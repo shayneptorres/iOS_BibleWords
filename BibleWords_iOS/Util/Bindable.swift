@@ -18,4 +18,4 @@ extension Bindable {
 
 extension Bible.WordInfo: Bindable {}
 extension Bible.WordInstance: Bindable {}
-extension WordList: Bindable {}
+extension VocabWordList: Bindable {}

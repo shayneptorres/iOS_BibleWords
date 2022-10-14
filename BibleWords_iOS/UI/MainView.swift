@@ -9,14 +9,14 @@ import SwiftUI
 
 struct MainView: View {
     enum Routes: Hashable {
-        case showList(WordList)
+        case showList(VocabWordList)
     }
     
     @Environment(\.managedObjectContext) var context
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \WordList.createdAt, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \VocabWordList.createdAt, ascending: true)],
         animation: .default)
-    var lists: FetchedResults<WordList>
+    var lists: FetchedResults<VocabWordList>
     
     @State var showListBuilderView = false
     
@@ -28,16 +28,17 @@ struct MainView: View {
                         .multilineTextAlignment(.center)
                 }
             } else {
-                List(lists) { list in
-                    HStack {
-                        NavigationLink(value: Routes.showList(list)) {
-                            HStack {
-                                Text(list.defaultTitle)
-                                Spacer()
-                                Text(list.defaultDetails)
+                List {
+                    ForEach(lists) { list in
+                        HStack {
+                            NavigationLink(value: Routes.showList(list)) {
+                                HStack {
+                                    Text(list.defaultTitle)
+                                    Spacer()
+                                    Text(list.defaultDetails)
+                                }
                             }
                         }
-                    }
                         .swipeActions {
                             Button(action: {
                                 withAnimation {
@@ -46,6 +47,7 @@ struct MainView: View {
                             }, label: { Text("Delete") })
                             .tint(.red)
                         }
+                    }
                 }
             }
             VStack {
@@ -76,25 +78,9 @@ struct MainView: View {
                 BuildVocabListView()
             }
         }
-        .onAppear {
-            if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
-            } else {
-                fetchData()
-            }
-        }
     }
     
-    func fetchData() {
-        Task {
-            await API.main.fetchHebrewDict()
-            await API.main.fetchHebrewBible()
-            await API.main.fetchGreekDict()
-            await API.main.fetchGreekBible()
-            API.main.dataReadyPublisher.send(true)
-        }
-    }
-    
-    func onDelete(_ list: WordList) {
+    func onDelete(_ list: VocabWordList) {
         CoreDataManager.transaction(context: context) {
             context.delete(list)
         }

@@ -79,3 +79,25 @@ struct BibleRange: Identifiable, Bindable, Equatable {
         }
     }
 }
+
+struct TextbookRange: Identifiable, Bindable, Equatable {
+    var id: String = UUID().uuidString
+    var info: API.Source.Info
+    var chapStart: Int
+    var chapEnd: Int
+    
+    static func ==(lhs: TextbookRange, rhs: TextbookRange) -> Bool {
+        return lhs.id == rhs.id &&
+        lhs.chapStart == rhs.chapStart &&
+        lhs.chapEnd == rhs.chapEnd &&
+        lhs.info.id == lhs.info.id
+    }
+    
+    var title: String {
+        return info.shortName
+    }
+    
+    var details: String {
+        return "Ch\(chapStart) - Ch\(chapEnd)"
+    }
+}

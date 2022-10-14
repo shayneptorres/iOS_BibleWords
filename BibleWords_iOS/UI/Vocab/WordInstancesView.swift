@@ -8,28 +8,30 @@
 import SwiftUI
 
 struct WordInstancesView: View {
+    @Environment(\.presentationMode) var presentationMode
     @Binding var word: Bible.WordInfo
     
     var body: some View {
         List {
             Section {
                 Text(word.lemma)
-                    .font(.title3)
-                    .padding(.bottom)
+                    .font(.bible40)
                 Text(word.definition)
-                    .padding(.bottom)
-                Text(word.usage)
-                    .padding(.bottom)
             }
             Section {
                 ForEach(word.instances) { instance in
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(instance.cleanSurface)
-                            .font(.title3)
-                        Text("\(instance.bibleBook.title) \(instance.chapter):\(instance.verse)")
+                    VStack(alignment: .leading) {
+                        Text(instance.cleanSurface.isEmpty ? instance.surface : instance.cleanSurface)
+                            .font(.bible32)
+                        Text(instance.prettyRefStr)
                         Text(instance.parsing)
                     }
                 }
+            }
+        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("Done", action: { presentationMode.wrappedValue.dismiss() })
             }
         }
     }

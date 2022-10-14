@@ -1,0 +1,2362 @@
+{
+    "words": [
+        {
+            "lemma": "אָדָם",
+            "gloss": "human, Adam",
+            "chap": "1",
+            "strongId": "121"
+        },
+        {
+            "lemma": "אֵשׁ",
+            "gloss": "fire",
+            "chap": "1",
+            "strongId": "785"
+        },
+        {
+            "lemma": "דָּבָר",
+            "gloss": "word, thing",
+            "chap": "1",
+            "strongId": "1697"
+        },
+        {
+            "lemma": "זָקֵן",
+            "gloss": "old (adjectives); elder, old man (noun)",
+            "chap": "1",
+            "strongId": "2205"
+        },
+        {
+            "lemma": "חָצֵר",
+            "gloss": "village, courtyard",
+            "chap": "1",
+            "strongId": "2691"
+        },
+        {
+            "lemma": "שַׂר",
+            "gloss": "ruler, leader, prince",
+            "chap": "1",
+            "strongId": "8269"
+        },
+        {
+            "lemma": "צֹאן",
+            "gloss": "flock (of sheep or goats)",
+            "chap": "1",
+            "strongId": "6629"
+        },
+        {
+            "lemma": "אִישׁ",
+            "gloss": "man, husband",
+            "chap": "2",
+            "strongId": "377"
+        },
+        {
+            "lemma": "אֱלֹהִים",
+            "gloss": "God, gods",
+            "chap": "2",
+            "strongId": "430"
+        },
+        {
+            "lemma": "בְּרִית",
+            "gloss": "covenant",
+            "chap": "2",
+            "strongId": "1286"
+        },
+        {
+            "lemma": "יֵשׁ",
+            "gloss": "there is",
+            "chap": "2",
+            "strongId": "3426"
+        },
+        {
+            "lemma": "כְּלִי",
+            "gloss": "vessel, tool, weapon, thing",
+            "chap": "2",
+            "strongId": "3627"
+        },
+        {
+            "lemma": "מַלְכָּה",
+            "gloss": "queen",
+            "chap": "2",
+            "strongId": "4436"
+        },
+        {
+            "lemma": "מִשְׁפָּט",
+            "gloss": "judgment, justice",
+            "chap": "2",
+            "strongId": "4941"
+        },
+        {
+            "lemma": "סוּס",
+            "gloss": "horse",
+            "chap": "2",
+            "strongId": "5483"
+        },
+        {
+            "lemma": "עִיר",
+            "gloss": "city",
+            "chap": "2",
+            "strongId": "5894"
+        },
+        {
+            "lemma": "אָשֵׁר",
+            "gloss": "Asher",
+            "chap": "2",
+            "strongId": "836"
+        },
+        {
+            "lemma": "מְלָכִים",
+            "gloss": "kings (the plural of מֶ֫לֶךְ)",
+            "chap": "2",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "סוּסָה",
+            "gloss": "mare (the feminine of סוּס)",
+            "chap": "2",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "שֹׁפְטִים",
+            "gloss": "judges (the plural of שֹׁפֵט)",
+            "chap": "2",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "אֲדָמָה",
+            "gloss": "ground, land",
+            "chap": "3",
+            "strongId": "128"
+        },
+        {
+            "lemma": "אוֹ",
+            "gloss": "or",
+            "chap": "3",
+            "strongId": "176"
+        },
+        {
+            "lemma": "אִשָּׁה",
+            "gloss": "woman, wife",
+            "chap": "3",
+            "strongId": "802"
+        },
+        {
+            "lemma": "בְּרָכָה",
+            "gloss": "blessing",
+            "chap": "3",
+            "strongId": "1294"
+        },
+        {
+            "lemma": "גִּבּוֹר",
+            "gloss": "mighty, strong (adjective); strong man, hero",
+            "chap": "3",
+            "strongId": "1368"
+        },
+        {
+            "lemma": "כֹּהֵן",
+            "gloss": "priest",
+            "chap": "3",
+            "strongId": "3548"
+        },
+        {
+            "lemma": "עַם",
+            "gloss": "people",
+            "chap": "3",
+            "strongId": "5972"
+        },
+        {
+            "lemma": "רוּחַ",
+            "gloss": "wind, breath, spirit, (divine Spirit)",
+            "chap": "3",
+            "strongId": "7308"
+        },
+        {
+            "lemma": "שָׂדֶה",
+            "gloss": "field",
+            "chap": "3",
+            "strongId": "7704"
+        },
+        {
+            "lemma": "גֶּזֶר",
+            "gloss": "Gezer",
+            "chap": "3",
+            "strongId": "1507"
+        },
+        {
+            "lemma": "דָּוִד",
+            "gloss": "David",
+            "chap": "3",
+            "strongId": "1732"
+        },
+        {
+            "lemma": "דָּן",
+            "gloss": "Dan",
+            "chap": "3",
+            "strongId": "1835"
+        },
+        {
+            "lemma": "יַעֲקֹב",
+            "gloss": "Jacob",
+            "chap": "3",
+            "strongId": "3290"
+        },
+        {
+            "lemma": "מֹשֶׁה",
+            "gloss": "Moses",
+            "chap": "3",
+            "strongId": "4873"
+        },
+        {
+            "lemma": "רִבְקָה",
+            "gloss": "Rebekah",
+            "chap": "3",
+            "strongId": "7259"
+        },
+        {
+            "lemma": "רָחֵל",
+            "gloss": "Rachel",
+            "chap": "3",
+            "strongId": "7354"
+        },
+        {
+            "lemma": "תִּמְנָה",
+            "gloss": "Timnah",
+            "chap": "3",
+            "strongId": "8553"
+        },
+        {
+            "lemma": "חוֹמָה",
+            "gloss": "wall",
+            "chap": "4",
+            "strongId": "2346"
+        },
+        {
+            "lemma": "זָהָב",
+            "gloss": "gold",
+            "chap": "4",
+            "strongId": "2091"
+        },
+        {
+            "lemma": "נָבִיא",
+            "gloss": "prophet",
+            "chap": "4",
+            "strongId": "5030"
+        },
+        {
+            "lemma": "צָבָא",
+            "gloss": "army, host, service in war",
+            "chap": "4",
+            "strongId": "6635"
+        },
+        {
+            "lemma": "רֹאשׁ",
+            "gloss": "head, top, leader",
+            "chap": "4",
+            "strongId": "7220"
+        },
+        {
+            "lemma": "אֹיֵב",
+            "gloss": "enemy",
+            "chap": "4",
+            "strongId": "341"
+        },
+        {
+            "lemma": "יִשְׂרָאֵל",
+            "gloss": "Israel",
+            "chap": "4",
+            "strongId": "3479"
+        },
+        {
+            "lemma": "מִצְרִי",
+            "gloss": "Egyptian",
+            "chap": "4",
+            "strongId": "4713"
+        },
+        {
+            "lemma": "אָב",
+            "gloss": "father",
+            "chap": "5",
+            "strongId": "1"
+        },
+        {
+            "lemma": "אוֹת",
+            "gloss": "sign",
+            "chap": "5",
+            "strongId": "226"
+        },
+        {
+            "lemma": "בֵּן",
+            "gloss": "son",
+            "chap": "5",
+            "strongId": "1123"
+        },
+        {
+            "lemma": "דָּם",
+            "gloss": "blood",
+            "chap": "5",
+            "strongId": "1818"
+        },
+        {
+            "lemma": "יוֹם",
+            "gloss": "day",
+            "chap": "5",
+            "strongId": "3118"
+        },
+        {
+            "lemma": "יְשׁוּעָה",
+            "gloss": "salvation",
+            "chap": "5",
+            "strongId": "3444"
+        },
+        {
+            "lemma": "מִזְבֵּחַ",
+            "gloss": "altar",
+            "chap": "5",
+            "strongId": "4196"
+        },
+        {
+            "lemma": "מִצְוָה",
+            "gloss": "command",
+            "chap": "5",
+            "strongId": "4687"
+        },
+        {
+            "lemma": "תּוֹרָה",
+            "gloss": "instruction, teaching, law",
+            "chap": "5",
+            "strongId": "8452"
+        },
+        {
+            "lemma": "אוֹר",
+            "gloss": "light",
+            "chap": "8",
+            "strongId": "216"
+        },
+        {
+            "lemma": "אֲשֶׁר",
+            "gloss": "who, which, that",
+            "chap": "8",
+            "strongId": "834"
+        },
+        {
+            "lemma": "הַר",
+            "gloss": "mountain, hill",
+            "chap": "8",
+            "strongId": "2022"
+        },
+        {
+            "lemma": "חָכָם",
+            "gloss": "wise (adjective and noun)",
+            "chap": "8",
+            "strongId": "2450"
+        },
+        {
+            "lemma": "יָשָׁר",
+            "gloss": "upright (adjective and noun)",
+            "chap": "8",
+            "strongId": "3477"
+        },
+        {
+            "lemma": "לֵב",
+            "gloss": "heart",
+            "chap": "8",
+            "strongId": "3821"
+        },
+        {
+            "lemma": "עָפָר",
+            "gloss": "dust",
+            "chap": "8",
+            "strongId": "6083"
+        },
+        {
+            "lemma": "אָח",
+            "gloss": "brother",
+            "chap": "12",
+            "strongId": "254"
+        },
+        {
+            "lemma": "הֵיכָל",
+            "gloss": "temple, palace",
+            "chap": "12",
+            "strongId": "1964"
+        },
+        {
+            "lemma": "יָד",
+            "gloss": "hand",
+            "chap": "12",
+            "strongId": "3027"
+        },
+        {
+            "lemma": "מֵאָה",
+            "gloss": "hundred",
+            "chap": "12",
+            "strongId": "3968"
+        },
+        {
+            "lemma": "מַחֲנֶה",
+            "gloss": "camp, army",
+            "chap": "12",
+            "strongId": "4264"
+        },
+        {
+            "lemma": "מַלְאָךְ",
+            "gloss": "messenger, angel",
+            "chap": "12",
+            "strongId": "4397"
+        },
+        {
+            "lemma": "שָׁנָה",
+            "gloss": "year",
+            "chap": "12",
+            "strongId": "8138"
+        },
+        {
+            "lemma": "קוֹל",
+            "gloss": "voice",
+            "chap": "12",
+            "strongId": "6963"
+        },
+        {
+            "lemma": "פֶּה",
+            "gloss": "mouth",
+            "chap": "12",
+            "strongId": "6310"
+        },
+        {
+            "lemma": "בָּרוּךְ",
+            "gloss": "Baruch",
+            "chap": "12",
+            "strongId": "1263"
+        },
+        {
+            "lemma": "יוֹנָה",
+            "gloss": "Jonah",
+            "chap": "12",
+            "strongId": "3124"
+        },
+        {
+            "lemma": "נִינְוֵה",
+            "gloss": "Nineveh",
+            "chap": "12",
+            "strongId": "5210"
+        },
+        {
+            "lemma": "אַחֵר",
+            "gloss": "other, another",
+            "chap": "15",
+            "strongId": "313"
+        },
+        {
+            "lemma": "גָּדוֹל",
+            "gloss": "great, big",
+            "chap": "15",
+            "strongId": "1419"
+        },
+        {
+            "lemma": "חַי",
+            "gloss": "alive",
+            "chap": "15",
+            "strongId": "2417"
+        },
+        {
+            "lemma": "טָהוֹר",
+            "gloss": "(ritually) clean",
+            "chap": "15",
+            "strongId": "2889"
+        },
+        {
+            "lemma": "קָטֹן",
+            "gloss": "small",
+            "chap": "15",
+            "strongId": "6994"
+        },
+        {
+            "lemma": "טוֹב",
+            "gloss": "good",
+            "chap": "15",
+            "strongId": "2897"
+        },
+        {
+            "lemma": "עֵץ",
+            "gloss": "tree, wood",
+            "chap": "15",
+            "strongId": "6086"
+        },
+        {
+            "lemma": "קָדוֹשׁ",
+            "gloss": "holy",
+            "chap": "15",
+            "strongId": "6918"
+        },
+        {
+            "lemma": "בֶּן־יְמִינִי",
+            "gloss": "Benjaminite(s)",
+            "chap": "15",
+            "strongId": "1145"
+        },
+        {
+            "lemma": "יִצְחָק",
+            "gloss": "Isaac",
+            "chap": "15",
+            "strongId": "3327"
+        },
+        {
+            "lemma": "לֵאָה",
+            "gloss": "Leah",
+            "chap": "15",
+            "strongId": "3812"
+        },
+        {
+            "lemma": "לָבָן",
+            "gloss": "Laban",
+            "chap": "15",
+            "strongId": "3837"
+        },
+        {
+            "lemma": "עֶזְרָא",
+            "gloss": "Ezra",
+            "chap": "15",
+            "strongId": "5831"
+        },
+        {
+            "lemma": "אֵם",
+            "gloss": "mother",
+            "chap": "16",
+            "strongId": "517"
+        },
+        {
+            "lemma": "אַמָּה",
+            "gloss": "cubit",
+            "chap": "16",
+            "strongId": "522"
+        },
+        {
+            "lemma": "חֹק",
+            "gloss": "rule, statute, law",
+            "chap": "16",
+            "strongId": "2706"
+        },
+        {
+            "lemma": "רַב",
+            "gloss": "many, much",
+            "chap": "16",
+            "strongId": "7229"
+        },
+        {
+            "lemma": "אֲרָם",
+            "gloss": "Aram, Syria",
+            "chap": "16",
+            "strongId": "758"
+        },
+        {
+            "lemma": "אֲרַמִּי",
+            "gloss": "Aramean(s), Syrian(s)",
+            "chap": "16",
+            "strongId": "761"
+        },
+        {
+            "lemma": "מוֹאָב",
+            "gloss": "Moab",
+            "chap": "16",
+            "strongId": "4124"
+        },
+        {
+            "lemma": "מוֹאָבִי",
+            "gloss": "Moabite(s)",
+            "chap": "16",
+            "strongId": "4125"
+        },
+        {
+            "lemma": "יִבְחַר",
+            "gloss": "(he) will choose",
+            "chap": "6",
+            "strongId": "2984"
+        },
+        {
+            "lemma": "קָטַל",
+            "gloss": "(he) killed",
+            "chap": "6",
+            "strongId": "6991"
+        },
+        {
+            "lemma": "אִם",
+            "gloss": "if",
+            "chap": "6",
+            "strongId": "518"
+        },
+        {
+            "lemma": "יָשׁוּב",
+            "gloss": "(he) will return",
+            "chap": "7",
+            "strongId": "3437"
+        },
+        {
+            "lemma": "לֹא",
+            "gloss": "no, not, ever",
+            "chap": "7",
+            "strongId": "3808"
+        },
+        {
+            "lemma": "עוֹד",
+            "gloss": "still, yet",
+            "chap": "7",
+            "strongId": "5751"
+        },
+        {
+            "lemma": "שָׁם",
+            "gloss": "there",
+            "chap": "7",
+            "strongId": "8033"
+        },
+        {
+            "lemma": "שְׁלֹמֹה",
+            "gloss": "Solomon",
+            "chap": "7",
+            "strongId": "8010"
+        },
+        {
+            "lemma": "גְּבוּל",
+            "gloss": "territory, border",
+            "chap": "9",
+            "strongId": "1366"
+        },
+        {
+            "lemma": "מִדְבָּר",
+            "gloss": "desert, wilderness",
+            "chap": "9",
+            "strongId": "4057"
+        },
+        {
+            "lemma": "עַל",
+            "gloss": "upon, over, against",
+            "chap": "9",
+            "strongId": "5922"
+        },
+        {
+            "lemma": "עֵצָה",
+            "gloss": "advice",
+            "chap": "9",
+            "strongId": "6098"
+        },
+        {
+            "lemma": "רָשָׁע",
+            "gloss": "wicked (adj.)",
+            "chap": "9",
+            "strongId": "7563"
+        },
+        {
+            "lemma": "אַבְרָם",
+            "gloss": "Abram",
+            "chap": "9",
+            "strongId": "87"
+        },
+        {
+            "lemma": "גִּדְעוֹן",
+            "gloss": "Gideon",
+            "chap": "9",
+            "strongId": "1439"
+        },
+        {
+            "lemma": "אָז",
+            "gloss": "then",
+            "chap": "10",
+            "strongId": "227"
+        },
+        {
+            "lemma": "בָּשָׂר",
+            "gloss": "meat, flesh, skin",
+            "chap": "10",
+            "strongId": "1320"
+        },
+        {
+            "lemma": "כִּי",
+            "gloss": "because, although, indeed, that, rather, instead",
+            "chap": "10",
+            "strongId": "3588"
+        },
+        {
+            "lemma": "אַבְרָהָם",
+            "gloss": "Abraham",
+            "chap": "10",
+            "strongId": "85"
+        },
+        {
+            "lemma": "דָּגוֹן",
+            "gloss": "Dagon",
+            "chap": "10",
+            "strongId": "1712"
+        },
+        {
+            "lemma": "יְהוּדָה",
+            "gloss": "Judah",
+            "chap": "10",
+            "strongId": "3063"
+        },
+        {
+            "lemma": "אֶחָד",
+            "gloss": "one",
+            "chap": "11",
+            "strongId": "259"
+        },
+        {
+            "lemma": "בַּת",
+            "gloss": "daughter",
+            "chap": "11",
+            "strongId": "1325"
+        },
+        {
+            "lemma": "גַּם",
+            "gloss": "also, even",
+            "chap": "11",
+            "strongId": "1571"
+        },
+        {
+            "lemma": "גּוֹי",
+            "gloss": "nation",
+            "chap": "11",
+            "strongId": "1471"
+        },
+        {
+            "lemma": "כֵּן",
+            "gloss": "thus",
+            "chap": "11",
+            "strongId": "3654"
+        },
+        {
+            "lemma": "מִלְחָמָה",
+            "gloss": "war, battle",
+            "chap": "11",
+            "strongId": "4421"
+        },
+        {
+            "lemma": "מִשְׁפָּחָה",
+            "gloss": "family",
+            "chap": "11",
+            "strongId": "4940"
+        },
+        {
+            "lemma": "עֵדָה",
+            "gloss": "congregation",
+            "chap": "11",
+            "strongId": "5713"
+        },
+        {
+            "lemma": "צַדִּיק",
+            "gloss": "righteous (adjective)",
+            "chap": "11",
+            "strongId": "6662"
+        },
+        {
+            "lemma": "אוּרִיָּה",
+            "gloss": "Uriah",
+            "chap": "11",
+            "strongId": "223"
+        },
+        {
+            "lemma": "בֵּין",
+            "gloss": "between",
+            "chap": "13",
+            "strongId": "997"
+        },
+        {
+            "lemma": "חָמֵשׁ",
+            "gloss": "five",
+            "chap": "13",
+            "strongId": "2568"
+        },
+        {
+            "lemma": "יָם",
+            "gloss": "sea",
+            "chap": "13",
+            "strongId": "3221"
+        },
+        {
+            "lemma": "מִן",
+            "gloss": "from, than",
+            "chap": "13",
+            "strongId": "4481"
+        },
+        {
+            "lemma": "עַד",
+            "gloss": "until, as far as, unto",
+            "chap": "13",
+            "strongId": "5706"
+        },
+        {
+            "lemma": "עִם",
+            "gloss": "with",
+            "chap": "13",
+            "strongId": "5974"
+        },
+        {
+            "lemma": "פָּנִים",
+            "gloss": "face, front",
+            "chap": "13",
+            "strongId": "6440"
+        },
+        {
+            "lemma": "סְדֹם",
+            "gloss": "Sodom",
+            "chap": "13",
+            "strongId": "5467"
+        },
+        {
+            "lemma": "כֹּה",
+            "gloss": "thus",
+            "chap": "14",
+            "strongId": "3541"
+        },
+        {
+            "lemma": "עֵת",
+            "gloss": "time, season",
+            "chap": "14",
+            "strongId": "6256"
+        },
+        {
+            "lemma": "שֵׁם",
+            "gloss": "name",
+            "chap": "14",
+            "strongId": "8035"
+        },
+        {
+            "lemma": "נָחוֹר",
+            "gloss": "Nahor",
+            "chap": "14",
+            "strongId": "5152"
+        },
+        {
+            "lemma": "שָׂרָה",
+            "gloss": "Sarah",
+            "chap": "14",
+            "strongId": "8283"
+        },
+        {
+            "lemma": "אַף",
+            "gloss": "also, even",
+            "chap": "17",
+            "strongId": "639"
+        },
+        {
+            "lemma": "אַתָּה",
+            "gloss": "you (ms)",
+            "chap": "17",
+            "strongId": "859"
+        },
+        {
+            "lemma": "הוּא",
+            "gloss": "he; that",
+            "chap": "17",
+            "strongId": "1932"
+        },
+        {
+            "lemma": "זֹאת",
+            "gloss": "this (f)",
+            "chap": "17",
+            "strongId": "2063"
+        },
+        {
+            "lemma": "זֶה",
+            "gloss": "this (m)",
+            "chap": "17",
+            "strongId": "2089"
+        },
+        {
+            "lemma": "מָה",
+            "gloss": "what? why?",
+            "chap": "17",
+            "strongId": "4101"
+        },
+        {
+            "lemma": "אָסָא",
+            "gloss": "Asa",
+            "chap": "17",
+            "strongId": "609"
+        },
+        {
+            "lemma": "נָתָן",
+            "gloss": "Nathan",
+            "chap": "17",
+            "strongId": "5416"
+        },
+        {
+            "lemma": "עֵשָׂו",
+            "gloss": "Esau",
+            "chap": "17",
+            "strongId": "6215"
+        },
+        {
+            "lemma": "רוּת",
+            "gloss": "Ruth",
+            "chap": "17",
+            "strongId": "7327"
+        },
+        {
+            "lemma": "אַל",
+            "gloss": "not",
+            "chap": "18",
+            "strongId": "409"
+        },
+        {
+            "lemma": "מָקוֹם",
+            "gloss": "place",
+            "chap": "18",
+            "strongId": "4725"
+        },
+        {
+            "lemma": "נַחֲלָה",
+            "gloss": "possession, inheritance",
+            "chap": "18",
+            "strongId": "5159"
+        },
+        {
+            "lemma": "עוֹלָם",
+            "gloss": "eternity, remote time, forever",
+            "chap": "18",
+            "strongId": "5769"
+        },
+        {
+            "lemma": "שְׁמֹנֶה",
+            "gloss": "eight",
+            "chap": "18",
+            "strongId": "8083"
+        },
+        {
+            "lemma": "אַשּׁוּר",
+            "gloss": "Assyria",
+            "chap": "18",
+            "strongId": "804"
+        },
+        {
+            "lemma": "בִּלְעָם",
+            "gloss": "Balaam",
+            "chap": "18",
+            "strongId": "1109"
+        },
+        {
+            "lemma": "בָּלָק",
+            "gloss": "Balak",
+            "chap": "18",
+            "strongId": "1111"
+        },
+        {
+            "lemma": "יוֹאָב",
+            "gloss": "Joab",
+            "chap": "18",
+            "strongId": "3097"
+        },
+        {
+            "lemma": "יוֹנָתָן",
+            "gloss": "Jonathan",
+            "chap": "18",
+            "strongId": "3129"
+        },
+        {
+            "lemma": "לֵוִי",
+            "gloss": "Levi, Levite(s)",
+            "chap": "18",
+            "strongId": "3879"
+        },
+        {
+            "lemma": "שָׁאוּל",
+            "gloss": "Saul",
+            "chap": "18",
+            "strongId": "7586"
+        },
+        {
+            "lemma": "אַרְבַּע",
+            "gloss": "four",
+            "chap": "19",
+            "strongId": "704"
+        },
+        {
+            "lemma": "רִאשׁוֹן",
+            "gloss": "first",
+            "chap": "19",
+            "strongId": "7223"
+        },
+        {
+            "lemma": "שֵׁשׁ",
+            "gloss": "six",
+            "chap": "19",
+            "strongId": "8337"
+        },
+        {
+            "lemma": "יָלַד",
+            "gloss": "Qal: give birt, beget",
+            "chap": "19",
+            "strongId": "3205"
+        },
+        {
+            "lemma": "יָצָא",
+            "gloss": "Qal: to go out",
+            "chap": "19",
+            "strongId": "3318"
+        },
+        {
+            "lemma": "אֶפְרַיִם",
+            "gloss": "Ephraim",
+            "chap": "19",
+            "strongId": "669"
+        },
+        {
+            "lemma": "גָּד",
+            "gloss": "Gad",
+            "chap": "19",
+            "strongId": "1410"
+        },
+        {
+            "lemma": "יְהוֹיָקִים",
+            "gloss": "Jehoiakim",
+            "chap": "19",
+            "strongId": "3079"
+        },
+        {
+            "lemma": "נֹחַ",
+            "gloss": "Noah",
+            "chap": "19",
+            "strongId": "5146"
+        },
+        {
+            "lemma": "נָשָׂא",
+            "gloss": "Qal: carry, lift up",
+            "chap": "20",
+            "strongId": "5375"
+        },
+        {
+            "lemma": "דּוֹר",
+            "gloss": "generation",
+            "chap": "20",
+            "strongId": "1756"
+        },
+        {
+            "lemma": "חָטָא",
+            "gloss": "Qal: miss (a mark), sin",
+            "chap": "20",
+            "strongId": "2398"
+        },
+        {
+            "lemma": "יָרַשׁ",
+            "gloss": "Qal: possess, inherit, disposses",
+            "chap": "20",
+            "strongId": "3423"
+        },
+        {
+            "lemma": "מְאֹד",
+            "gloss": "very much, very",
+            "chap": "20",
+            "strongId": "3966"
+        },
+        {
+            "lemma": "יָרֵא",
+            "gloss": "Qal: to fear, to be afraid",
+            "chap": "20",
+            "strongId": "3373"
+        },
+        {
+            "lemma": "מָצָא",
+            "gloss": "Qal: find, seek",
+            "chap": "20",
+            "strongId": "4672"
+        },
+        {
+            "lemma": "עָנִי",
+            "gloss": "poor, wretched",
+            "chap": "20",
+            "strongId": "6041"
+        },
+        {
+            "lemma": "בָּחַר",
+            "gloss": "Qal: choose; he chose",
+            "chap": "20",
+            "strongId": "977"
+        },
+        {
+            "lemma": "פְּלֶשֶׁת",
+            "gloss": "Philistia",
+            "chap": "20",
+            "strongId": "6429"
+        },
+        {
+            "lemma": "פְּלִשְׁתִּי",
+            "gloss": "Philistine(s)",
+            "chap": "20",
+            "strongId": "6430"
+        },
+        {
+            "lemma": "צִיּוֹן",
+            "gloss": "Zion",
+            "chap": "20",
+            "strongId": "6726"
+        },
+        {
+            "lemma": "נָבָל",
+            "gloss": "fool, arrogant person",
+            "chap": "20",
+            "strongId": "5037"
+        },
+        {
+            "lemma": "פָּחַד",
+            "gloss": "Qal: to fear, be in dread",
+            "chap": "20",
+            "strongId": "6342"
+        },
+        {
+            "lemma": "חָזַק",
+            "gloss": "Qal: be strong, have courage",
+            "chap": "21",
+            "strongId": "2388"
+        },
+        {
+            "lemma": "לָקַח",
+            "gloss": "Qal: take, grasp, capture",
+            "chap": "21",
+            "strongId": "3947"
+        },
+        {
+            "lemma": "מָלֵא",
+            "gloss": "Qal: be full, be filled",
+            "chap": "21",
+            "strongId": "4392"
+        },
+        {
+            "lemma": "יָכֹל",
+            "gloss": "Qal: be able to, be capable of",
+            "chap": "21",
+            "strongId": "3201"
+        },
+        {
+            "lemma": "נְאֻם",
+            "gloss": "utterance, declaration",
+            "chap": "21",
+            "strongId": "5002"
+        },
+        {
+            "lemma": "נָטָה",
+            "gloss": "Qal: reach out, spread out, stretch out, turn aside",
+            "chap": "21",
+            "strongId": "5186"
+        },
+        {
+            "lemma": "כָּבוֹד",
+            "gloss": "heaviness, honor, glory",
+            "chap": "21",
+            "strongId": "3519"
+        },
+        {
+            "lemma": "רָדַף",
+            "gloss": "Qal: pursue; he pursued",
+            "chap": "21",
+            "strongId": "7291"
+        },
+        {
+            "lemma": "אֵל",
+            "gloss": "God, god",
+            "chap": "21",
+            "strongId": "413"
+        },
+        {
+            "lemma": "פָּעַל",
+            "gloss": "Qal: do; he did",
+            "chap": "21",
+            "strongId": "6466"
+        },
+        {
+            "lemma": "מִנְחָה",
+            "gloss": "gift, present; offering",
+            "chap": "21",
+            "strongId": "4504"
+        },
+        {
+            "lemma": "בָּבֶל",
+            "gloss": "Babylon",
+            "chap": "21",
+            "strongId": "894"
+        },
+        {
+            "lemma": "שְׁמוּאֵל",
+            "gloss": "Samuel",
+            "chap": "21",
+            "strongId": "8050"
+        },
+        {
+            "lemma": "אֶ֫רֶץ",
+            "gloss": "earth",
+            "chap": "1",
+            "strongId": "776"
+        },
+        {
+            "lemma": "דַּ֫עַת",
+            "gloss": "knowledge",
+            "chap": "1",
+            "strongId": "1847"
+        },
+        {
+            "lemma": "מֶ֫לֶךְ",
+            "gloss": "king",
+            "chap": "1",
+            "strongId": "4428"
+        },
+        {
+            "lemma": "עֶ֫בֶד",
+            "gloss": "servant, slave",
+            "chap": "1",
+            "strongId": "5650"
+        },
+        {
+            "lemma": "שֹׁפֵט",
+            "gloss": "judge, leader",
+            "chap": "1",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "אֹ֫הֶל",
+            "gloss": "tent",
+            "chap": "2",
+            "strongId": "168"
+        },
+        {
+            "lemma": "אֵין",
+            "gloss": "there is no",
+            "chap": "2",
+            "strongId": "371"
+        },
+        {
+            "lemma": "בְּ",
+            "gloss": "in, with, by, among",
+            "chap": "2",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "שִׁלֹה",
+            "gloss": "Shiloh",
+            "chap": "2",
+            "strongId": "7887"
+        },
+        {
+            "lemma": "חַטָּאת",
+            "gloss": "sin, sin offering",
+            "chap": "3",
+            "strongId": "2402"
+        },
+        {
+            "lemma": "חָכְמָה",
+            "gloss": "wisdom",
+            "chap": "3",
+            "strongId": "2452"
+        },
+        {
+            "lemma": "שַׁ֫עַר",
+            "gloss": "gate",
+            "chap": "3",
+            "strongId": "8179"
+        },
+        {
+            "lemma": "יְהוֹשֻׁעַ",
+            "gloss": "Joshua",
+            "chap": "3",
+            "strongId": "3091"
+        },
+        {
+            "lemma": "כֶּ֫סֶף",
+            "gloss": "silver",
+            "chap": "4",
+            "strongId": "3701"
+        },
+        {
+            "lemma": "מָ֫וֶת",
+            "gloss": "death",
+            "chap": "4",
+            "strongId": "4194"
+        },
+        {
+            "lemma": "מַ֫יִם",
+            "gloss": "water",
+            "chap": "4",
+            "strongId": "4325"
+        },
+        {
+            "lemma": "עַ֫יִן",
+            "gloss": "eye, spring (of water)",
+            "chap": "4",
+            "strongId": "5869"
+        },
+        {
+            "lemma": "שְׁנַ֫יִם",
+            "gloss": "two",
+            "chap": "4",
+            "strongId": "8145"
+        },
+        {
+            "lemma": "שָׁמַ֫יִם",
+            "gloss": "heaven(s), sky",
+            "chap": "4",
+            "strongId": "8064"
+        },
+        {
+            "lemma": "יְרוּשָׁלַ֫יִמ",
+            "gloss": "Jerusalem",
+            "chap": "4",
+            "strongId": "3389"
+        },
+        {
+            "lemma": "מִצְרַ֫יִמ",
+            "gloss": "Egypt",
+            "chap": "4",
+            "strongId": "4714"
+        },
+        {
+            "lemma": "נָשִׁימ",
+            "gloss": "women (plural of אִשָּׁה)",
+            "chap": "4",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "בַּ֫יִת",
+            "gloss": "house",
+            "chap": "5",
+            "strongId": "1004"
+        },
+        {
+            "lemma": "כְּ",
+            "gloss": "like, as",
+            "chap": "5",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "עוֹלָה",
+            "gloss": "whole burnt offering",
+            "chap": "5",
+            "strongId": "5930"
+        },
+        {
+            "lemma": "וַיְהִי",
+            "gloss": "and there was",
+            "chap": "5",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "אָבוֹת",
+            "gloss": "fathers (אָב)",
+            "chap": "5",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "אֲנָשִׁים",
+            "gloss": "men (אִישׁ)",
+            "chap": "5",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "בֳּתִּים",
+            "gloss": "houses (בַּ֫יִת)",
+            "chap": "5",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "בָּנִים",
+            "gloss": "sons",
+            "chap": "5",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "יָמִים",
+            "gloss": "days (יוֹם)",
+            "chap": "5",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "מִזְבְּחוֹת",
+            "gloss": "altars (מִזְבֵּחַ)",
+            "chap": "5",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "עָרִים",
+            "gloss": "cities (עִיר)",
+            "chap": "5",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "אֶ֫בֶן",
+            "gloss": "stone",
+            "chap": "8",
+            "strongId": "68"
+        },
+        {
+            "lemma": "דֶּ֫רֶךְ",
+            "gloss": "road, way, path",
+            "chap": "8",
+            "strongId": "1870"
+        },
+        {
+            "lemma": "לֶ֫חֶם",
+            "gloss": "bread",
+            "chap": "8",
+            "strongId": "3899"
+        },
+        {
+            "lemma": "אַשְׁרֵי",
+            "gloss": "blessings of...",
+            "chap": "8",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "יהוה",
+            "gloss": "Yahweh",
+            "chap": "12",
+            "strongId": "3069"
+        },
+        {
+            "lemma": "תַּ֫חַת",
+            "gloss": "under, instead of",
+            "chap": "12",
+            "strongId": "8479"
+        },
+        {
+            "lemma": "יִרְמְיָ֫הוּ",
+            "gloss": "Jeremiah",
+            "chap": "12",
+            "strongId": "3414"
+        },
+        {
+            "lemma": "קֹ֫רַח",
+            "gloss": "Korah",
+            "chap": "12",
+            "strongId": "7141"
+        },
+        {
+            "lemma": "רָע / רַע / רָעָה",
+            "gloss": "evil, bad, trouble",
+            "chap": "15",
+            "strongId": "7451"
+        },
+        {
+            "lemma": "בִּנְיָמִן",
+            "gloss": "Benjamin",
+            "chap": "15",
+            "strongId": "1144"
+        },
+        {
+            "lemma": "חֶ֫רֶב",
+            "gloss": "sword",
+            "chap": "16",
+            "strongId": "2719"
+        },
+        {
+            "lemma": "נַ֫עַר",
+            "gloss": "boy, youth",
+            "chap": "16",
+            "strongId": "5288"
+        },
+        {
+            "lemma": "נֶ֫פֶשׁ",
+            "gloss": "life, self, soul, person",
+            "chap": "16",
+            "strongId": "5315"
+        },
+        {
+            "lemma": "סֵ֫פֶר",
+            "gloss": "scroll, book",
+            "chap": "16",
+            "strongId": "5612"
+        },
+        {
+            "lemma": "חֹ֫שֶׁךְ",
+            "gloss": "darkness",
+            "chap": "16",
+            "strongId": "2822"
+        },
+        {
+            "lemma": "יַרְדֵּן",
+            "gloss": "Jordan",
+            "chap": "16",
+            "strongId": "3383"
+        },
+        {
+            "lemma": "כְּנַ֫עַן",
+            "gloss": "Canaan",
+            "chap": "16",
+            "strongId": "3667"
+        },
+        {
+            "lemma": "כְּנַעֲנִי",
+            "gloss": "Canaanite(s)",
+            "chap": "16",
+            "strongId": "3669"
+        },
+        {
+            "lemma": "קָם",
+            "gloss": "(he) arose",
+            "chap": "6",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "יָק֫וּמוּ",
+            "gloss": "(they) will arise",
+            "chap": "6",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "יָסֹב",
+            "gloss": "(he) will encircle",
+            "chap": "6",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "וַיָּ֫סָב",
+            "gloss": "and (he) encircled",
+            "chap": "6",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "יִפֹּל",
+            "gloss": "(he) will fall",
+            "chap": "6",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "תִּפֹּל",
+            "gloss": "(she) will fall",
+            "chap": "6",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "יִמְצָא",
+            "gloss": "(he) will find",
+            "chap": "6",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "יִתֵּן",
+            "gloss": "(he) will give",
+            "chap": "6",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "אֶתֵּן",
+            "gloss": "I will give",
+            "chap": "6",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "יָֽלְדָה",
+            "gloss": "(she) gave birth",
+            "chap": "6",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "יִשְׁמַע",
+            "gloss": "(he) will hear",
+            "chap": "6",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "תִּשְׁמַע",
+            "gloss": "(she) will hear",
+            "chap": "6",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "יֶחֱטָא",
+            "gloss": "(he) will sin",
+            "chap": "6",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "לְ",
+            "gloss": "to, for",
+            "chap": "6",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "לְמַ֫עַן",
+            "gloss": "in order that, for the sake of",
+            "chap": "6",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "יֶאֱהַב",
+            "gloss": "(he) will love",
+            "chap": "7",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "יִירַשׁ",
+            "gloss": "(he) will possess",
+            "chap": "7",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "תּירַשׁ",
+            "gloss": "(she) will possess",
+            "chap": "7",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "שָׁב",
+            "gloss": "(he) returned",
+            "chap": "7",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "שָׁ֫בָה",
+            "gloss": "(she) returned",
+            "chap": "7",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "שָׁ֫בוּ",
+            "gloss": "(they) returned",
+            "chap": "7",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "וַיָּ֫שָׁב",
+            "gloss": "and (he) returned",
+            "chap": "7",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "יֹאמַר",
+            "gloss": "(he) will say",
+            "chap": "7",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "וַיֹּ֫אמֶר",
+            "gloss": "and (he) said",
+            "chap": "7",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "יֵשֵׁב",
+            "gloss": "(he) will sit",
+            "chap": "7",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "תֵּשֵׁב",
+            "gloss": "(she) will sit",
+            "chap": "7",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "וַיֵּ֫שֶׁב",
+            "gloss": "and (he) sat",
+            "chap": "7",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "וַתֵּ֫שֶׁב",
+            "gloss": "and (she) sat",
+            "chap": "7",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "יַעֲמֹד",
+            "gloss": "(he) will stand",
+            "chap": "7",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "תַּעֲמֹד",
+            "gloss": "(she) will stand",
+            "chap": "7",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "אֶל",
+            "gloss": "to",
+            "chap": "7",
+            "strongId": "413"
+        },
+        {
+            "lemma": "הֲ",
+            "gloss": "(interrogative marker)",
+            "chap": "7",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "יֹאסֵף",
+            "gloss": "Joseph",
+            "chap": "7",
+            "strongId": "3130"
+        },
+        {
+            "lemma": "בנה",
+            "gloss": "Qal: to build",
+            "chap": "9",
+            "strongId": "1124"
+        },
+        {
+            "lemma": "הלך",
+            "gloss": "Qal: to walk",
+            "chap": "9",
+            "strongId": "1981"
+        },
+        {
+            "lemma": "כתב",
+            "gloss": "Qal: to write",
+            "chap": "9",
+            "strongId": "3789"
+        },
+        {
+            "lemma": "מלך",
+            "gloss": "Qal: to be king",
+            "chap": "9",
+            "strongId": "4427"
+        },
+        {
+            "lemma": "עשׂה",
+            "gloss": "Qal: to do",
+            "chap": "9",
+            "strongId": "6213"
+        },
+        {
+            "lemma": "ראה",
+            "gloss": "Qal: to see",
+            "chap": "9",
+            "strongId": "7200"
+        },
+        {
+            "lemma": "שׁפט",
+            "gloss": "Qal: to judge",
+            "chap": "9",
+            "strongId": "8200"
+        },
+        {
+            "lemma": "בַּת־שֶׁ֫בַע",
+            "gloss": "Bathsheba",
+            "chap": "9",
+            "strongId": "1339"
+        },
+        {
+            "lemma": "נֶ֫גֶב",
+            "gloss": "Negev, often with article as in “the Negev”",
+            "chap": "9",
+            "strongId": "5045"
+        },
+        {
+            "lemma": "קַ֫יִן",
+            "gloss": "Cain",
+            "chap": "9",
+            "strongId": "7014"
+        },
+        {
+            "lemma": "אמר",
+            "gloss": "Qal: to say",
+            "chap": "10",
+            "strongId": "559"
+        },
+        {
+            "lemma": "היה",
+            "gloss": "Qal: to be, become",
+            "chap": "10",
+            "strongId": "1961"
+        },
+        {
+            "lemma": "ישׁב",
+            "gloss": "Qal: to sit, dwell",
+            "chap": "10",
+            "strongId": "3427"
+        },
+        {
+            "lemma": "נתן",
+            "gloss": "Qal: to give, place",
+            "chap": "10",
+            "strongId": "5414"
+        },
+        {
+            "lemma": "שׁמע",
+            "gloss": "Qal: to hear, listen",
+            "chap": "10",
+            "strongId": "8085"
+        },
+        {
+            "lemma": "שׁמר",
+            "gloss": "Qal: to keep, guard, observe",
+            "chap": "10",
+            "strongId": "8104"
+        },
+        {
+            "lemma": "אָֽנֹכִי / אֲנִי",
+            "gloss": "I",
+            "chap": "10",
+            "strongId": "589"
+        },
+        {
+            "lemma": "לַ֫יְלָה",
+            "gloss": "night",
+            "chap": "10",
+            "strongId": "3915"
+        },
+        {
+            "lemma": "אֵלִיָּ֫הוּ",
+            "gloss": "Elijah",
+            "chap": "10",
+            "strongId": "452"
+        },
+        {
+            "lemma": "לֹוט",
+            "gloss": "Lot",
+            "chap": "10",
+            "strongId": "3876"
+        },
+        {
+            "lemma": "יֶהְגֶּה",
+            "gloss": "He will meditate...",
+            "chap": "10",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "חפץ",
+            "gloss": "Qal: to desire, enjoy want",
+            "chap": "11",
+            "strongId": "2655"
+        },
+        {
+            "lemma": "נפל",
+            "gloss": "Qal: to fall",
+            "chap": "11",
+            "strongId": "5307"
+        },
+        {
+            "lemma": "שָׁלֹשׁ",
+            "gloss": "three",
+            "chap": "11",
+            "strongId": "7969"
+        },
+        {
+            "lemma": "בַּעֲדַת",
+            "gloss": "in the congregation of...",
+            "chap": "11",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "חַטָּאִים",
+            "gloss": "sinners",
+            "chap": "11",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "ירד",
+            "gloss": "to go down",
+            "chap": "12",
+            "strongId": "3381"
+        },
+        {
+            "lemma": "עמד",
+            "gloss": "to stand",
+            "chap": "12",
+            "strongId": "5975"
+        },
+        {
+            "lemma": "לֵץ",
+            "gloss": "mocker, scorner",
+            "chap": "12",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "הַטָּא",
+            "gloss": "sinful, sinner",
+            "chap": "12",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "חֶפְצֹו",
+            "gloss": "his delight...",
+            "chap": "12",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "מוֹשָׁב",
+            "gloss": "seat...",
+            "chap": "12",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "ענה",
+            "gloss": "to answer",
+            "chap": "13",
+            "strongId": "6031"
+        },
+        {
+            "lemma": "פקד",
+            "gloss": "to inspect, attend to, urge, muster, call to account, visit, punish",
+            "chap": "13",
+            "strongId": "6485"
+        },
+        {
+            "lemma": "אֶת־ / אֵת",
+            "gloss": "with",
+            "chap": "13",
+            "strongId": "854"
+        },
+        {
+            "lemma": "לִפְנֵי",
+            "gloss": "before, in the presence",
+            "chap": "13",
+            "strongId": "3942"
+        },
+        {
+            "lemma": "תָּ֫נֶךְ",
+            "gloss": "middle, midst",
+            "chap": "13",
+            "strongId": "8432"
+        },
+        {
+            "lemma": "מֹץ",
+            "gloss": "chaff",
+            "chap": "13",
+            "strongId": "4671"
+        },
+        {
+            "lemma": "תִּדְּפֶ֫נּוּ",
+            "gloss": "she will drive away him",
+            "chap": "13",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "אהב",
+            "gloss": "to love",
+            "chap": "15",
+            "strongId": "157"
+        },
+        {
+            "lemma": "ברך",
+            "gloss": "to bless; kneel",
+            "chap": "14",
+            "strongId": "1288"
+        },
+        {
+            "lemma": "זכר",
+            "gloss": "to remember",
+            "chap": "15",
+            "strongId": "2142"
+        },
+        {
+            "lemma": "שׁתל",
+            "gloss": "Qal: planted",
+            "chap": "15",
+            "strongId": "2142"
+        },
+        {
+            "lemma": "שָׁתוּל",
+            "gloss": "...he is planted... (passive paritciple)",
+            "chap": "15",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "פֶּ֫לֶג",
+            "gloss": "channel, canal",
+            "chap": "15",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "כרת",
+            "gloss": "Qal: to cut, cut off (cut a covenant with)",
+            "chap": "14",
+            "strongId": "3772"
+        },
+        {
+            "lemma": "קרב",
+            "gloss": "Qal: to draw near, approach",
+            "chap": "14",
+            "strongId": "7126"
+        },
+        {
+            "lemma": "שׁכב",
+            "gloss": "Qal: lie (down), have sexual intercourse",
+            "chap": "14",
+            "strongId": "7901"
+        },
+        {
+            "lemma": "\u05d0\u05b7\u05d7\u05b7\u05e8",
+            "gloss": "after, behind",
+            "chap": "14",
+            "strongId": "311"
+        },
+        {
+            "lemma": "כֹּל",
+            "gloss": "all, whole, every",
+            "chap": "14",
+            "strongId": "3605"
+        },
+        {
+            "lemma": "פְּרִי",
+            "gloss": "fruit",
+            "chap": "14",
+            "strongId": "6529"
+        },
+        {
+            "lemma": "קֹ֫דֶשׁ",
+            "gloss": "holiness, a holy thing",
+            "chap": "14",
+            "strongId": "6944"
+        },
+        {
+            "lemma": "רֶ֫גֶל",
+            "gloss": "foot",
+            "chap": "14",
+            "strongId": "7272"
+        },
+        {
+            "lemma": "שֶׁ֫בַע",
+            "gloss": "seven",
+            "chap": "14",
+            "strongId": "7651"
+        },
+        {
+            "lemma": "אֲבִימֶ֫לֶךְ",
+            "gloss": "Abimelech",
+            "chap": "14",
+            "strongId": "40"
+        },
+        {
+            "lemma": "וְעָלֵ֫הוּ",
+            "gloss": "...and his leaf...",
+            "chap": "14",
+            "strongId": "40"
+        },
+        {
+            "lemma": "יִבֹּול",
+            "gloss": "...it will wither...",
+            "chap": "14",
+            "strongId": "40"
+        },
+        {
+            "lemma": "אבד",
+            "gloss": "Qal: to die, be lost",
+            "chap": "16",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "ידע",
+            "gloss": "Qal: to know",
+            "chap": "16",
+            "strongId": "3045"
+        },
+        {
+            "lemma": "עבר",
+            "gloss": "Qal: to pass through; cross; transgress",
+            "chap": "16",
+            "strongId": "5674"
+        },
+        {
+            "lemma": "שׁתה",
+            "gloss": "Qal: to drink",
+            "chap": "16",
+            "strongId": "8354"
+        },
+        {
+            "lemma": "אֵ֫לֶּה",
+            "gloss": "these",
+            "chap": "17",
+            "strongId": "428"
+        },
+        {
+            "lemma": "אֲנַ֫חְנוּ",
+            "gloss": "we",
+            "chap": "17",
+            "strongId": "587"
+        },
+        {
+            "lemma": "אַתֶּם",
+            "gloss": "you (mp)",
+            "chap": "17",
+            "strongId": "859"
+        },
+        {
+            "lemma": "הִיא",
+            "gloss": "she; that",
+            "chap": "17",
+            "strongId": "1932"
+        },
+        {
+            "lemma": "הֵ֫מָּה / הֵם",
+            "gloss": "them; those (m)",
+            "chap": "17",
+            "strongId": "1992"
+        },
+        {
+            "lemma": "מִי",
+            "gloss": "who?",
+            "chap": "17",
+            "strongId": "4310"
+        },
+        {
+            "lemma": "הֶ֫בֶל",
+            "gloss": "Abel",
+            "chap": "17",
+            "strongId": "1893"
+        },
+        {
+            "lemma": "יַצְלִיחַ",
+            "gloss": "he will succeed",
+            "chap": "17",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "אכל",
+            "gloss": "Qal: to eat",
+            "chap": "18",
+            "strongId": "398"
+        },
+        {
+            "lemma": "אסף",
+            "gloss": "Qal: to gather, take in, retract",
+            "chap": "18",
+            "strongId": "622"
+        },
+        {
+            "lemma": "עלה",
+            "gloss": "Qal: to go up",
+            "chap": "18",
+            "strongId": "5927"
+        },
+        {
+            "lemma": "קרא",
+            "gloss": "Qal: to call, summon, proclaim",
+            "chap": "18",
+            "strongId": "7121"
+        },
+        {
+            "lemma": "שׁלח",
+            "gloss": "Qal: to send, stretch out",
+            "chap": "18",
+            "strongId": "7971"
+        },
+        {
+            "lemma": "כֶּ֫רֶם",
+            "gloss": "vineyard",
+            "chap": "18",
+            "strongId": "3754"
+        },
+        {
+            "lemma": "תֵּ֫שַׁע",
+            "gloss": "nine",
+            "chap": "18",
+            "strongId": "8672"
+        },
+        {
+            "lemma": "מִסְפָּר",
+            "gloss": "number",
+            "chap": "19",
+            "strongId": "4557"
+        },
+        {
+            "lemma": "מַטֶּה",
+            "gloss": "tribe, branch, shaft, rod",
+            "chap": "19",
+            "strongId": "4294"
+        },
+        {
+            "lemma": "בֹּֿקֶר",
+            "gloss": "morning, sunrise",
+            "chap": "19",
+            "strongId": "1242"
+        },
+        {
+            "lemma": "עֶֿשֶׂר",
+            "gloss": "ten",
+            "chap": "19",
+            "strongId": "6235"
+        },
+        {
+            "lemma": "עֶֿרֶב",
+            "gloss": "evening, sunset",
+            "chap": "19",
+            "strongId": "6153"
+        },
+        {
+            "lemma": "מַֿעַל",
+            "gloss": "above (מִעְלָה= upwards)",
+            "chap": "19",
+            "strongId": "4605"
+        },
+        {
+            "lemma": "אֶֿלֶף",
+            "gloss": "thousand, clan, troop",
+            "chap": "19",
+            "strongId": "505"
+        },
+        {
+            "lemma": "תּוֹלֵדוֹת",
+            "gloss": "generations",
+            "chap": "19",
+            "strongId": "8435"
+        },
+        {
+            "lemma": "זְבוּלֻן",
+            "gloss": "Zebulun",
+            "chap": "19",
+            "strongId": "2074"
+        },
+        {
+            "lemma": "יִשְׂשכָר",
+            "gloss": "Issachar",
+            "chap": "19",
+            "strongId": "3485"
+        },
+        {
+            "lemma": "מְנַשֶׁה",
+            "gloss": "Manasseh",
+            "chap": "19",
+            "strongId": "4519"
+        },
+        {
+            "lemma": "חֶֿסֶד",
+            "gloss": "Kindness, devotion, faithfulness, loyalty",
+            "chap": "20",
+            "strongId": "2617"
+        },
+        {
+            "lemma": "נִמְצָא",
+            "gloss": "Niphal: be found; he is/was found",
+            "chap": "20",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "ירא",
+            "gloss": "Qal: to fear, to be afraid",
+            "chap": "20",
+            "strongId": "3372"
+        },
+        {
+            "lemma": "נִשָּׂא",
+            "gloss": "Niphal: be carried; it was carried",
+            "chap": "20",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "אָדוֹן / אֲדֹנָי",
+            "gloss": "lord, master, sovereign",
+            "chap": "20",
+            "strongId": "113"
+        },
+        {
+            "lemma": "הוֹרִישׁ",
+            "gloss": "Hiphil: take possession of, drive out",
+            "chap": "20",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "נוֹרָא",
+            "gloss": "Niphal: be feared",
+            "chap": "20",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "הִמְלִיךְ",
+            "gloss": "Hiphil: install someone as king; he installed someone as king",
+            "chap": "20",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "נִשְׁמַר",
+            "gloss": "Niphal: be kept, be guarded",
+            "chap": "20",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "נִכְתָּב",
+            "gloss": "Niphal: be written; it is/was written",
+            "chap": "20",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "לַמְנַצֵּ͏חַ",
+            "gloss": "precise meaning unknown; often rendered: for the director of music",
+            "chap": "20",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "חִזַּק",
+            "gloss": "Piel: make firm, strengthen, harden (the heart)",
+            "chap": "21",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "הֶחֱזִיק",
+            "gloss": "Hiphil: seize, grasp, feel strengthened",
+            "chap": "21",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "הִתְחַזַּק",
+            "gloss": "Hithpael: he showed himself strong",
+            "chap": "21",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "מִלֵּא",
+            "gloss": "Piel: fill, endow, devote, fulfill",
+            "chap": "21",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "יִמָּלֵא",
+            "gloss": "Niphal: be filled; he will be filled (yiqtol)",
+            "chap": "21",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "אָֿוֶן",
+            "gloss": "iniquit, evil, disaster",
+            "chap": "21",
+            "strongId": "205"
+        },
+        {
+            "lemma": "הִטָּה",
+            "gloss": "Hiphil: stretch out, extend, guide away",
+            "chap": "21",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "הִכְרִית",
+            "gloss": "Hiphil: exterminate; he exterminated",
+            "chap": "21",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "נִכְרַת",
+            "gloss": "Niphal: cut off, eliminated",
+            "chap": "21",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "הִקְרִיב",
+            "gloss": "Hiphil: bring (near), take, offer",
+            "chap": "21",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "נִפְקַד",
+            "gloss": "Niphal: be missed",
+            "chap": "21",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "הִפְקִיד",
+            "gloss": "Hiphil: appoint; he appointed",
+            "chap": "21",
+            "strongId": "n/a"
+        },
+        {
+            "lemma": "אַהֲרוֺן",
+            "gloss": "Aaron",
+            "chap": "21",
+            "strongId": "175"
+        },
+        {
+            "lemma": "בֶּבְלִי",
+            "gloss": "Babylonian(s)",
+            "chap": "21",
+            "strongId": "896"
+        },
+        {
+            "lemma": "הִזְקִיָּה",
+            "gloss": "Hezekiah",
+            "chap": "21",
+            "strongId": "2396"
+        }
+    ]
+}

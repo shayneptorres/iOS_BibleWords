@@ -20,9 +20,21 @@ extension Int16 {
     var toInt: Int {
         return Int(self)
     }
+    var toInt32: Int32 {
+        return Int32(self)
+    }
 }
 
 extension Int32 {
+    var toInt: Int {
+        return Int(self)
+    }
+    var toInt16: Int16 {
+        return Int16(self)
+    }
+}
+
+extension Double {
     var toInt: Int {
         return Int(self)
     }

@@ -30,8 +30,14 @@ enum UserDefaultKey: String, CaseIterable {
 }
 
 class API: ObservableObject {
+    
+    enum BuiltTextbook {
+        case garretHebrew
+    }
+    
     static let main = API()
-    var dataReadyPublisher = CurrentValueSubject<Bool, Never>(false)
+    var coreDataReadyPublisher = CurrentValueSubject<Bool, Never>(false)
+    var builtTextbooks = CurrentValueSubject<[BuiltTextbook], Never>([])
     
     func fetchGreekBible() async {
         guard
@@ -67,7 +73,20 @@ class API: ObservableObject {
             let dict = try? JSONSerialization.jsonObject(with: data, options: []) as? [String:[String:[String:AnyObject]]]
         else { return }
         
-        Bible.main.hebrewLexicon = .init(lex: dict)
+         
+        Bible.main.hebrewLexicon.add(newLex: dict, source: API.Source.Info.app.id)
+    }
+    
+    func fetchGarretHebrew() async {
+        guard
+            let data = await readLocalJSONFile(forName: "garret-hebrew-1-21"),
+            let list: [TextbookImportWord] = await parse(jsonData: data)
+        else { return }
+        
+        Bible.main.hebrewLexicon.add(list: list, id: Source.Info.hebrewGarret.id)
+        var built = builtTextbooks.value
+        built.append(.garretHebrew)
+        builtTextbooks.send(built)
     }
 
     private func readLocalJSONFile(forName name: String) async -> Data? {
@@ -92,31 +111,42 @@ class API: ObservableObject {
         }
         return nil
     }
-    
-//    private func saveIfNeeded(_ list: VocabWordListable, context: NSManagedObjectContext) {
-//        
-//        if let greekList = list as? CodeableGreekBibleVocabList {
-//            guard UserDefaultKey.hasFetchedAndSavedAllGreekWords.get(as: Bool.self) == false else { return }
-//            CoreDataManager.transaction(context: context) {
-//                for word in greekList.words {
-//                    _ = VocabWord.newGreek(for: context, word: word)
-//                }
-//            }
-//            UserDefaultKey.hasFetchedAndSavedAllGreekWords.set(val: true)
-//        } else if let hebrewList = list as? CodeableHebrewWordList {
-//            guard UserDefaultKey.hasFetchedAndSavedAllHebrewWords.get(as: Bool.self) == false else { return }
-//            CoreDataManager.transaction(context: context) {
-//                for word in hebrewList.words {
-//                    let newVocab = VocabWord.newHebrew(for: context, word: word)
-//                    var sID = newVocab.gsid ?? ""
-//                    sID = sID.replacingOccurrences(of: "H", with: "")
-//                    if let count = StrongIDCount.main.dict[sID] {
-//                        newVocab.occurenceCount = Int32(count)
-//                    }
-//                }
-//            }
-//            UserDefaultKey.hasFetchedAndSavedAllHebrewWords.set(val: true)
-//        }
-//    }
+}
 
+extension API {
+    struct Source {
+        struct Info: Identifiable {
+            let id: String
+            let longName: String
+            let shortName: String
+            let details: String
+            let chapCount: Int
+            
+            static func info(for id: String) -> Info? {
+                return all.first(where: { $0.id == id })
+            }
+            
+            static let all: [Info] = [
+                .app,
+                .hebrewGarret
+            ]
+            
+            static let textbookInfos: [Info] = [
+                .hebrewGarret
+            ]
+            
+            static let app: Info = .init(id: "dc86985c-3dd5-11ed-a92f-4a45421fd684",
+                                         longName: "Provided by the BibleWords App",
+                                         shortName: "App Provided",
+                                         details: "Exported from https://openscriptures.org and organized by creator of BibleWords App",
+                                         chapCount: -1)
+            
+            static let hebrewGarret: Info = .init(id: "91e878a1-4d3f-40a4-8c12-6e9bdabbb4ae",
+                                                  longName: "A Modern Grammar for Biblical Hebrew: Garret, DeRouchie",
+                                                  shortName: "A Modern Gammar for Biblical Hebrew",
+                                                  details: "A Modern Grammar for Biblical Hebrew is a complete revision of Duane Garrett’s respected 2002 release originally entitled A Modern Grammar for Classical Hebrew. In addition to the revisions and contributions from new coauthor Jason DeRouchie, the book now includes the answer key for an all-new companion workbook and an updated vocabulary list for second year Hebrew courses.",
+                                                  chapCount: 21)
+            
+        }
+    }
 }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 
 struct Bible {
     static var main = Bible()
@@ -19,16 +20,60 @@ struct Bible {
         init(lex: [String:[String:[String:AnyObject]]] = [:]) {
             self.lex = lex
         }
+        
+        mutating func add(newLex: [String:[String:[String:AnyObject]]] = [:], source: String) {
+            self.lex[source] = newLex[source]!
+        }
+        
+        mutating func add(list: [TextbookImportWord], id: String) {
+            for word in list {
+                let wordData: [String: AnyObject] = [
+                    "id": word.strongId as AnyObject,
+                    "lemma": word.lemma as AnyObject,
+                    "definition": word.gloss as AnyObject,
+                    "chapter": word.chap as AnyObject,
+                    "usage": "" as AnyObject,
+                    "instances":[] as AnyObject
+                ]
+                if lex[id] == nil {
+                    lex[id] = [String:[String:AnyObject]]()
+                }
+                lex[id]![word.strongId] = wordData
+            }
+        }
+        
+        func words(source: String = API.Source.Info.app.id) -> [Bible.WordInfo] {
+            guard let sourceLex = self.lex[source] else { return [] }
+            
+            var words: [Bible.WordInfo] = []
+            for dict in sourceLex {
+                words.append(.init(dict.value))
+            }
+            return words
+        }
 
-        func word(for strongID: String, source: String = "dc86985c-3dd5-11ed-a92f-4a45421fd684") -> Bible.WordInfo {
+        func word(for strongID: String, source: String = API.Source.Info.app.id) -> Bible.WordInfo {
             guard
-                let wordsForSource = self.lex[source],
-                let wordDict = wordsForSource[strongID]
+                let sourceLex = self.lex[source],
+                let wordDict = sourceLex[strongID]
             else {
                 return .init([:])
             }
-
-            return .init(wordDict)
+            
+            if source == API.Source.Info.app.id {
+                // getting word from app lexicon, return right away
+                return .init(wordDict)
+            } else {
+                // getting word from textbook import, get instances from main lexicon
+                if let appLexWord = self.lex[API.Source.Info.app.id]?[strongID] {
+                    let appWordInfo = Bible.WordInfo(appLexWord)
+                    var word = Bible.WordInfo(wordDict)
+                    word.instances = appWordInfo.instances
+                    return word
+                } else {
+                    return Bible.WordInfo(wordDict)
+                }
+            }
         }
     }
     
@@ -55,14 +100,39 @@ struct Bible {
         var definition: String
         var usage: String
         var instances: [WordInstance]
+        // Textbook import only
+        var chapter: String
 
         init(_ dict: [String:AnyObject]) {
             self.id = dict["id"] as? String ?? ""
             self.lemma = dict["lemma"] as? String  ?? ""
             self.definition = dict["definition"] as? String  ?? ""
             self.usage = dict["usage"] as? String  ?? ""
+            self.chapter = dict["chapter"] as? String  ?? "-1"
             let instancesArr = dict["instances"] as? [[String:AnyObject]] ?? []
             instances = instancesArr.map { WordInstance(dict: $0) }
+        }
+        
+        func vocabWord(context: NSManagedObjectContext) -> VocabWord? {
+            let vocabFetchRequest = NSFetchRequest<VocabWord>(entityName: "VocabWord")
+            vocabFetchRequest.predicate = NSPredicate(format: "SELF.id == %@", self.id)
+            
+            var word: VocabWord?
+            do {
+                word = try context.fetch(vocabFetchRequest).first
+            } catch let err {
+                print(err)
+            }
+            
+            return word
+        }
+        
+        var language: VocabWord.Language {
+            if instances.first?.bibleBook.rawValue ?? 0 <= Bible.Book.malachi.rawValue {
+                return .hebrew
+            } else {
+                return .greek
+            }
         }
     }
     
@@ -81,7 +151,7 @@ struct Bible {
             self.lemma = dict["lemma"] as? String ?? ""
             self.index = dict["index"] as? Int ?? 0
             self.surface = dict["surface"] as? String ?? ""
-            self.parsing = dict["parse"] as? String ?? ""
+            self.parsing = dict["parsing"] as? String ?? ""
             self.refStr = dict["ref"] as? String ?? ""
             self.rawSurface = dict["rawSurface"] as? String ?? ""
             self.cleanSurface = dict["cleanSurface"] as? String ?? ""
@@ -101,110 +171,11 @@ struct Bible {
             guard let id = Int(refStr.split(separator: ".")[2]) else { return 0 }
             return id
         }
+        
+        var prettyRefStr: String {
+            return "\(bibleBook.shortTitle) \(chapter):\(verse)"
+        }
     }
-    
-//    struct Hebrew {
-//        static var main = Hebrew()
-//        var references = References()
-//        var words = Words()
-//
-//        struct Book {
-//            struct Chapter {
-//                struct Verse {
-//                    struct Word {
-//                        var values: [String] = []
-//                        var surface: String { values[0] }
-//                        var strongRaw: String { values[1] }
-//                        var parsing: String { values[2] }
-//                        var strongID: String {
-//                            return "H" + strongRaw.getDigits
-//                        }
-//                    }
-//                    var words: [Word] = []
-//                }
-//                var verses: [Verse] = []
-//            }
-//            var title: String = ""
-//            var chapters: [Chapter] = []
-//        }
-//
-//        struct StrongIDCount {
-//            static var main = StrongIDCount(dict: [:])
-//            var dict: [String:Int] = [:]
-//        }
-//
-//        struct References {
-//            var books: [String:Hebrew.Book] = [:]
-//
-//            init() {}
-//
-//            init(from data: [[String:AnyObject]]) {
-//                let importedBooks = data[0]
-//                var newBooks: [String:Bible.Hebrew.Book] = [:]
-//                for bibleBook in Bible.Book.oldTestament {
-//                    var newChapters: [Hebrew.Book.Chapter] = []
-//                    for chap in (importedBooks[bibleBook.title] as? [[[[String]]]] ?? []) {
-//                        var newVerses: [Hebrew.Book.Chapter.Verse] = []
-//                        for verses in chap {
-//                            var newWords: [Hebrew.Book.Chapter.Verse.Word] = []
-//                            for word in verses {
-//                                let strongs = word[1].components(separatedBy: CharacterSet(charactersIn: "/ "))
-//                                for str in strongs {
-//                                    let count = StrongIDCount.main.dict[str] ?? 0
-//                                    StrongIDCount.main.dict[str] = (count + 1)
-//                                }
-//                                newWords.append(.init(values: word))
-//                            }
-//                            newVerses.append(.init(words: newWords))
-//                        }
-//                        newChapters.append(.init(verses: newVerses))
-//                    }
-//                    newBooks[bibleBook.title] = .init(title: bibleBook.title, chapters: newChapters)
-//                }
-//                self.books = newBooks
-//            }
-//
-//            func get(_ bookInt: Int) -> Bible.Hebrew.Book {
-//                let bibleBook = Bible.Book(rawValue: bookInt) ?? .genesis
-//                return books[bibleBook.title] ?? .init()
-//            }
-//
-//            func get(_ book: Bible.Book) -> Bible.Hebrew.Book {
-//                return books[book.title] ?? .init()
-//            }
-//
-//            func get(_ book: Bible.Book, chapter: Int) -> Bible.Hebrew.Book.Chapter {
-//                return get(book).chapters[chapter]
-//            }
-//
-//            func get(_ bookInt: Int, chapter: Int) -> Bible.Hebrew.Book.Chapter {
-//                return get(bookInt).chapters[chapter]
-//            }
-//
-//            func get(_ book: Bible.Book, chapter: Int, verse: Int) -> Bible.Hebrew.Book.Chapter.Verse {
-//                return get(book).chapters[chapter].verses[verse]
-//            }
-//        }
-//
-//        struct Words {
-//            private var dict: [String:[String:[String:AnyObject]]] = [:]
-//
-//            init(dict: [String:[String:[String:AnyObject]]] = [:]) {
-//                self.dict = dict
-//            }
-//
-//            func word(for strongID: String, source: String = "dc86985c-3dd5-11ed-a92f-4a45421fd684") -> Bible.WordInfo {
-//                guard
-//                    let wordsForSource = self.dict[source],
-//                    let wordDict = wordsForSource[strongID]
-//                else {
-//                    return .init([:])
-//                }
-//
-//                return .init(wordDict)
-//            }
-//        }
-//    }
 }
 
 extension Bible {

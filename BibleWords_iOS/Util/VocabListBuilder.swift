@@ -52,6 +52,13 @@ class VocabListBuilder {
             .filter { !$0.definition.isEmpty }
             .filter { $0.instances.count >= occurrences }
     }
+    
+    static func buildHebrewTextbookList(sourceId: String, chapterStart: Int, chapterEnd: Int) -> [Bible.WordInfo] {
+        let textbookWords = Bible.main.hebrewLexicon.words(source: sourceId)
+        let textbookChapterFilterdWords = textbookWords.filter ({ $0.chapter.toInt >= chapterStart && $0.chapter.toInt <= chapterEnd })
+        
+        return textbookChapterFilterdWords
+    }
 }
 
 func printTimeElapsedWhenRunningCode(title:String, operation:()->()) {

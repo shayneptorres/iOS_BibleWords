@@ -1,13 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21279" systemVersion="21G83" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
-    <entity name="WordList" representedClassName="WordList" syncable="YES" codeGenerationType="class">
+    <entity name="VocabWord" representedClassName="VocabWord" syncable="YES" codeGenerationType="class">
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="currentInterval" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="customDefinition" optional="YES" attributeType="String"/>
+        <attribute name="customLemma" optional="YES" attributeType="String"/>
+        <attribute name="dueDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="lang" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="sourceId" optional="YES" attributeType="String"/>
+        <relationship name="list" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="VocabWordList" inverseName="words" inverseEntity="VocabWordList"/>
+    </entity>
+    <entity name="VocabWordList" representedClassName="VocabWordList" syncable="YES" codeGenerationType="class">
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="details" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="lastStudied" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="title" optional="YES" attributeType="String"/>
-        <relationship name="ranges" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="WordRange" inverseName="list" inverseEntity="WordRange"/>
+        <relationship name="ranges" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="VocabWordRange" inverseName="list" inverseEntity="VocabWordRange"/>
+        <relationship name="words" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="VocabWord" inverseName="list" inverseEntity="VocabWord"/>
     </entity>
-    <entity name="WordRange" representedClassName="WordRange" syncable="YES" codeGenerationType="class">
+    <entity name="VocabWordRange" representedClassName="VocabWordRange" syncable="YES" codeGenerationType="class">
         <attribute name="bookEnd" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="bookStart" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="chapEnd" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
@@ -15,6 +28,7 @@
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="occurrences" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="list" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WordList" inverseName="ranges" inverseEntity="WordList"/>
+        <attribute name="sourceId" optional="YES" attributeType="String"/>
+        <relationship name="list" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VocabWordList" inverseName="ranges" inverseEntity="VocabWordList"/>
     </entity>
 </model>
