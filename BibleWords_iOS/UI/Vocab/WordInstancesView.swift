@@ -20,14 +20,19 @@ struct WordInstancesView: View {
             }
             Section {
                 ForEach(word.instances) { instance in
-                    VStack(alignment: .leading) {
-                        Text(instance.cleanSurface.isEmpty ? instance.surface : instance.cleanSurface)
-                            .font(.bible32)
-                        Text(instance.prettyRefStr)
-                        Text(instance.parsing)
+                    NavigationLink(value: instance) {
+                        VStack(alignment: .leading) {
+                            Text(instance.cleanSurface.isEmpty ? instance.surface : instance.cleanSurface)
+                                .font(.bible32)
+                            Text(instance.prettyRefStr)
+                            Text(instance.parsing)
+                        }
                     }
                 }
             }
+        }
+        .navigationDestination(for: Bible.WordInstance.self) { instance in
+            WordInPassageView(word: $word, instance: instance.bound())
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {

@@ -15,25 +15,29 @@ class VocabListBuilder {
         var bookChapRange: [Int:[Int]] = [:]
         
         if bookStart == bookEnd {
-            let chapRange = Array(Int((chapStart))...Int((chapEnd)))
-            bookChapRange = [bookStart:chapRange]
+            if chapStart == chapEnd {
+                bookChapRange = [bookStart-1:[chapStart-1]]
+            } else {
+                let chapRange = Array(Int((chapStart-1))...Int((chapEnd-1)))
+                bookChapRange = [bookStart-1:chapRange]
+            }
         } else {
-            let bookIntRange = Array(bookStart...bookEnd)
+            let bookIntRange = Array(bookStart-1...bookEnd-1)
             
-            let startBookChapRange = Array(Int(chapStart)..<Bible.main.references.values[bookStart].count)
-            bookChapRange[bookStart] = startBookChapRange
-            let endBookChapRange = Array(0..<Int(chapEnd))
-            bookChapRange[bookEnd] = endBookChapRange
+            let startBookChapRange = Array(Int(chapStart-1)..<Bible.main.references.values[bookStart].count)
+            bookChapRange[bookStart-1] = startBookChapRange
+            let endBookChapRange = Array(0...Int(chapEnd-1))
+            bookChapRange[bookEnd-1] = endBookChapRange
             
             let middleBooks = Array(bookIntRange.dropFirst().dropLast())
             for book in middleBooks {
-                bookChapRange[book] = Array(0..<Bible.main.references.values[book - 1].count)
+                bookChapRange[book] = Array(0..<Bible.main.references.values[book].count)
             }
         }
         var chapters: [[[[String : AnyObject]]]] = []
         for (bookInt, chapInts) in bookChapRange.sorted(by: { $0.key < $1.key }) {
             for chapInt in chapInts {
-                chapters.append(Bible.main.references.values[bookInt-1][chapInt-1])
+                chapters.append(Bible.main.references.values[bookInt][chapInt])
             }
         }
         

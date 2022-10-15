@@ -44,11 +44,10 @@ struct Bible {
         
         func words(source: String = API.Source.Info.app.id) -> [Bible.WordInfo] {
             guard let sourceLex = self.lex[source] else { return [] }
-            
-            var words: [Bible.WordInfo] = []
-            for dict in sourceLex {
-                words.append(.init(dict.value))
-            }
+                    
+            let i = sourceLex.compactMap { $0.value["id"] as? String}
+            var words: [Bible.WordInfo] = i.map { word(for: $0, source: source) }
+
             return words
         }
 
@@ -162,6 +161,11 @@ struct Bible {
             return .init(rawValue: id) ?? .matthew
         }
         
+        var bookInt: Int {
+            guard let id = Int(refStr.split(separator: ".")[0]) else { return 0 }
+            return id
+        }
+        
         var chapter: Int {
             guard let id = Int(refStr.split(separator: ".")[1]) else { return 0 }
             return id
@@ -174,6 +178,20 @@ struct Bible {
         
         var prettyRefStr: String {
             return "\(bibleBook.shortTitle) \(chapter):\(verse)"
+        }
+        
+        var wordInPassage: String {
+            if Bible.main.references.values.count >= bookInt {
+                if Bible.main.references.values[bookInt-1].count >= chapter {
+                    if Bible.main.references.values[bookInt-1][chapter-1].count >= verse {
+                        let verse = Bible.main.references.values[bookInt-1][chapter-1][verse-1]
+                        let words = verse.compactMap { ($0["surface"] as? String)?.replacingOccurrences(of: "/", with: "") }
+                        return words.joined(separator: " ")
+                    }
+                }
+                return ""
+            }
+            return ""
         }
     }
 }

@@ -12,39 +12,45 @@ class ListDetailViewModel: ObservableObject, Equatable {
     @Published var list: VocabWordList
     @Published var isBibleDataReady = false
     @Published var isTextbookDataReady = false
+    @Published var isBuilding = false
     @Published var words: [Bible.WordInfo] = []
     var hereAreTheBuiltWords = CurrentValueSubject<[Bible.WordInfo], Never>([])
     private var subscribers: [AnyCancellable] = []
     
     init(list: VocabWordList) {
         self.list = list
-        
-        if list.sourceType == .app {
-            API.main.coreDataReadyPublisher.sink { [weak self] isReady in
-                if isReady {
-                    self?.buildBibleWords()
-                }
-            }.store(in: &subscribers)
-        } else {
-            API.main.builtTextbooks.sink { [weak self] builtTextbooks in
-                if builtTextbooks.contains(.garretHebrew) {
-                    self?.buildTextbookWords()
-                } else {
-                    Task {
-                        await API.main.fetchGarretHebrew()
+        isBuilding = true
+        Task {
+            if list.sourceType == .app {
+                API.main.coreDataReadyPublisher.sink { [weak self] isReady in
+                    if isReady {
+                        self?.buildBibleWords()
                     }
+                }.store(in: &subscribers)
+            } else {
+                API.main.builtTextbooks.sink { [weak self] builtTextbooks in
+                    if builtTextbooks.contains(.garretHebrew) {
+                        self?.buildTextbookWords()
+                    } else {
+                        Task {
+                            await API.main.fetchGarretHebrew()
+                        }
+                    }
+                }.store(in: &subscribers)
+            }
+            
+            hereAreTheBuiltWords.sink { w in
+                DispatchQueue.main.async {
+                    self.words = w
+                    if list.sourceType == .app {
+                        self.isBibleDataReady = true
+                    } else {
+                        self.isTextbookDataReady = true
+                    }
+                    self.isBuilding = false
                 }
             }.store(in: &subscribers)
         }
-        
-        hereAreTheBuiltWords.sink { w in
-            self.words = w
-            if list.sourceType == .app {
-                self.isBibleDataReady = true
-            } else {
-                self.isTextbookDataReady = true
-            }
-        }.store(in: &subscribers)
     }
     
     static func == (lhs: ListDetailViewModel, rhs: ListDetailViewModel) -> Bool {
@@ -53,6 +59,7 @@ class ListDetailViewModel: ObservableObject, Equatable {
     
     func buildBibleWords() {
         DispatchQueue.main.async {
+            self.isBuilding = true
             for range in self.list.rangesArr  {
                 let w = VocabListBuilder.buildVocabList(bookStart: range.bookStart.toInt,
                                                         chapStart: range.chapStart.toInt,
@@ -65,8 +72,9 @@ class ListDetailViewModel: ObservableObject, Equatable {
     }
     
     func buildTextbookWords() {
-        self.words.removeAll()
         DispatchQueue.main.async {
+            self.isBuilding = true
+            self.words.removeAll()
             for range in self.list.rangesArr  {
                 let w = VocabListBuilder.buildHebrewTextbookList(sourceId: range.sourceId ?? "",
                                                                  chapterStart: range.chapStart.toInt,
@@ -80,14 +88,13 @@ class ListDetailViewModel: ObservableObject, Equatable {
 struct ListDetailView: View {
     @Environment(\.managedObjectContext) var context
     @ObservedObject var viewModel: ListDetailViewModel
-    @State var isBuilding = false
     @State var studyWords = false
     @State var showWordInstances = false
     
     var body: some View {
         ZStack {
             List {
-                if !viewModel.isBibleDataReady && !viewModel.isTextbookDataReady {
+                if viewModel.isBuilding {
                     HStack {
                         ProgressView()
                             .progressViewStyle(.automatic)
@@ -97,7 +104,7 @@ struct ListDetailView: View {
                 } else {
                     if viewModel.list.sourceType == .app {
                         Section {
-                            ForEach(viewModel.words) { word in
+                            ForEach(viewModel.words.sorted { $0.lemma < $1.lemma }) { word in
                                 NavigationLink(value: word) {
                                     VStack(alignment: .leading) {
                                         Text(word.lemma)
@@ -127,7 +134,6 @@ struct ListDetailView: View {
                         }
                     }
                 }
-                Spacer().frame(height: 100)
             }
             VStack {
                 Spacer()
