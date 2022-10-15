@@ -56,7 +56,7 @@ struct BuildVocabListView: View {
                     Button(action: {
                         onBuild()
                     }, label: {
-                        Label(isBuilding ? "Building..." : "See words", systemImage: "list.bullet")
+                        Label(isBuilding ? "Building..." : "Build list", systemImage: "list.bullet")
                     })
                     .disabled(bibleRanges.isEmpty && textbookRanges.isEmpty && API.main.builtTextbooks.value.isEmpty)
                     Button(action: {
@@ -68,10 +68,11 @@ struct BuildVocabListView: View {
                 }
             }
         }
+        .navigationTitle("New Vocab List")
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 Button(action: { presentationMode.wrappedValue.dismiss() }, label: {
-                    Text("Done")
+                    Text("Cancel")
                         .bold()
                 })
             }
@@ -88,14 +89,33 @@ struct BuildVocabListView: View {
         }
         .sheet(isPresented: $showBuiltWords) {
             NavigationStack {
-                List {
-                    Section {
-                        Text("\(builtWords.count) words")
-                    }
-                    if !textbookRanges.isEmpty {
-                        ForEach(groupedTextbookWords, id: \.chapter) { group in
+                ZStack {
+                    List {
+                        Section {
+                            Text("\(builtWords.count) words")
+                        }
+                        if !textbookRanges.isEmpty {
                             Section {
-                                ForEach(group.words) { word in
+                                ForEach(groupedTextbookWords, id: \.chapter) { group in
+                                    Section {
+                                        ForEach(group.words) { word in
+                                            VStack(alignment: .leading) {
+                                                Text(word.lemma)
+                                                    .font(.bible24)
+                                                Text(word.definition)
+                                                    .font(.subheadline)
+                                            }
+                                        }
+                                    } header: {
+                                        Text("Chapter \(group.chapter)")
+                                    }
+                                }
+                            } footer: {
+                                Spacer().frame(height: 100)
+                            }
+                        } else {
+                            Section {
+                                ForEach(builtWords) { word in
                                     VStack(alignment: .leading) {
                                         Text(word.lemma)
                                             .font(.bible24)
@@ -103,23 +123,27 @@ struct BuildVocabListView: View {
                                             .font(.subheadline)
                                     }
                                 }
-                            } header: {
-                                Text("Chapter \(group.chapter)")
+                            } footer: {
+                                Spacer().frame(height: 100)
                             }
                         }
-                    } else {
-                        ForEach(builtWords) { word in
-                            VStack(alignment: .leading) {
-                                Text(word.lemma)
-                                    .font(.bible24)
-                                Text(word.definition)
-                                    .font(.subheadline)
-                            }
+                    }
+                    VStack {
+                        Spacer()
+                        AppButton(text: "Save list") {
+                            showBuiltWords = false
+                            onSave()
                         }
                     }
                 }
                 .toolbar {
-                    Button(action: { showBuiltWords = false }, label: { Text("Done").bold() })
+                    ToolbarItemGroup(placement: .principal) {
+                        NavHeaderTitleDetailView(title: !bibleRanges.isEmpty ? bibleRanges.title : textbookRanges.title,
+                                                 detail: !bibleRanges.isEmpty ? bibleRanges.details : textbookRanges.details)
+                    }
+                    ToolbarItemGroup(placement: .navigationBarTrailing) {
+                        Button(action: { showBuiltWords = false }, label: { Text("Dismiss").bold() })
+                    }
                 }
             }
         }

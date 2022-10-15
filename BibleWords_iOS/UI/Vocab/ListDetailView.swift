@@ -142,13 +142,7 @@ struct ListDetailView: View {
         }
         .toolbar {
             ToolbarItemGroup(placement: .principal) {
-                VStack {
-                    Text(viewModel.list.defaultTitle)
-                        .font(.headline)
-                    Text(viewModel.list.defaultDetails)
-                        .font(.subheadline)
-                        .foregroundColor(Color(uiColor: .secondaryLabel))
-                }
+                NavHeaderTitleDetailView(title: viewModel.list.defaultTitle, detail: viewModel.list.defaultDetails)
             }
         }
         .fullScreenCover(isPresented: $studyWords) {
