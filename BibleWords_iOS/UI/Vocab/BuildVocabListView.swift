@@ -430,7 +430,6 @@ struct TextbookRangePickerView: View {
                         }
                     }
                     .onReceive([self.range.chapStart].publisher.first()) { value in
-                        print("published")
                         if range.chapEnd < range.chapStart {
                             range.chapEnd = range.chapStart
                         }
@@ -444,7 +443,6 @@ struct TextbookRangePickerView: View {
                         }
                     }
                     .onReceive([self.range.chapStart].publisher.first()) { value in
-                        print("published")
                         if range.chapEnd < range.chapStart {
                             range.chapEnd = range.chapStart
                         }

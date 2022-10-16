@@ -10,23 +10,21 @@ import Combine
 
 class ListDetailViewModel: ObservableObject, Equatable {
     @Published var list: VocabWordList
-    @Published var isBibleDataReady = false
-    @Published var isTextbookDataReady = false
-    @Published var isBuilding = false
+    @Published var isBuilding = true
     @Published var words: [Bible.WordInfo] = []
-    var hereAreTheBuiltWords = CurrentValueSubject<[Bible.WordInfo], Never>([])
+    var wordsAreReady = CurrentValueSubject<[Bible.WordInfo], Never>([])
     private var subscribers: [AnyCancellable] = []
     
     init(list: VocabWordList) {
         self.list = list
-        isBuilding = true
+        
         Task {
             if list.sourceType == .app {
                 API.main.coreDataReadyPublisher.sink { [weak self] isReady in
                     if isReady {
                         self?.buildBibleWords()
                     }
-                }.store(in: &subscribers)
+                }.store(in: &self.subscribers)
             } else {
                 API.main.builtTextbooks.sink { [weak self] builtTextbooks in
                     if builtTextbooks.contains(.garretHebrew) {
@@ -36,21 +34,18 @@ class ListDetailViewModel: ObservableObject, Equatable {
                             await API.main.fetchGarretHebrew()
                         }
                     }
-                }.store(in: &subscribers)
+                }.store(in: &self.subscribers)
             }
-            
-            hereAreTheBuiltWords.sink { w in
-                DispatchQueue.main.async {
-                    self.words = w
-                    if list.sourceType == .app {
-                        self.isBibleDataReady = true
-                    } else {
-                        self.isTextbookDataReady = true
-                    }
+        }
+        
+        wordsAreReady.sink { builtWords in
+            DispatchQueue.main.async {
+                if !builtWords.isEmpty {
+                    self.words = builtWords
                     self.isBuilding = false
                 }
-            }.store(in: &subscribers)
-        }
+            }
+        }.store(in: &subscribers)
     }
     
     static func == (lhs: ListDetailViewModel, rhs: ListDetailViewModel) -> Bool {
@@ -58,29 +53,23 @@ class ListDetailViewModel: ObservableObject, Equatable {
     }
     
     func buildBibleWords() {
-        DispatchQueue.main.async {
-            self.isBuilding = true
-            for range in self.list.rangesArr  {
-                let w = VocabListBuilder.buildVocabList(bookStart: range.bookStart.toInt,
-                                                        chapStart: range.chapStart.toInt,
-                                                        bookEnd: range.bookEnd.toInt,
-                                                        chapEnd: range.chapEnd.toInt,
-                                                        occurrences: range.occurrences.toInt)
-                self.hereAreTheBuiltWords.send(w)
-            }
+        for range in self.list.rangesArr  {
+            let w = VocabListBuilder.buildVocabList(bookStart: range.bookStart.toInt,
+                                                    chapStart: range.chapStart.toInt,
+                                                    bookEnd: range.bookEnd.toInt,
+                                                    chapEnd: range.chapEnd.toInt,
+                                                    occurrences: range.occurrences.toInt)
+            self.wordsAreReady.send(w)
         }
     }
     
     func buildTextbookWords() {
-        DispatchQueue.main.async {
-            self.isBuilding = true
-            self.words.removeAll()
-            for range in self.list.rangesArr  {
-                let w = VocabListBuilder.buildHebrewTextbookList(sourceId: range.sourceId ?? "",
-                                                                 chapterStart: range.chapStart.toInt,
-                                                                 chapterEnd: range.chapEnd.toInt)
-                self.hereAreTheBuiltWords.send(w)
-            }
+        self.words.removeAll()
+        for range in self.list.rangesArr  {
+            let w = VocabListBuilder.buildHebrewTextbookList(sourceId: range.sourceId ?? "",
+                                                             chapterStart: range.chapStart.toInt,
+                                                             chapterEnd: range.chapEnd.toInt)
+            self.wordsAreReady.send(w)
         }
     }
 }
@@ -106,11 +95,7 @@ struct ListDetailView: View {
                         Section {
                             ForEach(viewModel.words.sorted { $0.lemma < $1.lemma }) { word in
                                 NavigationLink(value: word) {
-                                    VStack(alignment: .leading) {
-                                        Text(word.lemma)
-                                            .font(.bible32)
-                                        Text(word.definition)
-                                    }
+                                    WordInfoRow(wordInfo: word.bound())
                                 }
                                 .navigationViewStyle(.stack)
                             }
@@ -121,9 +106,7 @@ struct ListDetailView: View {
                                 ForEach(group.words) { word in
                                     NavigationLink(value: word) {
                                         VStack(alignment: .leading) {
-                                            Text(word.lemma)
-                                                .font(.bible40)
-                                            Text(word.definition)
+                                            WordInfoRow(wordInfo: word.bound())
                                         }
                                         .navigationViewStyle(.stack)
                                     }

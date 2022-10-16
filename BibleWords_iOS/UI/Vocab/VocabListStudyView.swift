@@ -7,18 +7,21 @@
 
 import SwiftUI
 
-struct VocabListStudyView: View {
+struct VocabListStudyView: View, Equatable {
+    static func == (lhs: VocabListStudyView, rhs: VocabListStudyView) -> Bool {
+        return (lhs.vocabList.id ?? "") == (rhs.vocabList.id ?? "")
+    }
+    
     @Environment(\.managedObjectContext) var managedObjectContext
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    
     @Namespace private var animation
     
     @Binding var vocabList: VocabWordList
     @State var dueWords: [Bible.WordInfo] = []
     @State var newWords: [Bible.WordInfo] = []
-    
     @State var allWordInfos: [Bible.WordInfo] = []
-    
     @State var incorrectWords: [VocabWord] = []
     @State var displayMode = DisplayMode.lemma
     @State var interfaceMode: InterfaceMode = .normal

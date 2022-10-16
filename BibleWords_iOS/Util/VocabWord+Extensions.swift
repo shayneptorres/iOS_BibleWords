@@ -35,7 +35,7 @@ extension VocabWord: Bindable {
         if VocabWord.Language(rawValue: self.lang) == .greek {
             return Bible.main.greekLexicon.word(for: self.id ?? "", source: self.sourceId ?? "")
         } else {
-            return Bible.main.hebrewLexicon.word(for: self.id ?? "")
+            return Bible.main.hebrewLexicon.word(for: self.id ?? "", source: self.sourceId ?? "")
         }
     }
     /// An array of the different Spaced Repitition intervals, in seconds
@@ -73,5 +73,9 @@ extension VocabWord {
         self.currentInterval = 0
         self.lang = wordInfo.language.rawValue
         self.dueDate = Date()
+    }
+    
+    var isDue: Bool {
+        return self.dueDate ?? Date() <= Date()
     }
 }

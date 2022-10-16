@@ -26,6 +26,8 @@
 		B8124D7F28FA30900053057C /* WordInPassageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8124D7E28FA30900053057C /* WordInPassageView.swift */; };
 		B8124D8128FB285D0053057C /* BibleRange+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8124D8028FB285D0053057C /* BibleRange+Extensions.swift */; };
 		B8124D8328FB2AF90053057C /* NavHeaderTitleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8124D8228FB2AF90053057C /* NavHeaderTitleDetailView.swift */; };
+		B8124D8528FB366F0053057C /* DueWordsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8124D8428FB366F0053057C /* DueWordsView.swift */; };
+		B899887E28FC94F000F00E0B /* WordInfoRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899887D28FC94F000F00E0B /* WordInfoRow.swift */; };
 		B8DD2E0B28F93CB100AC9492 /* BibleWords_iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DD2E0A28F93CB100AC9492 /* BibleWords_iOSApp.swift */; };
 		B8DD2E0F28F93CB300AC9492 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8DD2E0E28F93CB300AC9492 /* Assets.xcassets */; };
 		B8DD2E1228F93CB300AC9492 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8DD2E1128F93CB300AC9492 /* Preview Assets.xcassets */; };
@@ -75,6 +77,8 @@
 		B8124D7E28FA30900053057C /* WordInPassageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordInPassageView.swift; sourceTree = "<group>"; };
 		B8124D8028FB285D0053057C /* BibleRange+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BibleRange+Extensions.swift"; sourceTree = "<group>"; };
 		B8124D8228FB2AF90053057C /* NavHeaderTitleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavHeaderTitleDetailView.swift; sourceTree = "<group>"; };
+		B8124D8428FB366F0053057C /* DueWordsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DueWordsView.swift; sourceTree = "<group>"; };
+		B899887D28FC94F000F00E0B /* WordInfoRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordInfoRow.swift; sourceTree = "<group>"; };
 		B8DD2E0728F93CB100AC9492 /* BibleWords_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BibleWords_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8DD2E0A28F93CB100AC9492 /* BibleWords_iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleWords_iOSApp.swift; sourceTree = "<group>"; };
 		B8DD2E0E28F93CB300AC9492 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -133,6 +137,7 @@
 				B8124D6B28F9D05A0053057C /* TextbookSelectorView.swift */,
 				B8124D5F28F948FD0053057C /* AppButton.swift */,
 				B8124D8228FB2AF90053057C /* NavHeaderTitleDetailView.swift */,
+				B899887D28FC94F000F00E0B /* WordInfoRow.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -146,6 +151,7 @@
 				B8DD2E3E28F93CDD00AC9492 /* WordInstancesView.swift */,
 				B8DD2E3F28F93CDD00AC9492 /* BuildVocabListView.swift */,
 				B8124D7E28FA30900053057C /* WordInPassageView.swift */,
+				B8124D8428FB366F0053057C /* DueWordsView.swift */,
 			);
 			path = Vocab;
 			sourceTree = "<group>";
@@ -345,6 +351,7 @@
 				B8124D6028F948FD0053057C /* AppButton.swift in Sources */,
 				B8DD2E1428F93CB300AC9492 /* Persistence.swift in Sources */,
 				B8124D8328FB2AF90053057C /* NavHeaderTitleDetailView.swift in Sources */,
+				B899887E28FC94F000F00E0B /* WordInfoRow.swift in Sources */,
 				B8124D6628F9BDB90053057C /* Codables.swift in Sources */,
 				B8124D8128FB285D0053057C /* BibleRange+Extensions.swift in Sources */,
 				B8DD2E6E28F93CDF00AC9492 /* VocabListBuilder.swift in Sources */,
@@ -363,6 +370,7 @@
 				B8124D6C28F9D05A0053057C /* TextbookSelectorView.swift in Sources */,
 				B8DD2E7328F93CDF00AC9492 /* WordInstancesView.swift in Sources */,
 				B8124D7528FA0EF10053057C /* ParadigmPracticeView.swift in Sources */,
+				B8124D8528FB366F0053057C /* DueWordsView.swift in Sources */,
 				B8DD2E6A28F93CDF00AC9492 /* HebrewCodables.swift in Sources */,
 				B8DD2E7828F93CDF00AC9492 /* Font+Extensions.swift in Sources */,
 				B8DD2E6F28F93CDF00AC9492 /* Bindable.swift in Sources */,

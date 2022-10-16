@@ -12,6 +12,7 @@ struct HomeView: View {
         case allLists
         case showList(VocabWordList)
         case paradigms(VocabWord.Language)
+        case dueWords
     }
     
     @FetchRequest(
@@ -21,12 +22,62 @@ struct HomeView: View {
     
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \VocabWordList.createdAt, ascending: true)],
+        predicate: NSPredicate(format: "SELF.id != %@", "TEMP-DUE-WORD-LIST"),
         animation: .default)
     var lists: FetchedResults<VocabWordList>
     
     var body: some View {
         NavigationStack {
             List {
+                Section {
+                    Group {
+                        HStack {
+                            Image(systemName: "book")
+                            Text("\(123)")
+                                .foregroundColor(.accentColor)
+                                .bold()
+                            +
+                            Text(" words") +
+                            Text(" studied")
+                                .bold()
+                            +
+                            Text(" today")
+                        }
+                    }
+                    Group {
+                        HStack {
+                            Image(systemName: "stopwatch")
+                            Text("\(123)")
+                                .foregroundColor(.accentColor)
+                                .bold()
+                            +
+                            Text(" minutes") +
+                            Text(" studied")
+                                .bold()
+                            +
+                            Text(" today")
+                        }
+                    }
+                    NavigationLink(value: Routes.dueWords, label: {
+                        Group {
+                            HStack {
+                                Image(systemName: "clock.badge.exclamationmark")
+                                Text("\(dueVocabWords.count)")
+                                    .foregroundColor(.accentColor)
+                                    .bold()
+                                +
+                                Text(" words") +
+                                Text(" due")
+                                    .bold()
+                                    .foregroundColor(.orange)
+                            }
+                        }
+                    })
+                    .isDetailLink(false)
+                    .navigationViewStyle(.stack)
+                } header: {
+                    Text("Stats")
+                }
                 Section {
                     if recentlyStudiedLists.isEmpty {
                         Text("Oh no! You haven't studied any vocab lists yet! You should do something about that")
@@ -49,13 +100,19 @@ struct HomeView: View {
                         }
                     }
                     NavigationLink("All lists", value: Routes.allLists)
+                        .bold()
+                        .foregroundColor(.accentColor)
                 } header: {
-                    Text("Recently Studied Lists")
+                    Text("Your lists")
                 }
                 
                 Section {
                     NavigationLink("Hebrew Paradigms", value: Routes.paradigms(.hebrew))
+                        .bold()
+                        .foregroundColor(.accentColor)
                     NavigationLink("Greek Paradigms", value: Routes.paradigms(.greek))
+                        .bold()
+                        .foregroundColor(.accentColor)
                 } header: {
                     Text("Paradigm Practice")
                 }
@@ -74,6 +131,8 @@ struct HomeView: View {
                     case .hebrew, .aramaic:
                         ParadigmsViews()
                     }
+                case .dueWords:
+                    DueWordsView()
                 }
             }
             .onAppear {
@@ -85,12 +144,15 @@ struct HomeView: View {
         }
     }
     
+    var dueVocabWords: [VocabWord] {
+        words.filter { $0.isDue }
+    }
+    
     var recentlyStudiedLists: [VocabWordList] {
-        print(lists.count)
         let recent = lists
             .sorted { $0.lastStudied ?? Date().addingTimeInterval(-Double(7.days)) > $1.lastStudied ?? Date().addingTimeInterval(-Double(7.days)) }
         
-        return Array(recent.prefix(4))
+        return Array(recent.prefix(3))
     }
     
     func fetchData() {
@@ -100,6 +162,8 @@ struct HomeView: View {
             await API.main.fetchHebrewBible()
             await API.main.fetchGreekDict()
             await API.main.fetchGreekBible()
+            
+            await API.main.fetchGarretHebrew()
             API.main.coreDataReadyPublisher.send(true)
         }
     }

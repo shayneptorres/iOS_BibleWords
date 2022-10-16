@@ -15,6 +15,7 @@ struct MainView: View {
     @Environment(\.managedObjectContext) var context
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \VocabWordList.createdAt, ascending: true)],
+        predicate: NSPredicate(format: "SELF.id != %@", "TEMP-DUE-WORD-LIST"),
         animation: .default)
     var lists: FetchedResults<VocabWordList>
     

@@ -80,4 +80,8 @@ extension VocabWordList {
             }
         }
     }
+    
+    var isDueWordList: Bool {
+        return self.id == "TEMP-DUE-WORD-LIST"
+    }
 }
