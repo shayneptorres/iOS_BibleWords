@@ -27,7 +27,7 @@ struct VocabListStudyView: View, Equatable {
     @State var interfaceMode: InterfaceMode = .normal
     @State var currentWord: VocabWord?
     @State var prevWord: VocabWord?
-    @State var selectedNextInterval = 0
+//    @State var selectedNextInterval = 0
     @State var showWordDefView = false
     @State var showWordInfoView = false
     
@@ -64,6 +64,21 @@ struct VocabListStudyView: View, Equatable {
                                         }, label: {
                                             Image(systemName: "brain.head.profile")
                                             Text("New word!")
+                                        })
+                                        .padding()
+                                        Spacer()
+                                    }
+                                }
+                            }
+                            ZStack(alignment: .bottomLeading) {
+                                if prevWord != nil {
+                                    HStack {
+                                        Button(action: {
+                                            onPrev()
+                                        }, label: {
+                                            Image(systemName: "arrow.uturn.left")
+                                            Text("Previous word")
+                                                .font(.subheadline)
                                         })
                                         .padding()
                                         Spacer()
@@ -255,7 +270,7 @@ extension VocabListStudyView {
     
     func onPrev() {
         currentWord = prevWord
-        selectedNextInterval = Int(nextInterval)
+//        selectedNextInterval = Int(nextInterval)
         prevWord = nil
         displayMode = .lemma
     }
@@ -479,6 +494,39 @@ extension VocabListStudyView {
         LearnBtnView()
     }
     
+    func FullLearnInteractionView() -> some View {
+        return AnyView(
+            VStack {
+                Spacer()
+                HStack {
+                    Spacer()
+                    VStack {
+                        HStack {
+                            Image(systemName: "brain.head.profile")
+                                .font(.title2)
+                                .bold()
+                                .foregroundColor(.accentColor)
+                            Text("Learned it!")
+                                .font(.title2)
+                                .bold()
+                                .foregroundColor(.accentColor)
+                        }
+                        Text("Tap anywhere to continue!")
+                            .font(.headline)
+                            .bold()
+                            .foregroundColor(.accentColor)
+                    }
+                    Spacer()
+                }
+                Spacer()
+            }
+                .background(Color.red.opacity(0.0001))
+                .onTapGesture {
+                    onLearn()
+                }
+        )
+    }
+    
     func IntervalButton(title: String, detail: String, color: Color, action: @escaping (() -> ())) -> some View {
         return Button(action: action, label: {
             VStack {
@@ -576,7 +624,7 @@ extension VocabListStudyView {
     func DynamicUserInteractionView() -> some View {
         if displayMode == .learnWord {
             return AnyView(
-                DynamicLearnInteractionView()
+                FullLearnInteractionView()
             )
         } else if displayMode == .lemma {
             return AnyView(
