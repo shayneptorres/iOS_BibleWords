@@ -30,6 +30,11 @@ struct VocabListStudyView: View, Equatable {
     @State var selectedNextInterval = 0
     @State var showWordDefView = false
     @State var showWordInfoView = false
+    
+    @State var entries: [StudySessionEntry] = []
+    @State var startDate = Date()
+    @State var endDate = Date()
+    
     let buttonHeight: CGFloat = 60
     
     var body: some View {
@@ -101,6 +106,7 @@ struct VocabListStudyView: View, Equatable {
             })
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
+                startDate = Date()
                 updateCurrentWord()
             }
         }
@@ -186,6 +192,9 @@ extension VocabListStudyView {
     
     func onLearn() {
         CoreDataManager.transaction(context: managedObjectContext) {
+            let entry = StudySessionEntry.new(context: managedObjectContext, word: currentWord, answer: .wrong)
+            entries.append(entry)
+            
             currentWord?.currentInterval = 1
             currentWord?.dueDate = Date().addingTimeInterval(TimeInterval(15.seconds))
             updateCurrentWord()
@@ -252,11 +261,29 @@ extension VocabListStudyView {
     }
     
     func onDone() {
+        endDate = Date()
+        
+        // create session
+        CoreDataManager.transactionAsync(context: managedObjectContext) {
+            let session = StudySession(context: managedObjectContext)
+            session.id = UUID().uuidString
+            session.startDate = startDate
+            session.endDate = endDate
+            
+            for entry in entries {
+                // add entries
+                session.addToEntries(entry)
+            }
+        }
+        
         presentationMode.wrappedValue.dismiss()
     }
     
     func onWrong() {
         CoreDataManager.transaction(context: managedObjectContext) {
+            let entry = StudySessionEntry.new(context: managedObjectContext, word: currentWord, answer: .wrong)
+            entries.append(entry)
+            
             currentWord?.currentInterval = 1.toInt32
             let nextTime = VocabWord.defaultSRIntervals[1]
             currentWord?.dueDate = Date().addingTimeInterval(TimeInterval(nextTime))
@@ -268,6 +295,9 @@ extension VocabListStudyView {
         guard (currentWord?.currentInterval) != nil else { return }
         let interval = hardInterval
         CoreDataManager.transaction(context: managedObjectContext) {
+            let entry = StudySessionEntry.new(context: managedObjectContext, word: currentWord, answer: .hard)
+            entries.append(entry)
+            
             currentWord?.currentInterval = interval.toInt32
             let nextTime = VocabWord.defaultSRIntervals[interval]
             currentWord?.dueDate = Date().addingTimeInterval(TimeInterval(nextTime))
@@ -285,6 +315,9 @@ extension VocabListStudyView {
         }
         
         CoreDataManager.transaction(context: managedObjectContext) {
+            let entry = StudySessionEntry.new(context: managedObjectContext, word: currentWord, answer: .good)
+            entries.append(entry)
+            
             currentWord?.currentInterval = nextInterval.toInt32
             let nextTime = VocabWord.defaultSRIntervals[Int(nextInterval)]
             currentWord?.dueDate = Date().addingTimeInterval(TimeInterval(nextTime))
@@ -302,9 +335,13 @@ extension VocabListStudyView {
         }
         
         CoreDataManager.transaction(context: managedObjectContext) {
+            let entry = StudySessionEntry.new(context: managedObjectContext, word: currentWord, answer: .easy)
+            entries.append(entry)
+            
             currentWord?.currentInterval = nextInterVal.toInt32
             let nextTime = VocabWord.defaultSRIntervals[Int(nextInterVal)]
             currentWord?.dueDate = Date().addingTimeInterval(TimeInterval(nextTime))
+            
             updateCurrentWord()
         }
     }
@@ -394,6 +431,27 @@ extension VocabListStudyView {
         )
     }
     
+    func TapToRevealView() -> some View {
+        return AnyView(
+            VStack {
+                Spacer()
+                HStack {
+                    Spacer()
+                    Text("Tap to Reveal")
+                        .font(.title2)
+                        .bold()
+                        .foregroundColor(.accentColor)
+                    Spacer()
+                }
+                Spacer()
+            }
+                .background(Color.red.opacity(0.0001))
+                .onTapGesture {
+                    onReveal()
+                }
+        )
+    }
+    
     func LearnBtnView() -> some View {
         return AnyView(
             HStack {
@@ -413,7 +471,8 @@ extension VocabListStudyView {
     }
     
     func DynamicLemmaInteractionView() -> some View {
-        RevealBtnView()
+        TapToRevealView()
+//        RevealBtnView()
     }
     
     func DynamicLearnInteractionView() -> some View {
@@ -435,6 +494,42 @@ extension VocabListStudyView {
             .cornerRadius(4)
             .shadow(radius: 0.5)
         })
+    }
+    
+    func FullLemmaGlossInteractionView() -> some View {
+        return AnyView(
+            VStack {
+                HStack {
+                    Spacer()
+                    if displayMode == .lemmaGloss || displayMode == .learnWord {
+                        Button(action: { showWordDefView = true }, label: {
+                            Image(systemName: "pencil.circle")
+                                .frame(width: 30, height: 30)
+                        })
+                    }
+                    if displayMode == .lemmaGloss {
+                        Spacer()
+                        Button(action: onSkip, label: {
+                            Image(systemName: "goforward.60")
+                                .frame(width: 30, height: 30)
+                        })
+                    }
+                    Spacer()
+                }
+                HStack {
+                    IntervalButton(title: "Wrong", detail: onWrongIntervalStr, color: .red, action: onWrong)
+                    IntervalButton(title: "Hard", detail: onHardIntervalStr, color: .orange, action: onHard)
+                }
+                .frame(maxWidth: .infinity)
+                HStack {
+                    IntervalButton(title: "Good", detail: onGoodIntervalStr, color: .green, action: onGood)
+                    IntervalButton(title: "Easy", detail: onEasyIntervalStr, color: .accentColor, action: onEasy)
+                }
+                .frame(maxWidth: .infinity)
+            }
+                .frame(maxWidth: .infinity)
+        )
+        .frame(maxHeight: 300)
     }
     
     func DynamicLemmaGlossInteractionView() -> some View {
@@ -489,7 +584,8 @@ extension VocabListStudyView {
             )
         } else {
             return AnyView(
-                DynamicLemmaGlossInteractionView()
+//                DynamicLemmaGlossInteractionView()
+                FullLemmaGlossInteractionView()
             )
         }
     }

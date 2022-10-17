@@ -96,22 +96,22 @@ struct DueWordsView: View, Equatable {
     var filteredDueWords: [VocabWord] {
         switch langFilter {
         case .all:
-            return dueWords.map { $0 }
+            return dueWords.filter { ($0.list?.count ?? 0) > 0 }.map { $0 }
         case .greek:
-            return dueWords.filter { $0.lang == VocabWord.Language.greek.rawValue }
+            return dueWords.filter { ($0.list?.count ?? 0) > 0 && $0.lang == VocabWord.Language.greek.rawValue }
         case .hebrew:
-            return dueWords.filter { $0.lang == VocabWord.Language.hebrew.rawValue }
+            return dueWords.filter { ($0.list?.count ?? 0) > 0 && $0.lang == VocabWord.Language.hebrew.rawValue }
         }
     }
     
     var filteredDueWordInfos: [Bible.WordInfo] {
         switch langFilter {
         case .all:
-            return dueWords.map { $0.wordInfo }
+            return filteredDueWords.map { $0.wordInfo }
         case .greek:
-            return dueWords.map { $0.wordInfo }.filter { $0.language == .greek }
+            return filteredDueWords.map { $0.wordInfo }
         case .hebrew:
-            return dueWords.map { $0.wordInfo }.filter { $0.language == .hebrew }
+            return filteredDueWords.map { $0.wordInfo }
         }
     }
 }

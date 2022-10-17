@@ -13,6 +13,7 @@ struct HomeView: View {
         case showList(VocabWordList)
         case paradigms(VocabWord.Language)
         case dueWords
+        case newWords
     }
     
     @FetchRequest(
@@ -26,55 +27,24 @@ struct HomeView: View {
         animation: .default)
     var lists: FetchedResults<VocabWordList>
     
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \StudySession.startDate, ascending: false)],
+        predicate: NSPredicate(format: "startDate >= %@", Date.startOfToday as CVarArg)
+    ) var studySessions: FetchedResults<StudySession>
+    
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \StudySessionEntry.createdAt, ascending: false)],
+        predicate: NSPredicate(format: "createdAt >= %@", Date.startOfToday as CVarArg)
+    ) var studySessionEntries: FetchedResults<StudySessionEntry>
+    
     var body: some View {
         NavigationStack {
             List {
                 Section {
-                    Group {
-                        HStack {
-                            Image(systemName: "book")
-                            Text("\(123)")
-                                .foregroundColor(.accentColor)
-                                .bold()
-                            +
-                            Text(" words") +
-                            Text(" studied")
-                                .bold()
-                            +
-                            Text(" today")
-                        }
-                    }
-                    Group {
-                        HStack {
-                            Image(systemName: "stopwatch")
-                            Text("\(123)")
-                                .foregroundColor(.accentColor)
-                                .bold()
-                            +
-                            Text(" minutes") +
-                            Text(" studied")
-                                .bold()
-                            +
-                            Text(" today")
-                        }
-                    }
-                    NavigationLink(value: Routes.dueWords, label: {
-                        Group {
-                            HStack {
-                                Image(systemName: "clock.badge.exclamationmark")
-                                Text("\(dueVocabWords.count)")
-                                    .foregroundColor(.accentColor)
-                                    .bold()
-                                +
-                                Text(" words") +
-                                Text(" due")
-                                    .bold()
-                                    .foregroundColor(.orange)
-                            }
-                        }
-                    })
-                    .isDetailLink(false)
-                    .navigationViewStyle(.stack)
+                    WordsStudiedTodayRow()
+                    ReviewedWordsTodayRow()
+                    NewWordsLearnedRow()
+                    CurrentDueWordsRow()
                 } header: {
                     Text("Stats")
                 }
@@ -133,6 +103,8 @@ struct HomeView: View {
                     }
                 case .dueWords:
                     DueWordsView()
+                case .newWords:
+                    NewWordsLearnedTodayView()
                 }
             }
             .onAppear {
@@ -145,7 +117,7 @@ struct HomeView: View {
     }
     
     var dueVocabWords: [VocabWord] {
-        words.filter { $0.isDue }
+        words.filter { ($0.list?.count ?? 0) > 0 && $0.isDue }
     }
     
     var recentlyStudiedLists: [VocabWordList] {
@@ -153,6 +125,87 @@ struct HomeView: View {
             .sorted { $0.lastStudied ?? Date().addingTimeInterval(-Double(7.days)) > $1.lastStudied ?? Date().addingTimeInterval(-Double(7.days)) }
         
         return Array(recent.prefix(3))
+    }
+    
+    func WordsStudiedTodayRow() -> some View {
+        Group {
+            HStack {
+                Image(systemName: "book")
+                Text("\(studySessionEntries.count)")
+                    .foregroundColor(.accentColor)
+                    .bold()
+                +
+                Text(" words") +
+                Text(" studied")
+                    .bold()
+                +
+                Text(" today")
+            }
+        }
+    }
+    
+    func NewWordsLearnedRow() -> some View {
+        NavigationLink(value: Routes.newWords, label: {
+            Group {
+                HStack {
+                    Image(systemName: "sunrise")
+                    Text("\(studySessionEntries.filter { $0.studyTypeInt == 0 }.count)")
+                        .foregroundColor(.accentColor)
+                        .bold()
+                    +
+                    Text(" new")
+                        .bold()
+                    +
+                    Text(" words")
+                    +
+                    Text(" learned")
+                        .bold()
+                    +
+                    Text(" today")
+                }
+            }
+        })
+    }
+    
+    func ReviewedWordsTodayRow() -> some View {
+        Group {
+            HStack {
+                Image(systemName: "arrow.triangle.2.circlepath")
+                Text("\(studySessionEntries.filter { $0.studyTypeInt == 1 }.count)")
+                    .foregroundColor(.accentColor)
+                    .bold()
+                +
+                Text(" previous")
+                    .bold()
+                +
+                Text(" words")
+                +
+                Text(" reviewed")
+                    .bold()
+                +
+                Text(" today")
+            }
+        }
+    }
+    
+    func CurrentDueWordsRow() -> some View {
+        NavigationLink(value: Routes.dueWords, label: {
+            Group {
+                HStack {
+                    Image(systemName: "clock.badge.exclamationmark")
+                    Text("\(dueVocabWords.count)")
+                        .foregroundColor(.accentColor)
+                        .bold()
+                    +
+                    Text(" words currently") +
+                    Text(" due")
+                        .bold()
+                        .foregroundColor(.orange)
+                }
+            }
+        })
+        .isDetailLink(false)
+        .navigationViewStyle(.stack)
     }
     
     func fetchData() {

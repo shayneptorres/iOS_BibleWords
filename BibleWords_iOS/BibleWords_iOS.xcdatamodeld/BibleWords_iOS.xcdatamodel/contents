@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21279" systemVersion="21G83" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+    <entity name="StudySession" representedClassName="StudySession" syncable="YES" codeGenerationType="class">
+        <attribute name="endDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="entries" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StudySessionEntry" inverseName="session" inverseEntity="StudySessionEntry"/>
+    </entity>
+    <entity name="StudySessionEntry" representedClassName="StudySessionEntry" syncable="YES" codeGenerationType="class">
+        <attribute name="answerTypeInt" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="studyTypeInt" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="session" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StudySession" inverseName="entries" inverseEntity="StudySession"/>
+        <relationship name="word" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VocabWord" inverseName="sessionEntries" inverseEntity="VocabWord"/>
+    </entity>
     <entity name="VocabWord" representedClassName="VocabWord" syncable="YES" codeGenerationType="class">
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="currentInterval" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
@@ -10,6 +24,7 @@
         <attribute name="lang" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="sourceId" optional="YES" attributeType="String"/>
         <relationship name="list" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="VocabWordList" inverseName="words" inverseEntity="VocabWordList"/>
+        <relationship name="sessionEntries" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StudySessionEntry" inverseName="word" inverseEntity="StudySessionEntry"/>
     </entity>
     <entity name="VocabWordList" representedClassName="VocabWordList" syncable="YES" codeGenerationType="class">
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
