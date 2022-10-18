@@ -55,12 +55,7 @@ struct DueWordsView: View, Equatable {
         ZStack(alignment: .bottom) {
             List {
                 if viewModel.isBuilding {
-                    HStack {
-                        ProgressView()
-                            .progressViewStyle(.automatic)
-                            .padding(.trailing)
-                        Text("Building bible words data...")
-                    }
+                    DataLoadingRow()
                 } else {
                     Section {
                         Picker("Language", selection: $langFilter) {

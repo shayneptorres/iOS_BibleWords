@@ -37,17 +37,18 @@ struct HomeView: View {
         predicate: NSPredicate(format: "createdAt >= %@", Date.startOfToday as CVarArg)
     ) var studySessionEntries: FetchedResults<StudySessionEntry>
     
+    @ObservedObject var viewModel = DataDependentViewModel()
+    @State var showReadingView = false
+    
     var body: some View {
         NavigationStack {
             List {
-                Section {
-                    WordsStudiedTodayRow()
-                    ReviewedWordsTodayRow()
-                    NewWordsLearnedRow()
-                    CurrentDueWordsRow()
-                } header: {
-                    Text("Stats")
+                if viewModel.isBuilding {
+                    Section {
+                        DataLoadingRow()
+                    }
                 }
+                StatsSection()
                 Section {
                     if recentlyStudiedLists.isEmpty {
                         Text("Oh no! You haven't studied any vocab lists yet! You should do something about that")
@@ -69,11 +70,17 @@ struct HomeView: View {
                             }
                         }
                     }
-                    NavigationLink("All lists", value: Routes.allLists)
+                    NavigationLink("Your Vocab Lists", value: Routes.allLists)
                         .bold()
                         .foregroundColor(.accentColor)
                 } header: {
-                    Text("Your lists")
+                    Text("Vocab")
+                }
+                
+                Section {
+                    
+                } header: {
+                    Text("Parsing")
                 }
                 
                 Section {
@@ -84,14 +91,25 @@ struct HomeView: View {
                         .bold()
                         .foregroundColor(.accentColor)
                 } header: {
-                    Text("Paradigm Practice")
+                    Text("Paradigms")
                 }
             }
             .navigationTitle("Bible Words")
+            .toolbar {
+                Button(action: { showReadingView = true }, label: {
+                    Image(systemName: "book.fill")
+                })
+                .disabled(viewModel.isBuilding)
+            }
+            .fullScreenCover(isPresented: $showReadingView) {
+                NavigationStack {
+                    BibleReadingView()
+                }
+            }
             .navigationDestination(for: Routes.self) { route in
                 switch route {
                 case .allLists:
-                    MainView()
+                    VocabListsView()
                 case .showList(let list):
                     ListDetailView(viewModel: .init(list: list))
                 case .paradigms(let lang):
@@ -125,6 +143,32 @@ struct HomeView: View {
             .sorted { $0.lastStudied ?? Date().addingTimeInterval(-Double(7.days)) > $1.lastStudied ?? Date().addingTimeInterval(-Double(7.days)) }
         
         return Array(recent.prefix(3))
+    }
+    
+    func fetchData() {
+        Task {
+            guard !API.main.coreDataReadyPublisher.value else { return }
+            await API.main.fetchHebrewDict()
+            await API.main.fetchHebrewBible()
+            await API.main.fetchGreekDict()
+            await API.main.fetchGreekBible()
+            
+            await API.main.fetchGarretHebrew()
+            API.main.coreDataReadyPublisher.send(true)
+        }
+    }
+}
+
+extension HomeView {
+    func StatsSection() -> some View {
+        Section {
+            WordsStudiedTodayRow()
+            ReviewedWordsTodayRow()
+            NewWordsLearnedRow()
+            CurrentDueWordsRow()
+        } header: {
+            Text("Stats")
+        }
     }
     
     func WordsStudiedTodayRow() -> some View {
@@ -206,19 +250,6 @@ struct HomeView: View {
         })
         .isDetailLink(false)
         .navigationViewStyle(.stack)
-    }
-    
-    func fetchData() {
-        Task {
-            guard !API.main.coreDataReadyPublisher.value else { return }
-            await API.main.fetchHebrewDict()
-            await API.main.fetchHebrewBible()
-            await API.main.fetchGreekDict()
-            await API.main.fetchGreekBible()
-            
-            await API.main.fetchGarretHebrew()
-            API.main.coreDataReadyPublisher.send(true)
-        }
     }
 }
 

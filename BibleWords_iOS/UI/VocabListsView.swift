@@ -1,5 +1,5 @@
 //
-//  MainView.swift
+//  VocabListsView.swift
 //  Bible_Words_iOS
 //
 //  Created by Shayne Torres on 10/11/22.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MainView: View {
+struct VocabListsView: View {
     enum Routes: Hashable {
         case showList(VocabWordList)
     }
@@ -90,6 +90,6 @@ struct MainView: View {
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
-        MainView()
+        VocabListsView()
     }
 }

@@ -8,28 +8,12 @@
 import SwiftUI
 import Combine
 
-class NewWordsLearnedTodayViewModel: ObservableObject {
-    @Published var isBuilding = true
-    let id = UUID().uuidString
-    private var subscribers: [AnyCancellable] = []
-    
-    init() {
-        Task {
-            API.main.coreDataReadyPublisher.sink { [weak self] isReady in
-                if isReady {
-                    self?.isBuilding = false
-                }
-            }.store(in: &self.subscribers)
-        }
-    }
-}
-
 struct NewWordsLearnedTodayView: View {
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \StudySessionEntry.createdAt, ascending: false)],
         predicate: NSPredicate(format: "createdAt >= %@ AND studyTypeInt == 0", Date.startOfToday as CVarArg)
     ) var newWordEntries: FetchedResults<StudySessionEntry>
-    @ObservedObject var viewModel = NewWordsLearnedTodayViewModel()
+    @ObservedObject var viewModel = DataDependentViewModel()
     
     var body: some View {
         List {

@@ -30,6 +30,11 @@
 		B899887E28FC94F000F00E0B /* WordInfoRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899887D28FC94F000F00E0B /* WordInfoRow.swift */; };
 		B899888028FCBCF100F00E0B /* StudySession+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899887F28FCBCF100F00E0B /* StudySession+Extensions.swift */; };
 		B899888228FD1A5100F00E0B /* NewWordsLearnedTodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899888128FD1A5100F00E0B /* NewWordsLearnedTodayView.swift */; };
+		B899888628FDA92B00F00E0B /* ReadingMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899888528FDA92B00F00E0B /* ReadingMainView.swift */; };
+		B899888828FDAFE100F00E0B /* DataDependentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899888728FDAFE100F00E0B /* DataDependentViewModel.swift */; };
+		B899888A28FDB03300F00E0B /* DataLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899888928FDB03300F00E0B /* DataLoadingView.swift */; };
+		B899888C28FDB32D00F00E0B /* ReadPassageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899888B28FDB32D00F00E0B /* ReadPassageView.swift */; };
+		B899888E28FDDB0E00F00E0B /* BibleReadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899888D28FDDB0E00F00E0B /* BibleReadingView.swift */; };
 		B8DD2E0B28F93CB100AC9492 /* BibleWords_iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DD2E0A28F93CB100AC9492 /* BibleWords_iOSApp.swift */; };
 		B8DD2E0F28F93CB300AC9492 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8DD2E0E28F93CB300AC9492 /* Assets.xcassets */; };
 		B8DD2E1228F93CB300AC9492 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8DD2E1128F93CB300AC9492 /* Preview Assets.xcassets */; };
@@ -53,7 +58,7 @@
 		B8DD2E7228F93CDF00AC9492 /* ListDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DD2E3D28F93CDD00AC9492 /* ListDetailView.swift */; };
 		B8DD2E7328F93CDF00AC9492 /* WordInstancesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DD2E3E28F93CDD00AC9492 /* WordInstancesView.swift */; };
 		B8DD2E7428F93CDF00AC9492 /* BuildVocabListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DD2E3F28F93CDD00AC9492 /* BuildVocabListView.swift */; };
-		B8DD2E7528F93CDF00AC9492 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DD2E4028F93CDD00AC9492 /* MainView.swift */; };
+		B8DD2E7528F93CDF00AC9492 /* VocabListsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DD2E4028F93CDD00AC9492 /* VocabListsView.swift */; };
 		B8DD2E7628F93CDF00AC9492 /* EzraSR.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B8DD2E4228F93CDD00AC9492 /* EzraSR.ttf */; };
 		B8DD2E7728F93CDF00AC9492 /* TekniaGreek.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B8DD2E4328F93CDD00AC9492 /* TekniaGreek.ttf */; };
 		B8DD2E7828F93CDF00AC9492 /* Font+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DD2E4428F93CDD00AC9492 /* Font+Extensions.swift */; };
@@ -83,6 +88,11 @@
 		B899887D28FC94F000F00E0B /* WordInfoRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordInfoRow.swift; sourceTree = "<group>"; };
 		B899887F28FCBCF100F00E0B /* StudySession+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StudySession+Extensions.swift"; sourceTree = "<group>"; };
 		B899888128FD1A5100F00E0B /* NewWordsLearnedTodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordsLearnedTodayView.swift; sourceTree = "<group>"; };
+		B899888528FDA92B00F00E0B /* ReadingMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingMainView.swift; sourceTree = "<group>"; };
+		B899888728FDAFE100F00E0B /* DataDependentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataDependentViewModel.swift; sourceTree = "<group>"; };
+		B899888928FDB03300F00E0B /* DataLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLoadingView.swift; sourceTree = "<group>"; };
+		B899888B28FDB32D00F00E0B /* ReadPassageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadPassageView.swift; sourceTree = "<group>"; };
+		B899888D28FDDB0E00F00E0B /* BibleReadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleReadingView.swift; sourceTree = "<group>"; };
 		B8DD2E0728F93CB100AC9492 /* BibleWords_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BibleWords_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8DD2E0A28F93CB100AC9492 /* BibleWords_iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleWords_iOSApp.swift; sourceTree = "<group>"; };
 		B8DD2E0E28F93CB300AC9492 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -108,7 +118,7 @@
 		B8DD2E3D28F93CDD00AC9492 /* ListDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListDetailView.swift; sourceTree = "<group>"; };
 		B8DD2E3E28F93CDD00AC9492 /* WordInstancesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WordInstancesView.swift; sourceTree = "<group>"; };
 		B8DD2E3F28F93CDD00AC9492 /* BuildVocabListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildVocabListView.swift; sourceTree = "<group>"; };
-		B8DD2E4028F93CDD00AC9492 /* MainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		B8DD2E4028F93CDD00AC9492 /* VocabListsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VocabListsView.swift; sourceTree = "<group>"; };
 		B8DD2E4228F93CDD00AC9492 /* EzraSR.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EzraSR.ttf; sourceTree = "<group>"; };
 		B8DD2E4328F93CDD00AC9492 /* TekniaGreek.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = TekniaGreek.ttf; sourceTree = "<group>"; };
 		B8DD2E4428F93CDD00AC9492 /* Font+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Font+Extensions.swift"; sourceTree = "<group>"; };
@@ -142,6 +152,7 @@
 				B8124D5F28F948FD0053057C /* AppButton.swift */,
 				B8124D8228FB2AF90053057C /* NavHeaderTitleDetailView.swift */,
 				B899887D28FC94F000F00E0B /* WordInfoRow.swift */,
+				B899888928FDB03300F00E0B /* DataLoadingView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -149,6 +160,7 @@
 		B8124D7B28FA0F6E0053057C /* Vocab */ = {
 			isa = PBXGroup;
 			children = (
+				B8124D7C28FA0F990053057C /* HomeView.swift */,
 				B8DD2E3D28F93CDD00AC9492 /* ListDetailView.swift */,
 				B8124D5928F944110053057C /* VocabListStudyView.swift */,
 				B8124D6128F958830053057C /* VocabWordDefinitionView.swift */,
@@ -159,6 +171,23 @@
 				B899888128FD1A5100F00E0B /* NewWordsLearnedTodayView.swift */,
 			);
 			path = Vocab;
+			sourceTree = "<group>";
+		};
+		B899888328FDA90B00F00E0B /* Parsing */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Parsing;
+			sourceTree = "<group>";
+		};
+		B899888428FDA91400F00E0B /* Reading */ = {
+			isa = PBXGroup;
+			children = (
+				B899888528FDA92B00F00E0B /* ReadingMainView.swift */,
+				B899888B28FDB32D00F00E0B /* ReadPassageView.swift */,
+				B899888D28FDDB0E00F00E0B /* BibleReadingView.swift */,
+			);
+			path = Reading;
 			sourceTree = "<group>";
 		};
 		B8DD2DFE28F93CB100AC9492 = {
@@ -250,13 +279,15 @@
 		B8DD2E3C28F93CDD00AC9492 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				B8DD2E4028F93CDD00AC9492 /* MainView.swift */,
+				B8DD2E4028F93CDD00AC9492 /* VocabListsView.swift */,
 				B8124D7B28FA0F6E0053057C /* Vocab */,
+				B899888328FDA90B00F00E0B /* Parsing */,
+				B899888428FDA91400F00E0B /* Reading */,
 				B8124D7A28FA0F580053057C /* Components */,
 				B8124D7128FA0EE60053057C /* Paradigms */,
 				B8DD2E0E28F93CB300AC9492 /* Assets.xcassets */,
 				B8DD2E4128F93CDD00AC9492 /* Fonts */,
-				B8124D7C28FA0F990053057C /* HomeView.swift */,
+				B899888728FDAFE100F00E0B /* DataDependentViewModel.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -350,12 +381,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				B8DD2E6428F93CDF00AC9492 /* BibleRange.swift in Sources */,
-				B8DD2E7528F93CDF00AC9492 /* MainView.swift in Sources */,
+				B8DD2E7528F93CDF00AC9492 /* VocabListsView.swift in Sources */,
 				B8124D5E28F9446C0053057C /* Time+Extensions.swift in Sources */,
 				B8124D6228F958830053057C /* VocabWordDefinitionView.swift in Sources */,
 				B8124D5A28F944110053057C /* VocabListStudyView.swift in Sources */,
 				B8124D6028F948FD0053057C /* AppButton.swift in Sources */,
 				B8DD2E1428F93CB300AC9492 /* Persistence.swift in Sources */,
+				B899888A28FDB03300F00E0B /* DataLoadingView.swift in Sources */,
 				B899888028FCBCF100F00E0B /* StudySession+Extensions.swift in Sources */,
 				B8124D8328FB2AF90053057C /* NavHeaderTitleDetailView.swift in Sources */,
 				B899887E28FC94F000F00E0B /* WordInfoRow.swift in Sources */,
@@ -366,6 +398,7 @@
 				B8124D5C28F944550053057C /* VocabWord+Extensions.swift in Sources */,
 				B8124D7928FA0F120053057C /* HebrewConcepts.swift in Sources */,
 				B8DD2E7028F93CDF00AC9492 /* WordList+Extensions.swift in Sources */,
+				B899888E28FDDB0E00F00E0B /* BibleReadingView.swift in Sources */,
 				B8DD2E6528F93CDF00AC9492 /* HebrewParsingDictionary.swift in Sources */,
 				B8DD2E7228F93CDF00AC9492 /* ListDetailView.swift in Sources */,
 				B8DD2E6228F93CDF00AC9492 /* Bible.swift in Sources */,
@@ -375,6 +408,8 @@
 				B8124D7628FA0EF10053057C /* ParadigmsViews.swift in Sources */,
 				B8124D7F28FA30900053057C /* WordInPassageView.swift in Sources */,
 				B8124D6C28F9D05A0053057C /* TextbookSelectorView.swift in Sources */,
+				B899888C28FDB32D00F00E0B /* ReadPassageView.swift in Sources */,
+				B899888828FDAFE100F00E0B /* DataDependentViewModel.swift in Sources */,
 				B8DD2E7328F93CDF00AC9492 /* WordInstancesView.swift in Sources */,
 				B8124D7528FA0EF10053057C /* ParadigmPracticeView.swift in Sources */,
 				B8124D8528FB366F0053057C /* DueWordsView.swift in Sources */,
@@ -388,6 +423,7 @@
 				B8DD2E1728F93CB300AC9492 /* BibleWords_iOS.xcdatamodeld in Sources */,
 				B8DD2E7428F93CDF00AC9492 /* BuildVocabListView.swift in Sources */,
 				B8DD2E0B28F93CB100AC9492 /* BibleWords_iOSApp.swift in Sources */,
+				B899888628FDA92B00F00E0B /* ReadingMainView.swift in Sources */,
 				B8DD2E6128F93CDF00AC9492 /* CoreDataManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -523,8 +559,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -552,8 +588,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

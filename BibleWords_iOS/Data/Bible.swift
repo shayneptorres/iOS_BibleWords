@@ -91,6 +91,47 @@ struct Bible {
                 self.ref = dict["ref"] as? String  ?? ""
             }
         }
+        
+        func verse(book: Int, chapter: Int, verse: Int) -> [WordInstance] {
+            if Bible.main.references.values.count >= book {
+                if Bible.main.references.values[book-1].count >= chapter {
+                    // get the specified verse
+                    if Bible.main.references.values[book-1][chapter-1].count >= verse {
+                        let verse = Bible.main.references.values[book-1][chapter-1][verse-1]
+                        let words = verse.map { WordInstance(dict: $0) }
+                        return words
+                    }
+                }
+                return []
+            }
+            return []
+        }
+        
+        func verses(book: Int, chapter: Int, verse: Int) -> [WordInstance] {
+            if Bible.main.references.values.count >= book {
+                if Bible.main.references.values[book-1].count >= chapter {
+                    if verse == -1 {
+                        // if verse is -1, get all verses
+                        var versesArr = Bible.main.references.values[book-1][chapter-1]
+                        for i in 0..<versesArr.count {
+                            versesArr[i].insert(["id":"verse-num","surface":"\(i+1)"] as [String:AnyObject], at: 0)
+                        }
+                        
+                        let words = versesArr.flatMap { $0 }.map { WordInstance(dict: $0) }
+                        return words
+                    } else {
+                        // get the specified verse
+                        if Bible.main.references.values[book-1][chapter-1].count >= verse {
+                            let verse = Bible.main.references.values[book-1][chapter-1][verse-1]
+                            let words = verse.map { WordInstance(dict: $0) }
+                            return words
+                        }
+                    }
+                }
+                return []
+            }
+            return []
+        }
     }
     
     struct WordInfo: Identifiable, Hashable {
@@ -140,19 +181,19 @@ struct Bible {
         let index: Int
         let lemma: String
         let surface: String
-        let rawSurface: String
+//        let rawSurface: String
         let cleanSurface: String
         let parsing: String
         let refStr: String
 
         init(dict: [String:AnyObject]) {
-            self.id = UUID().uuidString
+            self.id = dict["lemma"] as? String ?? UUID().uuidString
             self.lemma = dict["lemma"] as? String ?? ""
             self.index = dict["index"] as? Int ?? 0
             self.surface = dict["surface"] as? String ?? ""
             self.parsing = dict["parsing"] as? String ?? ""
             self.refStr = dict["ref"] as? String ?? ""
-            self.rawSurface = dict["rawSurface"] as? String ?? ""
+//            self.rawSurface = dict["rawSurface"] as? String ?? ""
             self.cleanSurface = dict["cleanSurface"] as? String ?? ""
         }
 
@@ -178,6 +219,18 @@ struct Bible {
         
         var prettyRefStr: String {
             return "\(bibleBook.shortTitle) \(chapter):\(verse)"
+        }
+        
+        var rawSurface: String {
+            return surface.replacingOccurrences(of: "/", with: "")
+        }
+        
+        var language: VocabWord.Language {
+            if bookInt < 40 {
+                return .hebrew
+            } else {
+                return .greek
+            }
         }
         
         var wordInPassage: String {
