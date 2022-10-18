@@ -11,6 +11,7 @@ struct WordDetailsView: View {
     @Binding var wordInstance: Bible.WordInstance
     var onInfo: () -> Void
     var onClose: () -> Void
+    private let bibleWordFont = Font.bible32
     
     var body: some View {
         VStack {
@@ -35,12 +36,13 @@ struct WordDetailsView: View {
                     HStack {
                         Text("Surface:")
                             .foregroundColor(Color(uiColor: .secondaryLabel))
+                            .font(.subheadline)
                         Spacer()
                     }
-                    .frame(width: 125)
+                    .frame(width: 110)
                     VStack {
                         Text(wordInstance.rawSurface)
-                            .font(.bible24)
+                            .font(bibleWordFont)
                     }
                 }
                 .padding(.bottom, 4)
@@ -49,12 +51,13 @@ struct WordDetailsView: View {
                         HStack {
                             Text("Components:")
                                 .foregroundColor(Color(uiColor: .secondaryLabel))
+                                .font(.subheadline)
                             Spacer()
                         }
-                        .frame(width: 125)
+                        .frame(width: 110)
                         VStack {
                             Text(wordInstance.surface)
-                                .font(.bible24)
+                                .font(bibleWordFont)
                         }
                     }
                     .padding(.bottom, 4)
@@ -63,12 +66,13 @@ struct WordDetailsView: View {
                     HStack {
                         Text("Lemma:")
                             .foregroundColor(Color(uiColor: .secondaryLabel))
+                            .font(.subheadline)
                         Spacer()
                     }
-                    .frame(width: 125)
+                    .frame(width: 110)
                     VStack {
                         Text(wordInstance.wordInfo.lemma)
-                            .font(.bible24)
+                            .font(bibleWordFont)
                     }
                 }
                 .padding(.bottom, 8)
@@ -76,9 +80,10 @@ struct WordDetailsView: View {
                     HStack {
                         Text("Parsing:")
                             .foregroundColor(Color(uiColor: .secondaryLabel))
+                            .font(.subheadline)
                         Spacer()
                     }
-                    .frame(width: 125)
+                    .frame(width: 110)
                     VStack {
                         Text(wordInstance.parsing)
                             .lineLimit(4)
@@ -89,9 +94,10 @@ struct WordDetailsView: View {
                     HStack {
                         Text("Definintion:")
                             .foregroundColor(Color(uiColor: .secondaryLabel))
+                            .font(.subheadline)
                         Spacer()
                     }
-                    .frame(width: 125)
+                    .frame(width: 110)
                     VStack {
                         Text(wordInstance.wordInfo.definition)
                             .lineLimit(4)

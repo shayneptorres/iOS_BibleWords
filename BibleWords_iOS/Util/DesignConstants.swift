@@ -6,7 +6,15 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct Design {
+    
     static let defaultCornerRadius: CGFloat = 20
+    static let smallCornerRadius: CGFloat = 12
+    
+}
+
+extension Color {
+    static let appOrange = Color("appOrange")
 }

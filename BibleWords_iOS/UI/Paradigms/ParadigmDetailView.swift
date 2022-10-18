@@ -23,22 +23,23 @@ struct ParadigmDetailView: View {
                             ForEach(type.group.paradigms) { paradigm in
                                 VStack {
                                     Text(paradigm.text)
-                                        .font(.bible32)
+                                        .font(.bible50)
                                         .padding(.bottom, 4)
                                     Text(paradigm.parsing(display: .short))
                                     Text(paradigm.def)
                                 }
-                                .frame(maxWidth: .infinity, minHeight: 100)
+                                .frame(maxWidth: .infinity, minHeight: 150)
                                 .background(Color(UIColor.secondarySystemGroupedBackground))
                                 .foregroundColor(Color(uiColor: .label))
-                                .cornerRadius(8)
-//                                .shadow(radius: 2)
+                                .cornerRadius(Design.defaultCornerRadius)
                             }
                         }, header: {
                             Text(type.group.title)
+                                .bold()
+                                .padding(8)
                         })
                     }
-                    Spacer().frame(height: 100)
+                    Spacer().frame(height: 150)
                 }
                 .padding(.horizontal)
             }

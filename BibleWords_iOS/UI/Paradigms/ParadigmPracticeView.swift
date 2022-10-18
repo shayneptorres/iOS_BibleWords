@@ -11,12 +11,13 @@ struct ParadigmPracticeView: View {
     @Environment(\.presentationMode) var presentationMode
     let paradigmTypes: [HebrewParadigmType]
     @State var currentParadigm: HebrewParadigm?
-    @State var selectedPerson: PersonType = .none
-    @State var selectedGender: GenderType = .masculine
-    @State var selectedNumber: NumberType = .singular
+//    @State var selectedPerson: PersonType = .none
+//    @State var selectedGender: GenderType = .masculine
+//    @State var selectedNumber: NumberType = .singular
     @State var paradigms: [HebrewParadigm] = []
     @State var currentParadigmIndex = 0
-    @State var answerMode = AnswerMode.answering
+    @State var displayMode = DisplayMode.testing
+//    @State var answerMode = AnswerMode.answering
     
     var body: some View {
         NavigationView {
@@ -32,26 +33,23 @@ struct ParadigmPracticeView: View {
                     .padding()
                     .frame(maxWidth: .infinity, minHeight: 40)
                     .background(Color(uiColor: .systemGray))
-                    .cornerRadius(6)
+                    .cornerRadius(Design.smallCornerRadius)
                     .padding(.top)
                     .padding(.horizontal)
                     Text(currentParadigm?.text ?? "")
-                        .font(.bible60)
-                        .minimumScaleFactor(0.75)
+                        .font(.bible100)
+                        .minimumScaleFactor(0.6)
                         .frame(maxWidth: .infinity, minHeight: 200)
                         .background(Color(UIColor.systemBackground))
                         .foregroundColor(Color(uiColor: .label))
-                        .cornerRadius(8)
+                        .cornerRadius(Design.defaultCornerRadius)
                         .padding(.horizontal)
-                        .padding(.top)
-                    if answerMode == .correct {
+                        .padding(.top, 4)
+                    if displayMode == .showingAnswer {
                         VStack(alignment: .center) {
-                            Text("Correct!")
-                                .font(.largeTitle)
-                                .foregroundColor(.green)
                             Text(currentParadigm?.parsing(display: .long) ?? "")
                                 .font(.title2)
-                                .foregroundColor(.green)
+                                .foregroundColor(.appOrange)
                                 .bold()
                                 .padding(.bottom)
                             Text("Definition:")
@@ -60,45 +58,7 @@ struct ParadigmPracticeView: View {
                                 .bold()
                         }
                     }
-                    if answerMode == .wrong {
-                        VStack(alignment: .center) {
-                            Text("Incorrect!")
-                                .font(.largeTitle)
-                                .foregroundColor(.red)
-                                .padding(.bottom)
-                            Text("Correct Answer:")
-                            Text(currentParadigm?.parsing(display: .long) ?? "")
-                                .font(.title2)
-                                .bold().padding(.bottom)
-                            Text("Definition:")
-                            Text(currentParadigm?.def ?? "")
-                                .font(.title3)
-                                .bold()
-                        }
-                    }
-                    Spacer()
-                    VStack {
-                        Picker("Select Person", selection: $selectedPerson) {
-                            ForEach(PersonType.allCases, id: \.self) { person in
-                                Text(person.mediumTitle)
-                            }
-                        }.pickerStyle(.segmented)
-                        Picker("Select Gender", selection: $selectedGender) {
-                            ForEach(GenderType.allCases, id: \.self) { gender in
-                                Text(gender.mediumTitle)
-                            }
-                        }.pickerStyle(.segmented)
-                        Picker("Select Number", selection: $selectedNumber) {
-                            ForEach(NumberType.allCases, id: \.self) { number in
-                                Text(number.mediumTitle)
-                            }
-                        }.pickerStyle(.segmented)
-                            .padding(.bottom)
-                        
-                        AppButton(text: answerMode == .answering ? "Check Answer" : "Next", action: onButtonTap)
-                            .padding(.bottom)
-                    }
-                    .padding(.horizontal)
+                    TapToRevealView()
                 }
             }
             .toolbar {
@@ -133,6 +93,31 @@ struct ParadigmPracticeView: View {
             return "Multiple Paradigms"
         }
     }
+    
+    func TapToRevealView() -> some View {
+        return AnyView(
+            VStack {
+                Spacer()
+                HStack {
+                    Spacer()
+                    Text(displayMode == .testing ? "Tap to Reveal" : "Next")
+                        .foregroundColor(.accentColor)
+                        .font(.title2)
+                        .bold()
+                    Spacer()
+                }
+                Spacer()
+            }
+                .background(Color.red.opacity(0.0001))
+                .onTapGesture {
+                    if displayMode == .testing {
+                        onTapToReveal()
+                    } else {
+                        onTapNext()
+                    }
+                }
+        )
+    }
 }
 
 extension ParadigmPracticeView {
@@ -141,6 +126,11 @@ extension ParadigmPracticeView {
         case correct
         case wrong
         case answering
+    }
+    
+    enum DisplayMode {
+        case testing
+        case showingAnswer
     }
     
     func setCurrentParadigm() {
@@ -156,19 +146,29 @@ extension ParadigmPracticeView {
         }
     }
     
+    func onTapToReveal() {
+        displayMode = .showingAnswer
+    }
+    
+    func onTapNext() {
+        setNextParadigm()
+        displayMode = .testing
+    }
+    
+    
     func onButtonTap() {
-        if [AnswerMode.wrong, AnswerMode.correct].contains(answerMode) {
-            setNextParadigm()
-            answerMode = .answering
-        } else {
-            if selectedPerson == currentParadigm?.person &&
-                selectedGender == currentParadigm?.gender &&
-                selectedNumber == currentParadigm?.number {
-                answerMode = .correct
-            } else {
-                answerMode = .wrong
-            }
-        }
+//        if [AnswerMode.wrong, AnswerMode.correct].contains(answerMode) {
+//            setNextParadigm()
+//            answerMode = .answering
+//        } else {
+//            if selectedPerson == currentParadigm?.person &&
+//                selectedGender == currentParadigm?.gender &&
+//                selectedNumber == currentParadigm?.number {
+//                answerMode = .correct
+//            } else {
+//                answerMode = .wrong
+//            }
+//        }
     }
 }
 

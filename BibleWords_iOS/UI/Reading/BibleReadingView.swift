@@ -96,8 +96,11 @@ extension BibleReadingView {
                 Button(action: {
                     onPrev()
                 }, label: {
-                    Image(systemName: "arrow.left.circle.fill")
-                        .font(.system(size: btnFontSize))
+                    Image(systemName: "arrow.backward")
+                        .font(.system(size: 24))
+                        .padding(10)
+                        .foregroundColor(.white)
+                        .background(Circle().fill(Color.accentColor))
                 }).disabled(!canGoPrev)
                 Spacer()
                 Picker("", selection: $searchBook) {
@@ -114,18 +117,20 @@ extension BibleReadingView {
                     setPassage()
                 }, label: {
                     Image(systemName: "text.magnifyingglass")
-                        .font(.system(size: 24))
-                        .padding(8)
+                        .font(.system(size: 16))
+                        .padding(10)
                         .foregroundColor(.white)
-                        .background(Color.accentColor)
-                        .cornerRadius(Design.defaultCornerRadius)
+                        .background(Circle().fill(Color.accentColor))
                 })
                 Spacer()
                 Button(action: {
                     onNext()
                 }, label: {
-                    Image(systemName: "arrow.right.circle.fill")
-                        .font(.system(size: btnFontSize))
+                    Image(systemName: "arrow.forward")
+                        .font(.system(size: 24))
+                        .padding(10)
+                        .foregroundColor(.white)
+                        .background(Circle().fill(Color.accentColor))
                 }).disabled(!canGoNext)
             }
             .padding(8)

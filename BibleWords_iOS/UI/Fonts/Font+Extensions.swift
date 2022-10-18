@@ -20,9 +20,11 @@ extension Font {
     public static let bible24 = Font.custom(greekFont,size: 24)
     public static let bible32 = Font.custom(greekFont,size: 32)
     public static let bible40 = Font.custom(greekFont,size: 40)
+    public static let bible50 = Font.custom(greekFont,size: 50)
     public static let bible60 = Font.custom(greekFont,size: 60)
     public static let bible72 = Font.custom(greekFont,size: 72)
     public static let bible100 = Font.custom(greekFont,size: 100)
+    public static let bible120 = Font.custom(greekFont,size: 120)
     
 //    public static let hebrew12 = Font.custom(hebrewFont,size: 12)
 //    public static let hebrew13 = Font.custom(hebrewFont,size: 13)

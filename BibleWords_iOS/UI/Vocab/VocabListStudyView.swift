@@ -390,7 +390,7 @@ extension VocabListStudyView {
             .padding(.horizontal)
             .background(Color(UIColor.systemBackground))
             .foregroundColor(Color(uiColor: .label))
-            .cornerRadius(8)
+            .cornerRadius(Design.defaultCornerRadius)
     }
     
     func DefinitionView() -> some View {
