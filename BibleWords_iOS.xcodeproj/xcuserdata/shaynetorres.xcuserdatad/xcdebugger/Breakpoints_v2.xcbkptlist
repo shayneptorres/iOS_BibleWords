@@ -47,32 +47,64 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "D9107CDF-D6F4-4399-90D8-82F66C6B3C75"
+            uuid = "5B0034DF-8C0B-453E-B12E-AFD31A462BFD"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "BibleWords_iOS/UI/Reading/BibleReadingView.swift"
+            filePath = "BibleWords_iOS/Data/Bible.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "162"
-            endingLineNumber = "162"
-            landmarkName = "onNext()"
+            startingLineNumber = "71"
+            endingLineNumber = "71"
+            landmarkName = "word(for:source:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "D1FEE5E3-9C49-4237-B1DF-22EB1BC40D22"
+            uuid = "35D7BFD7-4E2A-4A2C-89D9-5536FF1A612A"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BibleWords_iOS/Data/Bible.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
+            landmarkName = "word(for:source:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C65BA7D7-B3E4-4122-892A-4AB8AC8C7DB9"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "BibleWords_iOS/UI/Reading/BibleReadingView.swift"
+            filePath = "BibleWords_iOS/Data/Bible.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "171"
-            endingLineNumber = "171"
-            landmarkName = "onNext()"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
+            landmarkName = "word(for:source:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CCE173EF-BA0C-4BDB-AE59-A5D3A154F79D"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BibleWords_iOS/Data/Bible.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "59"
+            endingLineNumber = "59"
+            landmarkName = "word(for:source:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

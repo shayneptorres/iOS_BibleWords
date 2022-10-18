@@ -35,6 +35,10 @@
 		B899888A28FDB03300F00E0B /* DataLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899888928FDB03300F00E0B /* DataLoadingView.swift */; };
 		B899888C28FDB32D00F00E0B /* ReadPassageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899888B28FDB32D00F00E0B /* ReadPassageView.swift */; };
 		B899888E28FDDB0E00F00E0B /* BibleReadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899888D28FDDB0E00F00E0B /* BibleReadingView.swift */; };
+		B899889028FE4D1900F00E0B /* DesignConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899888F28FE4D1900F00E0B /* DesignConstants.swift */; };
+		B8A210E028FE688900BDF272 /* hebrew-bible.json in Resources */ = {isa = PBXBuildFile; fileRef = B8A210DF28FE688900BDF272 /* hebrew-bible.json */; };
+		B8A210E228FE6DB100BDF272 /* WordDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A210E128FE6DB100BDF272 /* WordDetailsView.swift */; };
+		B8A210E428FE743A00BDF272 /* hebrew-dict.json in Resources */ = {isa = PBXBuildFile; fileRef = B8A210E328FE743A00BDF272 /* hebrew-dict.json */; };
 		B8DD2E0B28F93CB100AC9492 /* BibleWords_iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DD2E0A28F93CB100AC9492 /* BibleWords_iOSApp.swift */; };
 		B8DD2E0F28F93CB300AC9492 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8DD2E0E28F93CB300AC9492 /* Assets.xcassets */; };
 		B8DD2E1228F93CB300AC9492 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8DD2E1128F93CB300AC9492 /* Preview Assets.xcassets */; };
@@ -45,9 +49,7 @@
 		B8DD2E6328F93CDF00AC9492 /* GreekCodeables.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DD2E2B28F93CDD00AC9492 /* GreekCodeables.swift */; };
 		B8DD2E6428F93CDF00AC9492 /* BibleRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DD2E2C28F93CDD00AC9492 /* BibleRange.swift */; };
 		B8DD2E6528F93CDF00AC9492 /* HebrewParsingDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DD2E2D28F93CDD00AC9492 /* HebrewParsingDictionary.swift */; };
-		B8DD2E6628F93CDF00AC9492 /* hebrew-bible.json in Resources */ = {isa = PBXBuildFile; fileRef = B8DD2E2F28F93CDD00AC9492 /* hebrew-bible.json */; };
 		B8DD2E6728F93CDF00AC9492 /* greek-bible.json in Resources */ = {isa = PBXBuildFile; fileRef = B8DD2E3028F93CDD00AC9492 /* greek-bible.json */; };
-		B8DD2E6828F93CDF00AC9492 /* hebrew-dict.json in Resources */ = {isa = PBXBuildFile; fileRef = B8DD2E3128F93CDD00AC9492 /* hebrew-dict.json */; };
 		B8DD2E6928F93CDF00AC9492 /* greek-dict.json in Resources */ = {isa = PBXBuildFile; fileRef = B8DD2E3228F93CDD00AC9492 /* greek-dict.json */; };
 		B8DD2E6A28F93CDF00AC9492 /* HebrewCodables.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DD2E3328F93CDD00AC9492 /* HebrewCodables.swift */; };
 		B8DD2E6B28F93CDF00AC9492 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DD2E3428F93CDD00AC9492 /* API.swift */; };
@@ -93,6 +95,10 @@
 		B899888928FDB03300F00E0B /* DataLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLoadingView.swift; sourceTree = "<group>"; };
 		B899888B28FDB32D00F00E0B /* ReadPassageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadPassageView.swift; sourceTree = "<group>"; };
 		B899888D28FDDB0E00F00E0B /* BibleReadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleReadingView.swift; sourceTree = "<group>"; };
+		B899888F28FE4D1900F00E0B /* DesignConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignConstants.swift; sourceTree = "<group>"; };
+		B8A210DF28FE688900BDF272 /* hebrew-bible.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "hebrew-bible.json"; sourceTree = "<group>"; };
+		B8A210E128FE6DB100BDF272 /* WordDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordDetailsView.swift; sourceTree = "<group>"; };
+		B8A210E328FE743A00BDF272 /* hebrew-dict.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "hebrew-dict.json"; sourceTree = "<group>"; };
 		B8DD2E0728F93CB100AC9492 /* BibleWords_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BibleWords_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8DD2E0A28F93CB100AC9492 /* BibleWords_iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleWords_iOSApp.swift; sourceTree = "<group>"; };
 		B8DD2E0E28F93CB300AC9492 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -105,9 +111,7 @@
 		B8DD2E2B28F93CDD00AC9492 /* GreekCodeables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GreekCodeables.swift; sourceTree = "<group>"; };
 		B8DD2E2C28F93CDD00AC9492 /* BibleRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BibleRange.swift; sourceTree = "<group>"; };
 		B8DD2E2D28F93CDD00AC9492 /* HebrewParsingDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HebrewParsingDictionary.swift; sourceTree = "<group>"; };
-		B8DD2E2F28F93CDD00AC9492 /* hebrew-bible.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "hebrew-bible.json"; sourceTree = "<group>"; };
 		B8DD2E3028F93CDD00AC9492 /* greek-bible.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "greek-bible.json"; sourceTree = "<group>"; };
-		B8DD2E3128F93CDD00AC9492 /* hebrew-dict.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "hebrew-dict.json"; sourceTree = "<group>"; };
 		B8DD2E3228F93CDD00AC9492 /* greek-dict.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "greek-dict.json"; sourceTree = "<group>"; };
 		B8DD2E3328F93CDD00AC9492 /* HebrewCodables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HebrewCodables.swift; sourceTree = "<group>"; };
 		B8DD2E3428F93CDD00AC9492 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
@@ -186,6 +190,7 @@
 				B899888528FDA92B00F00E0B /* ReadingMainView.swift */,
 				B899888B28FDB32D00F00E0B /* ReadPassageView.swift */,
 				B899888D28FDDB0E00F00E0B /* BibleReadingView.swift */,
+				B8A210E128FE6DB100BDF272 /* WordDetailsView.swift */,
 			);
 			path = Reading;
 			sourceTree = "<group>";
@@ -249,9 +254,9 @@
 		B8DD2E2E28F93CDD00AC9492 /* JSON */ = {
 			isa = PBXGroup;
 			children = (
-				B8DD2E2F28F93CDD00AC9492 /* hebrew-bible.json */,
+				B8A210E328FE743A00BDF272 /* hebrew-dict.json */,
+				B8A210DF28FE688900BDF272 /* hebrew-bible.json */,
 				B8DD2E3028F93CDD00AC9492 /* greek-bible.json */,
-				B8DD2E3128F93CDD00AC9492 /* hebrew-dict.json */,
 				B8DD2E3228F93CDD00AC9492 /* greek-dict.json */,
 				B8124D6D28F9EB7D0053057C /* garret-hebrew-1-21.json */,
 				B8124D6728F9BFDD0053057C /* mgbh-garret-vocab-1-21.json */,
@@ -272,6 +277,7 @@
 				B8124D6928F9C7100053057C /* String+Extensions.swift */,
 				B8124D8028FB285D0053057C /* BibleRange+Extensions.swift */,
 				B899887F28FCBCF100F00E0B /* StudySession+Extensions.swift */,
+				B899888F28FE4D1900F00E0B /* DesignConstants.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -361,15 +367,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				B8124D6E28F9EB7D0053057C /* garret-hebrew-1-21.json in Resources */,
+				B8A210E028FE688900BDF272 /* hebrew-bible.json in Resources */,
 				B8124D6828F9BFDD0053057C /* mgbh-garret-vocab-1-21.json in Resources */,
-				B8DD2E6628F93CDF00AC9492 /* hebrew-bible.json in Resources */,
 				B8DD2E7628F93CDF00AC9492 /* EzraSR.ttf in Resources */,
+				B8A210E428FE743A00BDF272 /* hebrew-dict.json in Resources */,
 				B8DD2E7728F93CDF00AC9492 /* TekniaGreek.ttf in Resources */,
 				B8DD2E6728F93CDF00AC9492 /* greek-bible.json in Resources */,
 				B8DD2E6928F93CDF00AC9492 /* greek-dict.json in Resources */,
 				B8DD2E1228F93CB300AC9492 /* Preview Assets.xcassets in Resources */,
 				B8DD2E0F28F93CB300AC9492 /* Assets.xcassets in Resources */,
-				B8DD2E6828F93CDF00AC9492 /* hebrew-dict.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -404,11 +410,13 @@
 				B8DD2E6228F93CDF00AC9492 /* Bible.swift in Sources */,
 				B8124D6A28F9C7100053057C /* String+Extensions.swift in Sources */,
 				B8DD2E6D28F93CDF00AC9492 /* Int+Extensions.swift in Sources */,
+				B8A210E228FE6DB100BDF272 /* WordDetailsView.swift in Sources */,
 				B8124D7728FA0EF10053057C /* ParadigmDetailView.swift in Sources */,
 				B8124D7628FA0EF10053057C /* ParadigmsViews.swift in Sources */,
 				B8124D7F28FA30900053057C /* WordInPassageView.swift in Sources */,
 				B8124D6C28F9D05A0053057C /* TextbookSelectorView.swift in Sources */,
 				B899888C28FDB32D00F00E0B /* ReadPassageView.swift in Sources */,
+				B899889028FE4D1900F00E0B /* DesignConstants.swift in Sources */,
 				B899888828FDAFE100F00E0B /* DataDependentViewModel.swift in Sources */,
 				B8DD2E7328F93CDF00AC9492 /* WordInstancesView.swift in Sources */,
 				B8124D7528FA0EF10053057C /* ParadigmPracticeView.swift in Sources */,
@@ -556,6 +564,8 @@
 				DEVELOPMENT_TEAM = ZC55HLSXNP;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = BibleWords;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -585,6 +595,8 @@
 				DEVELOPMENT_TEAM = ZC55HLSXNP;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = BibleWords;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

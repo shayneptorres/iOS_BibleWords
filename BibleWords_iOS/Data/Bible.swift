@@ -46,7 +46,7 @@ struct Bible {
             guard let sourceLex = self.lex[source] else { return [] }
                     
             let i = sourceLex.compactMap { $0.value["id"] as? String}
-            var words: [Bible.WordInfo] = i.map { word(for: $0, source: source) }
+            let words: [Bible.WordInfo] = i.map { word(for: $0, source: source) }
 
             return words
         }
@@ -178,22 +178,22 @@ struct Bible {
     
     struct WordInstance: Identifiable, Hashable {
         let id: String
+        let strongId: String
         let index: Int
         let lemma: String
         let surface: String
-//        let rawSurface: String
         let cleanSurface: String
         let parsing: String
         let refStr: String
 
         init(dict: [String:AnyObject]) {
-            self.id = dict["lemma"] as? String ?? UUID().uuidString
+            self.id = UUID().uuidString
+            self.strongId = dict["id"] as? String ?? UUID().uuidString
             self.lemma = dict["lemma"] as? String ?? ""
             self.index = dict["index"] as? Int ?? 0
             self.surface = dict["surface"] as? String ?? ""
             self.parsing = dict["parsing"] as? String ?? ""
             self.refStr = dict["ref"] as? String ?? ""
-//            self.rawSurface = dict["rawSurface"] as? String ?? ""
             self.cleanSurface = dict["cleanSurface"] as? String ?? ""
         }
 
@@ -245,6 +245,14 @@ struct Bible {
                 return ""
             }
             return ""
+        }
+        
+        var wordInfo: WordInfo {
+            if language == .greek {
+                return Bible.main.greekLexicon.word(for: self.strongId)
+            } else {
+                return Bible.main.hebrewLexicon.word(for: self.strongId.getDigits)
+            }
         }
     }
 }

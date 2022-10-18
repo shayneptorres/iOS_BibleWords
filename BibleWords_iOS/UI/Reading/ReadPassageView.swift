@@ -30,18 +30,19 @@ struct Passage: Equatable {
 struct ReadPassageView: View {
     let viewModel = DataDependentViewModel()
     @Binding var passage: Passage
+    @Binding var selectedWord: Bible.WordInstance
     
     var body: some View {
         ScrollView {
             ScrollViewReader { reader in
                 if passage.book.rawValue < 40 {
-                    HebrewPassageTextView(words: $passage.words).id(1)
+                    HebrewPassageTextView(words: $passage.words, selectedWord: $selectedWord).id(1)
                         .padding(8)
                         .onChange(of: passage) { i in
                             reader.scrollTo(1, anchor: .top)
                         }
                 } else {
-                    GreekPassageTextView(words: $passage.words).id(2)
+                    GreekPassageTextView(words: $passage.words, selectedWord: $selectedWord).id(2)
                         .padding(8)
                         .onChange(of: passage) { i in
                             reader.scrollTo(2, anchor: .top)
@@ -62,15 +63,9 @@ extension ReadPassageView {
     }
 }
 
-struct ReadPassageView_Previews: PreviewProvider {
-    static var previews: some View {
-        ReadPassageView(passage: .constant(.init()))
-    }
-}
-
 struct GreekPassageTextView: View {
     @Binding var words: [Bible.WordInstance]
-    @State var selectedWord: Bible.WordInstance?
+    @Binding var selectedWord: Bible.WordInstance
     @State private var size: CGSize = .zero
     let buffer: CGFloat = 50
     
@@ -121,7 +116,7 @@ struct GreekPassageTextView: View {
 
 struct HebrewPassageTextView: View {
     @Binding var words: [Bible.WordInstance]
-    @State var selectedWord: Bible.WordInstance?
+    @Binding var selectedWord: Bible.WordInstance
     @State private var size: CGSize = .zero
     let buffer: CGFloat = 50
     
@@ -135,7 +130,7 @@ struct HebrewPassageTextView: View {
                     Color.clear.opacity(0.0001)
                     ForEach(0..<self.words.count, id: \.self) { i in
                         Text(self.words[i].rawSurface + " ")
-                            .font(self.words[i].id == "verse-num" ? .system(size: 12) : .bible40)
+                            .font(self.words[i].strongId == "verse-num" ? .system(size: 12) : .bible40)
                             .padding([.horizontal, .vertical], 4)
                             .onTapGesture {
                                 selectedWord = self.words[i]
