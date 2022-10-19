@@ -39,6 +39,10 @@
 		B8A210E028FE688900BDF272 /* hebrew-bible.json in Resources */ = {isa = PBXBuildFile; fileRef = B8A210DF28FE688900BDF272 /* hebrew-bible.json */; };
 		B8A210E228FE6DB100BDF272 /* WordDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A210E128FE6DB100BDF272 /* WordDetailsView.swift */; };
 		B8A210E428FE743A00BDF272 /* hebrew-dict.json in Resources */ = {isa = PBXBuildFile; fileRef = B8A210E328FE743A00BDF272 /* hebrew-dict.json */; };
+		B8A210E628FF553C00BDF272 /* ParsingLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A210E528FF553C00BDF272 /* ParsingLists.swift */; };
+		B8A210E828FF581E00BDF272 /* ParsingInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A210E728FF581D00BDF272 /* ParsingInfo.swift */; };
+		B8A210EA28FF5C3A00BDF272 /* BuildParsingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A210E928FF5C3A00BDF272 /* BuildParsingListView.swift */; };
+		B8A210EC29007CCD00BDF272 /* DefaultVocabListSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A210EB29007CCD00BDF272 /* DefaultVocabListSelectorView.swift */; };
 		B8DD2E0B28F93CB100AC9492 /* BibleWords_iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DD2E0A28F93CB100AC9492 /* BibleWords_iOSApp.swift */; };
 		B8DD2E0F28F93CB300AC9492 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8DD2E0E28F93CB300AC9492 /* Assets.xcassets */; };
 		B8DD2E1228F93CB300AC9492 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8DD2E1128F93CB300AC9492 /* Preview Assets.xcassets */; };
@@ -99,6 +103,10 @@
 		B8A210DF28FE688900BDF272 /* hebrew-bible.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "hebrew-bible.json"; sourceTree = "<group>"; };
 		B8A210E128FE6DB100BDF272 /* WordDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordDetailsView.swift; sourceTree = "<group>"; };
 		B8A210E328FE743A00BDF272 /* hebrew-dict.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "hebrew-dict.json"; sourceTree = "<group>"; };
+		B8A210E528FF553C00BDF272 /* ParsingLists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsingLists.swift; sourceTree = "<group>"; };
+		B8A210E728FF581D00BDF272 /* ParsingInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParsingInfo.swift; sourceTree = "<group>"; };
+		B8A210E928FF5C3A00BDF272 /* BuildParsingListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildParsingListView.swift; sourceTree = "<group>"; };
+		B8A210EB29007CCD00BDF272 /* DefaultVocabListSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultVocabListSelectorView.swift; sourceTree = "<group>"; };
 		B8DD2E0728F93CB100AC9492 /* BibleWords_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BibleWords_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8DD2E0A28F93CB100AC9492 /* BibleWords_iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleWords_iOSApp.swift; sourceTree = "<group>"; };
 		B8DD2E0E28F93CB300AC9492 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -173,6 +181,7 @@
 				B8124D7E28FA30900053057C /* WordInPassageView.swift */,
 				B8124D8428FB366F0053057C /* DueWordsView.swift */,
 				B899888128FD1A5100F00E0B /* NewWordsLearnedTodayView.swift */,
+				B8A210EB29007CCD00BDF272 /* DefaultVocabListSelectorView.swift */,
 			);
 			path = Vocab;
 			sourceTree = "<group>";
@@ -180,6 +189,8 @@
 		B899888328FDA90B00F00E0B /* Parsing */ = {
 			isa = PBXGroup;
 			children = (
+				B8A210E528FF553C00BDF272 /* ParsingLists.swift */,
+				B8A210E928FF5C3A00BDF272 /* BuildParsingListView.swift */,
 			);
 			path = Parsing;
 			sourceTree = "<group>";
@@ -238,6 +249,7 @@
 			children = (
 				B8DD2E2E28F93CDD00AC9492 /* JSON */,
 				B8DD2E1328F93CB300AC9492 /* Persistence.swift */,
+				B8A210E728FF581D00BDF272 /* ParsingInfo.swift */,
 				B8DD2E2928F93CDD00AC9492 /* CoreDataManager.swift */,
 				B8DD2E2A28F93CDD00AC9492 /* Bible.swift */,
 				B8DD2E2B28F93CDD00AC9492 /* GreekCodeables.swift */,
@@ -395,6 +407,7 @@
 				B8DD2E1428F93CB300AC9492 /* Persistence.swift in Sources */,
 				B899888A28FDB03300F00E0B /* DataLoadingView.swift in Sources */,
 				B899888028FCBCF100F00E0B /* StudySession+Extensions.swift in Sources */,
+				B8A210E828FF581E00BDF272 /* ParsingInfo.swift in Sources */,
 				B8124D8328FB2AF90053057C /* NavHeaderTitleDetailView.swift in Sources */,
 				B899887E28FC94F000F00E0B /* WordInfoRow.swift in Sources */,
 				B8124D6628F9BDB90053057C /* Codables.swift in Sources */,
@@ -402,6 +415,7 @@
 				B8DD2E6E28F93CDF00AC9492 /* VocabListBuilder.swift in Sources */,
 				B8124D7028F9FF5E0053057C /* Date+Extensions.swift in Sources */,
 				B8124D5C28F944550053057C /* VocabWord+Extensions.swift in Sources */,
+				B8A210E628FF553C00BDF272 /* ParsingLists.swift in Sources */,
 				B8124D7928FA0F120053057C /* HebrewConcepts.swift in Sources */,
 				B8DD2E7028F93CDF00AC9492 /* WordList+Extensions.swift in Sources */,
 				B899888E28FDDB0E00F00E0B /* BibleReadingView.swift in Sources */,
@@ -410,6 +424,7 @@
 				B8DD2E6228F93CDF00AC9492 /* Bible.swift in Sources */,
 				B8124D6A28F9C7100053057C /* String+Extensions.swift in Sources */,
 				B8DD2E6D28F93CDF00AC9492 /* Int+Extensions.swift in Sources */,
+				B8A210EA28FF5C3A00BDF272 /* BuildParsingListView.swift in Sources */,
 				B8A210E228FE6DB100BDF272 /* WordDetailsView.swift in Sources */,
 				B8124D7728FA0EF10053057C /* ParadigmDetailView.swift in Sources */,
 				B8124D7628FA0EF10053057C /* ParadigmsViews.swift in Sources */,
@@ -430,6 +445,7 @@
 				B8DD2E6328F93CDF00AC9492 /* GreekCodeables.swift in Sources */,
 				B8DD2E1728F93CB300AC9492 /* BibleWords_iOS.xcdatamodeld in Sources */,
 				B8DD2E7428F93CDF00AC9492 /* BuildVocabListView.swift in Sources */,
+				B8A210EC29007CCD00BDF272 /* DefaultVocabListSelectorView.swift in Sources */,
 				B8DD2E0B28F93CB100AC9492 /* BibleWords_iOSApp.swift in Sources */,
 				B899888628FDA92B00F00E0B /* ReadingMainView.swift in Sources */,
 				B8DD2E6128F93CDF00AC9492 /* CoreDataManager.swift in Sources */,

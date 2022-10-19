@@ -21,12 +21,12 @@ struct WordInPassageView: View {
             Section {
                 Text(instance.prettyRefStr)
                     .font(.title3)
-                Text(instance.surface.isEmpty ? instance.rawSurface : instance.surface)
+                Text(instance.textSurface)
                     .font(.bible32)
                 Text(instance.parsing)
                     .font(.title3)
                 Text(instance.wordInPassage) { string in
-                    let attributedStr = instance.surface.isEmpty ? instance.rawSurface : instance.surface
+                    let attributedStr = instance.surface
                     if let range = string.range(of: attributedStr) { /// here!
                         string[range].foregroundColor = .accentColor
                     }

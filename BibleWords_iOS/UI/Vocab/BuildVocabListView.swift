@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreData
+import Combine
 
 typealias GroupedWordInfos = (chapter: Int, words: [Bible.WordInfo])
 
@@ -99,11 +100,8 @@ struct BuildVocabListView: View {
                                 ForEach(groupedTextbookWords, id: \.chapter) { group in
                                     Section {
                                         ForEach(group.words) { word in
-                                            VStack(alignment: .leading) {
-                                                Text(word.lemma)
-                                                    .font(.bible24)
-                                                Text(word.definition)
-                                                    .font(.subheadline)
+                                            NavigationLink(value: word) {
+                                                WordInfoRow(wordInfo: word.bound())
                                             }
                                         }
                                     } header: {
@@ -116,11 +114,8 @@ struct BuildVocabListView: View {
                         } else {
                             Section {
                                 ForEach(builtWords) { word in
-                                    VStack(alignment: .leading) {
-                                        Text(word.lemma)
-                                            .font(.bible24)
-                                        Text(word.definition)
-                                            .font(.subheadline)
+                                    NavigationLink(value: word) {
+                                        WordInfoRow(wordInfo: word.bound())
                                     }
                                 }
                             } footer: {
@@ -306,7 +301,7 @@ extension BuildVocabListView {
 
 struct BibleRangePickerView: View {
     @Binding var range: BibleRange
-    var onDelete: () -> Void
+    var onDelete: (() -> Void)?
     
     var body: some View {
         Section {
@@ -385,13 +380,20 @@ struct BibleRangePickerView: View {
                     .keyboardType(.numberPad)
                     .textFieldStyle(.roundedBorder)
                     .multilineTextAlignment(.trailing)
+                    .onReceive(NotificationCenter.default.publisher(for: UITextField.textDidBeginEditingNotification)) { obj in
+                                    if let textField = obj.object as? UITextField {
+                                        textField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
+                                    }
+                                }
             }
         } footer: {
-            HStack {
-                Spacer()
-                Button(action: onDelete, label: {
-                    Image(systemName: "minus.circle")
-                })
+            if onDelete != nil {
+                HStack {
+                    Spacer()
+                    Button(action: { onDelete?() }, label: {
+                        Image(systemName: "minus.circle")
+                    })
+                }
             }
         }
     }

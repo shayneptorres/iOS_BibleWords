@@ -41,12 +41,12 @@ struct WordDetailsView: View {
                     }
                     .frame(width: 110)
                     VStack {
-                        Text(wordInstance.rawSurface)
-                            .font(bibleWordFont)
+                        Text(wordInstance.surface)
+                            .font(wordInstance.language == .greek ? .bible24 : .bible32)
                     }
                 }
                 .padding(.bottom, 4)
-                if wordInstance.surface != wordInstance.rawSurface {
+                if wordInstance.surface != wordInstance.surfaceComponents {
                     HStack(alignment: .center) {
                         HStack {
                             Text("Components:")
@@ -56,8 +56,8 @@ struct WordDetailsView: View {
                         }
                         .frame(width: 110)
                         VStack {
-                            Text(wordInstance.surface)
-                                .font(bibleWordFont)
+                            Text(wordInstance.surfaceComponents)
+                                .font(wordInstance.language == .greek ? .bible24 : .bible32)
                         }
                     }
                     .padding(.bottom, 4)
@@ -72,7 +72,7 @@ struct WordDetailsView: View {
                     .frame(width: 110)
                     VStack {
                         Text(wordInstance.wordInfo.lemma)
-                            .font(bibleWordFont)
+                            .font(wordInstance.language == .greek ? .bible24 : .bible32)
                     }
                 }
                 .padding(.bottom, 8)

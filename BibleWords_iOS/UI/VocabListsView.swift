@@ -19,7 +19,9 @@ struct VocabListsView: View {
         animation: .default)
     var lists: FetchedResults<VocabWordList>
     
-    @State var showListBuilderView = false
+    @State var showCreateListActionSheet = false
+    @State var showCustomListBuilderView = false
+    @State var showDefaultListSelectorView = false
     
     var body: some View {
         ZStack {
@@ -54,7 +56,8 @@ struct VocabListsView: View {
             VStack {
                 Spacer()
                 Button(action: {
-                    showListBuilderView = true
+//                    showCustomListBuilderView = true
+                    showCreateListActionSheet = true
                 }, label: {
                     Text("Create new list")
                         .frame(maxWidth: .infinity)
@@ -74,9 +77,27 @@ struct VocabListsView: View {
                 ListDetailView(viewModel: .init(list: list))
             }
         }
-        .sheet(isPresented: $showListBuilderView) {
+        .actionSheet(isPresented: $showCreateListActionSheet) {
+            ActionSheet(
+                title: Text("Create new vocab list"),
+                message: Text("Would you like to create a custom vocab word list, or select a default vocab list type?"), buttons: [
+                    .cancel(),
+                    .default(Text("Custom List")) {
+                        showCustomListBuilderView = true
+                    },
+                    .default(Text("Default List")) {
+                        showDefaultListSelectorView = true
+                    }
+                ])
+        }
+        .sheet(isPresented: $showCustomListBuilderView) {
             NavigationStack {
                 BuildVocabListView()
+            }
+        }
+        .sheet(isPresented: $showDefaultListSelectorView) {
+            NavigationStack {
+                DefaultVocabListSelectorView()
             }
         }
     }

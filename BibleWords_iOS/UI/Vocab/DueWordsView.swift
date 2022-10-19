@@ -72,7 +72,9 @@ struct DueWordsView: View, Equatable {
                         }
                     }
                     ForEach(filteredDueWordInfos) { wordInfo in
-                        WordInfoRow(wordInfo: wordInfo.bound())
+                        NavigationLink(value: wordInfo) {
+                            WordInfoRow(wordInfo: wordInfo.bound())
+                        }
                     }
                 }
             }
@@ -84,6 +86,9 @@ struct DueWordsView: View, Equatable {
             VocabListStudyView(
                 vocabList: $dueWordVocabList,
                 allWordInfos: filteredDueWordInfos)
+        }
+        .navigationDestination(for: Bible.WordInfo.self) { word in
+            WordInfoRow(wordInfo: word.bound())
         }
         .navigationTitle("Your Due Words")
     }

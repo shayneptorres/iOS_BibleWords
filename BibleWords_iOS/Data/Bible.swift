@@ -174,6 +174,24 @@ struct Bible {
                 return .greek
             }
         }
+        
+        var parsingInfo: ParsingInfo {
+            var parsingDict: [String:WordInstance] = [:]
+            for instance in instances {
+                parsingDict[instance.parsing] = instance
+            }
+            let uniqueInstances = parsingDict.map { $0.value }
+            
+            return .init(strongId: self.id, lemma: self.lemma, definition: self.definition, instances: uniqueInstances)
+        }
+    }
+    
+    struct ParsingInfo: Identifiable, Hashable {
+        let id: String = UUID().uuidString
+        let strongId: String
+        let lemma: String
+        let definition: String
+        let instances: [WordInstance]
     }
     
     struct WordInstance: Identifiable, Hashable {
@@ -181,8 +199,9 @@ struct Bible {
         let strongId: String
         let index: Int
         let lemma: String
-        let surface: String
-        let cleanSurface: String
+        let surfaceComponents: String
+        let rawSurface: String
+//        let surfaceComponents: String
         let parsing: String
         let refStr: String
 
@@ -191,10 +210,10 @@ struct Bible {
             self.strongId = dict["id"] as? String ?? UUID().uuidString
             self.lemma = dict["lemma"] as? String ?? ""
             self.index = dict["index"] as? Int ?? 0
-            self.surface = dict["surface"] as? String ?? ""
+            self.surfaceComponents = dict["surface"] as? String ?? ""
+            self.rawSurface = dict["rawSurface"] as? String ?? ""
             self.parsing = dict["parsing"] as? String ?? ""
             self.refStr = dict["ref"] as? String ?? ""
-            self.cleanSurface = dict["cleanSurface"] as? String ?? ""
         }
 
         var bibleBook: Bible.Book {
@@ -221,8 +240,12 @@ struct Bible {
             return "\(bibleBook.shortTitle) \(chapter):\(verse)"
         }
         
-        var rawSurface: String {
-            return surface.replacingOccurrences(of: "/", with: "")
+        var surface: String {
+            return surfaceComponents.replacingOccurrences(of: "/", with: "")
+        }
+        
+        var textSurface: String {
+            return rawSurface.isEmpty ? surface : rawSurface
         }
         
         var language: VocabWord.Language {

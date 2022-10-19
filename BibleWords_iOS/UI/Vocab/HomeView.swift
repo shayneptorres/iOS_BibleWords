@@ -10,6 +10,7 @@ import SwiftUI
 struct HomeView: View {
     enum Routes: Hashable {
         case allLists
+        case allParsingLists
         case showList(VocabWordList)
         case paradigms(VocabWord.Language)
         case dueWords
@@ -78,7 +79,9 @@ struct HomeView: View {
                 }
                 
                 Section {
-                    
+                    NavigationLink("Your Parsing Lists", value: Routes.allParsingLists)
+                        .bold()
+                        .foregroundColor(.accentColor)
                 } header: {
                     Text("Parsing")
                 }
@@ -110,6 +113,8 @@ struct HomeView: View {
                 switch route {
                 case .allLists:
                     VocabListsView()
+                case .allParsingLists:
+                    ParsingLists()
                 case .showList(let list):
                     ListDetailView(viewModel: .init(list: list))
                 case .paradigms(let lang):

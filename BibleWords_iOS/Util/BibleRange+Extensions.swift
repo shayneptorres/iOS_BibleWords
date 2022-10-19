@@ -6,6 +6,22 @@
 //
 
 import Foundation
+import CoreData
+
+extension VocabWordRange {
+    static func new(context: NSManagedObjectContext, range: BibleRange) -> VocabWordRange {
+        let newRange = VocabWordRange(context: context)
+        newRange.id = UUID().uuidString
+        newRange.createdAt = Date()
+        newRange.bookStart = range.bookStart.toInt16
+        newRange.bookEnd = range.bookEnd.toInt16
+        newRange.chapStart = range.chapStart.toInt16
+        newRange.chapEnd = range.chapEnd.toInt16
+        newRange.occurrences = range.occurrencesInt.toInt32
+        newRange.sourceId = API.Source.Info.app.id
+        return newRange
+    }
+}
 
 extension Array where Element == BibleRange {
     var title: String {

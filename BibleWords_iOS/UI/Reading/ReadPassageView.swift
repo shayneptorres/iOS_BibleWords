@@ -77,11 +77,13 @@ struct GreekPassageTextView: View {
             GeometryReader { g in
                 ZStack(alignment: .topLeading) {
                     ForEach(0..<self.words.count, id: \.self) { i in
-                        Text("" + self.words[i].rawSurface + " ")
-                            .font(.bible24)
+                        Text(self.words[i].surface + " ")
+                            .font(self.words[i].strongId == "verse-num" ? .system(size: 20) : .bible24)
                             .padding([.horizontal, .vertical], 4)
                             .onTapGesture {
-                                selectedWord = self.words[i]
+                                if self.words[i].strongId != "verse-num" {
+                                    selectedWord = self.words[i]
+                                }
                             }
                             .foregroundColor(selectedWord == self.words[i] ? .accentColor : Color(uiColor: .label))
                             .alignmentGuide(.leading, computeValue: { d in
@@ -129,11 +131,13 @@ struct HebrewPassageTextView: View {
                 ZStack(alignment: .topTrailing) {
                     Color.clear.opacity(0.0001)
                     ForEach(0..<self.words.count, id: \.self) { i in
-                        Text(self.words[i].rawSurface + " ")
-                            .font(self.words[i].strongId == "verse-num" ? .system(size: 12) : .bible40)
+                        Text(self.words[i].surface + " ")
+                            .font(self.words[i].strongId == "verse-num" ? .system(size: 30) : .bible40)
                             .padding([.horizontal, .vertical], 4)
                             .onTapGesture {
-                                selectedWord = self.words[i]
+                                if self.words[i].strongId != "verse-num" {
+                                    selectedWord = self.words[i]
+                                }
                             }
                             .foregroundColor(selectedWord == self.words[i] ? .accentColor : Color(uiColor: .label))
                             .alignmentGuide(.trailing, computeValue: { d in

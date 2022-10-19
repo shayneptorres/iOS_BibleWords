@@ -12,6 +12,9 @@ struct BibleReadingView: View {
     @State var passage: Passage = .init(book: .psalms, chapter: 1, verse: -1)
     @State var searchBook: Bible.Book = .psalms
     @State var searchChapter = 1
+    
+    @State var prevBook: Bible.Book = .psalms
+    
     @State var searchVerse = -1
     @State var showPassageSelector = false
     @State var showWordDetail = false
@@ -76,14 +79,8 @@ struct BibleReadingView: View {
                 })
             }
             ToolbarItemGroup(placement: .principal) {
-                Button(action: {
-                    withAnimation {
-                        showPassageSelector.toggle()
-                    }
-                }, label: {
-                    Text("\(passage.book.title) \(passage.chapter)")
-                })
-                .disabled(viewModel.isBuilding)
+                Text("\(passage.book.title) \(passage.chapter)")
+                    .font(.title2)
             }
         }
     }
@@ -108,20 +105,17 @@ extension BibleReadingView {
                         Text(book.title).tag(book)
                     }
                 }
+                .onChange(of: self.searchBook) { value in
+                    setPassage()
+                }
                 Picker("", selection: $searchChapter) {
                     ForEach(1...chapCount, id: \.self) { chp in
                         Text("Ch \(chp)").tag(chp)
                     }
                 }
-                Button(action: {
+                .onChange(of: self.searchChapter) { value in
                     setPassage()
-                }, label: {
-                    Image(systemName: "text.magnifyingglass")
-                        .font(.system(size: 16))
-                        .padding(10)
-                        .foregroundColor(.white)
-                        .background(Circle().fill(Color.accentColor))
-                })
+                }
                 Spacer()
                 Button(action: {
                     onNext()
@@ -140,51 +134,6 @@ extension BibleReadingView {
         }
         .transition(.move(edge: .bottom))
     }
-    
-//    func WordDetailView() -> some View {
-//        VStack {
-//            Spacer()
-//            VStack {
-//                Text(selectedWord.rawSurface)
-//                    .font(.bible32)
-//                    .padding(.bottom,4)
-//                    .onTapGesture {
-//                        let pasteboard = UIPasteboard.general
-//                        pasteboard.string = selectedWord.rawSurface
-//                    }
-//                Text(selectedWord.surface)
-//                    .font(.bible32)
-//                    .padding(.bottom,4)
-//                    .onTapGesture {
-//                        let pasteboard = UIPasteboard.general
-//                        pasteboard.string = selectedWord.surface
-//                    }
-//                Text(selectedWord.wordInfo.lemma)
-//                    .font(.bible32)
-//                    .padding(.bottom,4)
-//                    .onTapGesture {
-//                        let pasteboard = UIPasteboard.general
-//                        pasteboard.string = selectedWord.wordInfo.lemma
-//                    }
-//                Text(selectedWord.wordInfo.definition)
-//                    .padding(.bottom,4)
-//                Text(selectedWord.parsing)
-//                    .padding(.bottom,4)
-//                Button(action: {
-//                    showWordDetail = false
-//                }, label: {
-//                    Image(systemName: "xmark.circle")
-//                        .font(.system(size: 24))
-//                })
-//            }
-//            .padding(8)
-//            .frame(maxWidth: .infinity, maxHeight: 350)
-//            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: Design.defaultCornerRadius))
-//            .padding(.horizontal, 20)
-//            .padding(.bottom, 4)
-//            .transition(.move(edge: .bottom))
-//        }
-//    }
 }
 
 extension BibleReadingView {
@@ -207,6 +156,9 @@ extension BibleReadingView {
 
 extension BibleReadingView {
     func setPassage() {
+        if searchChapter > searchBook.chapterCount {
+            searchChapter = 1
+        }
         passage = .init(book: searchBook, chapter: searchChapter, verse: searchVerse)
         showPassageSelector = false
     }
@@ -221,6 +173,8 @@ extension BibleReadingView {
             let prevBook = Bible.Book(rawValue: passage.book.rawValue-1)
             passage = .init(book: prevBook!, chapter: prevChap, verse: -1)
         }
+        self.searchBook = passage.book
+        self.searchChapter = passage.chapter
         showWordDetail = false
     }
     
@@ -230,10 +184,11 @@ extension BibleReadingView {
             let nextChap = passage.chapter + 1
             passage = .init(book: passage.book, chapter: nextChap, verse: -1)
         } else {
-            let nextChap = 1
             let nextBook = Bible.Book(rawValue: passage.book.rawValue+1)
             passage = .init(book: nextBook!, chapter: 1, verse: -1)
         }
+        self.searchBook = passage.book
+        self.searchChapter = passage.chapter
         showWordDetail = false
     }
 }

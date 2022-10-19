@@ -13,6 +13,14 @@ extension VocabWord: Bindable {
         case hebrew = 0
         case aramaic
         case greek
+        
+        var title: String {
+            switch self {
+            case .hebrew: return "Hebrew"
+            case .greek: return "Greek"
+            case .aramaic: return "Aramaic"
+            }
+        }
     }
     
     var lemma: String {
