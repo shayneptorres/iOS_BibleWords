@@ -56,7 +56,6 @@ struct VocabListsView: View {
             VStack {
                 Spacer()
                 Button(action: {
-//                    showCustomListBuilderView = true
                     showCreateListActionSheet = true
                 }, label: {
                     Text("Create new list")

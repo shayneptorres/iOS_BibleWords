@@ -41,24 +41,22 @@ struct VocabListStudyView: View, Equatable {
             ZStack {
                 Color(uiColor: .secondarySystemBackground)
                     .ignoresSafeArea()
-                VStack {
-                    HeaderView()
-                    ZStack {
+                if horizontalSizeClass == .compact {
+                    VStack {
+                        HeaderView()
                         VStack {
                             LemmaCardView()
-                            ZStack(alignment: .bottomLeading) {
-                                if prevWord != nil {
-                                    HStack {
-                                        Button(action: {
-                                            onPrev()
-                                        }, label: {
-                                            Image(systemName: "arrow.uturn.left")
-                                            Text("Previous word")
-                                                .font(.subheadline)
-                                        })
-                                        .padding()
-                                        Spacer()
-                                    }
+                            if prevWord != nil {
+                                HStack {
+                                    Button(action: {
+                                        onPrev()
+                                    }, label: {
+                                        Image(systemName: "arrow.uturn.left")
+                                        Text("Previous word")
+                                            .font(.subheadline)
+                                    })
+                                    .padding()
+                                    Spacer()
                                 }
                             }
                             if displayMode == .lemmaGloss || displayMode == .learnWord {
@@ -68,8 +66,28 @@ struct VocabListStudyView: View, Equatable {
                             DynamicUserInteractionView()
                         }
                     }
+                    .padding(.horizontal)
+                } else {
+                    GeometryReader { proxy in
+                        HStack {
+                            VStack {
+                                HeaderView()
+                                LemmaCardView()
+                                if displayMode == .lemmaGloss || displayMode == .learnWord {
+                                    DefinitionView()
+                                }
+                                Spacer()
+                            }
+                            .frame(width: proxy.size.width * 0.60)
+                            .frame(maxHeight: .infinity)
+                            VStack {
+                                DynamicUserInteractionView()
+                            }
+                            .frame(width: proxy.size.width * 0.4)
+                            .frame(maxHeight: .infinity)
+                        }
+                    }
                 }
-                .padding(.horizontal)
             }
             .toolbar {
                 ToolbarItemGroup(placement: .principal) {
@@ -92,7 +110,7 @@ struct VocabListStudyView: View, Equatable {
             })
             .sheet(isPresented: $showWordInfoView, content: {
                 NavigationStack {
-                    WordInstancesView(word: (currentWord?.wordInfo ?? .init([:])).bound())
+                    WordInstancesView(word: currentWord?.wordInfo ?? .init([:]))
                 }
             })
             .navigationBarTitleDisplayMode(.inline)
@@ -387,6 +405,15 @@ extension VocabListStudyView {
             VStack {
                 Spacer()
                 HStack {
+                    if prevWord != nil {
+                        Button(action: {
+                            onPrev()
+                        }, label: {
+                            Image(systemName: "arrow.uturn.backward.circle")
+                                .font(.title2)
+                        })
+                        .padding()
+                    }
                     Spacer()
                     if displayMode == .lemmaGloss || displayMode == .learnWord {
                         Button(action: { showWordDefView = true }, label: {

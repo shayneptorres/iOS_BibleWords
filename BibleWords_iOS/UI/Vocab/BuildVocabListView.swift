@@ -143,7 +143,7 @@ struct BuildVocabListView: View {
             }
         }
         .navigationDestination(for: Bible.WordInfo.self) { wordInfo in
-            WordInstancesView(word: wordInfo.bound())
+            WordInstancesView(word: wordInfo)
         }
         .interactiveDismissDisabled(true)
     }

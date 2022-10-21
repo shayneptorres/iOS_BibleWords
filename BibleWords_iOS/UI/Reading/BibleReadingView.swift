@@ -61,7 +61,7 @@ struct BibleReadingView: View {
         }
         .sheet(isPresented: $showInstanceInfo) {
             NavigationStack {
-                WordInstancesView(word: selectedWord.wordInfo.bound())
+                WordInstancesView(word: selectedWord.wordInfo)
             }
         }
         .onChange(of: selectedWord) { w in

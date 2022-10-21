@@ -206,8 +206,8 @@
             filePath = "BibleWords_iOS/UI/Vocab/VocabListStudyView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "361"
-            endingLineNumber = "361"
+            startingLineNumber = "379"
+            endingLineNumber = "379"
             landmarkName = "LemmaCardView()"
             landmarkType = "7">
          </BreakpointContent>
@@ -257,6 +257,38 @@
             startingLineNumber = "181"
             endingLineNumber = "181"
             landmarkName = "readVerticalFlowSize(to:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6DD0A4DF-E0C9-4AD7-B7C6-E9A216AF4F03"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BibleWords_iOS/UI/Vocab/VocabListStudyView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "113"
+            endingLineNumber = "113"
+            landmarkName = "body"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "27BA88A8-2E4A-4C63-9EA0-A507A8AA52E3"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BibleWords_iOS/UI/Vocab/ListDetailView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "19"
+            endingLineNumber = "19"
+            landmarkName = "init(list:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

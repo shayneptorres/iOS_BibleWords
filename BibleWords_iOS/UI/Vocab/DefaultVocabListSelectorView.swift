@@ -152,7 +152,7 @@ extension DefaultVocabListSelectorView {
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: Bible.WordInfo.self) { word in
-                WordInstancesView(word: word.bound())
+                WordInstancesView(word: word)
             }
             .toolbar {
                 Button(action: { showBuiltWordsList = false }, label: { Text("Dismiss").bold() })

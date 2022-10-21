@@ -40,6 +40,12 @@ struct HomeView: View {
     
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \VocabWordList.createdAt, ascending: true)],
+        predicate: NSPredicate(format: "SELF.id == %@", "TEMP-DUE-WORD-LIST"),
+        animation: .default)
+    var dueVocabLists: FetchedResults<VocabWordList>
+    
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \VocabWordList.createdAt, ascending: true)],
         animation: .default)
     var parsingLists: FetchedResults<ParsingList>
     
@@ -172,7 +178,11 @@ struct HomeView: View {
                         Text("TODO")
                     }
                 case .dueWords:
-                    DueWordsView()
+                    if let list = dueList {
+                        DueWordsView(viewModel: .init(list: list))
+                    } else {
+                        Text("Something went wrong")
+                    }
                 case .newWords:
                     NewWordsLearnedTodayView()
                 case .parsedWords:
@@ -183,6 +193,7 @@ struct HomeView: View {
                 if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
                 } else {
                     fetchData()
+                    initializeCoreData()
                 }
             }
         }
@@ -202,6 +213,10 @@ struct HomeView: View {
         return Array(recent.prefix(3))
     }
     
+    var dueList: VocabWordList? {
+        return dueVocabLists.first
+    }
+    
     func fetchData() {
         Task {
             guard !API.main.coreDataReadyPublisher.value else { return }
@@ -212,6 +227,19 @@ struct HomeView: View {
             
             await API.main.fetchGarretHebrew()
             API.main.coreDataReadyPublisher.send(true)
+        }
+    }
+    
+    func initializeCoreData() {
+        if dueVocabLists.first == nil {
+            CoreDataManager.transactionAsync(context: context) {
+                let dueWordsList = VocabWordList(context: context)
+                dueWordsList.id = "TEMP-DUE-WORD-LIST"
+                dueWordsList.title = "Due words list"
+                dueWordsList.details = "A temporary vocab list to handle the words that are currently due, regardless of their list"
+                dueWordsList.lastStudied = Date()
+                dueWordsList.createdAt = Date()
+            }
         }
     }
 }
@@ -307,8 +335,6 @@ extension HomeView {
                 }
             }
         })
-        .isDetailLink(false)
-        .navigationViewStyle(.stack)
     }
 }
 

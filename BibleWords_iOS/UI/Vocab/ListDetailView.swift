@@ -132,7 +132,7 @@ struct ListDetailView: View {
             VocabListStudyView(vocabList: $viewModel.list, allWordInfos: viewModel.words)
         }
         .navigationDestination(for: Bible.WordInfo.self) { word in
-            WordInstancesView(word: word.bound())
+            WordInstancesView(word: word)
         }
         .navigationTitle(viewModel.list.defaultTitle)
         .navigationBarTitleDisplayMode(.inline)

@@ -9,6 +9,10 @@ import Foundation
 
 extension VocabWordList {
     
+    static func == (lhs: VocabWordList, rhs: VocabWordList) -> Bool {
+        return (lhs.id ?? "") == (rhs.id ?? "")
+    }
+    
     enum SourceType {
         case app
         case textbook

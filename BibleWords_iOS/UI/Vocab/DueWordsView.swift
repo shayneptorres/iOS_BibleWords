@@ -11,10 +11,12 @@ import CoreData
 
 class DueWordsViewModel: ObservableObject, Equatable {
     @Published var isBuilding = true
+    @Published var dueList: VocabWordList
     let id = UUID().uuidString
     private var subscribers: [AnyCancellable] = []
     
-    init() {
+    init(list: VocabWordList) {
+        self.dueList = list
         Task {
             API.main.coreDataReadyPublisher.sink { [weak self] isReady in
                 if isReady {
@@ -25,31 +27,25 @@ class DueWordsViewModel: ObservableObject, Equatable {
     }
     
     static func == (lhs: DueWordsViewModel, rhs: DueWordsViewModel) -> Bool {
-        return lhs.id == rhs.id
+        return lhs.dueList.id == rhs.dueList.id
     }
 }
 
 struct DueWordsView: View, Equatable {
-    static func == (lhs: DueWordsView, rhs: DueWordsView) -> Bool {
-        lhs.viewModel.id == rhs.viewModel.id
-    }
-    
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \VocabWordList.createdAt, ascending: true)],
-        predicate: NSPredicate(format: "SELF.id == %@", "TEMP-DUE-WORD-LIST"),
-        animation: .default)
-    var dueVocabLists: FetchedResults<VocabWordList>
-    
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \VocabWord.dueDate, ascending: false)],
         predicate: NSPredicate(format: "dueDate <= %@", Date() as CVarArg)
     ) var dueWords: FetchedResults<VocabWord>
     @Environment(\.managedObjectContext) var context
     
-    @ObservedObject var viewModel = DueWordsViewModel()
+    @ObservedObject var viewModel: DueWordsViewModel
     @State var langFilter: Language = .all
     @State var showStudyWordsView = false
     @State var studyWords: [VocabWord] = []
+    
+    static func == (lhs: DueWordsView, rhs: DueWordsView) -> Bool {
+        lhs.viewModel.dueList.id == rhs.viewModel.dueList.id
+    }
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -88,14 +84,10 @@ struct DueWordsView: View, Equatable {
             .disabled(viewModel.isBuilding)
         }
         .fullScreenCover(isPresented: $showStudyWordsView) {
-            if dueList == nil {
-                Text("Something happened")
-            } else {
-                VocabListStudyView(vocabList: dueList!.bound(), allWordInfos: [])                
-            }
+            VocabListStudyView(vocabList: $viewModel.dueList, allWordInfos: [])
         }
         .navigationDestination(for: Bible.WordInfo.self) { word in
-            WordInstancesView(word: word.bound())
+            WordInstancesView(word: word)
         }
         .navigationTitle("Your Due Words")
     }
@@ -125,47 +117,24 @@ struct DueWordsView: View, Equatable {
             return []
         }
     }
-    
-    var dueList: VocabWordList? {
-        dueVocabLists.first
-    }
 }
 
 extension DueWordsView {
     func onStudyWords() {
-//        let dueWordsFetchRequest = NSFetchRequest<VocabWordList>(entityName: "VocabWordList")
-//        dueWordsFetchRequest.predicate = NSPredicate(format: "SELF.id == %@", "TEMP-DUE-WORD-LIST")
-//
-//        var dueWordsLists: [VocabWordList] = []
-//        do {
-//            dueWordsLists = try context.fetch(dueWordsFetchRequest)
-//        } catch let err {
-//            print(err)
-//        }
-        
-        if dueList == nil {
-            let dueWordsList = VocabWordList(context: context)
-            dueWordsList.id = "TEMP-DUE-WORD-LIST"
-            dueWordsList.title = "Due words list"
-            dueWordsList.details = "A temporary vocab list to handle the words that are currently due, regardless of their list"
-            dueWordsList.lastStudied = Date()
-            dueWordsList.createdAt = Date()
-        } else {
-            for word in (dueList?.wordsArr ?? []) {
-                dueList?.removeFromWords(word)
-            }
+        for word in (viewModel.dueList.wordsArr) {
+            viewModel.dueList.removeFromWords(word)
         }
         
         for word in filteredDueWords {
-            dueList?.addToWords(word)
+            viewModel.dueList.addToWords(word)
         }
         
         showStudyWordsView = true
     }
 }
 
-struct DueWordsView_Previews: PreviewProvider {
-    static var previews: some View {
-        DueWordsView()
-    }
-}
+//struct DueWordsView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        DueWordsView()
+//    }
+//}

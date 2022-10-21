@@ -10,7 +10,7 @@ import SwiftUI
 struct WordInstancesView: View {
     @Environment(\.managedObjectContext) var context
     @Environment(\.presentationMode) var presentationMode
-    @Binding var word: Bible.WordInfo
+    @State var word: Bible.WordInfo
     @State var showForms = true
     @State var showAppearances = true
     @State var showEditWordView = true
@@ -82,8 +82,8 @@ struct WordInstancesView: View {
     }
 }
 
-struct WordInstancesView_Previews: PreviewProvider {
-    static var previews: some View {
-        WordInstancesView(word: .constant(.init([:])))
-    }
-}
+//struct WordInstancesView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        WordInstancesView(word: .constant(.init([:])))
+//    }
+//}
