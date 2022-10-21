@@ -13,27 +13,108 @@ struct WordInPassageView: View {
     
     var body: some View {
         List {
-            Section {
-                Text(word.lemma)
-                    .font(.bible40)
-                Text(word.definition)
+            VStack(alignment: .leading) {
+                HStack {
+                    Text("Word Details")
+                        .bold()
+                    Spacer()
+                }
+                Divider()
+                
+                HStack(alignment: .center) {
+                    HStack {
+                        Text("Surface:")
+                            .foregroundColor(Color(uiColor: .secondaryLabel))
+                            .font(.subheadline)
+                        Spacer()
+                    }
+                    .frame(width: 110)
+                    VStack {
+                        Text(instance.surface)
+                            .font(instance.language == .greek ? .bible24 : .bible32)
+                    }
+                }
+                .padding(.bottom, 4)
+                if instance.surface != instance.surfaceComponents {
+                    HStack(alignment: .center) {
+                        HStack {
+                            Text("Components:")
+                                .foregroundColor(Color(uiColor: .secondaryLabel))
+                                .font(.subheadline)
+                            Spacer()
+                        }
+                        .frame(width: 110)
+                        VStack {
+                            Text(instance.surfaceComponents)
+                                .font(instance.language == .greek ? .bible24 : .bible32)
+                        }
+                    }
+                    .padding(.bottom, 4)
+                }
+                HStack(alignment: .center) {
+                    HStack {
+                        Text("Lemma:")
+                            .foregroundColor(Color(uiColor: .secondaryLabel))
+                            .font(.subheadline)
+                        Spacer()
+                    }
+                    .frame(width: 110)
+                    VStack {
+                        Text(instance.wordInfo.lemma)
+                            .font(instance.language == .greek ? .bible24 : .bible32)
+                    }
+                }
+                .padding(.bottom, 8)
+                HStack(alignment: .top) {
+                    HStack {
+                        Text("Parsing:")
+                            .foregroundColor(Color(uiColor: .secondaryLabel))
+                            .font(.subheadline)
+                        Spacer()
+                    }
+                    .frame(width: 110)
+                    VStack {
+                        Text(instance.parsingStr)
+                            .lineLimit(4)
+                    }
+                }
+                .padding(.bottom)
+                HStack(alignment: .top) {
+                    HStack {
+                        Text("Definintion:")
+                            .foregroundColor(Color(uiColor: .secondaryLabel))
+                            .font(.subheadline)
+                        Spacer()
+                    }
+                    .frame(width: 110)
+                    VStack {
+                        Text(instance.wordInfo.definition)
+                            .lineLimit(4)
+                    }
+                }
             }
-            Section {
-                Text(instance.prettyRefStr)
-                    .font(.title3)
-                Text(instance.textSurface)
-                    .font(.bible32)
-                Text(instance.parsing)
-                    .font(.title3)
+            VStack(alignment: instance.language == .greek ? .leading : .trailing) {
                 Text(instance.wordInPassage) { string in
-                    let attributedStr = instance.surface
+                    let attributedStr = instance.textSurface
                     if let range = string.range(of: attributedStr) { /// here!
                         string[range].foregroundColor = .accentColor
                     }
                 }
-                    .font(.bible40)
+                .font(instance.language.largeBibleFont)
             }
+//            Section {
+//                Text(instance.prettyRefStr)
+//                    .font(.title3)
+//                Text(instance.textSurface)
+//                    .font(instance.language.meduimBibleFont)
+//                Text(instance.parsingStr)
+//                    .font(.title3)
+//
+//                }
+//            }
         }
+        .navigationTitle(instance.prettyRefStr)
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

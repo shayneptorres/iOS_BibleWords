@@ -21,6 +21,17 @@ extension VocabWordRange {
         newRange.sourceId = API.Source.Info.app.id
         return newRange
     }
+    
+    var bibleRange: BibleRange {
+        return .init(
+            id: self.id ?? "",
+            bookStart: self.bookStart.toInt,
+            bookEnd: self.bookEnd.toInt,
+            chapStart: self.chapStart.toInt,
+            chapEnd: self.chapEnd.toInt,
+            occurrencesTxt: "\(occurrences)"
+        )
+    }
 }
 
 extension Array where Element == BibleRange {

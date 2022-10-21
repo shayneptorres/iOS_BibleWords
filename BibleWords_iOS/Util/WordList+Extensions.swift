@@ -85,3 +85,63 @@ extension VocabWordList {
         return self.id == "TEMP-DUE-WORD-LIST"
     }
 }
+
+extension ParsingList {
+    var sessionsArr: [StudySession] {
+        return (studySessions?.allObjects ?? []) as! [StudySession]
+    }
+    
+    var language: Language {
+        return Language(rawValue: self.languageInt) ?? .greek
+    }
+    
+    var wordType: Parsing.WordType {
+        return .init(rawValue: self.wordTypeStr ?? "") ?? .noun
+    }
+    
+    var cases: [Parsing.Greek.Case] {
+        self.casesStr?.split(separator: ".").compactMap { Parsing.Greek.Case(rawValue: String($0)) } ?? []
+    }
+    
+    var genders: [Parsing.Gender] {
+        self.gendersStr?.split(separator: ".").compactMap { Parsing.Gender(rawValue: String($0)) } ?? []
+    }
+    
+    var numbers: [Parsing.Number] {
+        self.numbersStr?.split(separator: ".").compactMap { Parsing.Number(rawValue: String($0)) } ?? []
+    }
+    
+    var tenses: [Parsing.Greek.Tense] {
+        self.tensesStr?.split(separator: ".").compactMap { Parsing.Greek.Tense(rawValue: String($0)) } ?? []
+    }
+    
+    var voices: [Parsing.Greek.Voice] {
+        self.voicesStr?.split(separator: ".").compactMap { Parsing.Greek.Voice(rawValue: String($0)) } ?? []
+    }
+    
+    var moods: [Parsing.Greek.Mood] {
+        self.moodsStr?.split(separator: ".").compactMap { Parsing.Greek.Mood(rawValue: String($0)) } ?? []
+    }
+    
+    var persons: [Parsing.Person] {
+        self.personsStr?.split(separator: ".").compactMap { Parsing.Person(rawValue: String($0)) } ?? []
+    }
+    
+    var stems: [Parsing.Hebrew.Stem] {
+        self.stemsStr?.split(separator: ".").compactMap { Parsing.Hebrew.Stem(rawValue: String($0)) } ?? []
+    }
+    
+    var verbTypes: [Parsing.Hebrew.VerbType] {
+        self.hebVerbTypesStr?.split(separator: ".").compactMap { Parsing.Hebrew.VerbType(rawValue: String($0)) } ?? []
+    }
+    
+    var defaultTitle: String {
+        guard let range = range else { return "" }
+        return "\(Bible.Book(rawValue: range.bookStart.toInt)!.title) \(range.chapStart) - \(Bible.Book(rawValue: range.bookEnd.toInt)!.title) \(range.chapEnd)"
+    }
+    
+    var defaultDetails: String {
+        guard let range = range else { return "" }
+        return "\(range.occurrences)+ occurrences"
+    }
+}

@@ -63,6 +63,284 @@ class VocabListBuilder {
         
         return textbookChapterFilterdWords
     }
+    
+    static func buildParsingList(range: BibleRange, language: Language, wordType: Parsing.WordType, cases: [Parsing.Greek.Case], genders: [Parsing.Gender], numbers: [Parsing.Number], tenses: [Parsing.Greek.Tense], voices: [Parsing.Greek.Voice], moods: [Parsing.Greek.Mood], persons: [Parsing.Person], stems: [Parsing.Hebrew.Stem], verbTypes: [Parsing.Hebrew.VerbType], onComplete: ([Bible.WordInstance]) -> Void) async {
+        
+        let words = VocabListBuilder.buildVocabList(bookStart: range.bookStart,
+                                             chapStart: range.chapStart,
+                                             bookEnd: range.bookEnd,
+                                             chapEnd: range.chapEnd,
+                                                    occurrences: range.occurrencesInt).filter { $0.instances.first != nil && $0.instances.first!.parsing.lowercased().contains(wordType.name.lowercased()) }
+        
+        var filteredWordInstanceDict: [String:Bible.WordInstance] = [:]
+        var filteredWordInstanceArr: [Bible.WordInstance] = []
+        var instances = words.flatMap { $0.instances }
+        
+        if wordType == .verb {
+            if language == .greek {
+                // tense
+                if !tenses.isEmpty {
+                    tenses.forEach { t in
+                        instances.forEach { i in
+                            if i.parsingStr.lowercased().contains(t.rawValue) {
+                                filteredWordInstanceDict[i.textSurface] = i
+                            }
+                        }
+                    }
+                } else {
+                    for i in instances { filteredWordInstanceDict[i.textSurface] = i }
+                }
+                
+                // voice
+                if !voices.isEmpty {
+                    instances = Array(filteredWordInstanceDict.values)
+                    filteredWordInstanceDict.removeAll()
+                    instances.forEach { i in
+                        voices.forEach { v in
+                            if i.parsingStr.lowercased().contains(v.rawValue) {
+                                filteredWordInstanceDict[i.textSurface] = i
+                            }
+                        }
+                    }
+                }
+                
+                // mood
+                if !moods.isEmpty {
+                    instances = Array(filteredWordInstanceDict.values)
+                    filteredWordInstanceDict.removeAll()
+                    instances.forEach { i in
+                        moods.forEach { m in
+                            if i.parsingStr.lowercased().contains(m.rawValue) {
+                                filteredWordInstanceDict[i.textSurface] = i
+                            }
+                        }
+                    }
+                }
+                
+                // person
+                if !persons.isEmpty {
+                    instances = Array(filteredWordInstanceDict.values)
+                    filteredWordInstanceDict.removeAll()
+                    instances.forEach { i in
+                        persons.forEach { p in
+                            if i.parsingStr.lowercased().contains(p.rawValue) {
+                                filteredWordInstanceDict[i.textSurface] = i
+                            }
+                        }
+                    }
+                }
+                
+                // number
+                if !numbers.isEmpty {
+                    instances = Array(filteredWordInstanceDict.values)
+                    filteredWordInstanceDict.removeAll()
+                    instances.forEach { i in
+                        numbers.forEach { n in
+                            if i.parsingStr.lowercased().contains(n.rawValue) {
+                                filteredWordInstanceDict[i.textSurface] = i
+                            }
+                        }
+                    }
+                }
+                
+                if moods.contains(.participle) {
+                    // cases for participles
+                    var participleInstances = Array(filteredWordInstanceDict.values).filter { $0.parsingStr.lowercased().contains("participle") }
+                    
+                    let nonParticipleInstances = Array(filteredWordInstanceDict.values).filter { !$0.parsingStr.lowercased().contains("participle") }
+                    
+                    filteredWordInstanceDict.removeAll()
+                    
+                    if !cases.isEmpty {
+                        cases.forEach { c in
+                            participleInstances.forEach { i in
+                                if i.parsingStr.lowercased().contains(c.rawValue) {
+                                    filteredWordInstanceDict[i.textSurface] = i
+                                }
+                            }
+                        }
+                    } else {
+                        participleInstances.forEach { filteredWordInstanceDict[$0.textSurface] = $0 }
+                    }
+                    
+                    participleInstances = Array(filteredWordInstanceDict.values).filter { $0.parsingStr.lowercased().contains("participle") }
+                    
+                    // gender for participles
+                    if !genders.isEmpty {
+                        participleInstances.forEach { i in
+                            genders.forEach { g in
+                                if i.parsingStr.lowercased().contains(g.rawValue) {
+                                    filteredWordInstanceDict[i.textSurface] = i
+                                }
+                            }
+                        }
+                    } else {
+                        participleInstances.forEach { filteredWordInstanceDict[$0.textSurface] = $0 }
+                    }
+                    
+                    nonParticipleInstances.forEach { filteredWordInstanceDict[$0.textSurface] = $0 }
+                }
+                
+                filteredWordInstanceArr = Array(filteredWordInstanceDict.values)
+            } else if language == .hebrew {
+                // stems
+                if !stems.isEmpty {
+                    stems.forEach { s in
+                        instances.forEach { i in
+                            if i.parsingStr.lowercased().contains(s.rawValue) {
+                                filteredWordInstanceDict[i.textSurface] = i
+                            }
+                        }
+                    }
+                } else {
+                    for i in instances { filteredWordInstanceDict[i.textSurface] = i }
+                }
+                
+                // verb types
+                if !verbTypes.isEmpty {
+                    instances = Array(filteredWordInstanceDict.values)
+                    filteredWordInstanceDict.removeAll()
+                    instances.forEach { i in
+                        verbTypes.forEach { vt in
+                            if i.parsingStr.lowercased().contains(vt.parsingKey) {
+                                filteredWordInstanceDict[i.textSurface] = i
+                            }
+                        }
+                    }
+                }
+                
+                // gender
+                if !genders.isEmpty {
+                    instances = Array(filteredWordInstanceDict.values)
+                    filteredWordInstanceDict.removeAll()
+                    instances.forEach { i in
+                        genders.forEach { g in
+                            if i.parsingStr.lowercased().contains(g.rawValue) {
+                                filteredWordInstanceDict[i.textSurface] = i
+                            }
+                        }
+                    }
+                }
+                
+                // person
+                if !persons.isEmpty {
+                    instances = Array(filteredWordInstanceDict.values)
+                    filteredWordInstanceDict.removeAll()
+                    instances.forEach { i in
+                        persons.forEach { p in
+                            if i.parsingStr.lowercased().contains(p.rawValue) {
+                                filteredWordInstanceDict[i.textSurface] = i
+                            }
+                        }
+                    }
+                }
+                
+                // number
+                if !numbers.isEmpty {
+                    instances = Array(filteredWordInstanceDict.values)
+                    filteredWordInstanceDict.removeAll()
+                    instances.forEach { i in
+                        numbers.forEach { n in
+                            if i.parsingStr.lowercased().contains(n.rawValue) {
+                                filteredWordInstanceDict[i.textSurface] = i
+                            }
+                        }
+                    }
+                }
+                
+                filteredWordInstanceArr = Array(filteredWordInstanceDict.values)
+            }
+        } else if wordType == .noun {
+            if language == .greek {
+                var instances = words.flatMap { $0.instances }
+                // case
+                if !cases.isEmpty {
+                    cases.forEach { c in
+                        instances.forEach { i in
+                            if i.parsingStr.lowercased().contains(c.rawValue) {
+                                filteredWordInstanceDict[i.textSurface] = i
+                            }
+                        }
+                    }
+                } else {
+                    for i in instances { filteredWordInstanceDict[i.textSurface] = i }
+                }
+                
+                // number
+                if !numbers.isEmpty {
+                    instances = Array(filteredWordInstanceDict.values)
+                    filteredWordInstanceDict.removeAll()
+                    numbers.forEach { n in
+                        instances.forEach { i in
+                            if i.parsingStr.lowercased().contains(n.rawValue) {
+                                filteredWordInstanceDict[i.textSurface] = i
+                            }
+                        }
+                    }
+                }
+                
+                // gender
+                if !genders.isEmpty {
+                    instances = Array(filteredWordInstanceDict.values)
+                    filteredWordInstanceDict.removeAll()
+                    genders.forEach { g in
+                        instances.forEach { i in
+                            if i.parsingStr.lowercased().contains(g.rawValue) {
+                                filteredWordInstanceDict[i.textSurface] = i
+                            }
+                        }
+                    }
+                }
+
+                filteredWordInstanceArr = Array(filteredWordInstanceDict.values)
+            } else if language == .hebrew {
+                // gender
+                if !genders.isEmpty {
+                    instances = Array(filteredWordInstanceDict.values)
+                    filteredWordInstanceDict.removeAll()
+                    genders.forEach { g in
+                        instances.forEach { i in
+                            if i.parsingStr.lowercased().contains(g.rawValue) {
+                                filteredWordInstanceDict[i.textSurface] = i
+                            }
+                        }
+                    }
+                } else {
+                    for i in instances { filteredWordInstanceDict[i.textSurface] = i }
+                }
+                
+                // person
+                if !persons.isEmpty {
+                    instances = Array(filteredWordInstanceDict.values)
+                    filteredWordInstanceDict.removeAll()
+                    instances.forEach { i in
+                        persons.forEach { p in
+                            if i.parsingStr.lowercased().contains(p.rawValue) {
+                                filteredWordInstanceDict[i.textSurface] = i
+                            }
+                        }
+                    }
+                }
+                
+                // number
+                if !numbers.isEmpty {
+                    instances = Array(filteredWordInstanceDict.values)
+                    filteredWordInstanceDict.removeAll()
+                    numbers.forEach { n in
+                        instances.forEach { i in
+                            if i.parsingStr.lowercased().contains(n.rawValue) {
+                                filteredWordInstanceDict[i.textSurface] = i
+                            }
+                        }
+                    }
+                }
+                
+                filteredWordInstanceArr = Array(filteredWordInstanceDict.values)
+            }
+        }
+        
+        onComplete(filteredWordInstanceArr)
+    }
 }
 
 func printTimeElapsedWhenRunningCode(title:String, operation:()->()) {

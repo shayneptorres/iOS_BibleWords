@@ -6,17 +6,22 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct HomeView: View {
     enum Routes: Hashable {
         case allLists
         case allParsingLists
         case showList(VocabWordList)
-        case paradigms(VocabWord.Language)
+        case showParsingList(ParsingList)
+        case paradigms(Language)
         case dueWords
         case newWords
+        case parsedWords
     }
     
+    @Environment(\.managedObjectContext) var context
+    @Environment(\.presentationMode) var presentationMode
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \VocabWord.createdAt, ascending: true)],
         animation: .default)
@@ -29,6 +34,11 @@ struct HomeView: View {
     var lists: FetchedResults<VocabWordList>
     
     @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \VocabWordList.createdAt, ascending: true)],
+        animation: .default)
+    var parsingLists: FetchedResults<ParsingList>
+    
+    @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \StudySession.startDate, ascending: false)],
         predicate: NSPredicate(format: "startDate >= %@", Date.startOfToday as CVarArg)
     ) var studySessions: FetchedResults<StudySession>
@@ -37,6 +47,11 @@ struct HomeView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \StudySessionEntry.createdAt, ascending: false)],
         predicate: NSPredicate(format: "createdAt >= %@", Date.startOfToday as CVarArg)
     ) var studySessionEntries: FetchedResults<StudySessionEntry>
+    
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \StudySessionEntry.createdAt, ascending: false)],
+        predicate: NSPredicate(format: "createdAt >= %@ AND studyTypeInt == \(SessionEntryType.parsing.rawValue)", Date.startOfToday as CVarArg)
+    ) var wordsParsedToday: FetchedResults<StudySessionEntry>
     
     @ObservedObject var viewModel = DataDependentViewModel()
     @State var showReadingView = false
@@ -52,7 +67,7 @@ struct HomeView: View {
                 StatsSection()
                 Section {
                     if recentlyStudiedLists.isEmpty {
-                        Text("Oh no! You haven't studied any vocab lists yet! You should do something about that")
+                        Text("Oh no! You haven't studied your vocab words in a while! You should do something about that")
                             .multilineTextAlignment(.center)
                     } else {
                         ForEach(recentlyStudiedLists) { list in
@@ -79,6 +94,26 @@ struct HomeView: View {
                 }
                 
                 Section {
+                    if recentlyStudiedLists.isEmpty {
+                        Text("Oh no! You haven't practiced your parsing in a while! You should do something about that")
+                            .multilineTextAlignment(.center)
+                    } else {
+                        ForEach(recentlyParsedLists) { list in
+                            NavigationLink(value: Routes.showParsingList(list)) {
+                                VStack(alignment: .leading) {
+                                    HStack {
+                                        Text(list.defaultTitle)
+                                        Spacer()
+                                        Text(list.defaultDetails)
+                                    }
+                                    .padding(.bottom)
+                                    Text("Last studied on: \((list.lastStudied ?? Date()).toPrettyDate)")
+                                        .font(.subheadline)
+                                        .foregroundColor(Color(uiColor: .secondaryLabel))
+                                }
+                            }
+                        }
+                    }
                     NavigationLink("Your Parsing Lists", value: Routes.allParsingLists)
                         .bold()
                         .foregroundColor(.accentColor)
@@ -100,7 +135,10 @@ struct HomeView: View {
             .navigationTitle("Bible Words")
             .toolbar {
                 Button(action: { showReadingView = true }, label: {
-                    Image(systemName: "book.fill")
+                    HStack {
+                        Image(systemName: "book.fill")
+                        Text("Read")
+                    }
                 })
                 .disabled(viewModel.isBuilding)
             }
@@ -114,25 +152,41 @@ struct HomeView: View {
                 case .allLists:
                     VocabListsView()
                 case .allParsingLists:
-                    ParsingLists()
+                    ParsingListsView()
                 case .showList(let list):
                     ListDetailView(viewModel: .init(list: list))
+                case .showParsingList(let list):
+                    ParsingListDetailView(viewModel: .init(list: list))
                 case .paradigms(let lang):
                     switch lang {
                     case .greek:
                         Text("TODO")
                     case .hebrew, .aramaic:
                         ParadigmsViews()
+                    case .all:
+                        Text("TODO")
                     }
                 case .dueWords:
                     DueWordsView()
                 case .newWords:
                     NewWordsLearnedTodayView()
+                case .parsedWords:
+                    AllWordsParsedTodayView()
                 }
             }
             .onAppear {
                 if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
                 } else {
+//                    let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "StudySession")
+//                    deleteFetch.predicate = NSPredicate(format: "SELF.startDate > %@", Date.startOfToday as CVarArg)
+//                    let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
+//
+//                    do {
+//                        try self.context.execute(deleteRequest)
+//                        try self.context.save()
+//                    } catch {
+//                        // error
+//                    }
                     fetchData()
                 }
             }
@@ -145,6 +199,13 @@ struct HomeView: View {
     
     var recentlyStudiedLists: [VocabWordList] {
         let recent = lists
+            .sorted { $0.lastStudied ?? Date().addingTimeInterval(-Double(7.days)) > $1.lastStudied ?? Date().addingTimeInterval(-Double(7.days)) }
+        
+        return Array(recent.prefix(3))
+    }
+    
+    var recentlyParsedLists: [ParsingList] {
+        let recent = parsingLists
             .sorted { $0.lastStudied ?? Date().addingTimeInterval(-Double(7.days)) > $1.lastStudied ?? Date().addingTimeInterval(-Double(7.days)) }
         
         return Array(recent.prefix(3))
@@ -169,6 +230,7 @@ extension HomeView {
         Section {
             WordsStudiedTodayRow()
             ReviewedWordsTodayRow()
+            WordsParsedTodayRow()
             NewWordsLearnedRow()
             CurrentDueWordsRow()
         } header: {
@@ -180,11 +242,11 @@ extension HomeView {
         Group {
             HStack {
                 Image(systemName: "book")
-                Text("\(studySessionEntries.count)")
+                Text("\(studySessionEntries.filter { $0.studyType == .reviewedWord }.count)")
                     .foregroundColor(.accentColor)
                     .bold()
                 +
-                Text(" words") +
+                Text(" vocab words") +
                 Text(" studied")
                     .bold()
                 +
@@ -193,11 +255,30 @@ extension HomeView {
         }
     }
     
+    func WordsParsedTodayRow() -> some View {
+        NavigationLink(value: Routes.parsedWords, label: {
+            Group {
+                HStack {
+                    Image(systemName: "rectangle.and.hand.point.up.left.filled")
+                    Text("\(wordsParsedToday.count)")
+                        .foregroundColor(.accentColor)
+                        .bold()
+                    +
+                    Text(" words") +
+                    Text(" parsed")
+                        .bold()
+                    +
+                    Text(" today")
+                }
+            }
+        })
+    }
+    
     func NewWordsLearnedRow() -> some View {
         NavigationLink(value: Routes.newWords, label: {
             Group {
                 HStack {
-                    Image(systemName: "sunrise")
+                    Image(systemName: "gift.fill")
                     Text("\(studySessionEntries.filter { $0.studyTypeInt == 0 }.count)")
                         .foregroundColor(.accentColor)
                         .bold()

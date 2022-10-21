@@ -19,3 +19,5 @@ extension Bindable {
 extension Bible.WordInfo: Bindable {}
 extension Bible.WordInstance: Bindable {}
 extension VocabWordList: Bindable {}
+extension ParsingList: Bindable {}
+extension StudySessionEntry: Bindable {}

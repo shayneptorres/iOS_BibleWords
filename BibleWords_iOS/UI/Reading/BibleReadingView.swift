@@ -41,6 +41,7 @@ struct BibleReadingView: View {
                                 }, onClose: {
                                     showWordDetail = false
                                 })
+                            .frame(maxHeight: 400)
                         }
                         PassageNavigationBar()
                     }
@@ -64,6 +65,7 @@ struct BibleReadingView: View {
             }
         }
         .onChange(of: selectedWord) { w in
+            print(w)
             selectedWord = w
             showPassageSelector = false
             showWordDetail = true
@@ -81,6 +83,7 @@ struct BibleReadingView: View {
             ToolbarItemGroup(placement: .principal) {
                 Text("\(passage.book.title) \(passage.chapter)")
                     .font(.title2)
+                    .bold()
             }
         }
     }

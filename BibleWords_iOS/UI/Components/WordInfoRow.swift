@@ -13,7 +13,7 @@ struct WordInfoRow: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text(wordInfo.lemma)
-                .font(wordInfo.language == .hebrew ? .bible40 : .bible24)
+                .font(wordInfo.language.meduimBibleFont)
                 .padding(.bottom, 4)
             Text(wordInfo.definition)
                 .font(.subheadline)

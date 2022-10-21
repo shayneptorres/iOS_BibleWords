@@ -7,39 +7,79 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "D3A17153-EFEE-4BB1-8F19-3E4EB09A6B11"
+            uuid = "3ADEDF37-5EDF-4717-9ED0-C6D676DC601B"
             shouldBeEnabled = "No"
             ignoreCount = "0"
-            continueAfterRunningActions = "Yes"
-            filePath = "BibleWords_iOS/UI/Vocab/ListDetailView.swift"
+            continueAfterRunningActions = "No"
+            filePath = "BibleWords_iOS/UI/Parsing/PracticeParsingView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "132"
-            endingLineNumber = "132"
+            startingLineNumber = "243"
+            endingLineNumber = "243"
+            landmarkName = "setCurrentInstance()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D7771310-4257-4087-B54F-5463049A7848"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BibleWords_iOS/UI/Parsing/ParsingListSettingsView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
             landmarkName = "body"
             landmarkType = "24">
-            <Actions>
-               <BreakpointActionProxy
-                  ActionExtensionID = "Xcode.BreakpointAction.DebuggerCommand">
-                  <ActionContent
-                     consoleCommand = "print(&quot;SHOW&quot;)">
-                  </ActionContent>
-               </BreakpointActionProxy>
-            </Actions>
+            <Locations>
+               <Location
+                  uuid = "D7771310-4257-4087-B54F-5463049A7848 - 4b748ff01f3c762e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #3 (BibleWords_iOS.ParsingListSettingsView.SettingPage) -&gt; SwiftUI.List&lt;Swift.Never, SwiftUI.Text&gt; in closure #1 () -&gt; &lt;&lt;opaque return type of SwiftUI.View.navigationDestination&lt;&#x3c4;_0_0, &#x3c4;_0_1 where &#x3c4;_1_0: Swift.Hashable, &#x3c4;_1_1: SwiftUI.View&gt;(for: &#x3c4;_1_0.Type, destination: (&#x3c4;_1_0) -&gt; &#x3c4;_1_1) -&gt; some&gt;&gt;.0 in BibleWords_iOS.ParsingListSettingsView.body.getter : some"
+                  moduleName = "BibleWords_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/shaynetorres/Development/iOS/BibleWords_iOS/BibleWords_iOS/UI/Parsing/ParsingListSettingsView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "528">
+               </Location>
+               <Location
+                  uuid = "D7771310-4257-4087-B54F-5463049A7848 - 1a060d88160aeadf"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; SwiftUI.Text in closure #3 (BibleWords_iOS.ParsingListSettingsView.SettingPage) -&gt; SwiftUI.List&lt;Swift.Never, SwiftUI.Text&gt; in closure #1 () -&gt; &lt;&lt;opaque return type of SwiftUI.View.navigationDestination&lt;&#x3c4;_0_0, &#x3c4;_0_1 where &#x3c4;_1_0: Swift.Hashable, &#x3c4;_1_1: SwiftUI.View&gt;(for: &#x3c4;_1_0.Type, destination: (&#x3c4;_1_0) -&gt; &#x3c4;_1_1) -&gt; some&gt;&gt;.0 in BibleWords_iOS.ParsingListSettingsView.body.getter : some"
+                  moduleName = "BibleWords_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/shaynetorres/Development/iOS/BibleWords_iOS/BibleWords_iOS/UI/Parsing/ParsingListSettingsView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "456">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "4B7DAE37-E6DB-4254-9C05-CA8FBC03BC75"
+            uuid = "478FE3D3-2E2C-436C-9734-EE4C3EE92AA4"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "BibleWords_iOS/UI/HomeView.swift"
+            filePath = "BibleWords_iOS/UI/Parsing/ParsingListSettingsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "107"
-            endingLineNumber = "107"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -47,161 +87,113 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "5B0034DF-8C0B-453E-B12E-AFD31A462BFD"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BibleWords_iOS/Data/Bible.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "71"
-            endingLineNumber = "71"
-            landmarkName = "word(for:source:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "35D7BFD7-4E2A-4A2C-89D9-5536FF1A612A"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BibleWords_iOS/Data/Bible.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "73"
-            endingLineNumber = "73"
-            landmarkName = "word(for:source:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "C65BA7D7-B3E4-4122-892A-4AB8AC8C7DB9"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BibleWords_iOS/Data/Bible.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
-            landmarkName = "word(for:source:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "CCE173EF-BA0C-4BDB-AE59-A5D3A154F79D"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BibleWords_iOS/Data/Bible.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "59"
-            endingLineNumber = "59"
-            landmarkName = "word(for:source:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "D31A545E-DFEE-4E28-88EC-FCBE76B663C9"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BibleWords_iOS/Data/Bible.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "185"
-            endingLineNumber = "185"
-            landmarkName = "parsingInfo"
-            landmarkType = "24">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "F451396A-EB50-45E0-9162-825FEA94791F"
+            uuid = "FADD593E-94F1-42ED-8948-8CA8C3C74885"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "BibleWords_iOS/UI/Parsing/BuildParsingListView.swift"
+            filePath = "BibleWords_iOS/UI/Parsing/ParsingListSettingsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "138"
-            endingLineNumber = "138"
-            landmarkName = "onBuild()"
+            startingLineNumber = "28"
+            endingLineNumber = "28"
+            landmarkName = "body"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "01F88157-96A0-4002-A5F5-DBAFAE8763FC"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BibleWords_iOS/Util/ExternalTools.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "24"
+            endingLineNumber = "24"
+            landmarkName = "openBibleWordStudy(for:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "5FC04B8E-4452-4B82-B61A-3E67295B77CB"
+            uuid = "3CE1A7E3-5FB2-45D2-A0B9-FB704C8EC81C"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "BibleWords_iOS/UI/Vocab/WordInstancesView.swift"
+            filePath = "BibleWords_iOS/Util/ExternalTools.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "62"
-            endingLineNumber = "62"
-            landmarkName = "body"
-            landmarkType = "24">
+            startingLineNumber = "20"
+            endingLineNumber = "20"
+            landmarkName = "openBibleWordStudy(for:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "3CE1A7E3-5FB2-45D2-A0B9-FB704C8EC81C - 1cd68446b3bcf0f1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static BibleWords_iOS.Logos.openBibleWordStudy(for: Swift.String) -&gt; ()"
+                  moduleName = "BibleWords_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/shaynetorres/Development/iOS/BibleWords_iOS/BibleWords_iOS/Util/ExternalTools.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "19"
+                  endingLineNumber = "19"
+                  offsetFromSymbolStart = "268">
+               </Location>
+               <Location
+                  uuid = "3CE1A7E3-5FB2-45D2-A0B9-FB704C8EC81C - 1cd68446b3bcf0f1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static BibleWords_iOS.Logos.openBibleWordStudy(for: Swift.String) -&gt; ()"
+                  moduleName = "BibleWords_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/shaynetorres/Development/iOS/BibleWords_iOS/BibleWords_iOS/Util/ExternalTools.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "19"
+                  endingLineNumber = "19"
+                  offsetFromSymbolStart = "996">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "B67B5FFB-D160-459E-A0DC-F7076B8D3864"
+            uuid = "D68D9ACD-0515-41AF-A7D5-AE9EB8FAA479"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "BibleWords_iOS/UI/Reading/WordDetailsView.swift"
+            filePath = "BibleWords_iOS/Util/ExternalTools.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "59"
-            endingLineNumber = "59"
-            landmarkName = "body"
-            landmarkType = "24">
+            startingLineNumber = "27"
+            endingLineNumber = "27"
+            landmarkName = "openBibleWordStudy(for:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "198D6E4A-2572-4E6A-9306-FF66EE20C202"
+            uuid = "B80E24DD-833B-45FA-BD86-B06E2CF069B4"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "BibleWords_iOS/Data/Bible.swift"
+            filePath = "BibleWords_iOS/Util/ExternalTools.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "244"
-            endingLineNumber = "244"
-            landmarkName = "surface"
-            landmarkType = "24">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "063E1C7C-FA6A-45A0-923F-BBD53F9BEE14"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BibleWords_iOS/UI/Vocab/WordInstancesView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
-            landmarkName = "body"
-            landmarkType = "24">
+            startingLineNumber = "25"
+            endingLineNumber = "25"
+            landmarkName = "openBibleWordStudy(for:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

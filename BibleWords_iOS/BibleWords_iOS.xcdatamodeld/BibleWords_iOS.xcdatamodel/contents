@@ -1,22 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21279" systemVersion="21G83" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
     <entity name="ParsingList" representedClassName="ParsingList" syncable="YES" codeGenerationType="class">
+        <attribute name="casesStr" optional="YES" attributeType="String"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="details" optional="YES" attributeType="String"/>
+        <attribute name="gendersStr" optional="YES" attributeType="String"/>
+        <attribute name="hebVerbTypesStr" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="languageInt" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="lastStudied" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="moodsStr" optional="YES" attributeType="String"/>
+        <attribute name="numbersStr" optional="YES" attributeType="String"/>
+        <attribute name="personsStr" optional="YES" attributeType="String"/>
+        <attribute name="stemsStr" optional="YES" attributeType="String"/>
+        <attribute name="tensesStr" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
-        <relationship name="ranges" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="VocabWordRange" inverseName="parsingList" inverseEntity="VocabWordRange"/>
+        <attribute name="voicesStr" optional="YES" attributeType="String"/>
+        <attribute name="wordTypeStr" optional="YES" attributeType="String"/>
+        <relationship name="range" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VocabWordRange" inverseName="parsingList" inverseEntity="VocabWordRange"/>
+        <relationship name="studySessions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="StudySession" inverseName="parsingList" inverseEntity="StudySession"/>
     </entity>
     <entity name="StudySession" representedClassName="StudySession" syncable="YES" codeGenerationType="class">
         <attribute name="endDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <relationship name="entries" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StudySessionEntry" inverseName="session" inverseEntity="StudySessionEntry"/>
+        <relationship name="entries" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="StudySessionEntry" inverseName="session" inverseEntity="StudySessionEntry"/>
+        <relationship name="parsingList" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ParsingList" inverseName="studySessions" inverseEntity="ParsingList"/>
     </entity>
     <entity name="StudySessionEntry" representedClassName="StudySessionEntry" syncable="YES" codeGenerationType="class">
         <attribute name="answerTypeInt" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="parsingInstanceId" optional="YES" attributeType="String"/>
+        <attribute name="parsingInstanceLemma" optional="YES" attributeType="String"/>
+        <attribute name="parsingInstanceParseString" optional="YES" attributeType="String"/>
+        <attribute name="parsingInstanceSurfaceText" optional="YES" attributeType="String"/>
         <attribute name="studyTypeInt" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="session" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StudySession" inverseName="entries" inverseEntity="StudySession"/>
         <relationship name="word" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VocabWord" inverseName="sessionEntries" inverseEntity="VocabWord"/>
@@ -52,6 +70,6 @@
         <attribute name="occurrences" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="sourceId" optional="YES" attributeType="String"/>
         <relationship name="list" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VocabWordList" inverseName="ranges" inverseEntity="VocabWordList"/>
-        <relationship name="parsingList" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ParsingList" inverseName="ranges" inverseEntity="ParsingList"/>
+        <relationship name="parsingList" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ParsingList" inverseName="range" inverseEntity="ParsingList"/>
     </entity>
 </model>

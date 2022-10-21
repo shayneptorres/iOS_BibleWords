@@ -30,7 +30,7 @@ struct VocabWordDefinitionView: View {
                             .foregroundColor(Color(uiColor: .secondaryLabel))
                             .padding(.bottom, 2)
                         Text(vocabWord.lemma)
-                            .font(.bible24)
+                            .font(vocabWord.wordInfo.language.meduimBibleFont)
                     }
                     VStack(alignment: .leading) {
                         Text("Default definition")
@@ -54,7 +54,14 @@ struct VocabWordDefinitionView: View {
                         Text("Use this custom definition")
                     })
                 }, header: {
-                    
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            Logos.openBibleWordStudy(for: vocabWord.lemma)
+                        }, label: {
+                            Text("Logos Word Study")
+                        })
+                    }
                 }, footer: {
                     Text("Add your own definition for this vocab word. This definition will be shown whenever this word is studied. You can switch back to the default definition at any time.")
                 })

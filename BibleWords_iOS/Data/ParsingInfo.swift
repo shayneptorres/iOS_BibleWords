@@ -49,12 +49,14 @@ struct Parsing {
         case neuter
         case common
         
-        static func all(for lang: VocabWord.Language) -> [Gender] {
+        static func all(for lang: Language) -> [Gender] {
             switch lang {
             case .hebrew, .aramaic:
                 return [.masculine, .feminine, .common]
             case .greek:
                 return [.masculine, .feminine, .neuter]
+            case .all:
+                return []
             }
         }
     }
@@ -86,12 +88,14 @@ struct Parsing {
         case plural
         case dual
         
-        static func all(for lang: VocabWord.Language) -> [Number] {
+        static func all(for lang: Language) -> [Number] {
             switch lang {
             case .hebrew, .aramaic:
                 return Number.allCases
             case .greek:
                 return [.singular, .plural]
+            case .all:
+                return []
             }
         }
     }

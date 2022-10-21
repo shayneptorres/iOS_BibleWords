@@ -167,7 +167,7 @@ struct Bible {
             return word
         }
         
-        var language: VocabWord.Language {
+        var language: Language {
             if instances.first?.bibleBook.rawValue ?? 0 <= Bible.Book.malachi.rawValue {
                 return .hebrew
             } else {
@@ -184,6 +184,17 @@ struct Bible {
             
             return .init(strongId: self.id, lemma: self.lemma, definition: self.definition, instances: uniqueInstances)
         }
+        
+        func parsingInfo(for wordType: Parsing.WordType) -> ParsingInfo {
+            var parsingDict: [String:WordInstance] = [:]
+            for instance in instances {
+                parsingDict[instance.parsing] = instance
+            }
+            var uniqueInstances = parsingDict.map { $0.value }
+//            uniqueInstances = uniqueInstances.filter { $0.parsing.lowercased().contains(word) }
+            
+            return .init(strongId: self.id, lemma: self.lemma, definition: self.definition, instances: uniqueInstances)
+        }
     }
     
     struct ParsingInfo: Identifiable, Hashable {
@@ -191,7 +202,7 @@ struct Bible {
         let strongId: String
         let lemma: String
         let definition: String
-        let instances: [WordInstance]
+        var instances: [WordInstance]
     }
     
     struct WordInstance: Identifiable, Hashable {
@@ -214,6 +225,10 @@ struct Bible {
             self.rawSurface = dict["rawSurface"] as? String ?? ""
             self.parsing = dict["parsing"] as? String ?? ""
             self.refStr = dict["ref"] as? String ?? ""
+        }
+        
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(textSurface)
         }
 
         var bibleBook: Bible.Book {
@@ -248,7 +263,30 @@ struct Bible {
             return rawSurface.isEmpty ? surface : rawSurface
         }
         
-        var language: VocabWord.Language {
+        var parsingStr: String {
+//            if parsing.first == " " {
+//                return String(parsing.dropFirst())
+//            }
+            return parsing
+        }
+        
+        var displayParsingStr: String {
+            if language == .greek {
+                return parsing
+            } else  {
+                var str = ""
+                str = parsing.replacingOccurrences(of: " perfect ", with: " Qatal (perfect) ")
+                str = str.replacingOccurrences(of: " sequential perfect ", with: " WeQatal (sequential perfect) ")
+                str = str.replacingOccurrences(of: " imperfect ", with: " Yiqtol (imperfect) ")
+                str = str.replacingOccurrences(of: " sequential imperfect ", with: " WayYiqtol (sequential imperfect) ")
+                if str.first == " " {
+                    return String(str.dropFirst())
+                }
+                return str
+            }
+        }
+        
+        var language: Language {
             if bookInt < 40 {
                 return .hebrew
             } else {

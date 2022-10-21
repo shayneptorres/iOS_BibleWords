@@ -46,30 +46,30 @@ struct VocabListStudyView: View, Equatable {
                     HeaderView()
                     ZStack {
                         VStack {
-                            ZStack(alignment: .top) {
-                                LemmaCardView()
-                                HStack {
-                                    Spacer()
-                                    Button(action: {
-                                        showWordInfoView = true
-                                    }, label: {
-                                        Image(systemName: "info.circle")
-                                    })
-                                    .padding()
-                                }
-                                if currentWord?.currentInterval == 0 {
-                                    HStack {
-                                        Button(action: {
-                                            showWordInfoView = true
-                                        }, label: {
-                                            Image(systemName: "brain.head.profile")
-                                            Text("New word!")
-                                        })
-                                        .padding()
-                                        Spacer()
-                                    }
-                                }
-                            }
+                            LemmaCardView()
+//                            ZStack(alignment: .top) {
+//                                HStack {
+//                                    Spacer()
+//                                    Button(action: {
+//                                        showWordInfoView = true
+//                                    }, label: {
+//                                        Image(systemName: "info.circle")
+//                                    })
+//                                    .padding()
+//                                }
+//                                if currentWord?.currentInterval == 0 {
+//                                    HStack {
+//                                        Button(action: {
+//                                            showWordInfoView = true
+//                                        }, label: {
+//                                            Image(systemName: "gift.fill")
+//                                            Text("New word!")
+//                                        })
+//                                        .padding()
+//                                        Spacer()
+//                                    }
+//                                }
+//                            }
                             ZStack(alignment: .bottomLeading) {
                                 if prevWord != nil {
                                     HStack {
@@ -381,16 +381,48 @@ extension VocabListStudyView {
     }
     
     func LemmaCardView() -> some View {
-        Text(currentWord?.lemma ?? "")
-            .padding(.vertical)
-            .font(.bible100)
-            .minimumScaleFactor(0.5)
-            .lineLimit(1)
-            .frame(maxWidth: .infinity, minHeight: 200)
-            .padding(.horizontal)
-            .background(Color(UIColor.systemBackground))
-            .foregroundColor(Color(uiColor: .label))
-            .cornerRadius(Design.defaultCornerRadius)
+        ZStack(alignment: .top) {
+            Text(currentWord?.lemma ?? "")
+                .padding(.vertical)
+                .font(.bible100)
+                .minimumScaleFactor(0.5)
+                .lineLimit(1)
+                .frame(maxWidth: .infinity, maxHeight: 225)
+                .padding(.horizontal)
+                .background(Color(UIColor.systemBackground))
+                .foregroundColor(Color(uiColor: .label))
+                .cornerRadius(Design.defaultCornerRadius)
+            HStack {
+                Button(action: {
+                    showWordInfoView = true
+                }, label: {
+//                    Image(systemName: "info.circle")
+                })
+                .padding()
+                Spacer()
+                Button(action: {
+                    showWordInfoView = true
+                }, label: {
+                    Image(systemName: "info.circle")
+                        .font(.title2)
+                })
+                .padding()
+            }
+            VStack {
+                Spacer()
+                HStack {
+                    Spacer()
+                    if displayMode == .lemmaGloss || displayMode == .learnWord {
+                        Button(action: { showWordDefView = true }, label: {
+                            Image(systemName: "pencil.circle")
+                                .font(.title2)
+                        })
+                        .padding()
+                    }
+                }
+            }
+            .frame(maxWidth: .infinity, maxHeight: 225)
+        }
     }
     
     func DefinitionView() -> some View {
@@ -502,11 +534,11 @@ extension VocabListStudyView {
                     Spacer()
                     VStack {
                         HStack {
-                            Image(systemName: "brain.head.profile")
+                            Image(systemName: "gift.fill")
                                 .font(.title2)
                                 .bold()
                                 .foregroundColor(.accentColor)
-                            Text("Learned it!")
+                            Text("New Word!")
                                 .font(.title2)
                                 .bold()
                                 .foregroundColor(.accentColor)
@@ -527,20 +559,20 @@ extension VocabListStudyView {
         )
     }
     
-    func IntervalButton(title: String, detail: String, color: Color, action: @escaping (() -> ())) -> some View {
+    func AnswerButton(answerType: SessionEntryAnswerType, detail: String, action: @escaping (() -> ())) -> some View {
         return Button(action: action, label: {
             VStack {
-                Text(title)
-                    .bold()
+                answerType.buttonImage
+                    .font(.largeTitle)
+                    .padding(.bottom, 4)
                 Text(detail)
-                    .font(.caption)
+                    .font(.subheadline)
                     .bold()
             }
             .foregroundColor(.white)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(color)
-            .cornerRadius(4)
-            .shadow(radius: 0.5)
+            .background(answerType.color)
+            .cornerRadius(Design.defaultCornerRadius)
         })
     }
     
@@ -548,30 +580,13 @@ extension VocabListStudyView {
         return AnyView(
             VStack {
                 HStack {
-                    Spacer()
-                    if displayMode == .lemmaGloss || displayMode == .learnWord {
-                        Button(action: { showWordDefView = true }, label: {
-                            Image(systemName: "pencil.circle")
-                                .frame(width: 30, height: 30)
-                        })
-                    }
-                    if displayMode == .lemmaGloss {
-                        Spacer()
-                        Button(action: onSkip, label: {
-                            Image(systemName: "goforward.60")
-                                .frame(width: 30, height: 30)
-                        })
-                    }
-                    Spacer()
-                }
-                HStack {
-                    IntervalButton(title: "Wrong", detail: onWrongIntervalStr, color: .red, action: onWrong)
-                    IntervalButton(title: "Hard", detail: onHardIntervalStr, color: .orange, action: onHard)
+                    AnswerButton(answerType: .wrong, detail: onWrongIntervalStr, action: onWrong)
+                    AnswerButton(answerType: .hard, detail: onHardIntervalStr, action: onHard)
                 }
                 .frame(maxWidth: .infinity)
                 HStack {
-                    IntervalButton(title: "Good", detail: onGoodIntervalStr, color: .green, action: onGood)
-                    IntervalButton(title: "Easy", detail: onEasyIntervalStr, color: .accentColor, action: onEasy)
+                    AnswerButton(answerType: .good, detail: onGoodIntervalStr, action: onGood)
+                    AnswerButton(answerType: .easy, detail: onEasyIntervalStr, action: onEasy)
                 }
                 .frame(maxWidth: .infinity)
             }
@@ -586,10 +601,10 @@ extension VocabListStudyView {
                 VStack {
                     InterfaceButtonsView()
                     HStack {
-                        IntervalButton(title: "Wrong", detail: onWrongIntervalStr, color: .red, action: onWrong)
-                        IntervalButton(title: "Hard", detail: onHardIntervalStr, color: .orange, action: onHard)
-                        IntervalButton(title: "Good", detail: onGoodIntervalStr, color: .green, action: onGood)
-                        IntervalButton(title: "Easy", detail: onEasyIntervalStr, color: .accentColor, action: onEasy)
+                        AnswerButton(answerType: .wrong, detail: onWrongIntervalStr, action: onWrong)
+                        AnswerButton(answerType: .hard, detail: onHardIntervalStr, action: onHard)
+                        AnswerButton(answerType: .good, detail: onGoodIntervalStr, action: onGood)
+                        AnswerButton(answerType: .easy, detail: onEasyIntervalStr, action: onEasy)
                     }
                     .frame(height: buttonHeight)
                     .frame(maxWidth: .infinity)
@@ -604,13 +619,13 @@ extension VocabListStudyView {
                         .frame(maxWidth: interfaceMode == .rightHanded ? .infinity : 0)
                     VStack {
                         InterfaceButtonsView()
-                        IntervalButton(title: "Wrong", detail: onWrongIntervalStr, color: .red, action: onWrong)
+                        AnswerButton(answerType: .wrong, detail: onWrongIntervalStr, action: onWrong)
                             .frame(maxHeight: 60)
-                        IntervalButton(title: "Hard", detail: onHardIntervalStr, color: .orange, action: onHard)
+                        AnswerButton(answerType: .hard, detail: onHardIntervalStr, action: onHard)
                             .frame(maxHeight: 60)
-                        IntervalButton(title: "Good", detail: onGoodIntervalStr, color: .green, action: onGood)
+                        AnswerButton(answerType: .good, detail: onGoodIntervalStr, action: onGood)
                             .frame(maxHeight: 60)
-                        IntervalButton(title: "Easy", detail: onEasyIntervalStr, color: .accentColor, action: onEasy)
+                        AnswerButton(answerType: .easy, detail: onEasyIntervalStr, action: onEasy)
                             .frame(maxHeight: 60)
                     }
                     Spacer()

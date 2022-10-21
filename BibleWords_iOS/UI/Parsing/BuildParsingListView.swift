@@ -41,10 +41,13 @@ struct BuildParsingListView: View {
     @Environment(\.managedObjectContext) var context
     
     @State var parsingInfos: [Bible.ParsingInfo] = []
-    @State var range = BibleRange(bookStart: 40, bookEnd: 66, chapStart: 1, chapEnd: 22, occurrencesTxt: "50")
+    @State var parsingInstances: [Bible.WordInstance] = []
+    
+    @State var ntRange = BibleRange(bookStart: 40, bookEnd: 66, chapStart: 1, chapEnd: 22, occurrencesTxt: "50")
+    @State var otRange = BibleRange(bookStart: 1, bookEnd: 39, chapStart: 1, chapEnd: 3, occurrencesTxt: "100")
     
     @State var wordType = Parsing.WordType.verb
-    @State var language = VocabWord.Language.greek
+    @State var language = Language.greek
     
     @State var showSettingSelector = false
     @State var showBuildParingInfos = false
@@ -63,33 +66,36 @@ struct BuildParsingListView: View {
     @State var numbers: [Parsing.Number] = []
     
     var body: some View {
-        List {
-            Section {
-                if language == .greek {
-                    GreekSettingsSection()
-                } else {
-                    HebrewSettingsSection()
-                }
-            } header: {
-                Text("Parsing Settings")
-            }
-            Section {
-                BibleRangePickerView(range: $range)
-            } header: {
-                Text("Bible Range")
-            }
-            
-            Button(action: onBuild, label: {
-                if isBuilding {
-                    HStack {
-                        Label("Building...", systemImage: "hammer")
-                        ProgressView()
-                            .progressViewStyle(.automatic)
+        ZStack {
+            List {
+                LanguagePicker()
+                Section {
+                    if language == .greek {
+                        GreekSettingsSection()
+                    } else {
+                        HebrewSettingsSection()
                     }
-                } else {
-                    Label("Build list", systemImage: "hammer")
+                } header: {
+                    Text("Parsing Settings")
                 }
-            }).disabled(isBuilding)
+                Section {
+                    if language == .greek {
+                        BibleRangePickerView(range: $ntRange)
+                    } else {
+                        BibleRangePickerView(range: $otRange)
+                    }
+                } header: {
+                    Text("Bible Range")
+                } footer: {
+                    Spacer().frame(height: 100)
+                }
+            }
+            VStack {
+                Spacer()
+                AppButton(text: isBuilding ? "Building list..." : "Build List", systemImage: "hammer", action: onBuild)
+                    .disabled(isBuilding)
+                    .padding(.bottom)
+            }
         }
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
@@ -121,22 +127,36 @@ struct BuildParsingListView: View {
 }
 
 extension BuildParsingListView {
+    var groupedParsingInstances: [GroupedParsingInstances] {
+        let instancesByLemma: [String:[Bible.WordInstance]] = Dictionary(grouping: parsingInstances, by: { $0.lemma })
+        return instancesByLemma
+            .map { GroupedParsingInstances(lemma: $0.key, instances: $0.value) }
+            .sorted { $0.lemma < $1.lemma }
+    }
+    
     func onBuild() {
         isBuilding = true
-        DispatchQueue.global().async {
-            var words: Set<Bible.WordInfo> = []
-            
-            VocabListBuilder.buildVocabList(bookStart: range.bookStart,
-                                                 chapStart: range.chapStart,
-                                                 bookEnd: range.bookEnd,
-                                                 chapEnd: range.chapEnd,
-                                            occurrences: range.occurrencesInt).forEach { words.insert($0) }
-            
-            DispatchQueue.main.async {
-                parsingInfos = Array(words).map { $0.parsingInfo }
-                isBuilding = false
-                showBuildParingInfos = true
-            }
+        let buildRange = language == .greek ? ntRange : otRange
+        Task {
+            await VocabListBuilder.buildParsingList(range: buildRange,
+                                                        language: language,
+                                                        wordType: wordType,
+                                                        cases: cases,
+                                                        genders: genders,
+                                                        numbers: numbers,
+                                                        tenses: tenses,
+                                                        voices: voices,
+                                                        moods: moods,
+                                                        persons: persons,
+                                                        stems: stems,
+                                                        verbTypes: verbTypes,
+                                                        onComplete: { instances in
+                DispatchQueue.main.async {
+                    parsingInstances = instances
+                    isBuilding = false
+                    showBuildParingInfos = true
+                }
+            })
         }
     }
     
@@ -144,61 +164,76 @@ extension BuildParsingListView {
         CoreDataManager.transaction(context: context) {
             let parsingList = ParsingList(context: context)
             parsingList.id = UUID().uuidString
-            parsingList.title = range.title
-            parsingList.details = range.details
+            let buildRange = language == .greek ? ntRange : otRange
+            parsingList.title = buildRange.title
+            parsingList.details = buildRange.details
             parsingList.createdAt = Date()
             
-            let range = VocabWordRange(context: context)
+            parsingList.languageInt = language.rawValue
+            parsingList.wordTypeStr = wordType.rawValue
+            parsingList.casesStr = cases.map { $0.rawValue }.joined(separator: ".")
+            parsingList.numbersStr = numbers.map { $0.rawValue }.joined(separator: ".")
+            parsingList.gendersStr = genders.map { $0.rawValue }.joined(separator: ".")
+            parsingList.tensesStr = tenses.map { $0.rawValue }.joined(separator: ".")
+            parsingList.voicesStr = voices.map { $0.rawValue }.joined(separator: ".")
+            parsingList.moodsStr = moods.map { $0.rawValue }.joined(separator: ".")
+            parsingList.stemsStr = stems.map { $0.rawValue }.joined(separator: ".")
+            parsingList.hebVerbTypesStr = verbTypes.map { $0.rawValue }.joined(separator: ".")
+            parsingList.range = VocabWordRange.new(context: context, range: buildRange)
             
+            showBuildParingInfos = false
+            presentationMode.wrappedValue.dismiss()
         }
     }
 }
 
+typealias GroupedParsingInstances = (lemma: String, instances: [Bible.WordInstance])
 extension BuildParsingListView {
     func BuiltParsingWordsView() -> some View {
         NavigationStack {
             ZStack {
                 List {
                     HStack {
-                        Text("\(parsingInfos.count)")
+                        Text("\(groupedParsingInstances.count)")
                             .bold()
                             .foregroundColor(.accentColor)
                         +
                         Text(" words")
                     }
                     HStack {
-                        Text("\(parsingInfos.flatMap { $0.instances }.count)")
+                        Text("\(parsingInstances.count)")
                             .bold()
                             .foregroundColor(.accentColor)
                         +
                         Text(" forms")
                     }
-                    ForEach(parsingInfos) { info in
-                        VStack(alignment: .leading) {
-                            Text(info.lemma)
-                                .font(.bible32)
-                                .padding(.bottom, 4)
-                            Text(info.definition)
-                                .font(.subheadline)
-                                .foregroundColor(Color(uiColor: .secondaryLabel))
-                            VStack(alignment: .leading) {
-                                Text("Forms")
-                                Text(info.instances.map { $0.surface }.joined(separator: ", "))
-                                    .font(.subheadline)
-                                    .foregroundColor(Color(uiColor: .secondaryLabel))
+                    
+                    ForEach(groupedParsingInstances, id: \.lemma) { group in
+                        Section {
+                            
+                            HStack {
+                                Text("Lexical Form:")
+                                    .bold()
+                                Text(group.lemma)
+                                    .font(language.meduimBibleFont)
                             }
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: Design.defaultCornerRadius))
-                            .cornerRadius(Design.smallCornerRadius)
-                            .padding()
+                            ForEach(group.instances) { instance in
+                                VStack(alignment: .leading) {
+                                    Text(instance.textSurface)
+                                        .font(language.meduimBibleFont)
+                                        .padding(.bottom, 4)
+                                    Text(instance.parsingStr)
+                                        .font(.subheadline)
+                                        .foregroundColor(Color(uiColor: .secondaryLabel))
+                                }
+                            }
                         }
                     }
                 }
                 VStack {
                     Spacer()
                     AppButton(text: "Save Parsing List") {
-                        
+                        onSave()
                     }
                 }
             }
@@ -210,7 +245,6 @@ extension BuildParsingListView {
     
     func GreekSettingsSection() -> some View {
         Section {
-            LanguagePicker()
             WordTypePicker()
             if wordType == .verb {
                 VerbTenseRow()
@@ -237,7 +271,6 @@ extension BuildParsingListView {
     
     func HebrewSettingsSection() -> some View {
         Section {
-            LanguagePicker()
             WordTypePicker()
             if wordType == .noun {
                 GenderRow()
@@ -260,7 +293,7 @@ extension BuildParsingListView {
 extension BuildParsingListView {
     func LanguagePicker() -> some View {
         Picker("Language", selection: $language) {
-            ForEach([VocabWord.Language.greek, VocabWord.Language.hebrew], id: \.rawValue) { lang in
+            ForEach([Language.greek, Language.hebrew], id: \.rawValue) { lang in
                 Text(lang.title).tag(lang)
             }
         }.animation(.easeInOut, value: language)
@@ -281,7 +314,7 @@ extension BuildParsingListView {
             HStack {
                 Text("Select Verb Tense")
                 Spacer()
-                Text(tenses.isEmpty ? "None selected" : tenses.map { $0.rawValue }.joined(separator: ", "))
+                Text(tenses.isEmpty ? "All" : tenses.map { $0.rawValue }.joined(separator: ", "))
                     .font(.footnote)
                     .foregroundColor(Color(uiColor: .secondaryLabel))
             }
@@ -303,7 +336,7 @@ extension BuildParsingListView {
             HStack {
                 Text("Select Verb Voice")
                 Spacer()
-                Text(voices.isEmpty ? "None selected" : voices.map { $0.rawValue }.joined(separator: ", "))
+                Text(voices.isEmpty ? "All" : voices.map { $0.rawValue }.joined(separator: ", "))
                     .font(.footnote)
                     .foregroundColor(Color(uiColor: .secondaryLabel))
             }
@@ -325,7 +358,7 @@ extension BuildParsingListView {
             HStack {
                 Text("Select Verb Mood")
                 Spacer()
-                Text(moods.isEmpty ? "None selected" : moods.map { $0.rawValue }.joined(separator: ", "))
+                Text(moods.isEmpty ? "All" : moods.map { $0.rawValue }.joined(separator: ", "))
                     .font(.footnote)
                     .foregroundColor(Color(uiColor: .secondaryLabel))
             }
@@ -347,7 +380,7 @@ extension BuildParsingListView {
             HStack {
                 Text("Select Verb Stem")
                 Spacer()
-                Text(stems.isEmpty ? "None selected" : stems.map { $0.rawValue }.joined(separator: ", "))
+                Text(stems.isEmpty ? "All" : stems.map { $0.rawValue }.joined(separator: ", "))
                     .font(.footnote)
                     .foregroundColor(Color(uiColor: .secondaryLabel))
             }
@@ -369,7 +402,7 @@ extension BuildParsingListView {
             HStack {
                 Text("Select Verb Type")
                 Spacer()
-                Text(verbTypes.isEmpty ? "None selected" : verbTypes.map { $0.rawValue }.joined(separator: ", "))
+                Text(verbTypes.isEmpty ? "All" : verbTypes.map { $0.rawValue }.joined(separator: ", "))
                     .font(.footnote)
                     .foregroundColor(Color(uiColor: .secondaryLabel))
             }
@@ -391,7 +424,7 @@ extension BuildParsingListView {
             HStack {
                 Text("Select Case")
                 Spacer()
-                Text(cases.isEmpty ? "None selected" : cases.map { $0.rawValue }.joined(separator: ", "))
+                Text(cases.isEmpty ? "All" : cases.map { $0.rawValue }.joined(separator: ", "))
                     .font(.footnote)
                     .foregroundColor(Color(uiColor: .secondaryLabel))
             }
@@ -413,7 +446,7 @@ extension BuildParsingListView {
             HStack {
                 Text("Select Person")
                 Spacer()
-                Text(persons.isEmpty ? "None selected" : persons.map { $0.rawValue }.joined(separator: ", "))
+                Text(persons.isEmpty ? "All" : persons.map { $0.rawValue }.joined(separator: ", "))
                     .font(.footnote)
                     .foregroundColor(Color(uiColor: .secondaryLabel))
             }
@@ -435,7 +468,7 @@ extension BuildParsingListView {
             HStack {
                 Text("Select Gender")
                 Spacer()
-                Text(genders.isEmpty ? "None selected" : genders.map { $0.rawValue }.joined(separator: ", "))
+                Text(genders.isEmpty ? "All" : genders.map { $0.rawValue }.joined(separator: ", "))
                     .font(.footnote)
                     .foregroundColor(Color(uiColor: .secondaryLabel))
             }
@@ -457,7 +490,7 @@ extension BuildParsingListView {
             HStack {
                 Text("Select Number")
                 Spacer()
-                Text(numbers.isEmpty ? "None selected" : numbers.map { $0.rawValue }.joined(separator: ", "))
+                Text(numbers.isEmpty ? "All" : numbers.map { $0.rawValue }.joined(separator: ", "))
                     .font(.footnote)
                     .foregroundColor(Color(uiColor: .secondaryLabel))
             }

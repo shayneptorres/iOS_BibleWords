@@ -34,19 +34,13 @@ struct DueWordsView: View, Equatable {
         lhs.viewModel.id == rhs.viewModel.id
     }
     
-    enum DueWordLang: Int, Hashable {
-        case all
-        case greek
-        case hebrew
-    }
-    
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \VocabWord.dueDate, ascending: false)],
         predicate: NSPredicate(format: "dueDate <= %@", Date() as CVarArg)
     ) var dueWords: FetchedResults<VocabWord>
     @Environment(\.managedObjectContext) var context
     
-    @State var langFilter: DueWordLang = .all
+    @State var langFilter: Language = .all
     @State var studyWords = false
     @State var dueWordVocabList: VocabWordList = .init()
     @ObservedObject var viewModel = DueWordsViewModel()
@@ -59,9 +53,9 @@ struct DueWordsView: View, Equatable {
                 } else {
                     Section {
                         Picker("Language", selection: $langFilter) {
-                            Text("All").tag(DueWordLang.all)
-                            Text("Greek").tag(DueWordLang.greek)
-                            Text("Hebrew").tag(DueWordLang.hebrew)
+                            Text("All").tag(Language.all)
+                            Text("Greek").tag(Language.greek)
+                            Text("Hebrew").tag(Language.hebrew)
                         }.pickerStyle(.segmented)
                         Group {
                             Text("\(filteredDueWordInfos.count)")
@@ -88,7 +82,7 @@ struct DueWordsView: View, Equatable {
                 allWordInfos: filteredDueWordInfos)
         }
         .navigationDestination(for: Bible.WordInfo.self) { word in
-            WordInfoRow(wordInfo: word.bound())
+            WordInstancesView(word: word.bound())
         }
         .navigationTitle("Your Due Words")
     }
@@ -98,9 +92,11 @@ struct DueWordsView: View, Equatable {
         case .all:
             return dueWords.filter { ($0.list?.count ?? 0) > 0 }.map { $0 }
         case .greek:
-            return dueWords.filter { ($0.list?.count ?? 0) > 0 && $0.lang == VocabWord.Language.greek.rawValue }
+            return dueWords.filter { ($0.list?.count ?? 0) > 0 && $0.lang == Language.greek.rawValue }
         case .hebrew:
-            return dueWords.filter { ($0.list?.count ?? 0) > 0 && $0.lang == VocabWord.Language.hebrew.rawValue }
+            return dueWords.filter { ($0.list?.count ?? 0) > 0 && $0.lang == Language.hebrew.rawValue }
+        case .aramaic:
+            return []
         }
     }
     
@@ -112,6 +108,8 @@ struct DueWordsView: View, Equatable {
             return filteredDueWords.map { $0.wordInfo }
         case .hebrew:
             return filteredDueWords.map { $0.wordInfo }
+        case .aramaic:
+            return []
         }
     }
 }

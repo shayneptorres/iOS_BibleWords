@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct DataLoadingRow: View {
+    var text: String = "Building bible words data..."
     var body: some View {
         HStack {
             ProgressView()
                 .progressViewStyle(.automatic)
                 .padding(.trailing)
-            Text("Building bible words data...")
+            Text(text)
         }
     }
 }

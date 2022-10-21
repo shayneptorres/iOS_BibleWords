@@ -44,11 +44,11 @@ extension Int {
         if self < 1.minutes {
             return "\(self)s"
         } else if self < 1.hours {
-            return "\(self / 1.minutes)m"
+            return "\(self / 1.minutes)min"
         } else if self < 1.days {
             return "\(self / 1.hours)hr"
         } else if self < 1.months {
-            return "\(self / 1.days)d"
+            return "\(self / 1.days)dy"
         } else if self < 1.years {
             return "\(self / 1.months)mth"
         } else {

@@ -31,77 +31,80 @@ struct WordDetailsView: View {
                     })
                 }
                 Divider()
-                
-                HStack(alignment: .center) {
-                    HStack {
-                        Text("Surface:")
-                            .foregroundColor(Color(uiColor: .secondaryLabel))
-                            .font(.subheadline)
-                        Spacer()
-                    }
-                    .frame(width: 110)
-                    VStack {
-                        Text(wordInstance.surface)
-                            .font(wordInstance.language == .greek ? .bible24 : .bible32)
-                    }
-                }
-                .padding(.bottom, 4)
-                if wordInstance.surface != wordInstance.surfaceComponents {
-                    HStack(alignment: .center) {
-                        HStack {
-                            Text("Components:")
-                                .foregroundColor(Color(uiColor: .secondaryLabel))
-                                .font(.subheadline)
-                            Spacer()
+                ScrollView {
+                    VStack(alignment: .leading) {
+                        
+                        HStack(alignment: .center) {
+                            HStack {
+                                Text("Surface:")
+                                    .foregroundColor(Color(uiColor: .secondaryLabel))
+                                    .font(.subheadline)
+                                Spacer()
+                            }
+                            .frame(width: 110)
+                            VStack {
+                                Text(wordInstance.surface)
+                                    .font(wordInstance.language == .greek ? .bible24 : .bible32)
+                            }
                         }
-                        .frame(width: 110)
-                        VStack {
-                            Text(wordInstance.surfaceComponents)
-                                .font(wordInstance.language == .greek ? .bible24 : .bible32)
+                        .padding(.bottom, 4)
+                        if wordInstance.surface != wordInstance.surfaceComponents {
+                            HStack(alignment: .center) {
+                                HStack {
+                                    Text("Components:")
+                                        .foregroundColor(Color(uiColor: .secondaryLabel))
+                                        .font(.subheadline)
+                                    Spacer()
+                                }
+                                .frame(width: 110)
+                                VStack {
+                                    Text(wordInstance.surfaceComponents)
+                                        .font(wordInstance.language == .greek ? .bible24 : .bible32)
+                                }
+                            }
+                            .padding(.bottom, 4)
+                        }
+                        HStack(alignment: .center) {
+                            HStack {
+                                Text("Lemma:")
+                                    .foregroundColor(Color(uiColor: .secondaryLabel))
+                                    .font(.subheadline)
+                                Spacer()
+                            }
+                            .frame(width: 110)
+                            VStack {
+                                Text(wordInstance.wordInfo.lemma)
+                                    .font(wordInstance.language == .greek ? .bible24 : .bible32)
+                            }
+                        }
+                        .padding(.bottom, 8)
+                        HStack(alignment: .top) {
+                            HStack {
+                                Text("Parsing:")
+                                    .foregroundColor(Color(uiColor: .secondaryLabel))
+                                    .font(.subheadline)
+                                Spacer()
+                            }
+                            .frame(width: 110)
+                            VStack {
+                                Text(wordInstance.parsingStr)
+                            }
+                        }
+                        .padding(.bottom)
+                        HStack(alignment: .top) {
+                            HStack {
+                                Text("Definintion:")
+                                    .foregroundColor(Color(uiColor: .secondaryLabel))
+                                    .font(.subheadline)
+                                Spacer()
+                            }
+                            .frame(width: 110)
+                            VStack {
+                                Text(wordInstance.wordInfo.definition)
+                            }
                         }
                     }
-                    .padding(.bottom, 4)
-                }
-                HStack(alignment: .center) {
-                    HStack {
-                        Text("Lemma:")
-                            .foregroundColor(Color(uiColor: .secondaryLabel))
-                            .font(.subheadline)
-                        Spacer()
-                    }
-                    .frame(width: 110)
-                    VStack {
-                        Text(wordInstance.wordInfo.lemma)
-                            .font(wordInstance.language == .greek ? .bible24 : .bible32)
-                    }
-                }
-                .padding(.bottom, 8)
-                HStack(alignment: .top) {
-                    HStack {
-                        Text("Parsing:")
-                            .foregroundColor(Color(uiColor: .secondaryLabel))
-                            .font(.subheadline)
-                        Spacer()
-                    }
-                    .frame(width: 110)
-                    VStack {
-                        Text(wordInstance.parsing)
-                            .lineLimit(4)
-                    }
-                }
-                .padding(.bottom)
-                HStack(alignment: .top) {
-                    HStack {
-                        Text("Definintion:")
-                            .foregroundColor(Color(uiColor: .secondaryLabel))
-                            .font(.subheadline)
-                        Spacer()
-                    }
-                    .frame(width: 110)
-                    VStack {
-                        Text(wordInstance.wordInfo.definition)
-                            .lineLimit(4)
-                    }
+                    
                 }
             }
             .padding(20)

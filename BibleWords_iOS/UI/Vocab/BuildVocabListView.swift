@@ -191,15 +191,7 @@ struct BuildVocabListView: View {
             
             // save ranges
             for range in bibleRanges {
-                let newRange = VocabWordRange(context: context)
-                newRange.id = UUID().uuidString
-                newRange.createdAt = Date()
-                newRange.bookStart = range.bookStart.toInt16
-                newRange.bookEnd = range.bookEnd.toInt16
-                newRange.chapStart = range.chapStart.toInt16
-                newRange.chapEnd = range.chapEnd.toInt16
-                newRange.occurrences = range.occurrencesInt.toInt32
-                newRange.sourceId = API.Source.Info.app.id
+                let newRange = VocabWordRange.new(context: context, range: range)
                 list.addToRanges(newRange)
             }
             

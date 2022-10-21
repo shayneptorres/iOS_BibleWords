@@ -9,26 +9,21 @@ import SwiftUI
 import CoreData
 
 struct DefaultVocabListSelectorView: View {
-    enum LangType: Int, Hashable {
-        case all
-        case greek
-        case hebrew
-    }
     @Environment(\.managedObjectContext) var context
     @Environment(\.presentationMode) var presentationMode
     @State var showBuiltWordsList = false
     @State var builtWords: [Bible.WordInfo] = []
     @State var isBuilding = false
     @State var selectedListType = DefaultVocabListType.greek50
-    @State var selectedLang: LangType = .all
+    @State var selectedLang: Language = .all
     
     var body: some View {
         NavigationStack {
             List {
                 Picker("Language", selection: $selectedLang) {
-                    Text("All").tag(LangType.all)
-                    Text("Greek").tag(LangType.greek)
-                    Text("Hebrew").tag(LangType.hebrew)
+                    Text("All").tag(Language.all)
+                    Text("Greek").tag(Language.greek)
+                    Text("Hebrew").tag(Language.hebrew)
                 }.pickerStyle(.segmented)
                 if selectedLang == .hebrew || selectedLang == .all {
                     Section {
@@ -62,7 +57,7 @@ struct DefaultVocabListSelectorView: View {
                         }
                     } header: {
                         Text("Greek")
-                    }                    
+                    }
                 }
             }
             .sheet(isPresented: .init(get: { !builtWords.isEmpty && showBuiltWordsList }, set: { _ in })) {
@@ -73,7 +68,7 @@ struct DefaultVocabListSelectorView: View {
                     Text("Dismiss")
                 })
             }
-            .navigationTitle("Default Vocab Lists")
+            .navigationTitle("Preset Vocab Lists")
         }
     }
 }

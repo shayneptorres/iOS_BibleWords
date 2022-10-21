@@ -80,12 +80,12 @@ struct VocabListsView: View {
         .actionSheet(isPresented: $showCreateListActionSheet) {
             ActionSheet(
                 title: Text("Create new vocab list"),
-                message: Text("Would you like to create a custom vocab word list, or select a default vocab list type?"), buttons: [
+                message: Text("Would you like to create a custom vocab word list, or select a preset vocab list type?"), buttons: [
                     .cancel(),
                     .default(Text("Custom List")) {
                         showCustomListBuilderView = true
                     },
-                    .default(Text("Default List")) {
+                    .default(Text("Preset List")) {
                         showDefaultListSelectorView = true
                     }
                 ])

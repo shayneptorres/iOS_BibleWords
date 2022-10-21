@@ -14,6 +14,7 @@ enum ButtonType {
 
 struct AppButton: View {
     var text: String
+    var systemImage: String?
     var type: ButtonType = .primary
     var height: CGFloat = 55
     var horizontalPadding: CGFloat = 16
@@ -21,10 +22,17 @@ struct AppButton: View {
     
     var body: some View {
         Button(action: action, label: {
-            Text(text)
-                .bold()
-                .appButton(type: type, height: height)
-                .padding(.horizontal, horizontalPadding)
+            if systemImage != nil {
+                Label(text, systemImage: systemImage!)
+                    .appButton(type: type, height: height)
+                    .bold()
+                    .padding(.horizontal, horizontalPadding)
+            } else {
+                Text(text)
+                    .bold()
+                    .appButton(type: type, height: height)
+                    .padding(.horizontal, horizontalPadding)
+            }
         })
     }
 }
@@ -68,6 +76,12 @@ struct AppButtonModifier: ViewModifier {
                     .cornerRadius(8)
             )
         }
+    }
+}
+
+extension Label {
+    func appButton(type: ButtonType = .primary, width: CGFloat = .infinity, height: CGFloat = 55) -> some View {
+        modifier(AppButtonModifier(buttonType: type, width: width, height: height))
     }
 }
 

@@ -7,21 +7,57 @@
 
 import Foundation
 import CoreData
+import SwiftUI
 
-extension VocabWord: Bindable {
-    enum Language: Int16 {
-        case hebrew = 0
-        case aramaic
-        case greek
-        
-        var title: String {
-            switch self {
-            case .hebrew: return "Hebrew"
-            case .greek: return "Greek"
-            case .aramaic: return "Aramaic"
-            }
+enum Language: Int16 {
+    case hebrew = 0
+    case aramaic
+    case greek
+    case all
+    
+    var title: String {
+        switch self {
+        case .hebrew: return "Hebrew"
+        case .greek: return "Greek"
+        case .aramaic: return "Aramaic"
+        case .all: return "All"
         }
     }
+    
+    var filters: [Language] {
+        return [.all, .hebrew, .greek]
+    }
+    
+    var meduimBibleFont: Font {
+        switch self {
+        case .hebrew: return .bible40
+        case .greek: return .bible24
+        case .aramaic: return .bible40
+        case .all: return .bible40
+        }
+    }
+    
+    var largeBibleFont: Font {
+        switch self {
+        case .hebrew: return .bible40
+        case .greek: return .bible32
+        case .aramaic: return .bible40
+        case .all: return .bible40
+        }
+    }
+    
+    var xlargeBibleFont: Font {
+        switch self {
+        case .hebrew: return .bible100
+        case .greek: return .bible72
+        case .aramaic: return .bible100
+        case .all: return .bible100
+        }
+    }
+}
+
+
+extension VocabWord: Bindable {
     
     var lemma: String {
         if (customLemma ?? "").isEmpty {
@@ -40,7 +76,7 @@ extension VocabWord: Bindable {
     }
     
     var wordInfo: Bible.WordInfo {
-        if VocabWord.Language(rawValue: self.lang) == .greek {
+        if Language(rawValue: self.lang) == .greek {
             return Bible.main.greekLexicon.word(for: self.id ?? "", source: self.sourceId ?? "")
         } else {
             return Bible.main.hebrewLexicon.word(for: self.id ?? "", source: self.sourceId ?? "")

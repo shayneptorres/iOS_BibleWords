@@ -8,38 +8,24 @@
 import SwiftUI
 
 struct WordInstancesView: View {
+    @Environment(\.managedObjectContext) var context
     @Environment(\.presentationMode) var presentationMode
     @Binding var word: Bible.WordInfo
     @State var showForms = true
     @State var showAppearances = true
+    @State var showEditWordView = true
     
     var body: some View {
         List {
-            Section {
-                VStack(alignment: .leading) {
-                    Text("lemma")
-                        .font(.headline)
-                        .foregroundColor(Color(uiColor: .secondaryLabel))
-                    Text(word.lemma)
-                        .font(.bible40)
-                }
-                VStack(alignment: .leading) {
-                    Text("definition")
-                        .font(.headline)
-                        .foregroundColor(Color(uiColor: .secondaryLabel))
-                    Text(word.definition)
-                }
-            } header: {
-                Text("Word info")
-            }
+            WordInfoHeaderSection(wordInfo: $word)
             Section {
                 if showForms {
-                    ForEach(word.parsingInfo.instances.sorted { $0.parsing < $1.parsing }) { info in
+                    ForEach(word.parsingInfo.instances.sorted { $0.parsingStr < $1.parsingStr }) { info in
                         HStack {
                             Text(info.textSurface)
-                                .font(info.language == .greek ? .bible24 : .bible32)
+                                .font(info.language.meduimBibleFont)
                             Spacer()
-                            Text(info.parsing)
+                            Text(info.parsingStr)
                                 .font(.footnote)
                                 .foregroundColor(Color(uiColor: .secondaryLabel))
                         }
@@ -59,12 +45,13 @@ struct WordInstancesView: View {
                     ForEach(word.instances) { instance in
                         NavigationLink(value: instance) {
                             VStack(alignment: .leading) {
-                                Text(instance.textSurface)
-                                    .font(.bible24)
                                 Text(instance.prettyRefStr)
-                                    .font(.footnote)
-                                    .foregroundColor(Color(uiColor: .secondaryLabel))
-                                Text(instance.parsing)
+                                    .bold()
+                                    .padding(.bottom, 2)
+                                Text(instance.textSurface)
+                                    .font(instance.language.meduimBibleFont)
+                                    .padding(.bottom, 4)
+                                Text(instance.parsingStr)
                                     .font(.footnote)
                                     .foregroundColor(Color(uiColor: .secondaryLabel))
                             }
@@ -81,6 +68,9 @@ struct WordInstancesView: View {
                 }
             }
         }
+//        .sheet(isPresented: $showEditWordView) {
+//            VocabWordDefinitionView(vocabWord: word.vocabWord(context: context).bound())
+//        }
         .navigationDestination(for: Bible.WordInstance.self) { instance in
             WordInPassageView(word: $word, instance: instance.bound())
         }
