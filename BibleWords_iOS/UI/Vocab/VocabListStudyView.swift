@@ -27,7 +27,6 @@ struct VocabListStudyView: View, Equatable {
     @State var interfaceMode: InterfaceMode = .normal
     @State var currentWord: VocabWord?
     @State var prevWord: VocabWord?
-//    @State var selectedNextInterval = 0
     @State var showWordDefView = false
     @State var showWordInfoView = false
     
@@ -47,29 +46,6 @@ struct VocabListStudyView: View, Equatable {
                     ZStack {
                         VStack {
                             LemmaCardView()
-//                            ZStack(alignment: .top) {
-//                                HStack {
-//                                    Spacer()
-//                                    Button(action: {
-//                                        showWordInfoView = true
-//                                    }, label: {
-//                                        Image(systemName: "info.circle")
-//                                    })
-//                                    .padding()
-//                                }
-//                                if currentWord?.currentInterval == 0 {
-//                                    HStack {
-//                                        Button(action: {
-//                                            showWordInfoView = true
-//                                        }, label: {
-//                                            Image(systemName: "gift.fill")
-//                                            Text("New word!")
-//                                        })
-//                                        .padding()
-//                                        Spacer()
-//                                    }
-//                                }
-//                            }
                             ZStack(alignment: .bottomLeading) {
                                 if prevWord != nil {
                                     HStack {

@@ -28,6 +28,11 @@ struct HomeView: View {
     var words: FetchedResults<VocabWord>
     
     @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \VocabWord.dueDate, ascending: false)],
+        predicate: NSPredicate(format: "dueDate <= %@", Date() as CVarArg)
+    ) var dueWords: FetchedResults<VocabWord>
+    
+    @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \VocabWordList.createdAt, ascending: true)],
         predicate: NSPredicate(format: "SELF.id != %@", "TEMP-DUE-WORD-LIST"),
         animation: .default)
@@ -63,7 +68,7 @@ struct HomeView: View {
                     Section {
                         DataLoadingRow()
                     }
-                }
+                }            
                 StatsSection()
                 Section {
                     if recentlyStudiedLists.isEmpty {
@@ -177,24 +182,10 @@ struct HomeView: View {
             .onAppear {
                 if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
                 } else {
-//                    let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "StudySession")
-//                    deleteFetch.predicate = NSPredicate(format: "SELF.startDate > %@", Date.startOfToday as CVarArg)
-//                    let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
-//
-//                    do {
-//                        try self.context.execute(deleteRequest)
-//                        try self.context.save()
-//                    } catch {
-//                        // error
-//                    }
                     fetchData()
                 }
             }
         }
-    }
-    
-    var dueVocabWords: [VocabWord] {
-        words.filter { ($0.list?.count ?? 0) > 0 && $0.isDue }
     }
     
     var recentlyStudiedLists: [VocabWordList] {
@@ -228,30 +219,12 @@ struct HomeView: View {
 extension HomeView {
     func StatsSection() -> some View {
         Section {
-            WordsStudiedTodayRow()
             ReviewedWordsTodayRow()
             WordsParsedTodayRow()
             NewWordsLearnedRow()
             CurrentDueWordsRow()
         } header: {
             Text("Stats")
-        }
-    }
-    
-    func WordsStudiedTodayRow() -> some View {
-        Group {
-            HStack {
-                Image(systemName: "book")
-                Text("\(studySessionEntries.filter { $0.studyType == .reviewedWord }.count)")
-                    .foregroundColor(.accentColor)
-                    .bold()
-                +
-                Text(" vocab words") +
-                Text(" studied")
-                    .bold()
-                +
-                Text(" today")
-            }
         }
     }
     
@@ -323,7 +296,7 @@ extension HomeView {
             Group {
                 HStack {
                     Image(systemName: "clock.badge.exclamationmark")
-                    Text("\(dueVocabWords.count)")
+                    Text("\(dueWords.filter { ($0.list?.count ?? 0) > 0 }.count)")
                         .foregroundColor(.accentColor)
                         .bold()
                     +

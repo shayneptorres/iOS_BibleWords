@@ -35,15 +35,21 @@ struct DueWordsView: View, Equatable {
     }
     
     @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \VocabWordList.createdAt, ascending: true)],
+        predicate: NSPredicate(format: "SELF.id == %@", "TEMP-DUE-WORD-LIST"),
+        animation: .default)
+    var dueVocabLists: FetchedResults<VocabWordList>
+    
+    @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \VocabWord.dueDate, ascending: false)],
         predicate: NSPredicate(format: "dueDate <= %@", Date() as CVarArg)
     ) var dueWords: FetchedResults<VocabWord>
     @Environment(\.managedObjectContext) var context
     
-    @State var langFilter: Language = .all
-    @State var studyWords = false
-    @State var dueWordVocabList: VocabWordList = .init()
     @ObservedObject var viewModel = DueWordsViewModel()
+    @State var langFilter: Language = .all
+    @State var showStudyWordsView = false
+    @State var studyWords: [VocabWord] = []
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -65,10 +71,15 @@ struct DueWordsView: View, Equatable {
                             Text(" words")
                         }
                     }
-                    ForEach(filteredDueWordInfos) { wordInfo in
-                        NavigationLink(value: wordInfo) {
-                            WordInfoRow(wordInfo: wordInfo.bound())
+                    Section {
+                        ForEach(filteredDueWordInfos) { wordInfo in
+                            NavigationLink(value: wordInfo) {
+                                WordInfoRow(wordInfo: wordInfo.bound())
+                            }
                         }
+                    } footer: {
+                        Spacer()
+                            .frame(minHeight: 100)
                     }
                 }
             }
@@ -76,10 +87,12 @@ struct DueWordsView: View, Equatable {
             .padding(.bottom)
             .disabled(viewModel.isBuilding)
         }
-        .fullScreenCover(isPresented: $studyWords) {
-            VocabListStudyView(
-                vocabList: $dueWordVocabList,
-                allWordInfos: filteredDueWordInfos)
+        .fullScreenCover(isPresented: $showStudyWordsView) {
+            if dueList == nil {
+                Text("Something happened")
+            } else {
+                VocabListStudyView(vocabList: dueList!.bound(), allWordInfos: [])                
+            }
         }
         .navigationDestination(for: Bible.WordInfo.self) { word in
             WordInstancesView(word: word.bound())
@@ -112,40 +125,42 @@ struct DueWordsView: View, Equatable {
             return []
         }
     }
+    
+    var dueList: VocabWordList? {
+        dueVocabLists.first
+    }
 }
 
 extension DueWordsView {
     func onStudyWords() {
-        let dueWordsFetchRequest = NSFetchRequest<VocabWordList>(entityName: "VocabWordList")
-        dueWordsFetchRequest.predicate = NSPredicate(format: "SELF.id == %@", "TEMP-DUE-WORD-LIST")
-
-        var dueWordsLists: [VocabWordList] = []
-        do {
-            dueWordsLists = try context.fetch(dueWordsFetchRequest)
-        } catch let err {
-            print(err)
-        }
+//        let dueWordsFetchRequest = NSFetchRequest<VocabWordList>(entityName: "VocabWordList")
+//        dueWordsFetchRequest.predicate = NSPredicate(format: "SELF.id == %@", "TEMP-DUE-WORD-LIST")
+//
+//        var dueWordsLists: [VocabWordList] = []
+//        do {
+//            dueWordsLists = try context.fetch(dueWordsFetchRequest)
+//        } catch let err {
+//            print(err)
+//        }
         
-        var dueWordsList: VocabWordList?
-        if dueWordsLists.isEmpty {
-            dueWordsList = VocabWordList(context: context)
-            dueWordsList?.id = "TEMP-DUE-WORD-LIST"
-            dueWordsList?.title = "Due words list"
-            dueWordsList?.details = "A temporary vocab list to handle the words that are currently due, regardless of their list"
-            dueWordsList?.lastStudied = Date()
-            dueWordsList?.createdAt = Date()
+        if dueList == nil {
+            let dueWordsList = VocabWordList(context: context)
+            dueWordsList.id = "TEMP-DUE-WORD-LIST"
+            dueWordsList.title = "Due words list"
+            dueWordsList.details = "A temporary vocab list to handle the words that are currently due, regardless of their list"
+            dueWordsList.lastStudied = Date()
+            dueWordsList.createdAt = Date()
         } else {
-            dueWordsList = dueWordsLists.first
-            for word in (dueWordsList?.wordsArr ?? []) {
-                dueWordsList?.removeFromWords(word)
+            for word in (dueList?.wordsArr ?? []) {
+                dueList?.removeFromWords(word)
             }
         }
         
         for word in filteredDueWords {
-            dueWordsList?.addToWords(word)
+            dueList?.addToWords(word)
         }
-        dueWordVocabList = dueWordsList!
-        studyWords = true
+        
+        showStudyWordsView = true
     }
 }
 

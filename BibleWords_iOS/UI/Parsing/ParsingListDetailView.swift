@@ -24,26 +24,35 @@ class ParsingListDetailViewModel: ObservableObject, Equatable {
         
         guard let range = list.range else { return }
         
-        Task {
-            await VocabListBuilder.buildParsingList(range: range.bibleRange,
-                                                    language: list.language,
-                                                    wordType: list.wordType,
-                                                    cases: list.cases,
-                                                    genders: list.genders,
-                                                    numbers: list.numbers,
-                                                    tenses: list.tenses,
-                                                    voices: list.voices,
-                                                    moods: list.moods,
-                                                    persons: list.persons,
-                                                    stems: list.stems,
-                                                    verbTypes: list.verbTypes,
-                                                    onComplete: { builtInstances in
-                DispatchQueue.main.async { [weak self] in
-                    self?.instances = builtInstances
-                    self?.isBuilding = false
+        API.main.coreDataReadyPublisher.sink { isReady in
+            if isReady {
+                Task {
+                    await self.buildList(range: range)
                 }
-            })
-        }
+            }
+        }.store(in: &self.subscribers)
+    }
+    
+    func buildList(range: VocabWordRange) async {
+        await VocabListBuilder.buildParsingList(range: range.bibleRange,
+                                                language: list.language,
+                                                wordType: list.wordType,
+                                                cases: list.cases,
+                                                genders: list.genders,
+                                                numbers: list.numbers,
+                                                tenses: list.tenses,
+                                                voices: list.voices,
+                                                moods: list.moods,
+                                                persons: list.persons,
+                                                stems: list.stems,
+                                                verbTypes: list.verbTypes,
+                                                onComplete: { builtInstances in
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.instances = builtInstances
+                self?.isBuilding = false
+            }
+        })
     }
 }
 
@@ -113,7 +122,7 @@ struct ParsingListDetailView: View {
                 Spacer()
                 AppButton(text: "Practice Parsing") {
                     showParsingPracticeView = true
-                }
+                }.disabled(viewModel.isBuilding)
             }
         }
         .toolbar {
