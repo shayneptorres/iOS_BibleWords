@@ -120,7 +120,7 @@ struct HebrewPassageTextView: View {
     @Binding var words: [Bible.WordInstance]
     @Binding var selectedWord: Bible.WordInstance
     @State private var size: CGSize = .zero
-    let buffer: CGFloat = 50
+    let buffer: CGFloat = 75
     
     var body : some View {
         var height = CGFloat.zero
@@ -129,7 +129,6 @@ struct HebrewPassageTextView: View {
         return VStack {
             GeometryReader { g in
                 ZStack(alignment: .topTrailing) {
-                    Color.clear.opacity(0.0001)
                     ForEach(0..<self.words.count, id: \.self) { i in
                         Text(self.words[i].surface + " ")
                             .font(self.words[i].strongId == "verse-num" ? .system(size: 30) : .bible40)
@@ -175,7 +174,6 @@ struct HebrewPassageTextView: View {
 
 
 private extension View {
-    
     func readVerticalFlowSize(to size: Binding<CGSize>) -> some View {
         background(GeometryReader { proxy in
             Color.clear.preference(
@@ -187,7 +185,6 @@ private extension View {
             size.wrappedValue = $0
         }
     }
-    
 }
 
 private struct VerticalFlowSizePreferenceKey: PreferenceKey {
