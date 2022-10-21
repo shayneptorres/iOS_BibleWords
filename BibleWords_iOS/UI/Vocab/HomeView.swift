@@ -324,15 +324,10 @@ extension HomeView {
             Group {
                 HStack {
                     Image(systemName: "clock.badge.exclamationmark")
-                    Text("\(dueWords.filter { ($0.list?.count ?? 0) > 0 }.count)")
-                        .foregroundColor(.accentColor)
+                    Text(" Study due words")
                         .bold()
-                    +
-                    Text(" words currently") +
-                    Text(" due")
-                        .bold()
-                        .foregroundColor(.orange)
                 }
+                .foregroundColor(.accentColor)
             }
         })
     }

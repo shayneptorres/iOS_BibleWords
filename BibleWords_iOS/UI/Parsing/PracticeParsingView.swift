@@ -15,6 +15,7 @@ struct PracticeParsingView: View {
     
     @Environment(\.managedObjectContext) var context
     @Environment(\.presentationMode) var presentationMode
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @State var parsingList: ParsingList
     @State var parsingInstances: [Bible.WordInstance] = []
     @State var currentInstance: Bible.WordInstance?
@@ -33,62 +34,45 @@ struct PracticeParsingView: View {
             ZStack {
                 Color(uiColor: .secondarySystemBackground)
                     .ignoresSafeArea()
-                VStack {
-                    HStack(alignment: .center) {
-                        Text("Word \(currentInstanceIndex + 1) out of \(parsingInstances.count)")
-                            .bold()
+                if horizontalSizeClass == .compact {
+                    VStack {
+                        HeaderView()
+                        LemmaView()
+                        if displayMode == .surfaceAnswer {
+                            DefinitionView()
+                        }
+                        if displayMode == .surface {
+                            TapToRevealView()
+                                .padding()
+                        } else {
+                            Spacer()
+                            AnswerView()
+                                .padding()
+                        }
                     }
-                    .foregroundColor(.white)
-                    .padding()
-                    .frame(maxWidth: .infinity, minHeight: 40)
-                    .background(Color(uiColor: .systemGray))
-                    .cornerRadius(Design.smallCornerRadius)
-                    .padding(.top)
-                    .padding(.horizontal)
-                    Text(currentInstance?.textSurface ?? "")
-                        .font(.bible72)
-                        .minimumScaleFactor(0.6)
-                        .frame(maxWidth: .infinity, minHeight: 200)
-                        .background(Color(UIColor.systemBackground))
-                        .foregroundColor(Color(uiColor: .label))
-                        .cornerRadius(Design.defaultCornerRadius)
-                        .padding(.horizontal)
-                        .padding(.top, 4)
-                    if displayMode == .surfaceAnswer {
-                        VStack(alignment: .center) {
-                            Text(currentInstance?.displayParsingStr ?? "")
-                                .multilineTextAlignment(.center)
-                                .font(.title3)
-                                .bold()
-                                .padding(.bottom)
-                            HStack {
-                                VStack(alignment: .center) {
-                                    Text("Lexical form:")
-                                        .font(.subheadline)
-                                        .foregroundColor(.init(uiColor: .secondaryLabel))
-                                    Text(currentInstance?.lemma ?? "")
-                                        .font(.bible24)
+                    
+                } else {
+                    GeometryReader { proxy in
+                        HStack {
+                            VStack {
+                                HeaderView()
+                                LemmaView()
+                                if displayMode == .surfaceAnswer {
+                                    DefinitionView()
                                 }
-                                .frame(maxWidth: .infinity)
-                                VStack(alignment: .center) {
-                                    Text("Definition:")
-                                        .font(.subheadline)
-                                        .foregroundColor(.init(uiColor: .secondaryLabel))
-                                    Text(currentInstance?.wordInfo.definition ?? "")
-                                        .font(.headline)
-                                }
-                                .frame(maxWidth: .infinity)
+                                Spacer()
+                            }
+                            .frame(width: proxy.size.width * 0.60)
+                            .frame(maxHeight: .infinity)
+                            if displayMode == .surface {
+                                TapToRevealView()
+                                    .padding()
+                            } else {
+                                Spacer()
+                                AnswerView()
+                                    .padding()
                             }
                         }
-                        .padding(.horizontal)
-                    }
-                    if displayMode == .surface {
-                        TapToRevealView()
-                            .padding()
-                    } else {
-                        Spacer()
-                        AnswerView()
-                            .padding()
                     }
                 }
             }
@@ -130,6 +114,62 @@ struct PracticeParsingView: View {
 }
 
 extension PracticeParsingView {
+    
+    func DefinitionView() -> some View {
+        VStack(alignment: .center) {
+            Text(currentInstance?.displayParsingStr ?? "")
+                .multilineTextAlignment(.center)
+                .font(.title3)
+                .bold()
+                .padding(.bottom)
+            HStack {
+                VStack(alignment: .center) {
+                    Text("Lexical form:")
+                        .font(.subheadline)
+                        .foregroundColor(.init(uiColor: .secondaryLabel))
+                    Text(currentInstance?.lemma ?? "")
+                        .font(.bible24)
+                }
+                .frame(maxWidth: .infinity)
+                VStack(alignment: .center) {
+                    Text("Definition:")
+                        .font(.subheadline)
+                        .foregroundColor(.init(uiColor: .secondaryLabel))
+                    Text(currentInstance?.wordInfo.definition ?? "")
+                        .font(.headline)
+                }
+                .frame(maxWidth: .infinity)
+            }
+        }
+        .padding(.horizontal)
+    }
+    
+    func LemmaView() -> some View {
+        Text(currentInstance?.textSurface ?? "")
+            .font(.bible72)
+            .minimumScaleFactor(0.6)
+            .frame(maxWidth: .infinity, minHeight: 200)
+            .background(Color(UIColor.systemBackground))
+            .foregroundColor(Color(uiColor: .label))
+            .cornerRadius(Design.defaultCornerRadius)
+            .padding(.horizontal)
+            .padding(.top, 4)
+    }
+    
+    func HeaderView() -> some View {
+        HStack(alignment: .center) {
+            Text("Word \(currentInstanceIndex + 1) out of \(parsingInstances.count)")
+                .bold()
+        }
+        .foregroundColor(.white)
+        .padding()
+        .frame(maxWidth: .infinity, minHeight: 40)
+        .background(Color(uiColor: .systemGray))
+        .cornerRadius(Design.smallCornerRadius)
+        .padding(.top)
+        .padding(.horizontal)
+    }
+    
     func TapToRevealView() -> some View {
         return AnyView(
             VStack {
