@@ -17,4 +17,5 @@ struct Design {
 
 extension Color {
     static let appOrange = Color("appOrange")
+    static let appBackground = Color("appBackground")
 }

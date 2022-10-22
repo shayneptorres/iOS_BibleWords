@@ -129,6 +129,7 @@ struct BuildVocabListView: View {
                             showBuiltWords = false
                             onSave()
                         }
+                        .padding(.horizontal)
                     }
                 }
                 .toolbar {

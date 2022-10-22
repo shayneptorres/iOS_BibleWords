@@ -121,6 +121,7 @@ struct ListDetailView: View {
             VStack {
                 Spacer()
                 AppButton(text: "Study Vocab", action: onStudy)
+                    .padding(.horizontal)
             }
         }
         .toolbar {

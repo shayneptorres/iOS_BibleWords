@@ -13,7 +13,7 @@ struct BibleWords_iOSApp: App {
 
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            NewHomeView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }

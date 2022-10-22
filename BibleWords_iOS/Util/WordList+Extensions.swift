@@ -71,7 +71,7 @@ extension VocabWordList {
         if sources.first(where: { $0.id != API.Source.Info.app.id }) != nil {
             // we have ranges from a textbook
             if rangesArr.count == 1, let range = rangesArr.first {
-                return "Chapter \(range.chapStart) - Chapter \(range.chapEnd)"
+                return "Ch \(range.chapStart) - Ch \(range.chapEnd)"
             } else {
                 return "Multiple ranges selected"
             }

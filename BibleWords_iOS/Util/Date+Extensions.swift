@@ -14,6 +14,13 @@ extension Date {
         return formatter.string(from: self)
     }
     
+    var toShortPrettyDate: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "M/d/y"
+//        formatter.dateFormat = "M.d.y, h:mm a"
+        return formatter.string(from: self)
+    }
+    
     static var startOfToday: Date {
         let cal = Calendar.current
         return cal.startOfDay(for: Date())

@@ -55,18 +55,11 @@ struct VocabListsView: View {
             }
             VStack {
                 Spacer()
-                Button(action: {
+                AppButton(text: "Create new list") {
                     showCreateListActionSheet = true
-                }, label: {
-                    Text("Create new list")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.accentColor)
-                        .foregroundColor(.white)
-                        .bold()
-                        .cornerRadius(10)
-                        .padding()
-                })
+                }
+                .padding(.horizontal)
+                .padding(.bottom)
             }
         }
         .navigationTitle("Vocab Lists")

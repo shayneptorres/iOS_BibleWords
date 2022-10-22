@@ -27,6 +27,7 @@
 		B8124D8128FB285D0053057C /* BibleRange+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8124D8028FB285D0053057C /* BibleRange+Extensions.swift */; };
 		B8124D8328FB2AF90053057C /* NavHeaderTitleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8124D8228FB2AF90053057C /* NavHeaderTitleDetailView.swift */; };
 		B8124D8528FB366F0053057C /* DueWordsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8124D8428FB366F0053057C /* DueWordsView.swift */; };
+		B81C313F29032BD9002DBF6B /* NewHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81C313E29032BD9002DBF6B /* NewHomeView.swift */; };
 		B899887E28FC94F000F00E0B /* WordInfoRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899887D28FC94F000F00E0B /* WordInfoRow.swift */; };
 		B899888028FCBCF100F00E0B /* StudySession+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899887F28FCBCF100F00E0B /* StudySession+Extensions.swift */; };
 		B899888228FD1A5100F00E0B /* NewWordsLearnedTodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899888128FD1A5100F00E0B /* NewWordsLearnedTodayView.swift */; };
@@ -101,6 +102,7 @@
 		B8124D8028FB285D0053057C /* BibleRange+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BibleRange+Extensions.swift"; sourceTree = "<group>"; };
 		B8124D8228FB2AF90053057C /* NavHeaderTitleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavHeaderTitleDetailView.swift; sourceTree = "<group>"; };
 		B8124D8428FB366F0053057C /* DueWordsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DueWordsView.swift; sourceTree = "<group>"; };
+		B81C313E29032BD9002DBF6B /* NewHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHomeView.swift; sourceTree = "<group>"; };
 		B899887D28FC94F000F00E0B /* WordInfoRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordInfoRow.swift; sourceTree = "<group>"; };
 		B899887F28FCBCF100F00E0B /* StudySession+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StudySession+Extensions.swift"; sourceTree = "<group>"; };
 		B899888128FD1A5100F00E0B /* NewWordsLearnedTodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordsLearnedTodayView.swift; sourceTree = "<group>"; };
@@ -336,6 +338,7 @@
 				B8DD2E0E28F93CB300AC9492 /* Assets.xcassets */,
 				B8DD2E4128F93CDD00AC9492 /* Fonts */,
 				B899888728FDAFE100F00E0B /* DataDependentViewModel.swift */,
+				B81C313E29032BD9002DBF6B /* NewHomeView.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -456,6 +459,7 @@
 				B8DD2E7228F93CDF00AC9492 /* ListDetailView.swift in Sources */,
 				B8DD2E6228F93CDF00AC9492 /* Bible.swift in Sources */,
 				B8A210EE2900989A00BDF272 /* WordInfoHeaderSection.swift in Sources */,
+				B81C313F29032BD9002DBF6B /* NewHomeView.swift in Sources */,
 				B8124D6A28F9C7100053057C /* String+Extensions.swift in Sources */,
 				B8A210F22901A90900BDF272 /* VocabWordRange+Extensions.swift in Sources */,
 				B8DD2E6D28F93CDF00AC9492 /* Int+Extensions.swift in Sources */,

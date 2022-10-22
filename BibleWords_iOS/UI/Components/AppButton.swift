@@ -26,12 +26,12 @@ struct AppButton: View {
                 Label(text, systemImage: systemImage!)
                     .appButton(type: type, height: height)
                     .bold()
-                    .padding(.horizontal, horizontalPadding)
+//                    .padding(.horizontal, horizontalPadding)
             } else {
                 Text(text)
                     .bold()
                     .appButton(type: type, height: height)
-                    .padding(.horizontal, horizontalPadding)
+//                    .padding(.horizontal, horizontalPadding)
             }
         })
     }
@@ -63,17 +63,17 @@ struct AppButtonModifier: ViewModifier {
     func btbBackground() -> some View {
         if buttonType == .secondary {
             return AnyView(
-                RoundedRectangle(cornerRadius: 8)
+                RoundedRectangle(cornerRadius: Design.defaultCornerRadius)
                     .stroke(lineWidth: 2)
                     .foregroundColor(.accentColor)
                     .background(Color.white)
-                    .cornerRadius(8)
+                    .cornerRadius(Design.defaultCornerRadius)
             )
         } else {
             return AnyView(
-                RoundedRectangle(cornerRadius: 8)
+                RoundedRectangle(cornerRadius: Design.defaultCornerRadius)
                     .background(Color.accentColor)
-                    .cornerRadius(8)
+                    .cornerRadius(Design.defaultCornerRadius)
             )
         }
     }

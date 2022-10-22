@@ -148,6 +148,7 @@ extension DefaultVocabListSelectorView {
                     AppButton(text: "Save list") {
                         onSave()
                     }
+                    .padding(.horizontal)
                 }
             }
             .navigationBarTitleDisplayMode(.inline)

@@ -56,16 +56,18 @@ struct ParadigmsViews: View {
                 if mode == .singleSelect {
                     AppButton(text: "Select Multiple Paradigms", action: { mode = .multiSelect })
                         .padding(.bottom)
+                        .padding(.horizontal)
                 }
                 if mode == .multiSelect {
-                    
                     AppButton(text: "Practice \(selectedParadigms.count) Paradigms", action: { showParadigmDetailView = true })
                         .disabled(mode == .multiSelect && selectedParadigms.isEmpty)
+                        .padding(.horizontal)
                     AppButton(text: "Cancel", type: .secondary, action: {
                         mode = .singleSelect
                         selectedParadigms.removeAll()
                     })
                     .padding(.bottom)
+                    .padding(.horizontal)
                 }
             }
         }
