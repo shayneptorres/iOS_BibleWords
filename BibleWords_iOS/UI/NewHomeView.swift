@@ -7,19 +7,24 @@
 
 import SwiftUI
 
+enum Paths: Hashable {
+    case reviewedWords
+    case newWords
+    case parsedWords
+    case dueWords
+    case allVocabLists
+    case vocabListDetail(VocabWordList)
+    case allParsingLists
+    case parsingListDetail(ParsingList)
+    case greekParadigms
+    case hebrewParadigms
+    case wordInfo(Bible.WordInfo)
+    case wordInstance(Bible.WordInstance)
+    case parsingSessionsList(ParsingList)
+    case parsingSessionDetail(StudySession)
+}
+
 struct NewHomeView: View {
-    enum Paths: Hashable {
-        case reviewedWords
-        case newWords
-        case parsedWords
-        case dueWords
-        case allVocabLists
-        case vocabListDetail(VocabWordList)
-        case allParsingLists
-        case parsingListDetail(ParsingList)
-        case greekParadigms
-        case hebrewParadigms
-    }
     
     @Environment(\.managedObjectContext) var context
     @Environment(\.presentationMode) var presentationMode
@@ -114,10 +119,22 @@ struct NewHomeView: View {
                     ParsingListsView()
                 case .parsingListDetail(let list):
                     ParsingListDetailView(viewModel: .init(list: list))
+                case .parsingSessionsList(let list):
+                    ParsingListSessionsView(list: list.bound())
+                case .parsingSessionDetail(let session):
+                    List {
+                        ForEach(session.entriesArr.sorted { $0.createdAt! < $1.createdAt! }) { entry in
+                            ParsingSessionEntryRow(entry: entry.bound())
+                        }
+                    }
                 case .greekParadigms:
                     Text("Coming soon...")
                 case .hebrewParadigms:
                     ParadigmsViews()
+                case .wordInfo(let info):
+                    WordInfoDetailsView(word: info)
+                case .wordInstance(let instance):
+                    WordInPassageView(word: instance.wordInfo.bound(), instance: instance.bound())
                 }
             }
         }
@@ -249,7 +266,7 @@ extension NewHomeView {
                         Image(systemName: "clock.badge.exclamationmark")
                             .foregroundColor(.accentColor)
                             .font(.title3)
-                        Text("\(dueWords.filter { $0.list?.count ?? 0 > 1 }.count)")
+                        Text("\(dueWords.filter { ($0.list?.count ?? 0) > 0 }.count)")
                             .bold()
                     }
                     .frame(maxWidth: .infinity)
@@ -425,7 +442,7 @@ extension NewHomeView {
                         .font(.title3)
                 })
                 Spacer()
-                Button(action: { paths.append(.allVocabLists) }, label: {
+                Button(action: { paths.append(.allParsingLists) }, label: {
                     Text("See all")
                         .bold()
                 })

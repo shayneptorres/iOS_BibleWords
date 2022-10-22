@@ -110,7 +110,7 @@ struct VocabListStudyView: View, Equatable {
             })
             .sheet(isPresented: $showWordInfoView, content: {
                 NavigationStack {
-                    WordInstancesView(word: currentWord?.wordInfo ?? .init([:]))
+                    WordInfoDetailsView(word: currentWord?.wordInfo ?? .init([:]))
                 }
             })
             .navigationBarTitleDisplayMode(.inline)

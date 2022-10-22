@@ -34,7 +34,7 @@ struct VocabListsView: View {
                 List {
                     ForEach(lists) { list in
                         HStack {
-                            NavigationLink(value: Routes.showList(list)) {
+                            NavigationLink(value: Paths.vocabListDetail(list)) {
                                 HStack {
                                     Text(list.defaultTitle)
                                     Spacer()
@@ -63,12 +63,6 @@ struct VocabListsView: View {
             }
         }
         .navigationTitle("Vocab Lists")
-        .navigationDestination(for: Routes.self) { r in
-            switch r {
-            case .showList(let list):
-                ListDetailView(viewModel: .init(list: list))
-            }
-        }
         .actionSheet(isPresented: $showCreateListActionSheet) {
             ActionSheet(
                 title: Text("Create new vocab list"),

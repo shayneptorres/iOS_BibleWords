@@ -1,5 +1,5 @@
 //
-//  WordInstancesView.swift
+//  WordInfoDetails.swift
 //  Bible_Words_iOS
 //
 //  Created by Shayne Torres on 10/11/22.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct WordInstancesView: View {
+struct WordInfoDetailsView: View {
     @Environment(\.managedObjectContext) var context
     @Environment(\.presentationMode) var presentationMode
     @State var word: Bible.WordInfo
@@ -43,7 +43,7 @@ struct WordInstancesView: View {
             Section {
                 if showAppearances {
                     ForEach(word.instances) { instance in
-                        NavigationLink(value: instance) {
+                        NavigationLink(value: Paths.wordInstance(instance)) {
                             VStack(alignment: .leading) {
                                 Text(instance.prettyRefStr)
                                     .bold()
@@ -67,12 +67,6 @@ struct WordInstancesView: View {
                     })
                 }
             }
-        }
-//        .sheet(isPresented: $showEditWordView) {
-//            VocabWordDefinitionView(vocabWord: word.vocabWord(context: context).bound())
-//        }
-        .navigationDestination(for: Bible.WordInstance.self) { instance in
-            WordInPassageView(word: $word, instance: instance.bound())
         }
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {

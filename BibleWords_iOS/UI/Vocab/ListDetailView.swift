@@ -94,7 +94,7 @@ struct ListDetailView: View {
                     if viewModel.list.sourceType == .app {
                         Section {
                             ForEach(viewModel.words.sorted { $0.lemma < $1.lemma }) { word in
-                                NavigationLink(value: word) {
+                                NavigationLink(value: Paths.wordInfo(word)) {
                                     WordInfoRow(wordInfo: word.bound())
                                 }
                                 .navigationViewStyle(.stack)
@@ -104,7 +104,7 @@ struct ListDetailView: View {
                         ForEach(groupedTextbookWords, id: \.chapter) { group in
                             Section {
                                 ForEach(group.words) { word in
-                                    NavigationLink(value: word) {
+                                    NavigationLink(value: Paths.wordInfo(word)) {
                                         VStack(alignment: .leading) {
                                             WordInfoRow(wordInfo: word.bound())
                                         }
@@ -124,6 +124,9 @@ struct ListDetailView: View {
                     .padding(.horizontal)
             }
         }
+        .navigationDestination(for: Bible.WordInfo.self) { word in
+            WordInfoDetailsView(word: word)
+        }
         .toolbar {
             ToolbarItemGroup(placement: .principal) {
                 NavHeaderTitleDetailView(title: viewModel.list.defaultTitle, detail: viewModel.list.defaultDetails)
@@ -131,9 +134,6 @@ struct ListDetailView: View {
         }
         .fullScreenCover(isPresented: $studyWords) {
             VocabListStudyView(vocabList: $viewModel.list, allWordInfos: viewModel.words)
-        }
-        .navigationDestination(for: Bible.WordInfo.self) { word in
-            WordInstancesView(word: word)
         }
         .navigationTitle(viewModel.list.defaultTitle)
         .navigationBarTitleDisplayMode(.inline)

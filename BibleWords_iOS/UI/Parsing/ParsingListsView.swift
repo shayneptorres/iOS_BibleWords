@@ -23,7 +23,7 @@ struct ParsingListsView: View {
                         .multilineTextAlignment(.center)
                 } else {
                     ForEach(lists) { list in
-                        NavigationLink(value: list) {
+                        NavigationLink(value: Paths.parsingListDetail(list)) {
                             HStack {
                                 Text(list.defaultTitle)
                                 Spacer()
@@ -55,9 +55,6 @@ struct ParsingListsView: View {
             NavigationStack {
                 BuildParsingListView()
             }
-        }
-        .navigationDestination(for: ParsingList.self) { list in
-            ParsingListDetailView(viewModel: .init(list: list))
         }
         .navigationTitle("Parsing Lists")
     }

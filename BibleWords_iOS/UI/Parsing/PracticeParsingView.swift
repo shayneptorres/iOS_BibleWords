@@ -228,55 +228,55 @@ extension PracticeParsingView {
 
 extension PracticeParsingView {
     func onWrong() {
-        CoreDataManager.transaction(context: context) {
-            let entry = StudySessionEntry.new(context: context, word: currentInstance?.wordInfo.vocabWord(context: context), answer: .wrong, studyType: .parsing)
-            entry.parsingInstanceId = currentInstance?.id
-            entry.parsingInstanceSurfaceText = currentInstance?.textSurface
-            entry.parsingInstanceParseString = currentInstance?.displayParsingStr
-            entry.parsingInstanceLemma = currentInstance?.lemma
-            entries.append(entry)
-            
-            setNextInstance()
-        }
+        let entry = StudySessionEntry.new(context: context, word: currentInstance?.wordInfo.vocabWord(context: context), answer: .wrong, studyType: .parsing)
+        entry.parsingInstanceId = currentInstance?.id
+        entry.parsingInstanceSurfaceText = currentInstance?.textSurface
+        entry.parsingInstanceParseString = currentInstance?.displayParsingStr
+        entry.parsingInstanceLemma = currentInstance?.lemma
+        entries.append(entry)
+        
+        setNextInstance()
+//        CoreDataManager.transaction(context: context) {
+//        }
     }
     
     func onHard() {
-        CoreDataManager.transaction(context: context) {
-            let entry = StudySessionEntry.new(context: context, word: currentInstance?.wordInfo.vocabWord(context: context), answer: .hard, studyType: .parsing)
-            entry.parsingInstanceId = currentInstance?.id
-            entry.parsingInstanceSurfaceText = currentInstance?.textSurface
-            entry.parsingInstanceParseString = currentInstance?.displayParsingStr
-            entry.parsingInstanceLemma = currentInstance?.lemma
-            entries.append(entry)
-            
-            setNextInstance()
-        }
+        let entry = StudySessionEntry.new(context: context, word: currentInstance?.wordInfo.vocabWord(context: context), answer: .hard, studyType: .parsing)
+        entry.parsingInstanceId = currentInstance?.id
+        entry.parsingInstanceSurfaceText = currentInstance?.textSurface
+        entry.parsingInstanceParseString = currentInstance?.displayParsingStr
+        entry.parsingInstanceLemma = currentInstance?.lemma
+        entries.append(entry)
+        
+        setNextInstance()
+//        CoreDataManager.transaction(context: context) {
+//        }
     }
     
     func onCorrect() {
-        CoreDataManager.transaction(context: context) {
-            let entry = StudySessionEntry.new(context: context, word: currentInstance?.wordInfo.vocabWord(context: context), answer: .good, studyType: .parsing)
-            entry.parsingInstanceId = currentInstance?.id
-            entry.parsingInstanceSurfaceText = currentInstance?.textSurface
-            entry.parsingInstanceParseString = currentInstance?.displayParsingStr
-            entry.parsingInstanceLemma = currentInstance?.lemma
-            entries.append(entry)
-            
-            setNextInstance()
-        }
+        let entry = StudySessionEntry.new(context: context, word: currentInstance?.wordInfo.vocabWord(context: context), answer: .good, studyType: .parsing)
+        entry.parsingInstanceId = currentInstance?.id
+        entry.parsingInstanceSurfaceText = currentInstance?.textSurface
+        entry.parsingInstanceParseString = currentInstance?.displayParsingStr
+        entry.parsingInstanceLemma = currentInstance?.lemma
+        entries.append(entry)
+        
+        setNextInstance()
+//        CoreDataManager.transaction(context: context) {
+//        }
     }
     
     func onEasy() {
-        CoreDataManager.transaction(context: context) {
-            let entry = StudySessionEntry.new(context: context, word: currentInstance?.wordInfo.vocabWord(context: context), answer: .easy, studyType: .parsing)
-            entry.parsingInstanceId = currentInstance?.id
-            entry.parsingInstanceSurfaceText = currentInstance?.textSurface
-            entry.parsingInstanceParseString = currentInstance?.displayParsingStr
-            entry.parsingInstanceLemma = currentInstance?.lemma
-            entries.append(entry)
-            
-            setNextInstance()
-        }
+        let entry = StudySessionEntry.new(context: context, word: currentInstance?.wordInfo.vocabWord(context: context), answer: .easy, studyType: .parsing)
+        entry.parsingInstanceId = currentInstance?.id
+        entry.parsingInstanceSurfaceText = currentInstance?.textSurface
+        entry.parsingInstanceParseString = currentInstance?.displayParsingStr
+        entry.parsingInstanceLemma = currentInstance?.lemma
+        entries.append(entry)
+        
+        setNextInstance()
+//        CoreDataManager.transaction(context: context) {
+//        }
     }
     
     func setCurrentInstance() {

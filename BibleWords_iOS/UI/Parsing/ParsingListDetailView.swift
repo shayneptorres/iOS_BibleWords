@@ -77,7 +77,7 @@ struct ParsingListDetailView: View {
                     DataLoadingRow(text: "Building parsing info...")
                 } else {
                     Section {
-                        NavigationLink(value: true) {
+                        NavigationLink(value: Paths.parsingSessionsList(viewModel.list)) {
                             Text("Parsing Sessions Reports")
                         }
                         .navigationViewStyle(.stack)
@@ -125,18 +125,8 @@ struct ParsingListDetailView: View {
                 }.disabled(viewModel.isBuilding)
             }
         }
-        .toolbar {
-//            Button(action: {
-//                showListSettings = true
-//            }, label: {
-//                Image(systemName: "gearshape.fill")
-//            })
-        }
         .fullScreenCover(isPresented: $showParsingPracticeView) {
             PracticeParsingView(parsingList: viewModel.list, parsingInstances: viewModel.instances)
-        }
-        .navigationDestination(for: Bool.self) { _ in
-            ParsingListSessionsView(list: $viewModel.list)
         }
         .navigationTitle(viewModel.list.defaultTitle)
     }
