@@ -7,92 +7,89 @@
 
 import SwiftUI
 
-struct ParadigmsViews: View {
-    
+struct ConceptsView: View {
     enum Mode {
         case singleSelect
         case multiSelect
     }
     
-    @State var selectedParadigms: [HebrewParadigmType] = []
+    @State var selectedConcepts: [HebrewConcept] = []
     @State var mode: Mode = .singleSelect
     @State var showParadigmDetailView = false
     
     var body: some View {
         ZStack {
-            if mode == .singleSelect {
-                List {
+            List {
+                ForEach(HebrewConceptGroup.allCases, id: \.rawValue) { group in
                     Section {
-                        ForEach(HebrewParadigmType.allCases, id: \.self) { paradigm in
-                            NavigationLink(destination: ParadigmDetailView(paradigmTypes: [paradigm]), label: {
-                                Text(paradigm.group.title)
-                            })
+                        ForEach(group.concepts, id: \.rawValue) { concept in
+                            if mode == .singleSelect {
+                                NavigationLink(destination: ParadigmDetailView(concepts: [concept]), label: {
+                                    Text(concept.group.title)
+                                })
+                            } else {
+                                Button(action: { onTap(concept) }, label: {
+                                    HStack {
+                                        Text(concept.group.title)
+                                            .foregroundColor(Color(uiColor: .label))
+                                        Spacer()
+                                        Image(systemName: selectedConcepts.contains(concept) ? "circle.dashed.inset.filled" : "circle.dashed")
+                                    }
+                                })
+                            }
                         }
-                    } footer: {
-                        Spacer().frame(height: 75)
+                    } header: {
+                        Text(group.title)
                     }
                 }
+                Spacer().frame(height: 150)
             }
-            if mode == .multiSelect {
-                List {
-                    Section {
-                        ForEach(HebrewParadigmType.allCases, id: \.self) { paradigm in
-                            Button(action: { onTap(paradigm) }, label: {
-                                HStack {
-                                    Text(paradigm.group.title)
-                                        .foregroundColor(Color(uiColor: .label))
-                                    Spacer()
-                                    Image(systemName: selectedParadigms.contains(paradigm) ? "circle.dashed.inset.filled" : "circle.dashed")
-                                }
-                            })
-                        }
-                    } footer: {
-                        Spacer().frame(height: 150)
-                    }
-                }
-            }
-            VStack {
-                Spacer()
-                if mode == .singleSelect {
-                    AppButton(text: "Select Multiple Paradigms", action: { mode = .multiSelect })
-                        .padding(.bottom)
-                        .padding(.horizontal)
-                }
-                if mode == .multiSelect {
-                    AppButton(text: "Practice \(selectedParadigms.count) Paradigms", action: { showParadigmDetailView = true })
-                        .disabled(mode == .multiSelect && selectedParadigms.isEmpty)
-                        .padding(.horizontal)
-                    AppButton(text: "Cancel", type: .secondary, action: {
-                        mode = .singleSelect
-                        selectedParadigms.removeAll()
-                    })
-                    .padding(.bottom)
-                    .padding(.horizontal)
-                }
-            }
+            ButtonView()
         }
         .navigationDestination(isPresented: $showParadigmDetailView) {
-            ParadigmDetailView(paradigmTypes: selectedParadigms)
+            ParadigmDetailView(concepts: selectedConcepts)
         }
         .navigationTitle("Hebrew Paradigms")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             mode = .singleSelect
-            selectedParadigms.removeAll()
+            selectedConcepts.removeAll()
         }
     }
     
-    func onTap(_ paradigm: HebrewParadigmType) {
-        if let index = selectedParadigms.firstIndex(of: paradigm) {
-            selectedParadigms.remove(at: index)
+    func onTap(_ paradigm: HebrewConcept) {
+        if let index = selectedConcepts.firstIndex(of: paradigm) {
+            selectedConcepts.remove(at: index)
         } else {
-            selectedParadigms.append(paradigm)
+            selectedConcepts.append(paradigm)
+        }
+    }
+    
+    func ButtonView() -> some View {
+        VStack {
+            Spacer()
+            if mode == .singleSelect {
+                AppButton(text: "Select Multiple Paradigms", action: { mode = .multiSelect })
+                    .padding(.bottom)
+                    .padding(.horizontal)
+            }
+            if mode == .multiSelect {
+                AppButton(text: "Practice \(selectedConcepts.count) Paradigms", action: { showParadigmDetailView = true })
+                    .disabled(mode == .multiSelect && selectedConcepts.isEmpty)
+                    .padding(.horizontal)
+                AppButton(text: "Cancel", type: .secondary, action: {
+                    mode = .singleSelect
+                    selectedConcepts.removeAll()
+                })
+                .padding(.bottom)
+                .padding(.horizontal)
+            }
         }
     }
 }
 
 struct ParadigmsViews_Previews: PreviewProvider {
     static var previews: some View {
-        ParadigmsViews()
+        ConceptsView()
     }
 }

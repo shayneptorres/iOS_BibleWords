@@ -386,6 +386,12 @@ extension VocabListStudyView {
                 .background(Color(UIColor.systemBackground))
                 .foregroundColor(Color(uiColor: .label))
                 .cornerRadius(Design.defaultCornerRadius)
+                .onLongPressGesture {
+                    let pasteboard = UIPasteboard.general
+                    pasteboard.string = currentWord?.lemma ?? ""
+                    let generator = UINotificationFeedbackGenerator()
+                    generator.notificationOccurred(.success)
+                }
             HStack {
                 Button(action: {
                     showWordInfoView = true

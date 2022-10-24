@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ParadigmDetailView: View {
-    let paradigmTypes: [HebrewParadigmType]
+    let concepts: [HebrewConcept]
     let gridItemLayout: [GridItem] = [.init(.flexible()),.init(.flexible())]
     @State var showPracticeView = false
     
@@ -18,17 +18,19 @@ struct ParadigmDetailView: View {
                 .ignoresSafeArea()
             ScrollView {
                 LazyVGrid(columns: gridItemLayout, spacing: 8) {
-                    ForEach(paradigmTypes, id: \.rawValue) { type in
+                    ForEach(concepts, id: \.rawValue) { type in
                         Section(content: {
-                            ForEach(type.group.paradigms) { paradigm in
-                                VStack {
+                            ForEach(type.group.items) { paradigm in
+                                VStack(alignment: .center, spacing: 4) {
                                     Text(paradigm.text)
                                         .font(.bible50)
-                                        .padding(.bottom, 4)
-                                    Text(paradigm.parsing(display: .short))
-                                    Text(paradigm.def)
+                                    Text(paradigm.details)
+                                        .multilineTextAlignment(.center)
+                                    Text(paradigm.definition)
+                                        .multilineTextAlignment(.center)
                                 }
-                                .frame(maxWidth: .infinity, minHeight: 150)
+                                .frame(maxWidth: .infinity, minHeight: 200)
+                                .padding(.horizontal)
                                 .background(Color(UIColor.secondarySystemGroupedBackground))
                                 .foregroundColor(Color(uiColor: .label))
                                 .cornerRadius(Design.defaultCornerRadius)
@@ -48,22 +50,22 @@ struct ParadigmDetailView: View {
                 AppButton(text: "Practice Paradigms", action: {
                     showPracticeView = true
                 })
-                .padding(.bottom)
+                .padding([.horizontal, .bottom])
             }
         }
         .sheet(isPresented: $showPracticeView) {
-            ParadigmPracticeView(paradigmTypes: paradigmTypes)
+            ParadigmPracticeView(paradigmTypes: concepts)
         }
         .navigationTitle(title)
         .navigationBarTitleDisplayMode(.inline)
     }
     
-    var paradigms: [HebrewParadigm] {
-        return paradigmTypes.flatMap { $0.group.paradigms }
+    var paradigms: [LanguageConcept.Item] {
+        return concepts.flatMap { $0.group.items }
     }
     
     var title: String {
-        if paradigmTypes.count == 1 {
+        if concepts.count == 1 {
 //            return paradigmTypes.first!.group.title
             return ""
         } else {
@@ -76,7 +78,7 @@ struct ParadigmDetailView: View {
 struct ParadigmDetailView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            ParadigmDetailView(paradigmTypes: [.qatalStrong])
+            ParadigmDetailView(concepts: [.qatalStrong])
         }
     }
 }

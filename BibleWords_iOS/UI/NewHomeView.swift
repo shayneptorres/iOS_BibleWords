@@ -14,6 +14,8 @@ enum Paths: Hashable {
     case dueWords
     case allVocabLists
     case vocabListDetail(VocabWordList)
+    case wordInfoList([Bible.WordInfo])
+    case wordInstanceList([Bible.WordInstance])
     case allParsingLists
     case parsingListDetail(ParsingList)
     case greekParadigms
@@ -62,6 +64,7 @@ struct NewHomeView: View {
     @ObservedObject var viewModel = DataDependentViewModel()
     @State var paths: [Paths] = []
     @State var showStatsInfoModal = false
+    @State var showMoreStatsModal = false
     @State var showCreateListActionSheet = false
     @State var showCreateListModal = false
     @State var showCreateParsingModal = false
@@ -83,17 +86,11 @@ struct NewHomeView: View {
                         AppButton(text: "Greek Paradigms") {
                             paths.append(.greekParadigms)
                         }
-//                            Spacer()
                         AppButton(text: "Hebrew Paradigms") {
                             paths.append(.hebrewParadigms)
                         }
                     }
                     .padding(.horizontal)
-//                    .padding()
-//                    .frame(maxWidth: .infinity)
-//                    .background(Color(uiColor: .secondarySystemGroupedBackground))
-//                    .cornerRadius(Design.defaultCornerRadius)
-//                    .padding(.horizontal)
                 }
             }
             .navigationTitle("Bible Words")
@@ -115,6 +112,34 @@ struct NewHomeView: View {
                     VocabListsView()
                 case .vocabListDetail(let list):
                     ListDetailView(viewModel: .init(list: list))
+                case .wordInfoList(let words):
+                    List(words.sorted { $0.lemma.lowercased() < $1.lemma.lowercased() }) { word in
+                        NavigationLink(value: Paths.wordInfo(word)) {
+                            WordInfoRow(wordInfo: word.bound())
+                        }
+                    }
+                case .wordInstanceList(let instances):
+                    List {
+                        Section {
+                            ForEach(instances) { instance in
+                                VStack(alignment: .leading) {
+                                    Text(instance.textSurface)
+                                        .font(instance.language.meduimBibleFont)
+                                        .padding(.bottom, 4)
+                                    Text(instance.parsingStr)
+                                        .font(.subheadline)
+                                        .foregroundColor(Color(uiColor: .secondaryLabel))
+                                }
+                            }
+                        } header: {
+                            Text("Forms")
+                        }
+                    }
+                    .toolbar {
+                        ToolbarItemGroup(placement: .principal) {
+                            Text(instances.first?.lemma ?? "").font(.bible24)
+                        }
+                    }
                 case .allParsingLists:
                     ParsingListsView()
                 case .parsingListDetail(let list):
@@ -130,7 +155,7 @@ struct NewHomeView: View {
                 case .greekParadigms:
                     Text("Coming soon...")
                 case .hebrewParadigms:
-                    ParadigmsViews()
+                    ConceptsView()
                 case .wordInfo(let info):
                     WordInfoDetailsView(word: info)
                 case .wordInstance(let instance):
@@ -155,6 +180,9 @@ struct NewHomeView: View {
                         showSelectPresetListModal = true
                     }
                 ])
+        }
+        .sheet(isPresented: $showMoreStatsModal) {
+            MoreStatsView()
         }
         .sheet(isPresented: $showStatsInfoModal) {
             StatsInfoModal()
@@ -213,12 +241,17 @@ extension NewHomeView {
             HStack {
                 Text("Today's Stats")
                     .font(.headline)
-                Spacer()
                 Button(action: {
                     showStatsInfoModal = true
                 }, label: {
                     Image(systemName: "info.circle")
                         .font(.title3)
+                })
+                Spacer()
+                Button(action: {
+                    showMoreStatsModal = true
+                }, label: {
+                    Text("More Stats")
                 })
             }
             Divider()
@@ -472,10 +505,12 @@ extension NewHomeView {
     func ParsingListCard(list: Binding<ParsingList>) -> some View {
         HStack {
             VStack(alignment: .leading) {
-                Text(list.wrappedValue.defaultTitle)
+                Text(list.wrappedValue.shortTitle)
                     .font(.title3)
                     .bold()
-                Text(list.wrappedValue.defaultDetails)
+                Text(list.wrappedValue.parsingDetails)
+                    .font(.subheadline)
+                    .foregroundColor(Color(uiColor: .secondaryLabel))
                     .padding(.bottom, 4)
                 Spacer()
                 Text("Last studied: \((list.lastStudied.wrappedValue ?? Date()).toShortPrettyDate)")

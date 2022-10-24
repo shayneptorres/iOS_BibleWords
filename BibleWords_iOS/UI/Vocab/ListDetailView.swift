@@ -91,16 +91,35 @@ struct ListDetailView: View {
                         Text("Building words list...")
                     }
                 } else {
-                    if viewModel.list.sourceType == .app {
-                        Section {
-                            ForEach(viewModel.words.sorted { $0.lemma < $1.lemma }) { word in
-                                NavigationLink(value: Paths.wordInfo(word)) {
-                                    WordInfoRow(wordInfo: word.bound())
-                                }
-                                .navigationViewStyle(.stack)
+                    Section {
+                        HStack {
+                            NavigationLink(value: Paths.wordInfoList(viewModel.words)) {
+                                Image(systemName: "sum")
+                                    .font(.title3)
+                                Text("Total Words: \(viewModel.words.count)")
                             }
                         }
-                    } else {
+                        .foregroundColor(.accentColor)
+                        HStack {
+                            NavigationLink(value: Paths.wordInfoList(viewModel.words.filter { $0.vocabWord(context: context) == nil })) {
+                                Image(systemName: "gift")
+                                    .font(.title3)
+                                Text("New Words: \(viewModel.words.count - viewModel.list.wordsArr.count)")
+                            }
+                        }
+                        .foregroundColor(.accentColor)
+                        HStack {
+                            NavigationLink(value: Paths.wordInfoList(viewModel.list.wordsArr.filter { $0.isDue }.map { $0.wordInfo })) {
+                                Image(systemName: "clock.badge.exclamationmark")
+                                    .font(.title3)
+                                Text("Due Words: \(viewModel.list.wordsArr.filter { $0.isDue }.count)")
+                            }
+                        }
+                        .foregroundColor(.accentColor)
+                    } header: {
+                        Text("List info")
+                    }
+                    if viewModel.list.sourceType == .textbook {
                         ForEach(groupedTextbookWords, id: \.chapter) { group in
                             Section {
                                 ForEach(group.words) { word in
@@ -121,11 +140,8 @@ struct ListDetailView: View {
             VStack {
                 Spacer()
                 AppButton(text: "Study Vocab", action: onStudy)
-                    .padding(.horizontal)
+                    .padding([.horizontal, .bottom])
             }
-        }
-        .navigationDestination(for: Bible.WordInfo.self) { word in
-            WordInfoDetailsView(word: word)
         }
         .toolbar {
             ToolbarItemGroup(placement: .principal) {

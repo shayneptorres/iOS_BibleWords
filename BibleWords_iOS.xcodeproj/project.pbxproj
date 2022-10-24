@@ -79,6 +79,10 @@
 		B8DD2E7628F93CDF00AC9492 /* EzraSR.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B8DD2E4228F93CDD00AC9492 /* EzraSR.ttf */; };
 		B8DD2E7728F93CDF00AC9492 /* TekniaGreek.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B8DD2E4328F93CDD00AC9492 /* TekniaGreek.ttf */; };
 		B8DD2E7828F93CDF00AC9492 /* Font+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DD2E4428F93CDD00AC9492 /* Font+Extensions.swift */; };
+		B8E2FB3C2905176400C17F75 /* Text+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E2FB3B2905176400C17F75 /* Text+Extensions.swift */; };
+		B8E2FB3E29065D1D00C17F75 /* VocabWordIntervalStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E2FB3D29065D1D00C17F75 /* VocabWordIntervalStatsView.swift */; };
+		B8E2FB412906694B00C17F75 /* MoreStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E2FB402906694B00C17F75 /* MoreStatsView.swift */; };
+		B8E2FB43290670A900C17F75 /* VocabWordDifficultyStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E2FB42290670A900C17F75 /* VocabWordDifficultyStatsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -156,6 +160,10 @@
 		B8DD2E4228F93CDD00AC9492 /* EzraSR.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EzraSR.ttf; sourceTree = "<group>"; };
 		B8DD2E4328F93CDD00AC9492 /* TekniaGreek.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = TekniaGreek.ttf; sourceTree = "<group>"; };
 		B8DD2E4428F93CDD00AC9492 /* Font+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Font+Extensions.swift"; sourceTree = "<group>"; };
+		B8E2FB3B2905176400C17F75 /* Text+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Text+Extensions.swift"; sourceTree = "<group>"; };
+		B8E2FB3D29065D1D00C17F75 /* VocabWordIntervalStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabWordIntervalStatsView.swift; sourceTree = "<group>"; };
+		B8E2FB402906694B00C17F75 /* MoreStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreStatsView.swift; sourceTree = "<group>"; };
+		B8E2FB42290670A900C17F75 /* VocabWordDifficultyStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabWordDifficultyStatsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -322,6 +330,7 @@
 				B899888F28FE4D1900F00E0B /* DesignConstants.swift */,
 				B8A210F12901A90900BDF272 /* VocabWordRange+Extensions.swift */,
 				B8A2110129020FA100BDF272 /* ExternalTools.swift */,
+				B8E2FB3B2905176400C17F75 /* Text+Extensions.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -335,6 +344,7 @@
 				B899888428FDA91400F00E0B /* Reading */,
 				B8124D7A28FA0F580053057C /* Components */,
 				B8124D7128FA0EE60053057C /* Paradigms */,
+				B8E2FB3F2906693E00C17F75 /* Stats */,
 				B8DD2E0E28F93CB300AC9492 /* Assets.xcassets */,
 				B8DD2E4128F93CDD00AC9492 /* Fonts */,
 				B899888728FDAFE100F00E0B /* DataDependentViewModel.swift */,
@@ -351,6 +361,16 @@
 				B8DD2E4428F93CDD00AC9492 /* Font+Extensions.swift */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		B8E2FB3F2906693E00C17F75 /* Stats */ = {
+			isa = PBXGroup;
+			children = (
+				B8E2FB3D29065D1D00C17F75 /* VocabWordIntervalStatsView.swift */,
+				B8E2FB402906694B00C17F75 /* MoreStatsView.swift */,
+				B8E2FB42290670A900C17F75 /* VocabWordDifficultyStatsView.swift */,
+			);
+			path = Stats;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -434,6 +454,7 @@
 				B8DD2E6428F93CDF00AC9492 /* BibleRange.swift in Sources */,
 				B8DD2E7528F93CDF00AC9492 /* VocabListsView.swift in Sources */,
 				B8124D5E28F9446C0053057C /* Time+Extensions.swift in Sources */,
+				B8E2FB3C2905176400C17F75 /* Text+Extensions.swift in Sources */,
 				B8124D6228F958830053057C /* VocabWordDefinitionView.swift in Sources */,
 				B8124D5A28F944110053057C /* VocabListStudyView.swift in Sources */,
 				B8124D6028F948FD0053057C /* AppButton.swift in Sources */,
@@ -463,6 +484,7 @@
 				B8124D6A28F9C7100053057C /* String+Extensions.swift in Sources */,
 				B8A210F22901A90900BDF272 /* VocabWordRange+Extensions.swift in Sources */,
 				B8DD2E6D28F93CDF00AC9492 /* Int+Extensions.swift in Sources */,
+				B8E2FB43290670A900C17F75 /* VocabWordDifficultyStatsView.swift in Sources */,
 				B8A210EA28FF5C3A00BDF272 /* BuildParsingListView.swift in Sources */,
 				B8A210E228FE6DB100BDF272 /* WordDetailsView.swift in Sources */,
 				B8124D7728FA0EF10053057C /* ParadigmDetailView.swift in Sources */,
@@ -473,6 +495,7 @@
 				B899888C28FDB32D00F00E0B /* ReadPassageView.swift in Sources */,
 				B899889028FE4D1900F00E0B /* DesignConstants.swift in Sources */,
 				B899888828FDAFE100F00E0B /* DataDependentViewModel.swift in Sources */,
+				B8E2FB3E29065D1D00C17F75 /* VocabWordIntervalStatsView.swift in Sources */,
 				B8DD2E7328F93CDF00AC9492 /* WordInfoDetailsView.swift in Sources */,
 				B8124D7528FA0EF10053057C /* ParadigmPracticeView.swift in Sources */,
 				B8124D8528FB366F0053057C /* DueWordsView.swift in Sources */,
@@ -483,6 +506,7 @@
 				B8DD2E6F28F93CDF00AC9492 /* Bindable.swift in Sources */,
 				B8DD2E6B28F93CDF00AC9492 /* API.swift in Sources */,
 				B899888228FD1A5100F00E0B /* NewWordsLearnedTodayView.swift in Sources */,
+				B8E2FB412906694B00C17F75 /* MoreStatsView.swift in Sources */,
 				B8124D7D28FA0F990053057C /* HomeView.swift in Sources */,
 				B8A210F82901D80800BDF272 /* ParsingSessionReportView.swift in Sources */,
 				B8DD2E6328F93CDF00AC9492 /* GreekCodeables.swift in Sources */,

@@ -15,11 +15,24 @@ enum SessionEntryType: Int16 {
     case parsing
 }
 
-enum SessionEntryAnswerType: Int16 {
+enum SessionEntryAnswerType: Int16, CaseIterable {
     case wrong = 0
     case hard
     case good
     case easy
+    
+    var title: String {
+        switch self {
+        case .wrong:
+            return "Wrong"
+        case .hard:
+            return "Hard"
+        case .good:
+            return "Good"
+        case .easy:
+            return "Easy"
+        }
+    }
     
     var rowImage: some View {
         switch self {

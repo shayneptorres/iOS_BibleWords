@@ -6,59 +6,68 @@
 //
 
 import SwiftUI
+import Foundation
 
 struct ParadigmPracticeView: View {
+    struct Entry: Identifiable {
+        let id = UUID().uuidString
+        let item: LanguageConcept.Item
+        let answerType: SessionEntryAnswerType
+    }
+    
     @Environment(\.presentationMode) var presentationMode
-    let paradigmTypes: [HebrewParadigmType]
-    @State var currentParadigm: HebrewParadigm?
-//    @State var selectedPerson: PersonType = .none
-//    @State var selectedGender: GenderType = .masculine
-//    @State var selectedNumber: NumberType = .singular
-    @State var paradigms: [HebrewParadigm] = []
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    let paradigmTypes: [HebrewConcept]
+    @State var currentParadigm: LanguageConcept.Item?
+    @State var paradigms: [LanguageConcept.Item] = []
     @State var currentParadigmIndex = 0
     @State var displayMode = DisplayMode.testing
-//    @State var answerMode = AnswerMode.answering
+    @State var entries: [Entry] = []
+    @State var showCurrentEntries = false
     
     var body: some View {
         NavigationView {
             ZStack {
                 Color(uiColor: .secondarySystemBackground)
                     .ignoresSafeArea()
-                VStack {
-                    HStack(alignment: .center) {
-                        Text("Paradigm \(currentParadigmIndex + 1) out of \(paradigms.count)")
-                            .bold()
-                    }
-                    .foregroundColor(.white)
-                    .padding()
-                    .frame(maxWidth: .infinity, minHeight: 40)
-                    .background(Color(uiColor: .systemGray))
-                    .cornerRadius(Design.smallCornerRadius)
-                    .padding(.top)
-                    .padding(.horizontal)
-                    Text(currentParadigm?.text ?? "")
-                        .font(.bible100)
-                        .minimumScaleFactor(0.6)
-                        .frame(maxWidth: .infinity, minHeight: 200)
-                        .background(Color(UIColor.systemBackground))
-                        .foregroundColor(Color(uiColor: .label))
-                        .cornerRadius(Design.defaultCornerRadius)
-                        .padding(.horizontal)
-                        .padding(.top, 4)
-                    if displayMode == .showingAnswer {
-                        VStack(alignment: .center) {
-                            Text(currentParadigm?.parsing(display: .long) ?? "")
-                                .font(.title2)
-                                .foregroundColor(.appOrange)
-                                .bold()
-                                .padding(.bottom)
-                            Text("Definition:")
-                            Text(currentParadigm?.def ?? "")
-                                .font(.title3)
-                                .bold()
+                if horizontalSizeClass == .compact {
+                    VStack {
+                        HeaderView()
+                            .onTapGesture {
+                                showCurrentEntries = true
+                            }
+                        TextCardView()
+                        if displayMode == .showingAnswer {
+                            DefinitionView()
+                        }
+                        if displayMode == .showingAnswer {
+                            AnswerView()
+                        } else {
+                            TapToRevealView()
                         }
                     }
-                    TapToRevealView()
+                } else {
+                    GeometryReader { proxy in
+                        HStack {
+                            VStack {
+                                HeaderView()
+                                TextCardView()
+                                if displayMode == .showingAnswer {
+                                    DefinitionView()
+                                }
+                                Spacer()
+                            }
+                            .frame(width: proxy.size.width * 0.60)
+                            .frame(maxHeight: .infinity)
+                            if displayMode == .showingAnswer {
+                                AnswerView()
+                                    .padding()
+                            } else {
+                                TapToRevealView()
+                                    .padding()
+                            }
+                        }
+                    }
                 }
             }
             .toolbar {
@@ -74,10 +83,38 @@ struct ParadigmPracticeView: View {
                     })
                 }
             }
+            .sheet(isPresented: $showCurrentEntries) {
+                NavigationStack {
+                    List(entries) { entry in
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(entry.item.text)
+                                .font(.bible32)
+                            Text(entry.item.details)
+                            Text(entry.item.definition)
+                            HStack {
+                                entry.answerType.rowImage
+                                    .padding(.trailing, 4)
+                                Text(entry.answerType.title)
+                                    .foregroundColor(entry.answerType.color)
+                                Spacer()
+                            }
+                        }
+                    }
+                    .toolbar {
+                        Button(action: {
+                            showCurrentEntries = false
+                        }, label: {
+                            Text("Dismiss")
+                                .bold()
+                        })
+                    }
+                    .navigationBarTitle("Current Progress")
+                }
+            }
             .navigationBarTitleDisplayMode(.inline)
         }
         .onAppear {
-            paradigms = paradigmTypes.flatMap { $0.group.paradigms }.shuffled().filter { $0.text != "_" }
+            paradigms = paradigmTypes.flatMap { $0.group.items }.shuffled().filter { $0.text != "_" }
             setCurrentParadigm()
         }
     }
@@ -92,6 +129,109 @@ struct ParadigmPracticeView: View {
         } else {
             return "Multiple Paradigms"
         }
+    }
+    
+    func HeaderView() -> some View {
+        HStack(alignment: .center) {
+            VStack {
+                Text("Paradigm \(currentParadigmIndex + 1) out of \(paradigms.count)")
+                    .bold()
+                    .padding(.bottom, 4)
+                HStack {
+                    HStack {
+                        SessionEntryAnswerType.wrong.rowImage
+                        Text("\(entries.filter { $0.answerType == .wrong }.count)")
+                    }
+                    .frame(maxWidth: .infinity)
+                    HStack {
+                        SessionEntryAnswerType.hard.rowImage
+                        Text("\(entries.filter { $0.answerType == .hard }.count)")
+                    }
+                    .frame(maxWidth: .infinity)
+                    HStack {
+                        SessionEntryAnswerType.good.rowImage
+                        Text("\(entries.filter { $0.answerType == .good }.count)")
+                    }
+                    .frame(maxWidth: .infinity)
+                    HStack {
+                        SessionEntryAnswerType.easy.rowImage
+                        Text("\(entries.filter { $0.answerType == .easy }.count)")
+                    }
+                    .frame(maxWidth: .infinity)
+                }
+                .font(.caption)
+            }
+        }
+        .foregroundColor(.white)
+        .padding()
+        .frame(maxWidth: .infinity, minHeight: 40)
+        .background(Color(uiColor: .systemGray))
+        .cornerRadius(Design.smallCornerRadius)
+        .padding(.horizontal)
+    }
+    
+    func TextCardView() -> some View {
+        Text(currentParadigm?.text ?? "")
+            .font(.bible100)
+            .minimumScaleFactor(0.6)
+            .frame(maxWidth: .infinity, maxHeight: 200)
+            .background(Color(UIColor.systemBackground))
+            .foregroundColor(Color(uiColor: .label))
+            .cornerRadius(Design.defaultCornerRadius)
+            .padding(.horizontal)
+            .padding(.top, 4)
+    }
+    
+    func DefinitionView() -> some View {
+        HStack {
+            Text(currentParadigm?.details ?? "")
+                .font(.title2)
+                .bold()
+                .padding(.trailing, 8)
+            Text(currentParadigm?.definition ?? "")
+                .font(.title3)
+                .bold()
+        }
+    }
+    
+    func AnswerView() -> some View {
+        return AnyView(
+            VStack {
+                Spacer()
+                HStack {
+                    AnswerButton(answerType: .wrong, action: { on(.wrong) })
+                    AnswerButton(answerType: .hard, action: { on(.hard) })
+                }
+                .frame(maxWidth: .infinity)
+                HStack {
+                    AnswerButton(answerType: .good, action: { on(.good) })
+                    AnswerButton(answerType: .easy, action: { on(.easy) })
+                }
+                .frame(maxWidth: .infinity)
+            }
+                .frame(maxWidth: .infinity)
+        )
+        .frame(maxHeight: .infinity)
+        .padding([.horizontal, .bottom], 8)
+    }
+    
+    func on(_ answer: SessionEntryAnswerType) {
+        self.entries.append(.init(item: currentParadigm!, answerType: answer))
+        onTapNext()
+    }
+    
+    func AnswerButton(answerType: SessionEntryAnswerType, action: @escaping (() -> ())) -> some View {
+        return Button(action: action, label: {
+            VStack {
+                answerType.buttonImage
+                    .font(.largeTitle)
+                    .padding(.bottom, 4)
+            }
+            .foregroundColor(.white)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(answerType.color)
+            .cornerRadius(Design.defaultCornerRadius)
+        })
     }
     
     func TapToRevealView() -> some View {

@@ -148,7 +148,7 @@ extension PracticeParsingView {
         Text(currentInstance?.textSurface ?? "")
             .font(.bible72)
             .minimumScaleFactor(0.6)
-            .frame(maxWidth: .infinity, minHeight: 200)
+            .frame(maxWidth: .infinity, maxHeight: 200)
             .background(Color(UIColor.systemBackground))
             .foregroundColor(Color(uiColor: .label))
             .cornerRadius(Design.defaultCornerRadius)

@@ -73,7 +73,6 @@ class API: ObservableObject {
             let dict = try? JSONSerialization.jsonObject(with: data, options: []) as? [String:[String:[String:AnyObject]]]
         else { return }
         
-         
         Bible.main.hebrewLexicon.add(newLex: dict, source: API.Source.Info.app.id)
     }
     

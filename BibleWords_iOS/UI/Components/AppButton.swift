@@ -72,7 +72,7 @@ struct AppButtonModifier: ViewModifier {
         } else {
             return AnyView(
                 RoundedRectangle(cornerRadius: Design.defaultCornerRadius)
-                    .background(Color.accentColor)
+                    .fill(Color.accentColor.gradient)
                     .cornerRadius(Design.defaultCornerRadius)
             )
         }

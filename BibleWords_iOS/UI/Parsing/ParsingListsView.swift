@@ -24,10 +24,15 @@ struct ParsingListsView: View {
                 } else {
                     ForEach(lists) { list in
                         NavigationLink(value: Paths.parsingListDetail(list)) {
-                            HStack {
-                                Text(list.defaultTitle)
-                                Spacer()
-                                Text(list.defaultDetails)
+                            VStack(alignment: .leading, spacing: 4) {
+                                HStack {
+                                    Text(list.defaultTitle)
+                                    Spacer()
+                                    Text(list.defaultDetails)
+                                        .font(.subheadline)
+                                        .foregroundColor(Color(uiColor: .secondaryLabel))
+                                }
+                                Text(list.parsingDetails)
                                     .font(.subheadline)
                                     .foregroundColor(Color(uiColor: .secondaryLabel))
                             }

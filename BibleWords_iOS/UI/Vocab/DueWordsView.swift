@@ -80,7 +80,7 @@ struct DueWordsView: View, Equatable {
                 }
             }
             AppButton(text: "Study Words", action: onStudyWords)
-            .padding(.bottom)
+                .padding([.horizontal, .bottom])
             .disabled(viewModel.isBuilding)
         }
         .fullScreenCover(isPresented: $showStudyWordsView) {

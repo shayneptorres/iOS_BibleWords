@@ -20,9 +20,9 @@ struct WordsSeenTodayView: View {
     var words: [Bible.WordInfo] {
         switch entryType {
         case .newWord:
-            return wordEntries.filter { $0.answerTypeInt == 0 }.compactMap { $0.word?.wordInfo }
+            return wordEntries.filter { $0.studyTypeInt == 0 }.compactMap { $0.word?.wordInfo }
         case .reviewedWord:
-            return wordEntries.filter { $0.answerTypeInt == 1 }.compactMap { $0.word?.wordInfo }
+            return wordEntries.filter { $0.studyTypeInt == 1 }.compactMap { $0.word?.wordInfo }
         case .parsing:
             return []
         }
@@ -54,7 +54,7 @@ struct WordsSeenTodayView: View {
                         WordInfoRow(wordInfo: word.bound())
                     }
                 } else {
-                    ForEach(wordEntries.filter { $0.answerTypeInt == 2 }) { entry in
+                    ForEach(wordEntries.filter { $0.studyTypeInt == 2 }) { entry in
                         ParsingSessionEntryRow(entry: entry.bound())
                     }
                 }

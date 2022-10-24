@@ -105,6 +105,10 @@ extension VocabWord: Bindable {
                                             3.years,
                                             5.years,
                                             10.years]
+    
+    var sessionEntriesArr: [StudySessionEntry] {
+        return (sessionEntries?.allObjects ?? []) as! [StudySessionEntry]
+    }
 }
 
 extension VocabWord {

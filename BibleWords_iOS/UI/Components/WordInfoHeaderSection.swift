@@ -17,12 +17,25 @@ struct WordInfoHeaderSection: View {
                     .foregroundColor(Color(uiColor: .secondaryLabel))
                 Text(wordInfo.lemma)
                     .font(.bible40)
+                    .onLongPressGesture {
+                        let pasteboard = UIPasteboard.general
+                        pasteboard.string = wordInfo.lemma
+                        let generator = UINotificationFeedbackGenerator()
+                        generator.notificationOccurred(.success)
+                    }
             }
             VStack(alignment: .leading) {
                 Text("definition")
                     .font(.subheadline)
                     .foregroundColor(Color(uiColor: .secondaryLabel))
                 Text(wordInfo.definition)
+                    .font(.headline)
+            }
+            VStack(alignment: .leading) {
+                Text("Strong's ID")
+                    .font(.subheadline)
+                    .foregroundColor(Color(uiColor: .secondaryLabel))
+                Text(wordInfo.id)
                     .font(.headline)
             }
         } header: {

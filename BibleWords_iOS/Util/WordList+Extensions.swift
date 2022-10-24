@@ -144,8 +144,61 @@ extension ParsingList {
         return "\(Bible.Book(rawValue: range.bookStart.toInt)!.title) \(range.chapStart) - \(Bible.Book(rawValue: range.bookEnd.toInt)!.title) \(range.chapEnd)"
     }
     
+    var shortTitle: String {
+        guard let range = range else { return "" }
+        return "\(Bible.Book(rawValue: range.bookStart.toInt)!.shortTitle) \(range.chapStart) - \(Bible.Book(rawValue: range.bookEnd.toInt)!.shortTitle) \(range.chapEnd)"
+    }
+    
     var defaultDetails: String {
         guard let range = range else { return "" }
         return "\(range.occurrences)+ occurrences"
+    }
+    
+    var parsingDetails: String {
+        var str = wordType.rawValue.capitalized.appending("s: ")
+        if wordType == .noun {
+            if language == .greek {
+                str += [
+                    (casesStr ?? "").split(separator: ".").joined(separator: ", "),
+                    (numbersStr ?? "").split(separator: ".").joined(separator: ", "),
+                    (gendersStr ?? "").split(separator: ".").joined(separator: ", ")
+                ].joined(separator: "; ")
+            } else {
+                str += [
+                    (personsStr ?? "").split(separator: ".").joined(separator: ", "),
+                    (gendersStr ?? "").split(separator: ".").joined(separator: ", "),
+                    (numbersStr ?? "").split(separator: ".").joined(separator: ", ")
+                ].joined(separator: "; ")
+            }
+        } else {
+            if language == .greek {
+                str += [
+                    (tensesStr ?? "").split(separator: ".").joined(separator: ", "),
+                    (voicesStr ?? "").split(separator: ".").joined(separator: ", "),
+                    (moodsStr ?? "").split(separator: ".").joined(separator: ", ")
+                ].joined(separator: "; ")
+                if moods.contains(.participle) {
+                    str += [
+                        (casesStr ?? "").split(separator: ".").joined(separator: ", "),
+                        (numbersStr ?? "").split(separator: ".").joined(separator: ", "),
+                        (gendersStr ?? "").split(separator: ".").joined(separator: ", ")
+                    ].joined(separator: "; ")
+                } else {
+                    str += [
+                        (personsStr ?? "").split(separator: ".").joined(separator: ", "),
+                        (numbersStr ?? "").split(separator: ".").joined(separator: ", ")
+                    ].joined(separator: "; ")
+                }
+            } else {
+                str += [
+                    (stemsStr ?? "").split(separator: ".").joined(separator: ", "),
+                    (hebVerbTypesStr ?? "").split(separator: ".").joined(separator: ", "),
+                    (personsStr ?? "").split(separator: ".").joined(separator: ", "),
+                    (gendersStr ?? "").split(separator: ".").joined(separator: ", "),
+                    (numbersStr ?? "").split(separator: ".").joined(separator: ", ")
+                ].joined(separator: "; ")
+            }
+        }
+        return str
     }
 }

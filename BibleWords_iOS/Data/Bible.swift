@@ -190,8 +190,7 @@ struct Bible {
             for instance in instances {
                 parsingDict[instance.parsing] = instance
             }
-            var uniqueInstances = parsingDict.map { $0.value }
-//            uniqueInstances = uniqueInstances.filter { $0.parsing.lowercased().contains(word) }
+            let uniqueInstances = parsingDict.map { $0.value }
             
             return .init(strongId: self.id, lemma: self.lemma, definition: self.definition, instances: uniqueInstances)
         }
