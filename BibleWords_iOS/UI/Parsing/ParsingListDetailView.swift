@@ -24,17 +24,18 @@ class ParsingListDetailViewModel: ObservableObject, Equatable {
         
         guard let range = list.range else { return }
         
-        API.main.coreDataReadyPublisher.sink { isReady in
-            if isReady {
-                Task {
-                    await self.buildList(range: range)
+        Task {
+            API.main.coreDataReadyPublisher.sink { [weak self] isReady in
+                if isReady {
+                    self?.buildList(range: range)
                 }
-            }
-        }.store(in: &self.subscribers)
+            }.store(in: &self.subscribers)
+        }
+        
     }
     
-    func buildList(range: VocabWordRange) async {
-        await VocabListBuilder.buildParsingList(range: range.bibleRange,
+    func buildList(range: VocabWordRange) {
+        VocabListBuilder.buildParsingList(range: range.bibleRange,
                                                 language: list.language,
                                                 wordType: list.wordType,
                                                 cases: list.cases,

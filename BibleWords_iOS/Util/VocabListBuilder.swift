@@ -64,7 +64,7 @@ class VocabListBuilder {
         return textbookChapterFilterdWords
     }
     
-    static func buildParsingList(range: BibleRange, language: Language, wordType: Parsing.WordType, cases: [Parsing.Greek.Case], genders: [Parsing.Gender], numbers: [Parsing.Number], tenses: [Parsing.Greek.Tense], voices: [Parsing.Greek.Voice], moods: [Parsing.Greek.Mood], persons: [Parsing.Person], stems: [Parsing.Hebrew.Stem], verbTypes: [Parsing.Hebrew.VerbType], onComplete: ([Bible.WordInstance]) -> Void) async {
+    static func buildParsingList(range: BibleRange, language: Language, wordType: Parsing.WordType, cases: [Parsing.Greek.Case], genders: [Parsing.Gender], numbers: [Parsing.Number], tenses: [Parsing.Greek.Tense], voices: [Parsing.Greek.Voice], moods: [Parsing.Greek.Mood], persons: [Parsing.Person], stems: [Parsing.Hebrew.Stem], verbTypes: [Parsing.Hebrew.VerbType], onComplete: ([Bible.WordInstance]) -> Void) {
         
         let words = VocabListBuilder.buildVocabList(bookStart: range.bookStart,
                                              chapStart: range.chapStart,

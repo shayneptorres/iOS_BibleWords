@@ -138,7 +138,7 @@ extension BuildParsingListView {
         isBuilding = true
         let buildRange = language == .greek ? ntRange : otRange
         Task {
-            await VocabListBuilder.buildParsingList(range: buildRange,
+            VocabListBuilder.buildParsingList(range: buildRange,
                                                         language: language,
                                                         wordType: wordType,
                                                         cases: cases,
