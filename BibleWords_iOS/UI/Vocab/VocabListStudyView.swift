@@ -237,15 +237,6 @@ extension VocabListStudyView {
         
         
         newWordsIds = Array(allNewIds)
-//            .compactMap {
-//            if Bible.main.hebrewLexicon.word(for: $0)?.id != "" {
-//                return Bible.main.hebrewLexicon.word(for: $0)
-//            } else if Bible.main.greekLexicon.word(for: $0)?.id != "" {
-//                return Bible.main.greekLexicon.word(for: $0)
-//            } else {
-//                return nil
-//            }
-//        }
         
         if dueWordIds.isEmpty && newWordsIds.isEmpty {
             presentationMode.wrappedValue.dismiss()
@@ -288,7 +279,7 @@ extension VocabListStudyView {
             } else {
                 currentWord = matchingVocabIdDict[nextNewWordId]!
             }
-        } else {
+        } else if !dueWordIds.isEmpty {
             let vocabFetchRequest = NSFetchRequest<VocabWord>(entityName: "VocabWord")
             vocabFetchRequest.predicate = NSPredicate(format: "SELF.id == %@", dueWordIds.first!)
 
@@ -310,7 +301,6 @@ extension VocabListStudyView {
     
     func onPrev() {
         currentWord = prevWord
-//        selectedNextInterval = Int(nextInterval)
         prevWord = nil
         displayMode = .lemma
     }

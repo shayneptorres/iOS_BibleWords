@@ -68,7 +68,7 @@ struct DueWordsView: View, Equatable {
                         }
                     }
                     Section {
-                        ForEach(filteredDueWordInfos) { wordInfo in
+                        ForEach(filteredDueWordInfos.uniqueSorted) { wordInfo in
                             NavigationLink(value: AppPath.wordInfo(wordInfo)) {
                                 WordInfoRow(wordInfo: wordInfo.bound())
                             }

@@ -50,7 +50,7 @@ struct WordsSeenTodayView: View {
                 }
             } else {
                 if [SessionEntryType.newWord, .reviewedWord].contains(entryType) {
-                    ForEach(words) { word in
+                    ForEach(words.uniqueSorted) { word in
                         NavigationLink(value: AppPath.wordInfo(word)) {
                             WordInfoRow(wordInfo: word.bound())
                         }

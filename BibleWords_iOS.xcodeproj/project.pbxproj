@@ -86,6 +86,7 @@
 		B8E2FB4529072D4C00C17F75 /* CustomWordListBuilderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E2FB4429072D4C00C17F75 /* CustomWordListBuilderView.swift */; };
 		B8E2FB472907ADFB00C17F75 /* VocabListTypeInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E2FB462907ADFB00C17F75 /* VocabListTypeInfoView.swift */; };
 		B8E2FB492907B1A900C17F75 /* InfoImageTextRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E2FB482907B1A900C17F75 /* InfoImageTextRow.swift */; };
+		B8E2FB4B290892C100C17F75 /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E2FB4A290892C100C17F75 /* Array+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -170,6 +171,7 @@
 		B8E2FB4429072D4C00C17F75 /* CustomWordListBuilderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomWordListBuilderView.swift; sourceTree = "<group>"; };
 		B8E2FB462907ADFB00C17F75 /* VocabListTypeInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabListTypeInfoView.swift; sourceTree = "<group>"; };
 		B8E2FB482907B1A900C17F75 /* InfoImageTextRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoImageTextRow.swift; sourceTree = "<group>"; };
+		B8E2FB4A290892C100C17F75 /* Array+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -340,6 +342,7 @@
 				B8A210F12901A90900BDF272 /* VocabWordRange+Extensions.swift */,
 				B8A2110129020FA100BDF272 /* ExternalTools.swift */,
 				B8E2FB3B2905176400C17F75 /* Text+Extensions.swift */,
+				B8E2FB4A290892C100C17F75 /* Array+Extensions.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -491,6 +494,7 @@
 				B8DD2E6528F93CDF00AC9492 /* HebrewParsingDictionary.swift in Sources */,
 				B8DD2E7228F93CDF00AC9492 /* ListDetailView.swift in Sources */,
 				B8DD2E6228F93CDF00AC9492 /* Bible.swift in Sources */,
+				B8E2FB4B290892C100C17F75 /* Array+Extensions.swift in Sources */,
 				B8A210EE2900989A00BDF272 /* WordInfoHeaderSection.swift in Sources */,
 				B81C313F29032BD9002DBF6B /* NewHomeView.swift in Sources */,
 				B8124D6A28F9C7100053057C /* String+Extensions.swift in Sources */,

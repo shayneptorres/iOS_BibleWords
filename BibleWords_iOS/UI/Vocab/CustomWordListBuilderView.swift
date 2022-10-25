@@ -55,12 +55,6 @@ class CustomWordListBuilderViewModel: ObservableObject {
 }
 
 struct CustomWordListBuilderView: View {
-//    enum ViewPath: Hashable {
-//        case seeList
-//        case wordInfo(Bible.WordInfo)
-//        case wordInstance(Bible.WordInstance)
-//    }
-
     @Environment(\.managedObjectContext) var context
     @Environment(\.presentationMode) var presentationMode
     

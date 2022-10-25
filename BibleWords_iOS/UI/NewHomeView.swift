@@ -220,10 +220,6 @@ struct NewHomeView: View {
             CustomWordListBuilderView(viewModel: .init(list: nil))
                 .interactiveDismissDisabled()
         }
-//        .sheet(isPresented: $showCreateCustomListModal) {
-//            CustomWordListBuilderView(viewModel: .init(list: nil))
-//                .interactiveDismissDisabled()
-//        }
         .sheet(isPresented: $showVocabListTypeInfoModal) {
             VocabListTypeInfoView()
         }

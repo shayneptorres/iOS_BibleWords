@@ -7,17 +7,193 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "796447DA-E1E4-4143-947D-C6D259985096"
+            uuid = "EE249C0F-0E2D-440E-80AC-F6E0A379B75D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BibleWords_iOS/UI/Vocab/VocabListStudyView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "295"
+            endingLineNumber = "295"
+            landmarkName = "updateCurrentWord()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7C9A3F4A-F406-4EE4-9F40-093CBA9128CC"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BibleWords_iOS/UI/Vocab/VocabListStudyView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "292"
+            endingLineNumber = "292"
+            landmarkName = "updateCurrentWord()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "74A46350-4B69-49B9-AA85-2D9A17077F2E"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BibleWords_iOS/UI/Vocab/VocabListStudyView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "268"
+            endingLineNumber = "268"
+            landmarkName = "updateCurrentWord()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "74A46350-4B69-49B9-AA85-2D9A17077F2E - 8d49197a7e0a1566"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BibleWords_iOS.VocabListStudyView.updateCurrentWord() -&gt; ()"
+                  moduleName = "BibleWords_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/shaynetorres/Development/iOS/BibleWords_iOS/BibleWords_iOS/UI/Vocab/VocabListStudyView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "268"
+                  endingLineNumber = "268"
+                  offsetFromSymbolStart = "1996">
+               </Location>
+               <Location
+                  uuid = "74A46350-4B69-49B9-AA85-2D9A17077F2E - 19d1a166afee577c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 () -&gt; () in BibleWords_iOS.VocabListStudyView.updateCurrentWord() -&gt; ()"
+                  moduleName = "BibleWords_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/shaynetorres/Development/iOS/BibleWords_iOS/BibleWords_iOS/UI/Vocab/VocabListStudyView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "269"
+                  endingLineNumber = "269"
+                  offsetFromSymbolStart = "244">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "004BE245-0F0C-4429-BD52-9C00EB22E972"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BibleWords_iOS/UI/Vocab/VocabListStudyView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "267"
+            endingLineNumber = "267"
+            landmarkName = "updateCurrentWord()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "919F5710-85ED-4298-A89C-A1897960B829"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BibleWords_iOS/UI/Vocab/VocabListStudyView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "250"
-            endingLineNumber = "250"
+            startingLineNumber = "229"
+            endingLineNumber = "229"
             landmarkName = "updateWords(vocabWordDict:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7C0779B1-746E-4873-8D38-DD881E4B38D5"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BibleWords_iOS/UI/Vocab/VocabListStudyView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "239"
+            endingLineNumber = "239"
+            landmarkName = "updateWords(vocabWordDict:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9D554346-37B0-48C3-9459-C0D755EFC5ED"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BibleWords_iOS/UI/Vocab/VocabListStudyView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "265"
+            endingLineNumber = "265"
+            landmarkName = "updateCurrentWord()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "37463915-41E4-4917-A399-07143A231491"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BibleWords_iOS/UI/Vocab/VocabListStudyView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "266"
+            endingLineNumber = "266"
+            landmarkName = "updateCurrentWord()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "37463915-41E4-4917-A399-07143A231491 - 8d49197a7e0a1524"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BibleWords_iOS.VocabListStudyView.updateCurrentWord() -&gt; ()"
+                  moduleName = "BibleWords_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/shaynetorres/Development/iOS/BibleWords_iOS/BibleWords_iOS/UI/Vocab/VocabListStudyView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "266"
+                  endingLineNumber = "266"
+                  offsetFromSymbolStart = "1576">
+               </Location>
+               <Location
+                  uuid = "37463915-41E4-4917-A399-07143A231491 - 8d49197a7e0a1524"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BibleWords_iOS.VocabListStudyView.updateCurrentWord() -&gt; ()"
+                  moduleName = "BibleWords_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/shaynetorres/Development/iOS/BibleWords_iOS/BibleWords_iOS/UI/Vocab/VocabListStudyView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "266"
+                  endingLineNumber = "266"
+                  offsetFromSymbolStart = "1792">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
