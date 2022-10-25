@@ -7,32 +7,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "421CCBC2-6811-468D-B054-417505C23BCB"
+            uuid = "796447DA-E1E4-4143-947D-C6D259985096"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BibleWords_iOS/UI/Vocab/VocabListStudyView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "244"
-            endingLineNumber = "244"
-            landmarkName = "updateWords()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "A86533BF-D25A-48A9-ADE3-1CC226C5047C"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BibleWords_iOS/UI/Vocab/CustomWordListBuilderView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "314"
-            endingLineNumber = "314"
-            landmarkName = "onTap(_:)"
+            startingLineNumber = "250"
+            endingLineNumber = "250"
+            landmarkName = "updateWords(vocabWordDict:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

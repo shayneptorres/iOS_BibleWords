@@ -19,4 +19,9 @@ extension String {
     var strippingHebrewVowels: String {
         return self.replacing("[\\u0591-\\u05BD\\u05BF-\\u05C2\\u05C4-\\u05C7]", with: "")
     }
+    
+    var toWordInfo: Bible.WordInfo? {
+        return Bible.main.word(for: self)
+    }
+        
 }

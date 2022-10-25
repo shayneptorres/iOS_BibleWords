@@ -84,7 +84,7 @@ struct DueWordsView: View, Equatable {
             .disabled(viewModel.isBuilding)
         }
         .fullScreenCover(isPresented: $showStudyWordsView) {
-            VocabListStudyView(vocabList: $viewModel.dueList, allWordInfos: [])
+            VocabListStudyView(vocabList: $viewModel.dueList, allWordInfoIds: [])
         }
         .navigationDestination(for: Bible.WordInfo.self) { word in
             WordInfoDetailsView(word: word)

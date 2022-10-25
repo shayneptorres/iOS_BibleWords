@@ -347,7 +347,7 @@ extension CustomWordListBuilderView {
                 if let vocab = word.vocabWord(context: context) {
                     editingList.addToWords(vocab)
                 } else {
-                    let newVocab = VocabWord(context: context, wordInfo: word)
+                    let newVocab = VocabWord(context: context, id: word.id, lemma: word.lemma, def: word.definition, lang: word.language)
                     newVocab.sourceId = API.Source.Info.app.id
                     newVocab.currentInterval = 0
                     newVocab.dueDate = Date()

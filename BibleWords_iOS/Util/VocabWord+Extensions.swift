@@ -112,14 +112,14 @@ extension VocabWord: Bindable {
 }
 
 extension VocabWord {
-    convenience init(context: NSManagedObjectContext, wordInfo: Bible.WordInfo) {
+    convenience init(context: NSManagedObjectContext, id: String, lemma: String, def: String, lang: Language) {
         self.init(context: context)
-        self.id = wordInfo.id
-        self.customLemma = wordInfo.lemma
-        self.customDefinition = wordInfo.definition
+        self.id = id
+        self.customLemma = lemma
+        self.customDefinition = def
         self.createdAt = Date()
         self.currentInterval = 0
-        self.lang = wordInfo.language.rawValue
+        self.lang = lang.rawValue
         self.dueDate = Date()
     }
     

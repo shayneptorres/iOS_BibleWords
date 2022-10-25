@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct VocabListStudyView: View, Equatable {
     static func == (lhs: VocabListStudyView, rhs: VocabListStudyView) -> Bool {
@@ -19,10 +20,9 @@ struct VocabListStudyView: View, Equatable {
     @Namespace private var animation
     
     @Binding var vocabList: VocabWordList
-    @State var dueWords: [Bible.WordInfo] = []
-    @State var newWords: [Bible.WordInfo] = []
-    @State var allWordInfos: [Bible.WordInfo] = []
-    @State var incorrectWords: [VocabWord] = []
+    @State var dueWordIds: [String] = []
+    @State var newWordsIds: [String] = []
+    @State var allWordInfoIds: [String] = []
     @State var displayMode = DisplayMode.lemma
     @State var interfaceMode: InterfaceMode = .normal
     @State var currentWord: VocabWord?
@@ -190,7 +190,7 @@ extension VocabListStudyView {
     }
     
     func onReveal() {
-        guard !dueWords.isEmpty || !newWords.isEmpty else {
+        guard !dueWordIds.isEmpty || !newWordsIds.isEmpty else {
             presentationMode.wrappedValue.dismiss()
             return
         }
@@ -223,25 +223,31 @@ extension VocabListStudyView {
         }
     }
 
-    func updateWords() {
-        dueWords = vocabList.dueWords.map { $0.wordInfo }.filter { $0.id != "" }
+    func updateWords(vocabWordDict: [String:VocabWord]) {
+        dueWordIds = vocabList.dueWords.compactMap { $0.id }.filter { $0 != "" }
         
-        let allNewIds = Set(allWordInfos
+        let allNewIds = Set(allWordInfoIds
             .filter {
-                $0.vocabWord(context: managedObjectContext) == nil ||
-                $0.vocabWord(context: managedObjectContext)?.currentInterval == 0
-            }.map { $0.id })
+                $0 != "" &&
+                (
+                    vocabWordDict[$0] == nil ||
+                    vocabWordDict[$0]?.currentInterval == 0
+                )
+            })
         
         
-        newWords = allNewIds.compactMap {
-            if Bible.main.hebrewLexicon.word(for: $0) != nil {
-                return Bible.main.hebrewLexicon.word(for: $0)
-            } else {
-                return Bible.main.greekLexicon.word(for: $0)
-            }
-        }
+        newWordsIds = Array(allNewIds)
+//            .compactMap {
+//            if Bible.main.hebrewLexicon.word(for: $0)?.id != "" {
+//                return Bible.main.hebrewLexicon.word(for: $0)
+//            } else if Bible.main.greekLexicon.word(for: $0)?.id != "" {
+//                return Bible.main.greekLexicon.word(for: $0)
+//            } else {
+//                return nil
+//            }
+//        }
         
-        if dueWords.isEmpty && newWords.isEmpty {
+        if dueWordIds.isEmpty && newWordsIds.isEmpty {
             presentationMode.wrappedValue.dismiss()
         }
     }
@@ -249,24 +255,50 @@ extension VocabListStudyView {
     func updateCurrentWord() {
         prevWord = currentWord
         
-        if dueWords.count > 0 {
-            dueWords.remove(at: 0)
+        if dueWordIds.count > 0 {
+            dueWordIds.remove(at: 0)
         }
         
-        updateWords()
-        if dueWords.isEmpty, let nextNewWord = newWords.first {
-            if nextNewWord.vocabWord(context: managedObjectContext) == nil {
+        let vocabFetchRequest = NSFetchRequest<VocabWord>(entityName: "VocabWord")
+        vocabFetchRequest.predicate = NSPredicate(format: "SELF.id IN %@", allWordInfoIds)
+
+        var matchingVocabWords: [VocabWord] = []
+        do {
+            matchingVocabWords = try managedObjectContext.fetch(vocabFetchRequest)
+        } catch let err {
+            print(err)
+        }
+        var matchingVocabIdDict: [String:VocabWord] = [:]
+        matchingVocabWords.forEach { matchingVocabIdDict[$0.id ?? ""] = $0 }
+        
+        updateWords(vocabWordDict: matchingVocabIdDict)
+        if dueWordIds.isEmpty, let nextNewWordId = newWordsIds.first {
+            if matchingVocabIdDict[nextNewWordId] == nil {
                 CoreDataManager.transaction(context: managedObjectContext) {
-                    let newWord = VocabWord(context: managedObjectContext, wordInfo: nextNewWord)
+                    let wordInfo = Bible.main.word(for: nextNewWordId)
+                    let newWord = VocabWord(context: managedObjectContext,
+                                            id: wordInfo?.id ?? "",
+                                            lemma: wordInfo?.lemma ?? "",
+                                            def: wordInfo?.definition ?? "",
+                                            lang: wordInfo?.language ?? .greek)
                     newWord.sourceId = vocabList.sources.first?.id ?? ""
                     currentWord = newWord
                     vocabList.addToWords(newWord)
                 }
             } else {
-                currentWord = nextNewWord.vocabWord(context: managedObjectContext)
+                currentWord = matchingVocabIdDict[nextNewWordId]!
             }
         } else {
-            currentWord = dueWords.first?.vocabWord(context: managedObjectContext)
+            let vocabFetchRequest = NSFetchRequest<VocabWord>(entityName: "VocabWord")
+            vocabFetchRequest.predicate = NSPredicate(format: "SELF.id == %@", dueWordIds.first!)
+
+            var matchingVocabWords: [VocabWord] = []
+            do {
+                matchingVocabWords = try managedObjectContext.fetch(vocabFetchRequest)
+            } catch let err {
+                print(err)
+            }
+            currentWord = matchingVocabWords.first
         }
         
         if currentWord?.currentInterval == 0 {
@@ -373,11 +405,11 @@ extension VocabListStudyView {
 extension VocabListStudyView {
     func HeaderView() -> some View {
         HStack(alignment: .center) {
-            Text("Words due: \(dueWords.count)")
+            Text("Words due: \(dueWordIds.count)")
                 .font(.callout)
                 .bold()
             Spacer()
-            Text("New words: \(newWords.count)")
+            Text("New words: \(newWordsIds.count)")
                 .font(.callout)
                 .bold()
         }

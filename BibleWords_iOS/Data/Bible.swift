@@ -14,8 +14,38 @@ struct Bible {
     var greekLexicon = Lexicon()
     var hebrewLexicon = Lexicon()
     
+    func word(for strongID: String, source: String = API.Source.Info.app.id) -> Bible.WordInfo? {
+        var lex: Lexicon
+        if strongID.contains("G") {
+            lex = self.greekLexicon
+        } else {
+            lex = self.hebrewLexicon
+        }
+        guard
+            let sourceLex = lex.lex[source],
+            let wordDict = sourceLex[strongID]
+        else {
+            return nil
+        }
+        
+        if source == API.Source.Info.app.id {
+            // getting word from app lexicon, return right away
+            return .init(wordDict)
+        } else {
+            // getting word from textbook import, get instances from main lexicon
+            if let appLexWord = lex.lex[API.Source.Info.app.id]?[strongID] {
+                let appWordInfo = Bible.WordInfo(appLexWord)
+                var word = Bible.WordInfo(wordDict)
+                word.instances = appWordInfo.instances
+                return word
+            } else {
+                return Bible.WordInfo(wordDict)
+            }
+        }
+    }
+    
     struct Lexicon {
-        private var lex: [String:[String:[String:AnyObject]]] = [:]
+        var lex: [String:[String:[String:AnyObject]]] = [:]
 
         init(lex: [String:[String:[String:AnyObject]]] = [:]) {
             self.lex = lex

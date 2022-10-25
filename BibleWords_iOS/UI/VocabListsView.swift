@@ -37,7 +37,7 @@ struct VocabListsView: View {
                 List {
                     ForEach(lists) { list in
                         HStack {
-                            NavigationLink(value: AppPath.vocabListDetail(list)) {
+                            NavigationLink(value: AppPath.vocabListDetail(list: list, autoStudy: false)) {
                                 HStack {
                                     Text(list.defaultTitle)
                                     Spacer()

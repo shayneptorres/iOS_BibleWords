@@ -15,7 +15,7 @@ enum AppPath: Hashable {
     case dueWords
     case selectedWords
     case allVocabLists
-    case vocabListDetail(VocabWordList)
+    case vocabListDetail(list: VocabWordList, autoStudy: Bool)
     case wordInfoList([Bible.WordInfo])
     case wordInstanceList([Bible.WordInstance])
     case allParsingLists
@@ -63,7 +63,7 @@ struct NewHomeView: View {
         predicate: NSPredicate(format: "dueDate <= %@ && currentInterval > 0", Date() as CVarArg)
     ) var dueWords: FetchedResults<VocabWord>
     
-    @ObservedObject var viewModel = DataDependentViewModel()
+    @StateObject var viewModel = DataDependentViewModel()
     @State var paths: [AppPath] = []
     @State var showStatsInfoModal = false
     @State var showMoreStatsModal = false
@@ -114,8 +114,8 @@ struct NewHomeView: View {
                     }
                 case .allVocabLists:
                     VocabListsView()
-                case .vocabListDetail(let list):
-                    ListDetailView(viewModel: .init(list: list))
+                case .vocabListDetail(let list, let autoStudy):
+                    ListDetailView(viewModel: .init(list: list, autoStudy: autoStudy))
                 case .wordInfoList(let words):
                     List(words.sorted { $0.lemma.lowercased() < $1.lemma.lowercased() }) { word in
                         NavigationLink(value: AppPath.wordInfo(word)) {
@@ -433,9 +433,15 @@ extension NewHomeView {
                     ForEach(vocabLists) { list in
                         GeometryReader { geo in
                             VocabListCard(list: list.bound())
-                                .rotation3DEffect(Angle(degrees: Double(geo.frame(in: .global).minX) - 40) / -20, axis: (x: 0, y: 10, z: 0))
                                 .onTapGesture {
-                                    paths.append(.vocabListDetail(list))
+                                    paths.append(.vocabListDetail(list: list, autoStudy: false))
+                                }
+                                .contextMenu {
+                                    Button(action: {
+                                        paths.append(.vocabListDetail(list: list, autoStudy: true))
+                                    }, label: {
+                                        Label("Study", systemImage: "book")
+                                    })
                                 }
                         }
                         .frame(width: 200, height: vocabSectionHeight * 0.8)

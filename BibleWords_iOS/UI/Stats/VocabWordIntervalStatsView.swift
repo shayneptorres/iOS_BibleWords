@@ -11,10 +11,16 @@ import CoreData
 
 struct VocabWordIntervalStatsView: View {
     
+    enum StatDisplay {
+        case byCount
+        case byPercent
+    }
+    
     @Environment(\.managedObjectContext) var context
     @Environment(\.presentationMode) var presentationMode
     @State var subscribers: [AnyCancellable] = []
     @State var isBuilding = false
+    @State var display: StatDisplay = .byCount
     
     @State var intervalWords: [Int:[Bible.WordInfo]] = [:]
     var displayIntervals: [Int] {
@@ -27,17 +33,23 @@ struct VocabWordIntervalStatsView: View {
                 DataLoadingRow()
             } else {
                 Section {
+                    Picker("View as:", selection: $display) {
+                        Label("Word Count", systemImage: "number").tag(StatDisplay.byCount)
+                        Label("Percent", systemImage: "percent").tag(StatDisplay.byPercent)
+                    }
                     HStack {
                         Text("Total Vocab words studying: ")
                         Spacer()
                         Text("\(intervalWords.flatMap { $0.value }.count)")
                     }
+                }
+                Section {
                     ForEach(displayIntervals, id: \.self) { intervalInt in
                         NavigationLink(value: intervalWords[intervalInt] ?? []) {
                             HStack {
                                 Text(VocabWord.defaultSRIntervals[intervalInt].toPrettyTime)
                                 Spacer()
-                                Text("\(intervalWords[intervalInt]?.count ?? 0) words")
+                                Text(statDisplay(for: intervalInt))
                                     .font(.subheadline)
                                     .foregroundColor(Color(uiColor: .secondaryLabel))
                             }
@@ -63,6 +75,22 @@ struct VocabWordIntervalStatsView: View {
         .onAppear {
             guard intervalWords.isEmpty else { return }
             getVocabStatData()
+        }
+    }
+    
+    func statDisplay(for index: Int) -> String {
+        switch display {
+        case .byCount:
+            return "\(intervalWords[index]?.count ?? 0) words"
+        case .byPercent:
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .percent
+            formatter.minimumIntegerDigits = 1
+            formatter.maximumIntegerDigits = 2
+            formatter.maximumFractionDigits = 1
+            formatter.minimumFractionDigits = 1
+            let val = Double(intervalWords[index]?.count ?? 0) / Double(intervalWords.flatMap { $0.value }.count)
+            return formatter.string(for: val) ?? "0%"
         }
     }
     
