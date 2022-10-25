@@ -83,6 +83,9 @@
 		B8E2FB3E29065D1D00C17F75 /* VocabWordIntervalStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E2FB3D29065D1D00C17F75 /* VocabWordIntervalStatsView.swift */; };
 		B8E2FB412906694B00C17F75 /* MoreStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E2FB402906694B00C17F75 /* MoreStatsView.swift */; };
 		B8E2FB43290670A900C17F75 /* VocabWordDifficultyStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E2FB42290670A900C17F75 /* VocabWordDifficultyStatsView.swift */; };
+		B8E2FB4529072D4C00C17F75 /* CustomWordListBuilderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E2FB4429072D4C00C17F75 /* CustomWordListBuilderView.swift */; };
+		B8E2FB472907ADFB00C17F75 /* VocabListTypeInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E2FB462907ADFB00C17F75 /* VocabListTypeInfoView.swift */; };
+		B8E2FB492907B1A900C17F75 /* InfoImageTextRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E2FB482907B1A900C17F75 /* InfoImageTextRow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -164,6 +167,9 @@
 		B8E2FB3D29065D1D00C17F75 /* VocabWordIntervalStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabWordIntervalStatsView.swift; sourceTree = "<group>"; };
 		B8E2FB402906694B00C17F75 /* MoreStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreStatsView.swift; sourceTree = "<group>"; };
 		B8E2FB42290670A900C17F75 /* VocabWordDifficultyStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabWordDifficultyStatsView.swift; sourceTree = "<group>"; };
+		B8E2FB4429072D4C00C17F75 /* CustomWordListBuilderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomWordListBuilderView.swift; sourceTree = "<group>"; };
+		B8E2FB462907ADFB00C17F75 /* VocabListTypeInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabListTypeInfoView.swift; sourceTree = "<group>"; };
+		B8E2FB482907B1A900C17F75 /* InfoImageTextRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoImageTextRow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,6 +202,7 @@
 				B899887D28FC94F000F00E0B /* WordInfoRow.swift */,
 				B899888928FDB03300F00E0B /* DataLoadingView.swift */,
 				B8A210ED2900989A00BDF272 /* WordInfoHeaderSection.swift */,
+				B8E2FB482907B1A900C17F75 /* InfoImageTextRow.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -213,6 +220,8 @@
 				B8124D8428FB366F0053057C /* DueWordsView.swift */,
 				B899888128FD1A5100F00E0B /* NewWordsLearnedTodayView.swift */,
 				B8A210EB29007CCD00BDF272 /* DefaultVocabListSelectorView.swift */,
+				B8E2FB4429072D4C00C17F75 /* CustomWordListBuilderView.swift */,
+				B8E2FB462907ADFB00C17F75 /* VocabListTypeInfoView.swift */,
 			);
 			path = Vocab;
 			sourceTree = "<group>";
@@ -458,9 +467,11 @@
 				B8124D6228F958830053057C /* VocabWordDefinitionView.swift in Sources */,
 				B8124D5A28F944110053057C /* VocabListStudyView.swift in Sources */,
 				B8124D6028F948FD0053057C /* AppButton.swift in Sources */,
+				B8E2FB492907B1A900C17F75 /* InfoImageTextRow.swift in Sources */,
 				B8DD2E1428F93CB300AC9492 /* Persistence.swift in Sources */,
 				B8A2110229020FA100BDF272 /* ExternalTools.swift in Sources */,
 				B899888A28FDB03300F00E0B /* DataLoadingView.swift in Sources */,
+				B8E2FB472907ADFB00C17F75 /* VocabListTypeInfoView.swift in Sources */,
 				B899888028FCBCF100F00E0B /* StudySession+Extensions.swift in Sources */,
 				B8A210E828FF581E00BDF272 /* ParsingInfo.swift in Sources */,
 				B8124D8328FB2AF90053057C /* NavHeaderTitleDetailView.swift in Sources */,
@@ -468,6 +479,7 @@
 				B899887E28FC94F000F00E0B /* WordInfoRow.swift in Sources */,
 				B8A210FE2901E48A00BDF272 /* ParsingListSessionsView.swift in Sources */,
 				B8124D6628F9BDB90053057C /* Codables.swift in Sources */,
+				B8E2FB4529072D4C00C17F75 /* CustomWordListBuilderView.swift in Sources */,
 				B8124D8128FB285D0053057C /* BibleRange+Extensions.swift in Sources */,
 				B8DD2E6E28F93CDF00AC9492 /* VocabListBuilder.swift in Sources */,
 				B8124D7028F9FF5E0053057C /* Date+Extensions.swift in Sources */,

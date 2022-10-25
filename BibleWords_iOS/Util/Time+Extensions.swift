@@ -19,7 +19,9 @@ extension Int {
     
     var toPrettyTime: String {
         var str = ""
-        if self < 1.minutes {
+        if self == 0 {
+            return "New"
+        } else if self < 1.minutes {
             str = "\(self) sec"
             return self == 1 ? str : str + "s"
         } else if self < 1.hours {

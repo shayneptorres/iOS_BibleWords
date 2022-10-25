@@ -77,9 +77,9 @@ extension VocabWord: Bindable {
     
     var wordInfo: Bible.WordInfo {
         if Language(rawValue: self.lang) == .greek {
-            return Bible.main.greekLexicon.word(for: self.id ?? "", source: self.sourceId ?? "")
+            return Bible.main.greekLexicon.word(for: self.id ?? "", source: self.sourceId ?? "") ?? .init([:])
         } else {
-            return Bible.main.hebrewLexicon.word(for: self.id ?? "", source: self.sourceId ?? "")
+            return Bible.main.hebrewLexicon.word(for: self.id ?? "", source: self.sourceId ?? "") ?? .init([:])
         }
     }
     /// An array of the different Spaced Repitition intervals, in seconds
@@ -124,6 +124,12 @@ extension VocabWord {
     }
     
     var isDue: Bool {
-        return self.dueDate ?? Date() <= Date()
+        return self.dueDate ?? Date() <= Date() && self.currentInterval > 0
+    }
+}
+
+extension Bible.WordInfo {
+    func isNewVocab(context: NSManagedObjectContext) -> Bool {
+        return self.vocabWord(context: context) == nil || self.vocabWord(context: context)?.currentInterval == 0
     }
 }

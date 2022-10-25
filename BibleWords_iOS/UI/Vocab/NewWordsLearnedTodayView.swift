@@ -51,7 +51,9 @@ struct WordsSeenTodayView: View {
             } else {
                 if [SessionEntryType.newWord, .reviewedWord].contains(entryType) {
                     ForEach(words) { word in
-                        WordInfoRow(wordInfo: word.bound())
+                        NavigationLink(value: AppPath.wordInfo(word)) {
+                            WordInfoRow(wordInfo: word.bound())
+                        }
                     }
                 } else {
                     ForEach(wordEntries.filter { $0.studyTypeInt == 2 }) { entry in

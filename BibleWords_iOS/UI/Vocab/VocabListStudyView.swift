@@ -226,11 +226,20 @@ extension VocabListStudyView {
     func updateWords() {
         dueWords = vocabList.dueWords.map { $0.wordInfo }.filter { $0.id != "" }
         
-        let allIds = Set<String>(allWordInfos.map { $0.id })
-        let vocabListIds = Set<String>(vocabList.wordsArr.compactMap { $0.id })
+        let allNewIds = Set(allWordInfos
+            .filter {
+                $0.vocabWord(context: managedObjectContext) == nil ||
+                $0.vocabWord(context: managedObjectContext)?.currentInterval == 0
+            }.map { $0.id })
         
-        let newIds = allIds.subtracting(vocabListIds)
-        newWords = allWordInfos.filter { newIds.contains($0.id) }
+        
+        newWords = allNewIds.compactMap {
+            if Bible.main.hebrewLexicon.word(for: $0) != nil {
+                return Bible.main.hebrewLexicon.word(for: $0)
+            } else {
+                return Bible.main.greekLexicon.word(for: $0)
+            }
+        }
         
         if dueWords.isEmpty && newWords.isEmpty {
             presentationMode.wrappedValue.dismiss()
@@ -239,17 +248,22 @@ extension VocabListStudyView {
     
     func updateCurrentWord() {
         prevWord = currentWord
+        
         if dueWords.count > 0 {
             dueWords.remove(at: 0)
         }
         
         updateWords()
         if dueWords.isEmpty, let nextNewWord = newWords.first {
-            CoreDataManager.transaction(context: managedObjectContext) {
-                let newWord = VocabWord(context: managedObjectContext, wordInfo: nextNewWord)
-                newWord.sourceId = vocabList.sources.first?.id ?? ""
-                currentWord = newWord
-                vocabList.addToWords(newWord)
+            if nextNewWord.vocabWord(context: managedObjectContext) == nil {
+                CoreDataManager.transaction(context: managedObjectContext) {
+                    let newWord = VocabWord(context: managedObjectContext, wordInfo: nextNewWord)
+                    newWord.sourceId = vocabList.sources.first?.id ?? ""
+                    currentWord = newWord
+                    vocabList.addToWords(newWord)
+                }
+            } else {
+                currentWord = nextNewWord.vocabWord(context: managedObjectContext)
             }
         } else {
             currentWord = dueWords.first?.vocabWord(context: managedObjectContext)

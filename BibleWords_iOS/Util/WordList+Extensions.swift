@@ -23,7 +23,7 @@ extension VocabWordList {
     }
     
     var dueWords: [VocabWord] {
-        return wordsArr.filter { $0.dueDate! < Date() }.sorted { $0.dueDate! < $1.dueDate! }
+        return wordsArr.filter { $0.isDue }.sorted { $0.dueDate! < $1.dueDate! }
     }
     
     var rangesArr: [VocabWordRange] {
@@ -39,11 +39,14 @@ extension VocabWordList {
     }
     
     var sources: [API.Source.Info] {
+        if rangesArr.isEmpty {
+            return [.app]
+        }
         return rangesArr.compactMap { $0.sourceId }.compactMap { API.Source.Info.info(for: $0) }
     }
     
     var defaultTitle: String {
-        guard !rangesArr.isEmpty else { return "No ranges for this list" }
+        guard !rangesArr.isEmpty else { return self.title ?? "" }
         if sources.first(where: { $0.id != API.Source.Info.app.id }) != nil {
             // we have ranges from a textbook
             if rangesArr.count == 1, let range = rangesArr.first, let info = API.Source.Info.info(for: range.sourceId ?? "") {

@@ -49,18 +49,29 @@ class ListDetailViewModel: ObservableObject, Equatable {
     }
     
     static func == (lhs: ListDetailViewModel, rhs: ListDetailViewModel) -> Bool {
-        return (lhs.list.id ?? "") == (rhs.list.id ?? "")
+        return (lhs.list.id ?? "") == (rhs.list.id ?? "") &&
+        (lhs.list.title ?? "") == (rhs.list.title ?? "") &&
+        (lhs.list.details ?? "") == (rhs.list.details ?? "")
     }
     
     func buildBibleWords() {
+        var w: [Bible.WordInfo] = []
         for range in self.list.rangesArr  {
-            let w = VocabListBuilder.buildVocabList(bookStart: range.bookStart.toInt,
+            w = VocabListBuilder.buildVocabList(bookStart: range.bookStart.toInt,
                                                     chapStart: range.chapStart.toInt,
                                                     bookEnd: range.bookEnd.toInt,
                                                     chapEnd: range.chapEnd.toInt,
                                                     occurrences: range.occurrences.toInt)
-            self.wordsAreReady.send(w)
         }
+        
+        for vocabWord in list.wordsArr {
+            // get any remaining words that are part of this list but not from a bible/textbook range
+            if !w.contains(vocabWord.wordInfo) {
+                w.append(vocabWord.wordInfo)
+            }
+        }
+        
+        self.wordsAreReady.send(w)
     }
     
     func buildTextbookWords() {
@@ -79,73 +90,40 @@ struct ListDetailView: View {
     @ObservedObject var viewModel: ListDetailViewModel
     @State var studyWords = false
     @State var showWordInstances = false
+    @State var showEditView = false
     
     var body: some View {
         ZStack {
             List {
                 if viewModel.isBuilding {
-                    HStack {
-                        ProgressView()
-                            .progressViewStyle(.automatic)
-                            .padding(.trailing)
-                        Text("Building words list...")
-                    }
+                    DataLoadingRow(text: "Building list data...")
                 } else {
-                    Section {
-                        HStack {
-                            NavigationLink(value: Paths.wordInfoList(viewModel.words)) {
-                                Image(systemName: "sum")
-                                    .font(.title3)
-                                Text("Total Words: \(viewModel.words.count)")
-                            }
-                        }
-                        .foregroundColor(.accentColor)
-                        HStack {
-                            NavigationLink(value: Paths.wordInfoList(viewModel.words.filter { $0.vocabWord(context: context) == nil })) {
-                                Image(systemName: "gift")
-                                    .font(.title3)
-                                Text("New Words: \(viewModel.words.count - viewModel.list.wordsArr.count)")
-                            }
-                        }
-                        .foregroundColor(.accentColor)
-                        HStack {
-                            NavigationLink(value: Paths.wordInfoList(viewModel.list.wordsArr.filter { $0.isDue }.map { $0.wordInfo })) {
-                                Image(systemName: "clock.badge.exclamationmark")
-                                    .font(.title3)
-                                Text("Due Words: \(viewModel.list.wordsArr.filter { $0.isDue }.count)")
-                            }
-                        }
-                        .foregroundColor(.accentColor)
-                    } header: {
-                        Text("List info")
-                    }
-                    if viewModel.list.sourceType == .textbook {
-                        ForEach(groupedTextbookWords, id: \.chapter) { group in
-                            Section {
-                                ForEach(group.words) { word in
-                                    NavigationLink(value: Paths.wordInfo(word)) {
-                                        VStack(alignment: .leading) {
-                                            WordInfoRow(wordInfo: word.bound())
-                                        }
-                                        .navigationViewStyle(.stack)
-                                    }
-                                }
-                            } header: {
-                                Text("Chapter \(group.chapter)")
-                            }
-                        }
-                    }
+                    ListInfoSection()
+                    TextbookWordsSection()
                 }
             }
-            VStack {
-                Spacer()
-                AppButton(text: "Study Vocab", action: onStudy)
-                    .padding([.horizontal, .bottom])
-            }
+            StudyButton()
         }
         .toolbar {
             ToolbarItemGroup(placement: .principal) {
                 NavHeaderTitleDetailView(title: viewModel.list.defaultTitle, detail: viewModel.list.defaultDetails)
+            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    showEditView = true
+                }, label: {
+                    Text("Edit")
+                        .bold()
+                })
+            }
+        }
+        .sheet(isPresented: $showEditView) {
+            if viewModel.list.rangesArr.isEmpty {
+                CustomWordListBuilderView(viewModel: .init(list: $viewModel.list)) { editedList in
+                    viewModel.list = editedList
+                }
+            } else {
+                
             }
         }
         .fullScreenCover(isPresented: $studyWords) {
@@ -171,7 +149,67 @@ struct ListDetailView: View {
 }
 
 extension ListDetailView {
+ 
+    @ViewBuilder
+    func ListInfoSection() -> some View {
+        Section {
+            HStack {
+                NavigationLink(value: AppPath.wordInfoList(viewModel.words)) {
+                    Image(systemName: "sum")
+                        .font(.title3)
+                    Text("Total Words: \(viewModel.words.count)")
+                }
+            }
+            .foregroundColor(.accentColor)
+            HStack {
+                NavigationLink(value: AppPath.wordInfoList(viewModel.words.filter { $0.isNewVocab(context: context) })) {
+                    Image(systemName: "gift")
+                        .font(.title3)
+                    Text("New Words: \(viewModel.words.filter { $0.isNewVocab(context: context) }.count)")
+                }
+            }
+            .foregroundColor(.accentColor)
+            HStack {
+                NavigationLink(value: AppPath.wordInfoList(viewModel.list.wordsArr.filter { $0.isDue }.map { $0.wordInfo })) {
+                    Image(systemName: "clock.badge.exclamationmark")
+                        .font(.title3)
+                    Text("Due Words: \(viewModel.list.wordsArr.filter { $0.isDue }.count)")
+                }
+            }
+            .foregroundColor(.accentColor)
+        } header: {
+            Text("List info")
+        }
+    }
     
+    @ViewBuilder
+    func TextbookWordsSection() -> some View {
+        if viewModel.list.sourceType == .textbook {
+            ForEach(groupedTextbookWords, id: \.chapter) { group in
+                Section {
+                    ForEach(group.words) { word in
+                        NavigationLink(value: AppPath.wordInfo(word)) {
+                            VStack(alignment: .leading) {
+                                WordInfoRow(wordInfo: word.bound())
+                            }
+                            .navigationViewStyle(.stack)
+                        }
+                    }
+                } header: {
+                    Text("Chapter \(group.chapter)")
+                }
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func StudyButton() -> some View {
+        VStack {
+            Spacer()
+            AppButton(text: "Study Vocab", action: onStudy)
+                .padding([.horizontal, .bottom])
+        }
+    }
 }
 
 //struct ListDetailView_Previews: PreviewProvider {

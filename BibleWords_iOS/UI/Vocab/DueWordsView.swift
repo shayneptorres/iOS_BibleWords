@@ -34,7 +34,7 @@ class DueWordsViewModel: ObservableObject, Equatable {
 struct DueWordsView: View, Equatable {
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \VocabWord.dueDate, ascending: false)],
-        predicate: NSPredicate(format: "dueDate <= %@", Date() as CVarArg)
+        predicate: NSPredicate(format: "dueDate <= %@ && currentInterval > 0", Date() as CVarArg)
     ) var dueWords: FetchedResults<VocabWord>
     @Environment(\.managedObjectContext) var context
     
@@ -69,7 +69,7 @@ struct DueWordsView: View, Equatable {
                     }
                     Section {
                         ForEach(filteredDueWordInfos) { wordInfo in
-                            NavigationLink(value: Paths.wordInfo(wordInfo)) {
+                            NavigationLink(value: AppPath.wordInfo(wordInfo)) {
                                 WordInfoRow(wordInfo: wordInfo.bound())
                             }
                         }

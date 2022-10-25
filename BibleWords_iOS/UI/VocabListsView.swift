@@ -20,8 +20,11 @@ struct VocabListsView: View {
     var lists: FetchedResults<VocabWordList>
     
     @State var showCreateListActionSheet = false
-    @State var showCustomListBuilderView = false
-    @State var showDefaultListSelectorView = false
+    @State var showCreateBiblePassageListModal = false
+    @State var showSelectDefaultListModal = false
+    @State var showCreateCustomListModal = false
+    @State var showStatsInfoModal = false
+    @State var showVocabListTypeInfoModal = false
     
     var body: some View {
         ZStack {
@@ -34,7 +37,7 @@ struct VocabListsView: View {
                 List {
                     ForEach(lists) { list in
                         HStack {
-                            NavigationLink(value: Paths.vocabListDetail(list)) {
+                            NavigationLink(value: AppPath.vocabListDetail(list)) {
                                 HStack {
                                     Text(list.defaultTitle)
                                     Spacer()
@@ -66,25 +69,37 @@ struct VocabListsView: View {
         .actionSheet(isPresented: $showCreateListActionSheet) {
             ActionSheet(
                 title: Text("Create new vocab list"),
-                message: Text("Would you like to create a custom vocab word list, or select a preset vocab list type?"), buttons: [
+                message: Text("What type of vocab list would you like to create?"), buttons: [
                     .cancel(),
-                    .default(Text("Custom List")) {
-                        showCustomListBuilderView = true
+                    .default(Text("Bible Passage(s) List")) {
+                        showCreateBiblePassageListModal = true
                     },
-                    .default(Text("Preset List")) {
-                        showDefaultListSelectorView = true
+                    .default(Text("Default List")) {
+                        showSelectDefaultListModal = true
+                    },
+                    .default(Text("Custom Word List")) {
+                        showCreateCustomListModal = true
+                    },
+                    .default(Text("What are these?")) {
+                        showVocabListTypeInfoModal = true
                     }
                 ])
         }
-        .sheet(isPresented: $showCustomListBuilderView) {
+        .sheet(isPresented: $showCreateBiblePassageListModal) {
             NavigationStack {
                 BuildVocabListView()
             }
         }
-        .sheet(isPresented: $showDefaultListSelectorView) {
+        .sheet(isPresented: $showSelectDefaultListModal) {
             NavigationStack {
                 DefaultVocabListSelectorView()
             }
+        }
+        .sheet(isPresented: $showCreateCustomListModal) {
+            CustomWordListBuilderView(viewModel: .init(list: nil))
+        }
+        .sheet(isPresented: $showVocabListTypeInfoModal) {
+            VocabListTypeInfoView()
         }
     }
     

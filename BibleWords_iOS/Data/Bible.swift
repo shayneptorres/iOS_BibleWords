@@ -46,12 +46,12 @@ struct Bible {
             guard let sourceLex = self.lex[source] else { return [] }
                     
             let i = sourceLex.compactMap { $0.value["id"] as? String}
-            let words: [Bible.WordInfo] = i.map { word(for: $0, source: source) }
+            let words: [Bible.WordInfo] = i.compactMap { word(for: $0, source: source) }
 
             return words
         }
 
-        func word(for strongID: String, source: String = API.Source.Info.app.id) -> Bible.WordInfo {
+        func word(for strongID: String, source: String = API.Source.Info.app.id) -> Bible.WordInfo? {
             guard
                 let sourceLex = self.lex[source],
                 let wordDict = sourceLex[strongID]
@@ -309,9 +309,9 @@ struct Bible {
         
         var wordInfo: WordInfo {
             if language == .greek {
-                return Bible.main.greekLexicon.word(for: self.strongId)
+                return Bible.main.greekLexicon.word(for: self.strongId) ?? .init([:])
             } else {
-                return Bible.main.hebrewLexicon.word(for: self.strongId.getDigits)
+                return Bible.main.hebrewLexicon.word(for: self.strongId.getDigits) ?? .init([:])
             }
         }
     }

@@ -94,7 +94,7 @@ struct BuildParsingListView: View {
                 Spacer()
                 AppButton(text: isBuilding ? "Building list..." : "Build List", systemImage: "hammer", action: onBuild)
                     .disabled(isBuilding)
-                    .padding(.bottom)
+                    .padding([.horizontal, .bottom])
             }
         }
         .toolbar {

@@ -20,7 +20,7 @@ struct ParsingListSessionsView: View {
                     .fontWeight(.semibold)
             } else {
                 ForEach(list.sessionsArr.sorted { $0.startDate! > $1.startDate! }) { session in
-                    NavigationLink(value: Paths.parsingSessionDetail(session)) {
+                    NavigationLink(value: AppPath.parsingSessionDetail(session)) {
                         VStack(alignment: .leading) {
                             Text(session.startDate?.toPrettyDate ?? "")
                                 .padding(.bottom, 4)

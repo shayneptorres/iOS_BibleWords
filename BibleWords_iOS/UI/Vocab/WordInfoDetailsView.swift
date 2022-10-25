@@ -43,7 +43,7 @@ struct WordInfoDetailsView: View {
             Section {
                 if showAppearances {
                     ForEach(word.instances) { instance in
-                        NavigationLink(value: Paths.wordInstance(instance)) {
+                        NavigationLink(value: AppPath.wordInstance(instance)) {
                             VStack(alignment: .leading) {
                                 Text(instance.prettyRefStr)
                                     .bold()
@@ -68,6 +68,8 @@ struct WordInfoDetailsView: View {
                 }
             }
         }
+        .navigationTitle("Word Info")
+        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 Button("Done", action: { presentationMode.wrappedValue.dismiss() })

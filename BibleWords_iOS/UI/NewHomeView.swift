@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import CoreData
 
-enum Paths: Hashable {
+enum AppPath: Hashable {
     case reviewedWords
     case newWords
     case parsedWords
     case dueWords
+    case selectedWords
     case allVocabLists
     case vocabListDetail(VocabWordList)
     case wordInfoList([Bible.WordInfo])
@@ -58,18 +60,20 @@ struct NewHomeView: View {
     
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \VocabWord.dueDate, ascending: false)],
-        predicate: NSPredicate(format: "dueDate <= %@", Date() as CVarArg)
+        predicate: NSPredicate(format: "dueDate <= %@ && currentInterval > 0", Date() as CVarArg)
     ) var dueWords: FetchedResults<VocabWord>
     
     @ObservedObject var viewModel = DataDependentViewModel()
-    @State var paths: [Paths] = []
+    @State var paths: [AppPath] = []
     @State var showStatsInfoModal = false
     @State var showMoreStatsModal = false
     @State var showCreateListActionSheet = false
-    @State var showCreateListModal = false
+    @State var showCreateBiblePassageListModal = false
     @State var showCreateParsingModal = false
-    @State var showSelectPresetListModal = false
+    @State var showSelectDefaultListModal = false
+    @State var showCreateCustomListModal = false
     @State var showBibleReadingView = false
+    @State var showVocabListTypeInfoModal = false
     let vocabSectionHeight: CGFloat = 175
     
     var body: some View {
@@ -94,7 +98,7 @@ struct NewHomeView: View {
                 }
             }
             .navigationTitle("Bible Words")
-            .navigationDestination(for: Paths.self) { path in
+            .navigationDestination(for: AppPath.self) { path in
                 switch path {
                 case .reviewedWords:
                     WordsSeenTodayView(entryType: .reviewedWord)
@@ -114,7 +118,7 @@ struct NewHomeView: View {
                     ListDetailView(viewModel: .init(list: list))
                 case .wordInfoList(let words):
                     List(words.sorted { $0.lemma.lowercased() < $1.lemma.lowercased() }) { word in
-                        NavigationLink(value: Paths.wordInfo(word)) {
+                        NavigationLink(value: AppPath.wordInfo(word)) {
                             WordInfoRow(wordInfo: word.bound())
                         }
                     }
@@ -160,6 +164,8 @@ struct NewHomeView: View {
                     WordInfoDetailsView(word: info)
                 case .wordInstance(let instance):
                     WordInPassageView(word: instance.wordInfo.bound(), instance: instance.bound())
+                default:
+                    Text("Not implemented")
                 }
             }
         }
@@ -171,13 +177,19 @@ struct NewHomeView: View {
         .actionSheet(isPresented: $showCreateListActionSheet) {
             ActionSheet(
                 title: Text("Create new vocab list"),
-                message: Text("Would you like to create a custom vocab word list, or select a preset vocab list type?"), buttons: [
+                message: Text("What type of vocab list would you like to create?"), buttons: [
                     .cancel(),
-                    .default(Text("Custom List")) {
-                        showCreateListModal = true
+                    .default(Text("Bible Passage(s) List")) {
+                        showCreateBiblePassageListModal = true
                     },
-                    .default(Text("Preset List")) {
-                        showSelectPresetListModal = true
+                    .default(Text("Default List")) {
+                        showSelectDefaultListModal = true
+                    },
+                    .default(Text("Custom Word List")) {
+                        showCreateCustomListModal = true
+                    },
+                    .default(Text("What are these?")) {
+                        showVocabListTypeInfoModal = true
                     }
                 ])
         }
@@ -185,18 +197,35 @@ struct NewHomeView: View {
             MoreStatsView()
         }
         .sheet(isPresented: $showStatsInfoModal) {
-            StatsInfoModal()
-                .presentationDetents([.fraction(0.9)])
+            NavigationStack {
+                StatsInfoModal()
+            }
         }
-        .sheet(isPresented: $showCreateListModal) {
+        .sheet(isPresented: $showCreateBiblePassageListModal) {
             NavigationStack {
                 BuildVocabListView()
             }
         }
-        .sheet(isPresented: $showSelectPresetListModal) {
+        .sheet(isPresented: $showSelectDefaultListModal) {
             NavigationStack {
                 DefaultVocabListSelectorView()
             }
+        }
+        .sheet(isPresented: $showCreateParsingModal) {
+            NavigationStack {
+                BuildParsingListView()
+            }
+        }
+        .sheet(isPresented: $showCreateCustomListModal) {
+            CustomWordListBuilderView(viewModel: .init(list: nil))
+                .interactiveDismissDisabled()
+        }
+//        .sheet(isPresented: $showCreateCustomListModal) {
+//            CustomWordListBuilderView(viewModel: .init(list: nil))
+//                .interactiveDismissDisabled()
+//        }
+        .sheet(isPresented: $showVocabListTypeInfoModal) {
+            VocabListTypeInfoView()
         }
         .onAppear {
             if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
@@ -204,6 +233,22 @@ struct NewHomeView: View {
                 fetchData()
                 initializeCoreData()
             }
+            
+//            CoreDataManager.transaction(context: context) {
+//                let vocabFetchRequest = NSFetchRequest<VocabWord>(entityName: "VocabWord")
+//                vocabFetchRequest.predicate = NSPredicate(format: "SELF.id == %@", "6466" )
+//
+//                var matchingVocabWords: [VocabWord] = []
+//                do {
+//                    matchingVocabWords = try context.fetch(vocabFetchRequest)
+//                } catch let err {
+//                    print(err)
+//                }
+//
+//                for word in matchingVocabWords  {
+//                    context.delete(word)
+//                }
+//            }
         }
     }
     
@@ -319,9 +364,6 @@ extension NewHomeView {
         List {
             Section {
                 VStack(alignment: .leading) {
-                    Text("Stats Info")
-                        .font(.title)
-                        .padding(.bottom, 4)
                     Text("What do those images and numbers mean?")
                         .font(.headline)
                         .padding(.bottom, 4)
@@ -329,48 +371,20 @@ extension NewHomeView {
                         .font(.subheadline)
                 }
             }
-            VStack(alignment: .leading, spacing: 16) {
-                HStack(alignment: .center) {
-                    Image(systemName: "arrow.triangle.2.circlepath")
-                        .font(.title)
-                        .foregroundColor(.accentColor)
-                        .padding(.trailing)
-                        .padding(.leading, -16)
-                    Text("This represents the vocab words that you have previously learned but have reviewed today. Every day this will be set to 0 and the count will increase as you review previous vocab words")
-                        .multilineTextAlignment(.leading)
-                    
-                }
-                Divider()
-                HStack(alignment: .center) {
-                    Image(systemName: "gift")
-                        .font(.title)
-                        .foregroundColor(.accentColor)
-                        .padding(.trailing)
-                        .padding(.leading, -16)
-                    Text("This represents the new words that you were exposed to today. Once exposed, they are given a due date and you will see them later. At that point they will become 'reviewed' words.")
-                }
-                Divider()
-                HStack(alignment: .center) {
-                    Image(systemName: "rectangle.and.hand.point.up.left.filled")
-                        .font(.title)
-                        .foregroundColor(.accentColor)
-                        .padding(.trailing)
-                        .padding(.leading, -16)
-                    Text("This represents the number of words that you have parsed today. Learning biblical greek and hebrew is more than just vocabulary. Make sure to spend time practicing your parsing.")
-                }
-                Divider()
-                HStack(alignment: .center) {
-                    Image(systemName: "clock.badge.exclamationmark")
-                        .font(.title)
-                        .foregroundColor(.accentColor)
-                        .padding(.trailing)
-                        .padding(.leading, -16)
-                    Text("This represents the number of vocab words that are past due. You have already seen these words before and it is time for you to review them again")
-                }
+            Section {
+                InfoImageTextRow(imageName: "arrow.triangle.2.circlepath", text: "This represents the vocab words that you have previously learned but have reviewed today. Every day this will be set to 0 and the count will increase as you review previous vocab words")
+                InfoImageTextRow(imageName: "gift", text: "This represents the new words that you were exposed to today. Once exposed, they are given a due date and you will see them later. At that point they will become 'reviewed' words.")
+                InfoImageTextRow(imageName: "rectangle.and.hand.point.up.left.filled", text: "This represents the number of words that you have parsed today. Learning biblical greek and hebrew is more than just vocabulary. Make sure to spend time practicing your parsing.")
+                InfoImageTextRow(imageName: "clock.badge.exclamationmark", text: "This represents the number of vocab words that are past due. You have already seen these words before and it is time for you to review them again")                
             }
-            .padding(20)
-            .frame(maxWidth: .infinity)
         }
+        .toolbar {
+            Button(action: { showStatsInfoModal = false }, label: {
+                Text("Dismiss")
+                    .bold()
+            })
+        }
+        .navigationTitle("App Statistics")
     }
     
     @ViewBuilder

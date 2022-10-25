@@ -185,12 +185,10 @@ struct ParadigmPracticeView: View {
     func DefinitionView() -> some View {
         HStack {
             Text(currentParadigm?.details ?? "")
-                .font(.title2)
-                .bold()
+                .font(.bible24)
                 .padding(.trailing, 8)
             Text(currentParadigm?.definition ?? "")
-                .font(.title3)
-                .bold()
+                .font(.bible24)
         }
     }
     

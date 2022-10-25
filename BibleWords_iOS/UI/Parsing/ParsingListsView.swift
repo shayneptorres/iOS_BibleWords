@@ -23,7 +23,7 @@ struct ParsingListsView: View {
                         .multilineTextAlignment(.center)
                 } else {
                     ForEach(lists) { list in
-                        NavigationLink(value: Paths.parsingListDetail(list)) {
+                        NavigationLink(value: AppPath.parsingListDetail(list)) {
                             VStack(alignment: .leading, spacing: 4) {
                                 HStack {
                                     Text(list.defaultTitle)

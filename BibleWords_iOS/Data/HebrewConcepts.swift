@@ -416,11 +416,20 @@ enum HebrewConcept: Int, CaseIterable {
         case .principalParts:
             return .init(title: "Principal Parts", items: [
                 .init(text: "קָטַל", definition: "To kill\nYiqtol: יִקְטֹל \nInf. Const: קְטֹל \nParticiple: קֹטֵל", details: "(Strong)"),
-                .init(text: "בָּנָה", definition: "To make, do\nYiqtol: יִבְנֶה \nInf. Const: בְּנוֹת \nParticiple: בּוֹנֶה", details: "(I-ח/ע)"),
-                .init(text: "בחר", definition: "To choose\nYiqtol: יִבְחַר \nInf. Const: בְּחֹר \nParticiple: בֹּחֵר", details: "(II-Guttural)"),
+                .init(text: "בָּנָה", definition: "To make, do\nYiqtol: יִבְנֶה \nInf. Const: בְּנוֹת \nParticiple: בּוֹנֶה", details: "(III-ח)\n"),
+                .init(text: "עָמַד", definition: "To stand\nYiqtol: יַעֲמֹד \nInf. Const: עֲמֹד \nParticiple: עֹמֵד", details: "(I-ע)\n"),
+                .init(text: "בָּחַר", definition: "To choose\nYiqtol: יִבְחַר \nInf. Const: בְּחֹר \nParticiple: בֹּחֵר", details: "(II-Guttural)"),
                 .init(text: "שָׁמַע", definition: "To hear, listen\nYiqtol: יִשְׁמַע \nInf. Const: שְׁמֹעַ \nParticiple: שֹׁמֵעַ", details: "(III-ח/ע)\n"),
                 .init(text: "מָצָא", definition: "To find\nYiqtol: יִמְצָא \nInf. Const: מְצֹא \nParticiple: מֹצֵא", details: "(III-א)"),
                 .init(text: "חָטָא", definition: "To sin\nYiqtol: יֶחֱטָא \nInf. Const: חֲטֹא \nParticiple: חוֹטֵא", details: "(I-ח + III-א)"),
+                .init(text: "נָפַל", definition: "To fall\nYiqtol: יִפֹּל \nInf. Const: נְפֹל \nParticiple: נֹפֵל", details: "(I-נ)"),
+                .init(text: "שָׁב", definition: "To return\nYiqtol: יָשׁוּב \nInf. Const: שׁוּב \nParticiple: שָׁב", details: "(I-י)"),
+                .init(text: "סָבַב", definition: "To encircle/surround/go about\nYiqtol: יָסֹב \nInf. Const: סְבֹב \nParticiple: סֹבֵב", details: "(Geminate)"),
+                .init(text: "יָשַׁב", definition: "To sit/dwell\nYiqtol: יֵשֵׁב,תֵּשֵׁב \nInf. Const: שֶׁבֶת \nParticiple: יֹשֵׁב", details: "(I-י)"),
+                .init(text: "יָרַשׁ", definition: "To possess\nYiqtol: יִירַשׁ \nInf. Const: רֶשֶׁת \nParticiple: יוֹרֵשׁ", details: "(I-י)"),
+                .init(text: "אָמַר", definition: "say\nYiqtol: יֹאמַר \nInf. Const: לֵאמֹר \nParticiple: אֹמֵר", details: "(I-א)"),
+                .init(text: "אָהַב", definition: "to love\nYiqtol: יֶאֱהַב \nInf. Const: אַהֲבַת \nParticiple: אֹהֵב", details: "(I-א)"),
+                
             ])
         }
     }

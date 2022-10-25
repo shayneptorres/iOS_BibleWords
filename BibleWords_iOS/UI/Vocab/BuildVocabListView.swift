@@ -26,7 +26,7 @@ struct BuildVocabListView: View {
     var body: some View {
         List {
             if (bibleRanges.isEmpty && textbookRanges.isEmpty) {
-                Text("It looks like you have not added any ranges yet. Tap the button below to get stared.")
+                Text("You have not added any ranges yet. Tap the button below to get stared.")
                     .multilineTextAlignment(.center)
             }
             if textbookRanges.isEmpty && !bibleRanges.isEmpty {

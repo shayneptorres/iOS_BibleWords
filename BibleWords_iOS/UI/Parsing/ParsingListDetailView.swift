@@ -85,7 +85,7 @@ struct ParsingListDetailView: View {
                         Text("\(viewModel.list.range?.occurrences ?? 0)+ occurrences")
                     }
                     Section {
-                        NavigationLink(value: Paths.parsingSessionsList(viewModel.list)) {
+                        NavigationLink(value: AppPath.parsingSessionsList(viewModel.list)) {
                             Text("Parsing Sessions Reports")
                         }
                         .navigationViewStyle(.stack)
@@ -106,7 +106,7 @@ struct ParsingListDetailView: View {
                     }
                     Section {
                         ForEach(groupedParsingInstances.sorted { $0.lemma < $1.lemma }, id: \.lemma) { group in
-                            NavigationLink(value: Paths.wordInstanceList(group.instances)) {
+                            NavigationLink(value: AppPath.wordInstanceList(group.instances)) {
                                 HStack {
                                     Text(group.lemma)
                                         .font(viewModel.list.language.meduimBibleFont)
