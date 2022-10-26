@@ -17,6 +17,16 @@ struct ParadigmDetailView: View {
             Color(uiColor: .systemGroupedBackground)
                 .ignoresSafeArea()
             ScrollView {
+                HStack {
+                    Text("Study Session Reports")
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                }
+                .padding()
+                .background(Color(UIColor.secondarySystemGroupedBackground))
+                .foregroundColor(Color(uiColor: .label))
+                .cornerRadius(Design.defaultCornerRadius)
+                .padding()
                 LazyVGrid(columns: gridItemLayout, spacing: 8) {
                     ForEach(concepts, id: \.rawValue) { type in
                         Section(content: {

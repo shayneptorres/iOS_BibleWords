@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreData
+import WidgetKit
 
 enum AppPath: Hashable {
     case reviewedWords
@@ -254,40 +255,45 @@ struct NewHomeView: View {
                 print("Inactive")
             } else if newPhase == .background {
                 print("Background")
-                AppGroupManager.clear()
-                let vocabFetchRequest = NSFetchRequest<VocabWord>(entityName: "VocabWord")
-                vocabFetchRequest.predicate = NSPredicate(format: "dueDate <= %@ && currentInterval > 0", Date().addingTimeInterval(Double(6.hours)) as CVarArg)
+                
+                if UserDefaultKey.shouldRefreshWidgetTimeline.get(as: Bool.self) {
+                    AppGroupManager.clear()
+                    let vocabFetchRequest = NSFetchRequest<VocabWord>(entityName: "VocabWord")
+                    vocabFetchRequest.predicate = NSPredicate(format: "dueDate <= %@ && currentInterval > 0", Date().addingTimeInterval(Double(8.hours)) as CVarArg)
 
-                var fetchedVocabWords: [VocabWord] = []
-                do {
-                    fetchedVocabWords = try context.fetch(vocabFetchRequest)
-                } catch let err {
-                    print(err)
-                }
-                
-                fetchedVocabWords = fetchedVocabWords.filter { ($0.list?.count ?? 0) > 0 }
-                let currentDate = Date()
-                var stats: [Stat] = []
-                var newCount = studySessionEntries.filter { $0.studyTypeInt == 0 }.count
-                var reviewedCount = studySessionEntries.filter { $0.studyTypeInt == 1 }.count
-                var parsedCount = studySessionEntries.filter { $0.studyTypeInt == 2 }.count
-                var dueCount = 0
-                
-                for i in 0 ... 16 {
-                    let entryDate = currentDate.addingTimeInterval(Double(30.minutes * i))
-                    if entryDate > Date.endOfToday {
-                        newCount = 0
-                        reviewedCount = 0
-                        parsedCount = 0
+                    var fetchedVocabWords: [VocabWord] = []
+                    do {
+                        fetchedVocabWords = try context.fetch(vocabFetchRequest)
+                    } catch let err {
+                        print(err)
                     }
-                    dueCount += fetchedVocabWords.filter { $0.dueDate ?? Date() > entryDate }.count
-                    stats.append(.init(date: entryDate,
-                                       reviewedCount: reviewedCount,
-                                       parsedCount: parsedCount,
-                                       newCount: newCount,
-                                       dueCount: dueCount))
+                    
+                    fetchedVocabWords = fetchedVocabWords.filter { ($0.list?.count ?? 0) > 0 }
+                    let currentDate = Date()
+                    var stats: [Stat] = []
+                    var newCount = studySessionEntries.filter { $0.studyTypeInt == 0 }.count
+                    var reviewedCount = studySessionEntries.filter { $0.studyTypeInt == 1 }.count
+                    var parsedCount = studySessionEntries.filter { $0.studyTypeInt == 2 }.count
+                    var dueCount = 0
+                    
+                    for i in 0 ... 64 {
+                        let entryDate = currentDate.addingTimeInterval(Double(15.minutes * i))
+                        if entryDate > Date.endOfToday {
+                            newCount = 0
+                            reviewedCount = 0
+                            parsedCount = 0
+                        }
+                        dueCount = fetchedVocabWords.filter { $0.dueDate ?? Date() < entryDate }.count
+                        stats.append(.init(date: entryDate,
+                                           reviewedCount: reviewedCount,
+                                           parsedCount: parsedCount,
+                                           newCount: newCount,
+                                           dueCount: dueCount))
+                    }
+                    AppGroupManager.set(stats: stats)
+                    WidgetCenter.shared.reloadTimelines(ofKind: "TodayStatsWidget")
+                    UserDefaultKey.shouldRefreshWidgetTimeline.set(val: false)
                 }
-                AppGroupManager.set(stats: stats)
             }
         }
     }

@@ -13,17 +13,18 @@ enum UserDefaultKey: String, CaseIterable {
     case hasFetchedAndSavedAllGreekWords
     case hasFetchedAndSavedAllHebrewWords
     case hasFetchedAndSavedModernGrammarHebrewGarret
+    case shouldRefreshWidgetTimeline
     
     func get<T: Any>(as: T.Type) -> T {
         switch self {
-        case .hasFetchedAndSavedAllGreekWords, .hasFetchedAndSavedAllHebrewWords, .hasFetchedAndSavedModernGrammarHebrewGarret:
+        case .hasFetchedAndSavedAllGreekWords, .hasFetchedAndSavedAllHebrewWords, .hasFetchedAndSavedModernGrammarHebrewGarret, .shouldRefreshWidgetTimeline:
             return UserDefaults.standard.bool(forKey: self.rawValue) as! T
         }
     }
     
     func set<T: Any>(val: T) {
         switch self {
-        case .hasFetchedAndSavedAllGreekWords, .hasFetchedAndSavedAllHebrewWords, .hasFetchedAndSavedModernGrammarHebrewGarret:
+        case .hasFetchedAndSavedAllGreekWords, .hasFetchedAndSavedAllHebrewWords, .hasFetchedAndSavedModernGrammarHebrewGarret, .shouldRefreshWidgetTimeline:
             UserDefaults.standard.set(val, forKey: self.rawValue)
         }
     }

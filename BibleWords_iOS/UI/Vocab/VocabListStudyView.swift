@@ -117,6 +117,7 @@ struct VocabListStudyView: View, Equatable {
             .onAppear {
                 startDate = Date()
                 updateCurrentWord()
+                UserDefaultKey.shouldRefreshWidgetTimeline.set(val: true)
             }
         }
     }

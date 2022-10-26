@@ -41,9 +41,11 @@ struct TodayStatsWidgetEntryView : View {
                     .bold()
                     .padding(.top, 8)
                     .padding(.bottom, 12)
+                    .foregroundColor(Color.widgetTextColor)
                 HStack {
                     VStack {
                         Image(systemName: "arrow.triangle.2.circlepath")
+                            .foregroundColor(Color.widgetTextColor)
                             .font(.headline)
                             .bold()
                         Text("\(entry.reviewedCount)")
@@ -51,6 +53,7 @@ struct TodayStatsWidgetEntryView : View {
                     .frame(maxWidth: .infinity)
                     VStack {
                         Image(systemName: "gift")
+                            .foregroundColor(Color.widgetTextColor)
                             .font(.headline)
                             .bold()
                         Text("\(entry.newCount)")
@@ -62,6 +65,7 @@ struct TodayStatsWidgetEntryView : View {
                 HStack {
                     VStack {
                         Image(systemName: "rectangle.and.hand.point.up.left.filled")
+                            .foregroundColor(Color.widgetTextColor)
                             .font(.headline)
                             .bold()
                         Text("\(entry.parsedCount)")
@@ -69,6 +73,7 @@ struct TodayStatsWidgetEntryView : View {
                     .frame(maxWidth: .infinity)
                     VStack {
                         Image(systemName: "clock.badge.exclamationmark")
+                            .foregroundColor(Color.widgetTextColor)
                             .font(.headline)
                             .bold()
                         Text("\(entry.dueCount)")
@@ -78,7 +83,6 @@ struct TodayStatsWidgetEntryView : View {
                 .padding(.horizontal)
                 Spacer()
             }
-            .foregroundColor(Color.widgetTextColor)
         }
     }
 }
@@ -91,8 +95,9 @@ struct TodayStatsWidget: Widget {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
             TodayStatsWidgetEntryView(entry: entry)
         }
-        .configurationDisplayName("My Widget")
-        .description("This is an example widget.")
+        .configurationDisplayName("Today's Stats")
+        .description("Provides a quick glance at your current App stats (reviewed words, new words, parsed words, and due words)")
+        .supportedFamilies([.systemSmall])
     }
 }
 

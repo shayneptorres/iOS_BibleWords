@@ -31,10 +31,10 @@
         <attribute name="answerTypeInt" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="String"/>
-        <attribute name="parsingInstanceId" optional="YES" attributeType="String"/>
-        <attribute name="parsingInstanceLemma" optional="YES" attributeType="String"/>
-        <attribute name="parsingInstanceParseString" optional="YES" attributeType="String"/>
-        <attribute name="parsingInstanceSurfaceText" optional="YES" attributeType="String"/>
+        <attribute name="relatedId" optional="YES" attributeType="String"/>
+        <attribute name="studiedDescription" optional="YES" attributeType="String"/>
+        <attribute name="studiedDetail" optional="YES" attributeType="String"/>
+        <attribute name="studiedText" optional="YES" attributeType="String"/>
         <attribute name="studyTypeInt" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="session" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StudySession" inverseName="entries" inverseEntity="StudySession"/>
         <relationship name="word" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VocabWord" inverseName="sessionEntries" inverseEntity="VocabWord"/>

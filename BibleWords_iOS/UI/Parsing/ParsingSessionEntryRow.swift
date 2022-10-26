@@ -22,7 +22,7 @@ struct ParsingSessionEntryRow: View {
                         .font(.subheadline)
                         .foregroundColor(.init(uiColor: .secondaryLabel))
                     +
-                    Text(entry.parsingInstanceSurfaceText ?? "")
+                    Text(entry.studiedText ?? "")
                         .font(.bible24)
                 }
                 HStack {
@@ -30,11 +30,11 @@ struct ParsingSessionEntryRow: View {
                         .font(.subheadline)
                         .foregroundColor(.init(uiColor: .secondaryLabel))
                     +
-                    Text(entry.parsingInstanceLemma ?? "")
+                    Text(entry.studiedDescription ?? "")
                         .font(.bible24)
                 }
                 .padding(.bottom, 4)
-                Text(entry.parsingInstanceParseString ?? "")
+                Text(entry.studiedDetail ?? "")
                     .foregroundColor(entry.answerType.color)
             }
         }
