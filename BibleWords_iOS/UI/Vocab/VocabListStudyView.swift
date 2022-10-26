@@ -292,7 +292,7 @@ extension VocabListStudyView {
             }
             currentWord = matchingVocabWords.first
         }
-        
+
         if currentWord?.currentInterval == 0 {
             displayMode = .learnWord
         } else {

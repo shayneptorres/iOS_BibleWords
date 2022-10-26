@@ -99,6 +99,8 @@ struct ListDetailView: View {
     @State var showWordInstances = false
     @State var showEditView = false
     
+    @State var studyWords = false
+    
     var body: some View {
         ZStack {
             List {
@@ -133,7 +135,7 @@ struct ListDetailView: View {
                 
             }
         }
-        .fullScreenCover(isPresented: $viewModel.studyWords) {
+        .fullScreenCover(isPresented: $studyWords) {
             VocabListStudyView(vocabList: $viewModel.list, allWordInfoIds: viewModel.wordIds)
         }
         .navigationTitle(viewModel.list.defaultTitle)
@@ -149,7 +151,7 @@ struct ListDetailView: View {
     }
     
     func onStudy() {
-        viewModel.studyWords = true
+        self.studyWords = true
         CoreDataManager.transactionAsync(context: context) {
             self.viewModel.list.lastStudied = Date()
         }
@@ -162,7 +164,7 @@ extension ListDetailView {
     func ListInfoSection() -> some View {
         Section {
             HStack {
-                NavigationLink(value: AppPath.wordInfoList(viewModel.wordIds.compactMap { $0.toWordInfo })) {
+                NavigationLink(value: AppPath.wordInfoList(wordInfos: viewModel.wordIds.compactMap { $0.toWordInfo }, viewTitle: "Total Words")) {
                     Image(systemName: "sum")
                         .font(.title3)
                     Text("Total Words: \(viewModel.wordIds.count)")
@@ -170,7 +172,7 @@ extension ListDetailView {
             }
             .foregroundColor(.accentColor)
             HStack {
-                NavigationLink(value: AppPath.wordInfoList(viewModel.wordIds.compactMap { $0.toWordInfo }.filter { $0.isNewVocab(context: context) })) {
+                NavigationLink(value: AppPath.wordInfoList(wordInfos: viewModel.wordIds.compactMap { $0.toWordInfo }.filter { $0.isNewVocab(context: context) }, viewTitle: "New Words")) {
                     Image(systemName: "gift")
                         .font(.title3)
                     Text("New Words: \(viewModel.wordIds.compactMap { $0.toWordInfo }.filter { $0.isNewVocab(context: context) }.count)")
@@ -178,7 +180,7 @@ extension ListDetailView {
             }
             .foregroundColor(.accentColor)
             HStack {
-                NavigationLink(value: AppPath.wordInfoList(viewModel.list.wordsArr.filter { $0.isDue }.map { $0.wordInfo })) {
+                NavigationLink(value: AppPath.wordInfoList(wordInfos:viewModel.list.wordsArr.filter { $0.isDue }.map { $0.wordInfo }, viewTitle: "Due Words")) {
                     Image(systemName: "clock.badge.exclamationmark")
                         .font(.title3)
                     Text("Due Words: \(viewModel.list.wordsArr.filter { $0.isDue }.count)")

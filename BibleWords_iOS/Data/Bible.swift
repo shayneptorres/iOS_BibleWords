@@ -21,8 +21,14 @@ struct Bible {
         } else {
             lex = self.hebrewLexicon
         }
+        var sourceID = ""
+        if strongID.getDigits.isEmpty {
+            sourceID = API.Source.Info.hebrewGarret.id
+        } else {
+            sourceID = source
+        }
         guard
-            let sourceLex = lex.lex[source],
+            let sourceLex = lex.lex[sourceID],
             let wordDict = sourceLex[strongID]
         else {
             return nil

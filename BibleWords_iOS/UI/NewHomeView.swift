@@ -17,7 +17,7 @@ enum AppPath: Hashable {
     case selectedWords
     case allVocabLists
     case vocabListDetail(list: VocabWordList, autoStudy: Bool)
-    case wordInfoList([Bible.WordInfo])
+    case wordInfoList(wordInfos: [Bible.WordInfo], viewTitle: String)
     case wordInstanceList([Bible.WordInstance])
     case allParsingLists
     case parsingListDetail(ParsingList)
@@ -118,12 +118,12 @@ struct NewHomeView: View {
                     VocabListsView()
                 case .vocabListDetail(let list, let autoStudy):
                     ListDetailView(viewModel: .init(list: list, autoStudy: autoStudy))
-                case .wordInfoList(let words):
+                case .wordInfoList(let words, let viewTitle):
                     List(words.sorted { $0.lemma.lowercased() < $1.lemma.lowercased() }) { word in
                         NavigationLink(value: AppPath.wordInfo(word)) {
                             WordInfoRow(wordInfo: word.bound())
                         }
-                    }
+                    }.navigationBarTitle(viewTitle)
                 case .wordInstanceList(let instances):
                     List {
                         Section {
@@ -231,22 +231,6 @@ struct NewHomeView: View {
                 fetchData()
                 initializeCoreData()
             }
-            
-//            CoreDataManager.transaction(context: context) {
-//                let vocabFetchRequest = NSFetchRequest<VocabWord>(entityName: "VocabWord")
-//                vocabFetchRequest.predicate = NSPredicate(format: "SELF.id == %@", "6466" )
-//
-//                var matchingVocabWords: [VocabWord] = []
-//                do {
-//                    matchingVoca 0Words = try context.fetch(vocabFetchRequest)
-//                } catch let err {
-//                    print(err)
-//                }
-//
-//                for word in matchingVocabWords  {
-//                    context.delete(word)
-//                }
-//            }
         }
         .onChange(of: scenePhase) { newPhase in
             if newPhase == .active {
@@ -255,45 +239,7 @@ struct NewHomeView: View {
                 print("Inactive")
             } else if newPhase == .background {
                 print("Background")
-                
-                if UserDefaultKey.shouldRefreshWidgetTimeline.get(as: Bool.self) {
-                    AppGroupManager.clear()
-                    let vocabFetchRequest = NSFetchRequest<VocabWord>(entityName: "VocabWord")
-                    vocabFetchRequest.predicate = NSPredicate(format: "dueDate <= %@ && currentInterval > 0", Date().addingTimeInterval(Double(8.hours)) as CVarArg)
-
-                    var fetchedVocabWords: [VocabWord] = []
-                    do {
-                        fetchedVocabWords = try context.fetch(vocabFetchRequest)
-                    } catch let err {
-                        print(err)
-                    }
-                    
-                    fetchedVocabWords = fetchedVocabWords.filter { ($0.list?.count ?? 0) > 0 }
-                    let currentDate = Date()
-                    var stats: [Stat] = []
-                    var newCount = studySessionEntries.filter { $0.studyTypeInt == 0 }.count
-                    var reviewedCount = studySessionEntries.filter { $0.studyTypeInt == 1 }.count
-                    var parsedCount = studySessionEntries.filter { $0.studyTypeInt == 2 }.count
-                    var dueCount = 0
-                    
-                    for i in 0 ... 64 {
-                        let entryDate = currentDate.addingTimeInterval(Double(15.minutes * i))
-                        if entryDate > Date.endOfToday {
-                            newCount = 0
-                            reviewedCount = 0
-                            parsedCount = 0
-                        }
-                        dueCount = fetchedVocabWords.filter { $0.dueDate ?? Date() < entryDate }.count
-                        stats.append(.init(date: entryDate,
-                                           reviewedCount: reviewedCount,
-                                           parsedCount: parsedCount,
-                                           newCount: newCount,
-                                           dueCount: dueCount))
-                    }
-                    AppGroupManager.set(stats: stats)
-                    WidgetCenter.shared.reloadTimelines(ofKind: "TodayStatsWidget")
-                    UserDefaultKey.shouldRefreshWidgetTimeline.set(val: false)
-                }
+                AppGroupManager.updateStats(context)
             }
         }
     }

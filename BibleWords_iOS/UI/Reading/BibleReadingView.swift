@@ -65,7 +65,6 @@ struct BibleReadingView: View {
             }
         }
         .onChange(of: selectedWord) { w in
-            print(w)
             selectedWord = w
             showPassageSelector = false
             showWordDetail = true

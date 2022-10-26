@@ -22,24 +22,11 @@ struct ParsingListSettingsView: View {
                 }
             }
             .onAppear {
-                print(list.sessionsArr.count)
-                print(list.studySessions?.count ?? 0)
-                print(list)
-                print(list.defaultTitle)
             }
             .navigationDestination(for: SettingPage.self) { setting in
                 switch setting {
                 case .sessionReports:
                     ParsingListSessionsView(list: $list)
-//                    List {
-//                        Text("Look!")
-//                        Text("Count: \(list.defaultTitle)")
-//                        ForEach(list.sessionsArr) { session in
-//                            NavigationLink(value: session) {
-//                                Text(session.startDate?.toPrettyDate ?? "")
-//                            }
-//                        }
-//                    }
                 }
             }
         }

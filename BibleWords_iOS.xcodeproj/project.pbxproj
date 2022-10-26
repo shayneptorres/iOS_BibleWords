@@ -37,6 +37,7 @@
 		B81C31742903B310002DBF6B /* WidgetShareable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81C31732903B310002DBF6B /* WidgetShareable.swift */; };
 		B81C31772903B4FE002DBF6B /* WidgetShareable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81C31732903B310002DBF6B /* WidgetShareable.swift */; };
 		B81C31792903B5EB002DBF6B /* WidgetStatsUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81C31782903B5EB002DBF6B /* WidgetStatsUtil.swift */; };
+		B83875EF2909BEC6002682FE /* Widget-AppOnly.swift in Sources */ = {isa = PBXBuildFile; fileRef = B83875EE2909BEC6002682FE /* Widget-AppOnly.swift */; };
 		B899887E28FC94F000F00E0B /* WordInfoRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899887D28FC94F000F00E0B /* WordInfoRow.swift */; };
 		B899888028FCBCF100F00E0B /* StudySession+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899887F28FCBCF100F00E0B /* StudySession+Extensions.swift */; };
 		B899888228FD1A5100F00E0B /* NewWordsLearnedTodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899888128FD1A5100F00E0B /* NewWordsLearnedTodayView.swift */; };
@@ -157,6 +158,7 @@
 		B81C31752903B386002DBF6B /* BibleWords_iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BibleWords_iOS.entitlements; sourceTree = "<group>"; };
 		B81C31762903B3BE002DBF6B /* TodayStatsWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TodayStatsWidgetExtension.entitlements; sourceTree = "<group>"; };
 		B81C31782903B5EB002DBF6B /* WidgetStatsUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetStatsUtil.swift; sourceTree = "<group>"; };
+		B83875EE2909BEC6002682FE /* Widget-AppOnly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Widget-AppOnly.swift"; sourceTree = "<group>"; };
 		B899887D28FC94F000F00E0B /* WordInfoRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordInfoRow.swift; sourceTree = "<group>"; };
 		B899887F28FCBCF100F00E0B /* StudySession+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StudySession+Extensions.swift"; sourceTree = "<group>"; };
 		B899888128FD1A5100F00E0B /* NewWordsLearnedTodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordsLearnedTodayView.swift; sourceTree = "<group>"; };
@@ -390,6 +392,7 @@
 				B8124D6528F9BDB90053057C /* Codables.swift */,
 				B8124D7828FA0F120053057C /* HebrewConcepts.swift */,
 				B81C31732903B310002DBF6B /* WidgetShareable.swift */,
+				B83875EE2909BEC6002682FE /* Widget-AppOnly.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -654,6 +657,7 @@
 				B8A210F82901D80800BDF272 /* ParsingSessionReportView.swift in Sources */,
 				B8DD2E6328F93CDF00AC9492 /* GreekCodeables.swift in Sources */,
 				B8DD2E1728F93CB300AC9492 /* BibleWords_iOS.xcdatamodeld in Sources */,
+				B83875EF2909BEC6002682FE /* Widget-AppOnly.swift in Sources */,
 				B8DD2E7428F93CDF00AC9492 /* BuildVocabListView.swift in Sources */,
 				B8A210EC29007CCD00BDF272 /* DefaultVocabListSelectorView.swift in Sources */,
 				B8DD2E0B28F93CB100AC9492 /* BibleWords_iOSApp.swift in Sources */,

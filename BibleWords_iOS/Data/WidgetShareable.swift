@@ -7,6 +7,7 @@
 
 import Foundation
 import WidgetKit
+import CoreData
 
 struct Stat: Codable {
     let date: Date
@@ -57,5 +58,4 @@ struct AppGroupManager {
         
         return stats
     }
-    
 }
