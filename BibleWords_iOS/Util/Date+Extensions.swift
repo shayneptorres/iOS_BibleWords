@@ -26,6 +26,16 @@ extension Date {
         return cal.startOfDay(for: Date())
     }
     
+    static var endOfToday: Date {
+        let cal = Calendar.current
+        return cal.startOfDay(for: Date()).addingTimeInterval(Double(24.hours))
+    }
+    
+    func isSameDay(as date: Date) -> Bool {
+        let cal = Calendar.current
+        return cal.isDateInToday(date)
+    }
+    
 //    static var endOfToday: Date {
 //        return Date.startOfToday.addingTimeInterval()
 //    }

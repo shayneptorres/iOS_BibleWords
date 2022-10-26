@@ -56,7 +56,6 @@ enum Language: Int16 {
     }
 }
 
-
 extension VocabWord: Bindable {
     
     var lemma: String {

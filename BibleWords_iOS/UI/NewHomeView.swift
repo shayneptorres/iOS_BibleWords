@@ -32,6 +32,7 @@ struct NewHomeView: View {
     
     @Environment(\.managedObjectContext) var context
     @Environment(\.presentationMode) var presentationMode
+    @Environment(\.scenePhase) var scenePhase
     
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \StudySessionEntry.createdAt, ascending: false)],
@@ -236,7 +237,7 @@ struct NewHomeView: View {
 //
 //                var matchingVocabWords: [VocabWord] = []
 //                do {
-//                    matchingVocabWords = try context.fetch(vocabFetchRequest)
+//                    matchingVoca 0Words = try context.fetch(vocabFetchRequest)
 //                } catch let err {
 //                    print(err)
 //                }
@@ -245,6 +246,49 @@ struct NewHomeView: View {
 //                    context.delete(word)
 //                }
 //            }
+        }
+        .onChange(of: scenePhase) { newPhase in
+            if newPhase == .active {
+                print("Active")
+            } else if newPhase == .inactive {
+                print("Inactive")
+            } else if newPhase == .background {
+                print("Background")
+                AppGroupManager.clear()
+                let vocabFetchRequest = NSFetchRequest<VocabWord>(entityName: "VocabWord")
+                vocabFetchRequest.predicate = NSPredicate(format: "dueDate <= %@ && currentInterval > 0", Date().addingTimeInterval(Double(6.hours)) as CVarArg)
+
+                var fetchedVocabWords: [VocabWord] = []
+                do {
+                    fetchedVocabWords = try context.fetch(vocabFetchRequest)
+                } catch let err {
+                    print(err)
+                }
+                
+                fetchedVocabWords = fetchedVocabWords.filter { ($0.list?.count ?? 0) > 0 }
+                let currentDate = Date()
+                var stats: [Stat] = []
+                var newCount = studySessionEntries.filter { $0.studyTypeInt == 0 }.count
+                var reviewedCount = studySessionEntries.filter { $0.studyTypeInt == 1 }.count
+                var parsedCount = studySessionEntries.filter { $0.studyTypeInt == 2 }.count
+                var dueCount = 0
+                
+                for i in 0 ... 16 {
+                    let entryDate = currentDate.addingTimeInterval(Double(30.minutes * i))
+                    if entryDate > Date.endOfToday {
+                        newCount = 0
+                        reviewedCount = 0
+                        parsedCount = 0
+                    }
+                    dueCount += fetchedVocabWords.filter { $0.dueDate ?? Date() > entryDate }.count
+                    stats.append(.init(date: entryDate,
+                                       reviewedCount: reviewedCount,
+                                       parsedCount: parsedCount,
+                                       newCount: newCount,
+                                       dueCount: dueCount))
+                }
+                AppGroupManager.set(stats: stats)
+            }
         }
     }
     
@@ -273,6 +317,11 @@ struct NewHomeView: View {
             }
         }
     }
+    
+    func getWidgetTimelineData() {
+        
+    }
+    
 }
 
 extension NewHomeView {
