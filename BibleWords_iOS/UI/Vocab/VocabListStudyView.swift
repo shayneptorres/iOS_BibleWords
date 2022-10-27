@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreData
+import ActivityKit
 
 struct VocabListStudyView: View, Equatable {
     static func == (lhs: VocabListStudyView, rhs: VocabListStudyView) -> Bool {
@@ -18,7 +19,6 @@ struct VocabListStudyView: View, Equatable {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     
     @Namespace private var animation
-    
     @Binding var vocabList: VocabWordList
     @State var dueWordIds: [String] = []
     @State var newWordsIds: [String] = []
@@ -124,7 +124,7 @@ struct VocabListStudyView: View, Equatable {
 }
 
 extension VocabListStudyView {
-    enum DisplayMode {
+    enum DisplayMode: Int {
         case lemma
         case lemmaGloss
         case learnWord
@@ -198,6 +198,7 @@ extension VocabListStudyView {
         withAnimation {
             displayMode = .lemmaGloss
         }
+        updateOrCreateLiveActivity()
     }
     
     func onLearn() {
@@ -223,6 +224,38 @@ extension VocabListStudyView {
             self.interfaceMode = interface
         }
     }
+    
+    func updateOrCreateLiveActivity() {
+        if #available(iOS 16.1, *) {
+            print("This code only runs on iOS 16.1 and up")
+            let studyAttributes = StudyAttributes(studyListName: vocabList.defaultTitle)
+            let studyAttState = StudyAttributes.StudyState(id: UUID().uuidString,
+                                                           date: startDate,
+                                                           text: currentWord?.lemma ?? "",
+                                                           def: currentWord?.definition ?? "",
+                                                           displayModeInt: displayMode.rawValue,
+                                                           dueCount: dueWordIds.count,
+                                                           newCount: newWordsIds.count)
+            
+            if LiveActivityMonitor.main.studyActivity == nil {
+                LiveActivityMonitor.main.studyActivity = try? Activity<StudyAttributes>.request(attributes: studyAttributes, contentState: studyAttState)
+            } else {
+                Task {
+                    await LiveActivityMonitor.main.studyActivity?.update(using: studyAttState)
+                }
+            }
+        }
+    }
+    
+    func endLiveActivity() {
+        if #available(iOS 16.1, *) {
+            if LiveActivityMonitor.main.studyActivity != nil {
+                Task {
+                    await LiveActivityMonitor.main.studyActivity?.end(dismissalPolicy: .immediate)
+                }
+            }
+        }
+    }
 
     func updateWords(vocabWordDict: [String:VocabWord]) {
         dueWordIds = vocabList.dueWords.compactMap { $0.id }.filter { $0 != "" }
@@ -240,6 +273,7 @@ extension VocabListStudyView {
         newWordsIds = Array(allNewIds)
         
         if dueWordIds.isEmpty && newWordsIds.isEmpty {
+            endLiveActivity()
             presentationMode.wrappedValue.dismiss()
         }
     }
@@ -298,6 +332,7 @@ extension VocabListStudyView {
         } else {
             displayMode = .lemma
         }
+        updateOrCreateLiveActivity()
     }
     
     func onPrev() {
@@ -321,7 +356,7 @@ extension VocabListStudyView {
                 session.addToEntries(entry)
             }
         }
-        
+        endLiveActivity()
         presentationMode.wrappedValue.dismiss()
     }
     

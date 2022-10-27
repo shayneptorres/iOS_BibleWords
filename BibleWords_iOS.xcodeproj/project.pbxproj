@@ -38,6 +38,11 @@
 		B81C31772903B4FE002DBF6B /* WidgetShareable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81C31732903B310002DBF6B /* WidgetShareable.swift */; };
 		B81C31792903B5EB002DBF6B /* WidgetStatsUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81C31782903B5EB002DBF6B /* WidgetStatsUtil.swift */; };
 		B83875EF2909BEC6002682FE /* Widget-AppOnly.swift in Sources */ = {isa = PBXBuildFile; fileRef = B83875EE2909BEC6002682FE /* Widget-AppOnly.swift */; };
+		B83875F52909C726002682FE /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B81C315F2903AE1F002DBF6B /* WidgetKit.framework */; };
+		B83875F62909C726002682FE /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B81C31612903AE1F002DBF6B /* SwiftUI.framework */; };
+		B83875F92909C726002682FE /* StudyingLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B83875F82909C726002682FE /* StudyingLiveActivity.swift */; };
+		B83875FB2909C726002682FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B83875FA2909C726002682FE /* Assets.xcassets */; };
+		B83875FF2909C726002682FE /* StudyingLiveActivityExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B83875F42909C725002682FE /* StudyingLiveActivityExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B899887E28FC94F000F00E0B /* WordInfoRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899887D28FC94F000F00E0B /* WordInfoRow.swift */; };
 		B899888028FCBCF100F00E0B /* StudySession+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899887F28FCBCF100F00E0B /* StudySession+Extensions.swift */; };
 		B899888228FD1A5100F00E0B /* NewWordsLearnedTodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899888128FD1A5100F00E0B /* NewWordsLearnedTodayView.swift */; };
@@ -47,6 +52,12 @@
 		B899888C28FDB32D00F00E0B /* ReadPassageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899888B28FDB32D00F00E0B /* ReadPassageView.swift */; };
 		B899888E28FDDB0E00F00E0B /* BibleReadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899888D28FDDB0E00F00E0B /* BibleReadingView.swift */; };
 		B899889028FE4D1900F00E0B /* DesignConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899888F28FE4D1900F00E0B /* DesignConstants.swift */; };
+		B89CB54F2909CCD70002FEF8 /* LiveActivity+Shareable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89CB54C2909CCCF0002FEF8 /* LiveActivity+Shareable.swift */; };
+		B89CB5502909D88E0002FEF8 /* LiveActivity+Shareable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89CB54C2909CCCF0002FEF8 /* LiveActivity+Shareable.swift */; };
+		B89CB5512909E1AF0002FEF8 /* Font+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DD2E4428F93CDD00AC9492 /* Font+Extensions.swift */; };
+		B89CB5532909E4E30002FEF8 /* StudySessionAnswerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89CB5522909E4E30002FEF8 /* StudySessionAnswerType.swift */; };
+		B89CB5542909E4E60002FEF8 /* StudySessionAnswerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89CB5522909E4E30002FEF8 /* StudySessionAnswerType.swift */; };
+		B89CB5562909F8880002FEF8 /* LiveActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89CB5552909F8880002FEF8 /* LiveActivityManager.swift */; };
 		B8A210E028FE688900BDF272 /* hebrew-bible.json in Resources */ = {isa = PBXBuildFile; fileRef = B8A210DF28FE688900BDF272 /* hebrew-bible.json */; };
 		B8A210E228FE6DB100BDF272 /* WordDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A210E128FE6DB100BDF272 /* WordDetailsView.swift */; };
 		B8A210E628FF553C00BDF272 /* ParsingListsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A210E528FF553C00BDF272 /* ParsingListsView.swift */; };
@@ -109,6 +120,13 @@
 			remoteGlobalIDString = B81C315C2903AE1F002DBF6B;
 			remoteInfo = TodayStatsWidgetExtension;
 		};
+		B83875FD2909C726002682FE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B8DD2DFF28F93CB100AC9492 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B83875F32909C725002682FE;
+			remoteInfo = StudyingLiveActivityExtension;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -118,6 +136,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				B83875FF2909C726002682FE /* StudyingLiveActivityExtension.appex in Embed Foundation Extensions */,
 				B81C316B2903AE20002DBF6B /* TodayStatsWidgetExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
@@ -159,6 +178,11 @@
 		B81C31762903B3BE002DBF6B /* TodayStatsWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TodayStatsWidgetExtension.entitlements; sourceTree = "<group>"; };
 		B81C31782903B5EB002DBF6B /* WidgetStatsUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetStatsUtil.swift; sourceTree = "<group>"; };
 		B83875EE2909BEC6002682FE /* Widget-AppOnly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Widget-AppOnly.swift"; sourceTree = "<group>"; };
+		B83875F42909C725002682FE /* StudyingLiveActivityExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = StudyingLiveActivityExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		B83875F82909C726002682FE /* StudyingLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyingLiveActivity.swift; sourceTree = "<group>"; };
+		B83875FA2909C726002682FE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B83875FC2909C726002682FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B83876032909C7E6002682FE /* BibleWords-iOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "BibleWords-iOS-Info.plist"; sourceTree = SOURCE_ROOT; };
 		B899887D28FC94F000F00E0B /* WordInfoRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordInfoRow.swift; sourceTree = "<group>"; };
 		B899887F28FCBCF100F00E0B /* StudySession+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StudySession+Extensions.swift"; sourceTree = "<group>"; };
 		B899888128FD1A5100F00E0B /* NewWordsLearnedTodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordsLearnedTodayView.swift; sourceTree = "<group>"; };
@@ -168,6 +192,9 @@
 		B899888B28FDB32D00F00E0B /* ReadPassageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadPassageView.swift; sourceTree = "<group>"; };
 		B899888D28FDDB0E00F00E0B /* BibleReadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleReadingView.swift; sourceTree = "<group>"; };
 		B899888F28FE4D1900F00E0B /* DesignConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignConstants.swift; sourceTree = "<group>"; };
+		B89CB54C2909CCCF0002FEF8 /* LiveActivity+Shareable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LiveActivity+Shareable.swift"; sourceTree = "<group>"; };
+		B89CB5522909E4E30002FEF8 /* StudySessionAnswerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudySessionAnswerType.swift; sourceTree = "<group>"; };
+		B89CB5552909F8880002FEF8 /* LiveActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityManager.swift; sourceTree = "<group>"; };
 		B8A210DF28FE688900BDF272 /* hebrew-bible.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "hebrew-bible.json"; sourceTree = "<group>"; };
 		B8A210E128FE6DB100BDF272 /* WordDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordDetailsView.swift; sourceTree = "<group>"; };
 		B8A210E528FF553C00BDF272 /* ParsingListsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsingListsView.swift; sourceTree = "<group>"; };
@@ -229,6 +256,15 @@
 			files = (
 				B81C31622903AE1F002DBF6B /* SwiftUI.framework in Frameworks */,
 				B81C31602903AE1F002DBF6B /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B83875F12909C725002682FE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B83875F62909C726002682FE /* SwiftUI.framework in Frameworks */,
+				B83875F52909C726002682FE /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,6 +342,17 @@
 			path = TodayStatsWidget;
 			sourceTree = "<group>";
 		};
+		B83875F72909C726002682FE /* StudyingLiveActivity */ = {
+			isa = PBXGroup;
+			children = (
+				B89CB54C2909CCCF0002FEF8 /* LiveActivity+Shareable.swift */,
+				B83875F82909C726002682FE /* StudyingLiveActivity.swift */,
+				B83875FA2909C726002682FE /* Assets.xcassets */,
+				B83875FC2909C726002682FE /* Info.plist */,
+			);
+			path = StudyingLiveActivity;
+			sourceTree = "<group>";
+		};
 		B899888328FDA90B00F00E0B /* Parsing */ = {
 			isa = PBXGroup;
 			children = (
@@ -333,12 +380,22 @@
 			path = Reading;
 			sourceTree = "<group>";
 		};
+		B89CB54B2909CC7C0002FEF8 /* WidgetFiles */ = {
+			isa = PBXGroup;
+			children = (
+				B81C31732903B310002DBF6B /* WidgetShareable.swift */,
+				B83875EE2909BEC6002682FE /* Widget-AppOnly.swift */,
+			);
+			path = WidgetFiles;
+			sourceTree = "<group>";
+		};
 		B8DD2DFE28F93CB100AC9492 = {
 			isa = PBXGroup;
 			children = (
 				B81C31762903B3BE002DBF6B /* TodayStatsWidgetExtension.entitlements */,
 				B8DD2E0928F93CB100AC9492 /* BibleWords_iOS */,
 				B81C31632903AE1F002DBF6B /* TodayStatsWidget */,
+				B83875F72909C726002682FE /* StudyingLiveActivity */,
 				B81C315E2903AE1F002DBF6B /* Frameworks */,
 				B8DD2E0828F93CB100AC9492 /* Products */,
 			);
@@ -349,6 +406,7 @@
 			children = (
 				B8DD2E0728F93CB100AC9492 /* BibleWords_iOS.app */,
 				B81C315D2903AE1F002DBF6B /* TodayStatsWidgetExtension.appex */,
+				B83875F42909C725002682FE /* StudyingLiveActivityExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -356,6 +414,7 @@
 		B8DD2E0928F93CB100AC9492 /* BibleWords_iOS */ = {
 			isa = PBXGroup;
 			children = (
+				B83876032909C7E6002682FE /* BibleWords-iOS-Info.plist */,
 				B81C31752903B386002DBF6B /* BibleWords_iOS.entitlements */,
 				B8DD2E0A28F93CB100AC9492 /* BibleWords_iOSApp.swift */,
 				B8DD2E1828F93CB300AC9492 /* Info.plist */,
@@ -363,6 +422,7 @@
 				B8DD2E3C28F93CDD00AC9492 /* UI */,
 				B8DD2E2828F93CDD00AC9492 /* Data */,
 				B8DD2E3628F93CDD00AC9492 /* Util */,
+				B89CB54B2909CC7C0002FEF8 /* WidgetFiles */,
 				B8DD2E1028F93CB300AC9492 /* Preview Content */,
 			);
 			path = BibleWords_iOS;
@@ -391,8 +451,6 @@
 				B8DD2E3428F93CDD00AC9492 /* API.swift */,
 				B8124D6528F9BDB90053057C /* Codables.swift */,
 				B8124D7828FA0F120053057C /* HebrewConcepts.swift */,
-				B81C31732903B310002DBF6B /* WidgetShareable.swift */,
-				B83875EE2909BEC6002682FE /* Widget-AppOnly.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -428,6 +486,8 @@
 				B8A2110129020FA100BDF272 /* ExternalTools.swift */,
 				B8E2FB3B2905176400C17F75 /* Text+Extensions.swift */,
 				B8E2FB4A290892C100C17F75 /* Array+Extensions.swift */,
+				B89CB5522909E4E30002FEF8 /* StudySessionAnswerType.swift */,
+				B89CB5552909F8880002FEF8 /* LiveActivityManager.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -490,6 +550,23 @@
 			productReference = B81C315D2903AE1F002DBF6B /* TodayStatsWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		B83875F32909C725002682FE /* StudyingLiveActivityExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B83876002909C726002682FE /* Build configuration list for PBXNativeTarget "StudyingLiveActivityExtension" */;
+			buildPhases = (
+				B83875F02909C725002682FE /* Sources */,
+				B83875F12909C725002682FE /* Frameworks */,
+				B83875F22909C725002682FE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = StudyingLiveActivityExtension;
+			productName = StudyingLiveActivityExtension;
+			productReference = B83875F42909C725002682FE /* StudyingLiveActivityExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		B8DD2E0628F93CB100AC9492 /* BibleWords_iOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B8DD2E1B28F93CB300AC9492 /* Build configuration list for PBXNativeTarget "BibleWords_iOS" */;
@@ -503,6 +580,7 @@
 			);
 			dependencies = (
 				B81C316A2903AE20002DBF6B /* PBXTargetDependency */,
+				B83875FE2909C726002682FE /* PBXTargetDependency */,
 			);
 			name = BibleWords_iOS;
 			productName = BibleWords_iOS;
@@ -520,6 +598,9 @@
 				LastUpgradeCheck = 1400;
 				TargetAttributes = {
 					B81C315C2903AE1F002DBF6B = {
+						CreatedOnToolsVersion = 14.0.1;
+					};
+					B83875F32909C725002682FE = {
 						CreatedOnToolsVersion = 14.0.1;
 					};
 					B8DD2E0628F93CB100AC9492 = {
@@ -542,6 +623,7 @@
 			targets = (
 				B8DD2E0628F93CB100AC9492 /* BibleWords_iOS */,
 				B81C315C2903AE1F002DBF6B /* TodayStatsWidgetExtension */,
+				B83875F32909C725002682FE /* StudyingLiveActivityExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -552,6 +634,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				B81C31672903AE20002DBF6B /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B83875F22909C725002682FE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B83875FB2909C726002682FE /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -584,6 +674,17 @@
 				B8E2FB4C2908B58100C17F75 /* Time+Extensions.swift in Sources */,
 				B81C31772903B4FE002DBF6B /* WidgetShareable.swift in Sources */,
 				B81C31722903B1E6002DBF6B /* WidgetDesign.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B83875F02909C725002682FE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B89CB5512909E1AF0002FEF8 /* Font+Extensions.swift in Sources */,
+				B89CB54F2909CCD70002FEF8 /* LiveActivity+Shareable.swift in Sources */,
+				B89CB5542909E4E60002FEF8 /* StudySessionAnswerType.swift in Sources */,
+				B83875F92909C726002682FE /* StudyingLiveActivity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -625,11 +726,13 @@
 				B8E2FB4B290892C100C17F75 /* Array+Extensions.swift in Sources */,
 				B8A210EE2900989A00BDF272 /* WordInfoHeaderSection.swift in Sources */,
 				B81C313F29032BD9002DBF6B /* NewHomeView.swift in Sources */,
+				B89CB5502909D88E0002FEF8 /* LiveActivity+Shareable.swift in Sources */,
 				B8124D6A28F9C7100053057C /* String+Extensions.swift in Sources */,
 				B8A210F22901A90900BDF272 /* VocabWordRange+Extensions.swift in Sources */,
 				B8DD2E6D28F93CDF00AC9492 /* Int+Extensions.swift in Sources */,
 				B8E2FB43290670A900C17F75 /* VocabWordDifficultyStatsView.swift in Sources */,
 				B8A210EA28FF5C3A00BDF272 /* BuildParsingListView.swift in Sources */,
+				B89CB5562909F8880002FEF8 /* LiveActivityManager.swift in Sources */,
 				B8A210E228FE6DB100BDF272 /* WordDetailsView.swift in Sources */,
 				B8124D7728FA0EF10053057C /* ParadigmDetailView.swift in Sources */,
 				B8124D7628FA0EF10053057C /* ParadigmsViews.swift in Sources */,
@@ -656,6 +759,7 @@
 				B8124D7D28FA0F990053057C /* HomeView.swift in Sources */,
 				B8A210F82901D80800BDF272 /* ParsingSessionReportView.swift in Sources */,
 				B8DD2E6328F93CDF00AC9492 /* GreekCodeables.swift in Sources */,
+				B89CB5532909E4E30002FEF8 /* StudySessionAnswerType.swift in Sources */,
 				B8DD2E1728F93CB300AC9492 /* BibleWords_iOS.xcdatamodeld in Sources */,
 				B83875EF2909BEC6002682FE /* Widget-AppOnly.swift in Sources */,
 				B8DD2E7428F93CDF00AC9492 /* BuildVocabListView.swift in Sources */,
@@ -674,6 +778,11 @@
 			isa = PBXTargetDependency;
 			target = B81C315C2903AE1F002DBF6B /* TodayStatsWidgetExtension */;
 			targetProxy = B81C31692903AE20002DBF6B /* PBXContainerItemProxy */;
+		};
+		B83875FE2909C726002682FE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B83875F32909C725002682FE /* StudyingLiveActivityExtension */;
+			targetProxy = B83875FD2909C726002682FE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -726,6 +835,60 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "ShayneTorres.BibleWords-iOS.TodayStatsWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		B83876012909C726002682FE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ZC55HLSXNP;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = StudyingLiveActivity/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = StudyingLiveActivity;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "ShayneTorres.BibleWords-iOS.StudyingLiveActivity";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B83876022909C726002682FE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ZC55HLSXNP;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = StudyingLiveActivity/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = StudyingLiveActivity;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "ShayneTorres.BibleWords-iOS.StudyingLiveActivity";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -861,8 +1024,10 @@
 				DEVELOPMENT_TEAM = ZC55HLSXNP;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "BibleWords-iOS-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = BibleWords;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -894,8 +1059,10 @@
 				DEVELOPMENT_TEAM = ZC55HLSXNP;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "BibleWords-iOS-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = BibleWords;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -922,6 +1089,15 @@
 			buildConfigurations = (
 				B81C316D2903AE20002DBF6B /* Debug */,
 				B81C316E2903AE20002DBF6B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B83876002909C726002682FE /* Build configuration list for PBXNativeTarget "StudyingLiveActivityExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B83876012909C726002682FE /* Debug */,
+				B83876022909C726002682FE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

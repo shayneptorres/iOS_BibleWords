@@ -136,7 +136,11 @@ struct ListDetailView: View {
             }
         }
         .fullScreenCover(isPresented: $studyWords) {
-            VocabListStudyView(vocabList: $viewModel.list, allWordInfoIds: viewModel.wordIds)
+            if #available(iOS 16.1, *) {
+                VocabListStudyView(vocabList: $viewModel.list, allWordInfoIds: viewModel.wordIds)
+            } else {
+                VocabListStudyView(vocabList: $viewModel.list, allWordInfoIds: viewModel.wordIds)
+            }
         }
         .navigationTitle(viewModel.list.defaultTitle)
         .navigationBarTitleDisplayMode(.inline)

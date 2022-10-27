@@ -8,6 +8,7 @@
 import SwiftUI
 import CoreData
 import WidgetKit
+import ActivityKit
 
 enum AppPath: Hashable {
     case reviewedWords
@@ -231,6 +232,15 @@ struct NewHomeView: View {
                 fetchData()
                 initializeCoreData()
             }
+            if #available(iOS 16.1, *) {
+                if !Activity<StudyAttributes>.activities.isEmpty {
+                    for activity in Activity<StudyAttributes>.activities {
+                        Task {
+                            await activity.end(dismissalPolicy: .immediate)
+                        }
+                    }
+                }                
+            }
         }
         .onChange(of: scenePhase) { newPhase in
             if newPhase == .active {
@@ -262,7 +272,7 @@ struct NewHomeView: View {
             CoreDataManager.transactionAsync(context: context) {
                 let dueWordsList = VocabWordList(context: context)
                 dueWordsList.id = "TEMP-DUE-WORD-LIST"
-                dueWordsList.title = "Due words list"
+                dueWordsList.title = "Your Due Words"
                 dueWordsList.details = "A temporary vocab list to handle the words that are currently due, regardless of their list"
                 dueWordsList.lastStudied = Date()
                 dueWordsList.createdAt = Date()

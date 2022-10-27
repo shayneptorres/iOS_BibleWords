@@ -84,7 +84,11 @@ struct DueWordsView: View, Equatable {
             .disabled(viewModel.isBuilding)
         }
         .fullScreenCover(isPresented: $showStudyWordsView) {
-            VocabListStudyView(vocabList: $viewModel.dueList, allWordInfoIds: [])
+            if #available(iOS 16.1, *) {
+                VocabListStudyView(vocabList: $viewModel.dueList, allWordInfoIds: [])
+            } else {
+                VocabListStudyView(vocabList: $viewModel.dueList, allWordInfoIds: [])
+            }
         }
         .navigationDestination(for: Bible.WordInfo.self) { word in
             WordInfoDetailsView(word: word)
@@ -121,6 +125,9 @@ struct DueWordsView: View, Equatable {
 
 extension DueWordsView {
     func onStudyWords() {
+        CoreDataManager.transaction(context: context) {
+            viewModel.dueList.title = "Your Due Words"
+        }
         for word in (viewModel.dueList.wordsArr) {
             viewModel.dueList.removeFromWords(word)
         }

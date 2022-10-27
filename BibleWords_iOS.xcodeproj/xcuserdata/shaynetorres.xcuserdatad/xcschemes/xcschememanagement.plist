@@ -7,12 +7,35 @@
 		<key>BibleWords_iOS.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+		<key>StudyingLiveActivityExtension.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
 		<key>TodayStatsWidgetExtension.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>1</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>B81C315C2903AE1F002DBF6B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B83875F32909C725002682FE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B8DD2E0628F93CB100AC9492</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>
