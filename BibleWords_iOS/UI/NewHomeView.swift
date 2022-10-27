@@ -107,6 +107,11 @@ struct NewHomeView: View {
                 Color.appBackground
                     .ignoresSafeArea()
                 ScrollView {
+                    if viewModel.isBuilding {
+                        DataIsBuildingCard(rotationAngle: $viewModel.animationRotationAngle)
+                            .transition(.move(edge: .trailing))
+                            .padding(.horizontal, horizontalPadding)
+                    }
                     StatsCardView()
                     QuickActionsSection()
                     PinnedItemsSection()

@@ -225,11 +225,3 @@ extension ListDetailView {
         }
     }
 }
-
-//struct ListDetailView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        NavigationStack {
-//            ListDetailView(viewModel: .init(list: .init(context: PersistenceController.preview.container.viewContexts)))
-//        }
-//    }
-//}
