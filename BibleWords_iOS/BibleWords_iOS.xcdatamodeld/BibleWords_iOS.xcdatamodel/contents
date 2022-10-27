@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21279" systemVersion="21G83" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21512" systemVersion="21G83" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
     <entity name="ParsingList" representedClassName="ParsingList" syncable="YES" codeGenerationType="class">
         <attribute name="casesStr" optional="YES" attributeType="String"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -17,10 +17,21 @@
         <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="voicesStr" optional="YES" attributeType="String"/>
         <attribute name="wordTypeStr" optional="YES" attributeType="String"/>
+        <relationship name="pin" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="PinnedItem" inverseName="parsingList" inverseEntity="PinnedItem"/>
         <relationship name="range" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VocabWordRange" inverseName="parsingList" inverseEntity="VocabWordRange"/>
         <relationship name="studySessions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="StudySession" inverseName="parsingList" inverseEntity="StudySession"/>
     </entity>
+    <entity name="PinnedItem" representedClassName="PinnedItem" syncable="YES" codeGenerationType="class">
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="pinTitle" optional="YES" attributeType="String"/>
+        <relationship name="parsingList" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ParsingList" inverseName="pin" inverseEntity="ParsingList"/>
+        <relationship name="vocabList" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VocabWordList" inverseName="pin" inverseEntity="VocabWordList"/>
+        <relationship name="vocabWord" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VocabWord" inverseName="pin" inverseEntity="VocabWord"/>
+    </entity>
     <entity name="StudySession" representedClassName="StudySession" syncable="YES" codeGenerationType="class">
+        <attribute name="activityTitle" optional="YES" attributeType="String"/>
+        <attribute name="activityTypeInt" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="endDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -49,6 +60,7 @@
         <attribute name="lang" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="sourceId" optional="YES" attributeType="String"/>
         <relationship name="list" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="VocabWordList" inverseName="words" inverseEntity="VocabWordList"/>
+        <relationship name="pin" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="PinnedItem" inverseName="vocabWord" inverseEntity="PinnedItem"/>
         <relationship name="sessionEntries" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StudySessionEntry" inverseName="word" inverseEntity="StudySessionEntry"/>
     </entity>
     <entity name="VocabWordList" representedClassName="VocabWordList" syncable="YES" codeGenerationType="class">
@@ -57,6 +69,7 @@
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="lastStudied" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="pin" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="PinnedItem" inverseName="vocabList" inverseEntity="PinnedItem"/>
         <relationship name="ranges" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="VocabWordRange" inverseName="list" inverseEntity="VocabWordRange"/>
         <relationship name="words" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="VocabWord" inverseName="list" inverseEntity="VocabWord"/>
     </entity>

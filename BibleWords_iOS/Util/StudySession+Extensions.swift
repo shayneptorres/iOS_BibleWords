@@ -19,6 +19,10 @@ extension StudySession {
     var entriesArr: [StudySessionEntry] {
         return (entries?.allObjects ?? []) as! [StudySessionEntry]
     }
+    
+    var activityType: ActivityType {
+        return ActivityType(rawValue: self.activityTypeInt) ?? .vocab
+    }
 }
 
 extension StudySessionEntry {

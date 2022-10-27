@@ -32,9 +32,17 @@ enum AppPath: Hashable {
 
 struct NewHomeView: View {
     
+    // MARK: Environment
     @Environment(\.managedObjectContext) var context
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.scenePhase) var scenePhase
+    
+    
+    // MARK: Fetch Requests
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \StudySession.endDate, ascending: false)],
+        predicate: NSPredicate(format: "endDate >= %@", Date.startOfToday as CVarArg)
+    ) var sessions: FetchedResults<StudySession>
     
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \StudySessionEntry.createdAt, ascending: false)],
@@ -66,8 +74,20 @@ struct NewHomeView: View {
         predicate: NSPredicate(format: "dueDate <= %@ && currentInterval > 0", Date() as CVarArg)
     ) var dueWords: FetchedResults<VocabWord>
     
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \PinnedItem.createdAt, ascending: false)]
+    ) var pins: FetchedResults<PinnedItem>
+    
     @StateObject var viewModel = DataDependentViewModel()
+    
+    // MARK: Namespace
+    @Namespace var homeViewNamepace
+    
+    // MARK: State
     @State var paths: [AppPath] = []
+    @State var showFullStats = false
+    @State var showFullPins = false
+    @State var showFullRecent = false
     @State var showStatsInfoModal = false
     @State var showMoreStatsModal = false
     @State var showCreateListActionSheet = false
@@ -77,7 +97,9 @@ struct NewHomeView: View {
     @State var showCreateCustomListModal = false
     @State var showBibleReadingView = false
     @State var showVocabListTypeInfoModal = false
-    let vocabSectionHeight: CGFloat = 175
+    
+    // MARK: UI Constants
+    let horizontalPadding: CGFloat = 12
     
     var body: some View {
         NavigationStack(path: $paths) {
@@ -85,19 +107,10 @@ struct NewHomeView: View {
                 Color.appBackground
                     .ignoresSafeArea()
                 ScrollView {
-                    StatsCard()
-                    ReadBibleSection()
-                    VocabListSection()
-                    ParsingListSection()
-                    HStack {
-                        AppButton(text: "Greek Paradigms") {
-                            paths.append(.greekParadigms)
-                        }
-                        AppButton(text: "Hebrew Paradigms") {
-                            paths.append(.hebrewParadigms)
-                        }
-                    }
-                    .padding(.horizontal)
+                    StatsCardView()
+                    QuickActionsSection()
+                    PinnedItemsSection()
+                    RecentActivitySection()
                 }
             }
             .navigationTitle("Bible Words")
@@ -230,7 +243,8 @@ struct NewHomeView: View {
             if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
             } else {
                 fetchData()
-                initializeCoreData()
+                initCoreData()
+                initUI()
             }
             if #available(iOS 16.1, *) {
                 if !Activity<StudyAttributes>.activities.isEmpty {
@@ -253,7 +267,10 @@ struct NewHomeView: View {
             }
         }
     }
-    
+}
+
+// MARK: Data Methods
+extension NewHomeView {
     func fetchData() {
         Task {
             guard !API.main.coreDataReadyPublisher.value else { return }
@@ -267,7 +284,7 @@ struct NewHomeView: View {
         }
     }
     
-    func initializeCoreData() {
+    func initCoreData() {
         if dueVocabLists.first == nil {
             CoreDataManager.transactionAsync(context: context) {
                 let dueWordsList = VocabWordList(context: context)
@@ -280,90 +297,161 @@ struct NewHomeView: View {
         }
     }
     
+    func initUI() {
+        showFullStats = UserDefaultKey.homeViewShowFullStats.get(as: Bool.self)
+        showFullPins = UserDefaultKey.homeViewShowFullPins.get(as: Bool.self)
+        showFullRecent = UserDefaultKey.homeViewShowFullRecents.get(as: Bool.self)
+    }
+    
     func getWidgetTimelineData() {
         
     }
-    
 }
 
 extension NewHomeView {
     @ViewBuilder
-    func StatsCard() -> some View {
-        VStack(alignment: .leading) {
-            HStack {
-                Text("Today's Stats")
-                    .font(.headline)
-                Button(action: {
-                    showStatsInfoModal = true
-                }, label: {
-                    Image(systemName: "info.circle")
-                        .font(.title3)
-                })
-                Spacer()
-                Button(action: {
-                    showMoreStatsModal = true
-                }, label: {
-                    Text("More Stats")
-                })
+    func StatsCardView() -> some View {
+        VStack {
+            if showFullStats {
+                HStack(alignment: .firstTextBaseline) {
+                    Text("Today's Stats")
+                        .font(.headline)
+                        .bold()
+                        .transition(.opacity)
+                    Button(action: {
+                        showStatsInfoModal = true
+                    }, label: {
+                        Image(systemName: "info.circle")
+                            .font(.headline)
+                            .foregroundColor(.accentColor)
+                    })
+                    Spacer()
+                    Button(action: {
+                        withAnimation {
+                            showFullStats.toggle()
+                            UserDefaultKey.homeViewShowFullStats.set(val: showFullStats)
+                        }
+                    }, label: {
+                        Image(systemName: "chevron.up")
+                            .font(.headline)
+                            .foregroundColor(.accentColor)
+                    })
+                    .matchedGeometryEffect(id: "home.stats.chevron-button", in: homeViewNamepace)
+                }
+                .matchedGeometryEffect(id: "home.stats.top-container", in: homeViewNamepace)
+                Divider()
             }
-            Divider()
-            HStack(alignment: .top) {
+            HStack(alignment: .center) {
                 Button(action: {
-                    paths.append(.reviewedWords)
+                    
                 }, label: {
                     VStack(spacing: 4) {
+                        if showFullStats {
+                            Spacer()
+                            Text("Reviewed")
+                                .font(.footnote)
+                                .foregroundColor(.accentColor)
+                        }
                         Image(systemName: "arrow.triangle.2.circlepath")
+                            .font(.headline)
                             .foregroundColor(.accentColor)
-                            .font(.title3)
-                        Text("\(studySessionEntries.filter { $0.studyTypeInt == 1 }.count) ")
-                            .bold()
+                        Text("\(studySessionEntries.filter { $0.studyTypeInt == 1 }.count)")
+                            .font(showFullStats ? .body : .subheadline)
+                            .foregroundColor(Color(uiColor: .label))
+                        if showFullStats {
+                            Spacer()
+                        }
                     }
                     .frame(maxWidth: .infinity)
                 })
                 Button(action: {
-                    paths.append(.newWords)
+                    
                 }, label: {
                     VStack(spacing: 4) {
+                        if showFullStats {
+                            Spacer()
+                            Text("New")
+                                .font(.footnote)
+                                .foregroundColor(.accentColor)
+                        }
                         Image(systemName: "gift")
+                            .font(.headline)
                             .foregroundColor(.accentColor)
-                            .font(.title3)
                         Text("\(studySessionEntries.filter { $0.studyTypeInt == 0 }.count)")
-                            .bold()
+                            .font(showFullStats ? .body : .subheadline)
+                            .foregroundColor(Color(uiColor: .label))
+                        if showFullStats {
+                            Spacer()
+                        }
                     }
+                    .foregroundColor(.black)
                     .frame(maxWidth: .infinity)
                 })
                 Button(action: {
-                    paths.append(.parsedWords)
+                    
                 }, label: {
                     VStack(spacing: 4) {
+                        if showFullStats {
+                            Spacer()
+                            Text("Parsed")
+                                .font(.footnote)
+                                .foregroundColor(.accentColor)
+                        }
                         Image(systemName: "rectangle.and.hand.point.up.left.filled")
+                            .font(.headline)
                             .foregroundColor(.accentColor)
-                            .font(.title3)
                         Text("\(studySessionEntries.filter { $0.studyTypeInt == 2 }.count)")
-                            .bold()
+                            .font(showFullStats ? .body : .subheadline)
+                            .foregroundColor(Color(uiColor: .label))
+                        if showFullStats {
+                            Spacer()
+                        }
                     }
+                    .foregroundColor(.black)
                     .frame(maxWidth: .infinity)
                 })
                 Button(action: {
                     paths.append(.dueWords)
                 }, label: {
                     VStack(spacing: 4) {
+                        if showFullStats {
+                            Spacer()
+                            Text("Due")
+                                .font(.footnote)
+                                .foregroundColor(.accentColor)
+                        }
                         Image(systemName: "clock.badge.exclamationmark")
+                            .font(.headline)
                             .foregroundColor(.accentColor)
-                            .font(.title3)
                         Text("\(dueWords.filter { ($0.list?.count ?? 0) > 0 }.count)")
-                            .bold()
+                            .font(showFullStats ? .body : .subheadline)
+                            .foregroundColor(Color(uiColor: .label))
+                        if showFullStats {
+                            Spacer()
+                        }
                     }
+                    .foregroundColor(.black)
                     .frame(maxWidth: .infinity)
                 })
+                if !showFullStats {
+                    Button(action: {
+                        withAnimation {
+                            showFullStats.toggle()
+                            UserDefaultKey.homeViewShowFullStats.set(val: showFullStats)
+                        }
+                    }, label: {
+                        Image(systemName: "chevron.down")
+                            .font(.headline)
+                            .frame(maxWidth: .infinity)
+                    })
+                    .matchedGeometryEffect(id: "home.stats.chevron-button", in: homeViewNamepace)
+                }
             }
             .padding(.top, 4)
         }
-        .padding()
-        .frame(maxWidth: .infinity)
-        .background(Color(uiColor: .secondarySystemGroupedBackground))
-        .cornerRadius(Design.defaultCornerRadius)
-        .padding(.horizontal)
+        .appCard()
+        .padding(.horizontal, horizontalPadding)
+        .padding(.bottom, -8)
     }
     
     @ViewBuilder
@@ -395,161 +483,196 @@ extension NewHomeView {
     }
     
     @ViewBuilder
-    func ReadBibleSection() -> some View {
-        if viewModel.isBuilding {
-            DataLoadingRow()
-                .padding()
-                .frame(maxWidth: .infinity)
-                .frame(height: 55)
-                .background(Color(uiColor: .secondarySystemGroupedBackground))
-                .cornerRadius(Design.defaultCornerRadius)
-                .padding(.horizontal)
-                .padding(.bottom)
-        } else {
-            AppButton(text: "Read Bible", systemImage: "book.fill") {
+    func QuickActionsSection() -> some View {
+        HStack {
+            Button(action: {
                 showBibleReadingView = true
-            }
-            .padding(.horizontal)
-            .disabled(viewModel.isBuilding)
-            .padding(.bottom)
+            }, label: {
+                VStack(spacing: 8) {
+                    Image(systemName: "book")
+                        .font(.title2)
+                    Text("Bible")
+                        .font(.caption2)
+                        .bold()
+                }
+                .appCard(height: 60, innerPadding: 8)
+            })
+            Button(action: {
+                paths.append(.allVocabLists)
+            }, label: {
+                VStack(spacing: 8) {
+                    Image(systemName: ActivityType.vocab.imageName)
+                        .font(.title2)
+                    Text("Vocab")
+                        .font(.caption2)
+                        .bold()
+                }
+                .appCard(height: 60, innerPadding: 8)
+            })
+            Button(action: {
+                paths.append(.allParsingLists)
+            }, label: {
+                VStack(spacing: 8) {
+                    Image(systemName: ActivityType.parsing.imageName)
+                        .font(.title2)
+                    Text("Parsing")
+                        .font(.caption2)
+                        .bold()
+                }
+                    .appCard(height: 60, innerPadding: 8)
+            })
+            Button(action: {
+                paths.append(.hebrewParadigms)
+            }, label: {
+                VStack(spacing: 8) {
+                    Image(systemName: ActivityType.paradigm.imageName)
+                        .font(.title2)
+                    Text("Paradigm")
+                        .font(.caption2)
+                        .bold()
+                }
+                    .appCard(height: 60, innerPadding: 4)
+            })
         }
+        .padding(.horizontal, horizontalPadding)
     }
     
     @ViewBuilder
-    func VocabListSection() -> some View {
+    func PinnedItemsSection() -> some View {
         VStack {
-            HStack(alignment: .lastTextBaseline) {
-                Text("Your Vocab Lists")
-                    .font(.title2)
-                    .bold()
-                    .padding(.bottom, -12)
-                    .padding(.trailing)
-                Button(action: { showCreateListActionSheet = true }, label: {
-                    Image(systemName: "plus.circle")
-                        .font(.title3)
-                })
-                Spacer()
-                Button(action: { paths.append(.allVocabLists) }, label: {
-                    Text("See all")
+            if showFullPins {
+                HStack(alignment: .firstTextBaseline) {
+                    Image(systemName: "pin")
+                        .matchedGeometryEffect(id: "home.pins.pin-image", in: homeViewNamepace)
+                        .font(.headline)
+                    Text("Pinned Items")
+                        .font(.headline)
                         .bold()
-                })
-            }
-            .padding(.horizontal)
-            ScrollView(.horizontal) {
-                HStack {
-                    ForEach(vocabLists) { list in
-                        GeometryReader { geo in
-                            VocabListCard(list: list.bound())
-                                .onTapGesture {
-                                    paths.append(.vocabListDetail(list: list, autoStudy: false))
-                                }
-                                .contextMenu {
-                                    Button(action: {
-                                        paths.append(.vocabListDetail(list: list, autoStudy: true))
-                                    }, label: {
-                                        Label("Study", systemImage: "book")
-                                    })
-                                }
+                        .transition(.opacity)
+                    Spacer()
+                    Button(action: {
+                        withAnimation {
+                            showFullPins.toggle()
+                            UserDefaultKey.homeViewShowFullPins.set(val: showFullPins)
                         }
-                        .frame(width: 200, height: vocabSectionHeight * 0.8)
+                    }, label: {
+                        Image(systemName: "chevron.up")
+                            .font(.headline)
+                            .foregroundColor(.accentColor)
+                    })
+                    .matchedGeometryEffect(id: "home.pins.chevron", in: homeViewNamepace)
+                }
+                Divider()
+                VStack(alignment: .leading, spacing: 14) {
+                    ForEach(pins) { pin in
+                        Text(pin.pinTitle ?? "")
                     }
                 }
-                .padding()
-//                .background(Color.blue.opacity(0.1))
+                .padding(.top, 8)
+            } else {
+                HStack {
+                    Image(systemName: "pin")
+                        .matchedGeometryEffect(id: "home.pins.pin-image", in: homeViewNamepace)
+                        .font(.headline)
+                    Spacer()
+                    Button(action: {
+                        withAnimation {
+                            showFullPins.toggle()
+                            UserDefaultKey.homeViewShowFullPins.set(val: showFullPins)
+                        }
+                    }, label: {
+                        Image(systemName: "chevron.down")
+                            .font(.headline)
+                            .foregroundColor(.accentColor)
+                    })
+                    .matchedGeometryEffect(id: "home.pins.chevron", in: homeViewNamepace)
+                }
             }
-            .scrollIndicators(.hidden)
-            .frame(height: vocabSectionHeight)
-//            .background(Color.red.opacity(0.1))
         }
+        .appCard()
+        .padding(.horizontal, horizontalPadding)
     }
     
     @ViewBuilder
-    func VocabListCard(list: Binding<VocabWordList>) -> some View {
-        HStack {
+    func RecentActivitySection() -> some View {
+        VStack {
+            if showFullRecent {
+                HStack(alignment: .firstTextBaseline) {
+                    Image(systemName: "timer")
+                        .matchedGeometryEffect(id: "home.recent.recent-image", in: homeViewNamepace)
+                        .font(.headline)
+                    Text("Recent Activity")
+                        .font(.headline)
+                        .bold()
+                        .transition(.opacity)
+                    Spacer()
+                    Button(action: {
+                        withAnimation {
+                            showFullRecent.toggle()
+                            UserDefaultKey.homeViewShowFullRecents.set(val: showFullRecent)
+                        }
+                    }, label: {
+                        Image(systemName: "chevron.up")
+                            .font(.headline)
+                            .foregroundColor(.accentColor)
+                    })
+                    .matchedGeometryEffect(id: "home.recent.chevron", in: homeViewNamepace)
+                }
+                Divider()
+                VStack(alignment: .leading, spacing: 14) {
+                    ForEach(Array(sessions.prefix(5))) { session in
+                        RecentActivityRow(session: session)
+                    }
+                }
+                .padding(.top, 8)
+            } else {
+                HStack {
+                    Image(systemName: "timer")
+                        .matchedGeometryEffect(id: "home.recent.recent-image", in: homeViewNamepace)
+                        .font(.headline)
+                    HStack(spacing: 14) {
+                        ForEach(Array(sessions.prefix(5))) { session in
+                            Image(systemName: session.activityType.imageName)
+                                .font(.title3)
+                                .foregroundColor(.accentColor)
+                        }
+                    }
+                    Spacer()
+                    Button(action: {
+                        withAnimation {
+                            showFullRecent.toggle()
+                            UserDefaultKey.homeViewShowFullRecents.set(val: showFullRecent)
+                        }
+                    }, label: {
+                        Image(systemName: "chevron.down")
+                            .font(.headline)
+                            .foregroundColor(.accentColor)
+                    })
+                    .matchedGeometryEffect(id: "home.recent.chevron", in: homeViewNamepace)
+                }
+            }
+        }
+        .appCard()
+        .padding(.horizontal, horizontalPadding)
+    }
+        
+    @ViewBuilder
+    func RecentActivityRow(session: StudySession) -> some View {
+        HStack(alignment: .center) {
+            Image(systemName: session.activityType.imageName)
+                .font(.largeTitle)
+                .foregroundColor(.accentColor)
             VStack(alignment: .leading) {
-                Text(list.wrappedValue.defaultTitle)
-                    .font(.title3)
-                    .bold()
-                Text(list.wrappedValue.defaultDetails)
-                    .padding(.bottom, 4)
-                Text("\(list.wrappedValue.dueWords.filter { $0.list?.count ?? 0 > 1 }.count) words due")
+                Text(session.activityType.title)
                     .font(.subheadline)
-                    .padding(.bottom, 4)
-                Spacer()
-                Text("Last studied: \((list.lastStudied.wrappedValue ?? Date()).toShortPrettyDate)")
+                    .fontWeight(.regular)
+                Text(session.activityTitle ?? "")
                     .font(.caption)
-            }
-            .padding()
-            Spacer()
-        }
-        .frame(width: 200, height: vocabSectionHeight * 0.8)
-        .background(Color(uiColor: .secondarySystemGroupedBackground))
-        .cornerRadius(Design.defaultCornerRadius)
-        .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
-    }
-    
-    @ViewBuilder
-    func ParsingListSection() -> some View {
-        VStack {
-            HStack(alignment: .lastTextBaseline) {
-                Text("Your Parsing Lists")
-                    .font(.title2)
-                    .bold()
-                    .padding(.bottom, -12)
-                    .padding(.trailing)
-                Button(action: { showCreateParsingModal = true }, label: {
-                    Image(systemName: "plus.circle")
-                        .font(.title3)
-                })
-                Spacer()
-                Button(action: { paths.append(.allParsingLists) }, label: {
-                    Text("See all")
-                        .bold()
-                })
-            }
-            .padding(.horizontal)
-            ScrollView(.horizontal) {
-                HStack {
-                    ForEach(parsingLists) { list in
-                        GeometryReader { geo in
-                            ParsingListCard(list: list.bound())
-                                .rotation3DEffect(Angle(degrees: Double(geo.frame(in: .global).minX) - 40) / -20, axis: (x: 0, y: 10, z: 0))
-                                .onTapGesture {
-                                    paths.append(.parsingListDetail(list))
-                                }
-                        }
-                        .frame(width: 200, height: vocabSectionHeight * 0.8)
-                    }
-                }
-                .padding()
-            }
-            .scrollIndicators(.hidden)
-            .frame(height: vocabSectionHeight)
-        }
-    }
-    
-    @ViewBuilder
-    func ParsingListCard(list: Binding<ParsingList>) -> some View {
-        HStack {
-            VStack(alignment: .leading) {
-                Text(list.wrappedValue.shortTitle)
-                    .font(.title3)
-                    .bold()
-                Text(list.wrappedValue.parsingDetails)
-                    .font(.subheadline)
                     .foregroundColor(Color(uiColor: .secondaryLabel))
-                    .padding(.bottom, 4)
-                Spacer()
-                Text("Last studied: \((list.lastStudied.wrappedValue ?? Date()).toShortPrettyDate)")
-                    .font(.caption)
+                    .fontWeight(.regular)
             }
-            .padding()
             Spacer()
         }
-        .frame(width: 200, height: vocabSectionHeight * 0.8)
-        .background(Color(uiColor: .secondarySystemGroupedBackground))
-        .cornerRadius(Design.defaultCornerRadius)
-        .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
     }
 }
 

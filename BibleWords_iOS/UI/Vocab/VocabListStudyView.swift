@@ -350,6 +350,9 @@ extension VocabListStudyView {
             session.id = UUID().uuidString
             session.startDate = startDate
             session.endDate = endDate
+            session.activityTitle = vocabList.title
+            session.activityTypeInt = ActivityType.vocab.rawValue
+            
             
             for entry in entries {
                 // add entries

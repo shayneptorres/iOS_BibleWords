@@ -323,6 +323,8 @@ extension PracticeParsingView {
             session.startDate = startDate
             session.endDate = endDate
             session.parsingList = parsingList
+            session.activityTypeInt = ActivityType.parsing.rawValue
+            session.activityTitle = parsingList.title ?? ""
             
             for entry in entries {
                 // add entries
