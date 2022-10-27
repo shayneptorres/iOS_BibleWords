@@ -260,6 +260,21 @@ struct NewHomeView: View {
                     }
                 }                
             }
+            
+//            CoreDataManager.transaction(context: context) {
+//                let deleteFetchRequest = NSFetchRequest<PinnedItem>(entityName: "PinnedItem")
+//                
+//                var pins: [PinnedItem] = []
+//                do {
+//                    pins = try context.fetch(deleteFetchRequest)
+//                } catch let err {
+//                    print(err)
+//                }
+//                
+//                for pin in pins {
+//                    context.delete(pin)
+//                }
+//            }
         }
         .onChange(of: scenePhase) { newPhase in
             if newPhase == .active {
@@ -453,6 +468,20 @@ extension NewHomeView {
                 }
             }
             .padding(.top, 4)
+            if showFullStats {
+                Divider()
+                HStack {
+                    Button(action: {
+                        showMoreStatsModal = true
+                    }, label: {
+                        Text("More Stats")
+                            .foregroundColor(.accentColor)
+                            .font(.headline)
+                            .bold()
+                            .transition(.opacity)
+                    })
+                }
+            }
         }
         .appCard()
         .padding(.horizontal, horizontalPadding)
@@ -570,7 +599,7 @@ extension NewHomeView {
                 Divider()
                 VStack(alignment: .leading, spacing: 14) {
                     ForEach(pins) { pin in
-                        Text(pin.pinTitle ?? "")
+                        PinnedItemRow(pin: pin)
                     }
                 }
                 .padding(.top, 8)
@@ -579,6 +608,27 @@ extension NewHomeView {
                     Image(systemName: "pin")
                         .matchedGeometryEffect(id: "home.pins.pin-image", in: homeViewNamepace)
                         .font(.headline)
+                    HStack(spacing: 14) {
+                        ForEach(pins) { pin in
+                            ZStack {
+                                Image(systemName: pin.activityType.imageName)
+                                    .font(.title2)
+                                    .foregroundColor(.accentColor)
+                                VStack {
+                                    HStack {
+                                        Spacer()
+                                        Image(systemName: "pin.fill")
+                                            .font(.footnote)
+                                            .foregroundColor(.appOrange)
+                                            .padding(.trailing, 2)
+                                    }
+                                    Spacer()
+                                }
+                            }
+                            .matchedGeometryEffect(id: "pin-row.image.\(pin.id ?? "")", in: homeViewNamepace)
+                            .frame(width: 30)
+                        }
+                    }
                     Spacer()
                     Button(action: {
                         withAnimation {
@@ -596,6 +646,35 @@ extension NewHomeView {
         }
         .appCard()
         .padding(.horizontal, horizontalPadding)
+    }
+    
+    @ViewBuilder
+    func PinnedItemRow(pin: PinnedItem) -> some View {
+        HStack(alignment: .center) {
+            ZStack {
+                Image(systemName: pin.activityType.imageName)
+                    .font(.largeTitle)
+                    .foregroundColor(.accentColor)
+                VStack {
+                    HStack {
+                        Spacer()
+                        Image(systemName: "pin.fill")
+                            .font(.subheadline)
+                            .foregroundColor(.appOrange)
+                            .padding(.trailing, 4)
+                    }
+                    Spacer()
+                }
+            }
+            .matchedGeometryEffect(id: "pin-row.image.\(pin.id ?? "")", in: homeViewNamepace)
+            .frame(width: 30)
+            VStack(alignment: .leading) {
+                Text(pin.pinTitle ?? "")
+                    .font(.subheadline)
+                    .fontWeight(.regular)
+            }
+            Spacer()
+        }
     }
     
     @ViewBuilder
@@ -638,7 +717,8 @@ extension NewHomeView {
                     HStack(spacing: 14) {
                         ForEach(Array(sessions.prefix(5))) { session in
                             Image(systemName: session.activityType.imageName)
-                                .font(.title3)
+                                .matchedGeometryEffect(id: "session-row.image.\(session.id ?? "")", in: homeViewNamepace)
+                                .font(.title2)
                                 .foregroundColor(.accentColor)
                         }
                     }
@@ -665,6 +745,7 @@ extension NewHomeView {
     func RecentActivityRow(session: StudySession) -> some View {
         HStack(alignment: .center) {
             Image(systemName: session.activityType.imageName)
+                .matchedGeometryEffect(id: "session-row.image.\(session.id ?? "")", in: homeViewNamepace)
                 .font(.largeTitle)
                 .foregroundColor(.accentColor)
             VStack(alignment: .leading) {

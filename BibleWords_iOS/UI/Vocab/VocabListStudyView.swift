@@ -117,7 +117,6 @@ struct VocabListStudyView: View, Equatable {
             .onAppear {
                 startDate = Date()
                 updateCurrentWord()
-                UserDefaultKey.shouldRefreshWidgetTimeline.set(val: true)
             }
         }
     }
@@ -333,6 +332,8 @@ extension VocabListStudyView {
             displayMode = .lemma
         }
         updateOrCreateLiveActivity()
+        UserDefaultKey.shouldRefreshWidgetTimeline.set(val: true)
+        AppGroupManager.updateStats(managedObjectContext)
     }
     
     func onPrev() {

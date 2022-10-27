@@ -12,7 +12,10 @@ class ListDetailViewModel: ObservableObject, Equatable {
     @Published var list: VocabWordList
     @Published var autoStudy: Bool = false
     @Published var isBuilding = true
+    @Published var animationRotationAngle: CGFloat = 0.0
+    @Published var timer: Publishers.Autoconnect<Timer.TimerPublisher> = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @Published var wordIds: [String] = []
+    @Published var words: [Bible.WordInfo] = []
     @Published var studyWords = false
     var wordsAreReady = CurrentValueSubject<[Bible.WordInfo], Never>([])
     private var subscribers: [AnyCancellable] = []
@@ -44,13 +47,19 @@ class ListDetailViewModel: ObservableObject, Equatable {
         wordsAreReady.sink { [weak self] builtWords in
             DispatchQueue.main.async {
                 if !builtWords.isEmpty {
-                    self?.wordIds = builtWords.map { $0.id }
+                    self?.timer.upstream.connect().cancel()
+//                    self?.wordIds = builtWords.map { $0.id }
+                    self?.words = builtWords.uniqueInfos
                     self?.isBuilding = false
                     if self?.autoStudy == true {
                         self?.studyWords = true
                     }
                 }
             }
+        }.store(in: &subscribers)
+        
+        timer.sink { [weak self] _ in
+            self?.animationRotationAngle += 360
         }.store(in: &subscribers)
     }
     
@@ -94,22 +103,49 @@ class ListDetailViewModel: ObservableObject, Equatable {
 }
 
 struct ListDetailView: View {
+    enum Filter {
+        case all
+        case new
+        case due
+    }
+    
     @Environment(\.managedObjectContext) var context
     @ObservedObject var viewModel: ListDetailViewModel
     @State var showWordInstances = false
     @State var showEditView = false
-    
+    @State var wordFilter = Filter.all
     @State var studyWords = false
+    
+    // MARK: Settings State
+    @State var showSettings = false
+    @State var isPinned = false
+    
+    var filteredWords: [Bible.WordInfo] {
+        switch wordFilter {
+        case .all:
+            return viewModel.words
+        case .new:
+            return viewModel.words.filter { $0.isNewVocab(context: context) }
+        case .due:
+            return viewModel.list.wordsArr.filter { $0.isDue }.map { $0.wordInfo }
+        }
+    }
     
     var body: some View {
         ZStack {
-            List {
+            Color
+                .appBackground
+                .ignoresSafeArea()
+            ScrollView {
                 if viewModel.isBuilding {
-                    DataLoadingRow(text: "Building list data...")
+                    DataIsBuildingCard(rotationAngle: $viewModel.animationRotationAngle)
+                        .padding(.horizontal, 12)
                 } else {
-                    ListInfoSection()
-                    TextbookWordsSection()
+                    WordFilterSection()
+                    WordsSection()
                 }
+                Spacer()
+                    .frame(height: 150)
             }
             StudyButton()
         }
@@ -119,12 +155,16 @@ struct ListDetailView: View {
             }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
-                    showEditView = true
+                    showSettings = true
                 }, label: {
-                    Text("Edit")
+                    Image(systemName: "ellipsis.circle")
+                        .font(.title3)
                         .bold()
                 })
             }
+        }
+        .sheet(isPresented: $showSettings) {
+            SettingsView()
         }
         .sheet(isPresented: $showEditView) {
             if viewModel.list.rangesArr.isEmpty {
@@ -144,6 +184,9 @@ struct ListDetailView: View {
         }
         .navigationTitle(viewModel.list.defaultTitle)
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            isPinned = viewModel.list.pin != nil
+        }
     }
     
     var groupedTextbookWords: [GroupedWordInfos] {
@@ -165,34 +208,77 @@ struct ListDetailView: View {
 extension ListDetailView {
  
     @ViewBuilder
-    func ListInfoSection() -> some View {
-        Section {
-            HStack {
-                NavigationLink(value: AppPath.wordInfoList(wordInfos: viewModel.wordIds.compactMap { $0.toWordInfo }, viewTitle: "Total Words")) {
+    func WordFilterSection() -> some View {
+        HStack {
+            Button(action: {
+                wordFilter = .all
+            }, label: {
+                VStack {
                     Image(systemName: "sum")
-                        .font(.title3)
-                    Text("Total Words: \(viewModel.wordIds.count)")
+                        .font(.title2)
+                        .padding(.bottom, 4)
+                    Text("All: \(viewModel.words.count)")
+                        .font(.caption2)
                 }
-            }
-            .foregroundColor(.accentColor)
-            HStack {
-                NavigationLink(value: AppPath.wordInfoList(wordInfos: viewModel.wordIds.compactMap { $0.toWordInfo }.filter { $0.isNewVocab(context: context) }, viewTitle: "New Words")) {
+                .foregroundColor(wordFilter == .all ? .white : .accentColor)
+                .appCard(height: 60, backgroundColor: wordFilter == .all ? .accentColor : Color(uiColor: .secondarySystemGroupedBackground))
+            })
+            Button(action: {
+                wordFilter = .new
+            }, label: {
+                VStack {
                     Image(systemName: "gift")
-                        .font(.title3)
-                    Text("New Words: \(viewModel.wordIds.compactMap { $0.toWordInfo }.filter { $0.isNewVocab(context: context) }.count)")
+                        .font(.title2)
+                        .padding(.bottom, 4)
+                    Text("New: \(viewModel.words.filter { $0.isNewVocab(context: context) }.count)")
+                        .font(.caption2)
                 }
-            }
-            .foregroundColor(.accentColor)
-            HStack {
-                NavigationLink(value: AppPath.wordInfoList(wordInfos:viewModel.list.wordsArr.filter { $0.isDue }.map { $0.wordInfo }, viewTitle: "Due Words")) {
+                .foregroundColor(wordFilter == .new ? .white : .accentColor)
+                .appCard(height: 60, backgroundColor: wordFilter == .new ? .accentColor : Color(uiColor: .secondarySystemGroupedBackground))
+            })
+            Button(action: {
+                wordFilter = .due
+            }, label: {
+                VStack {
                     Image(systemName: "clock.badge.exclamationmark")
-                        .font(.title3)
-                    Text("Due Words: \(viewModel.list.wordsArr.filter { $0.isDue }.count)")
+                        .font(.title2)
+                        .padding(.bottom, 4)
+                    Text("Due: \(viewModel.list.wordsArr.filter { $0.isDue }.count)")
+                        .font(.caption2)
+                }
+                .foregroundColor(wordFilter == .due ? .white : .accentColor)
+                .appCard(height: 60, backgroundColor: wordFilter == .due ? .accentColor : Color(uiColor: .secondarySystemGroupedBackground))
+            })
+        }
+        .padding(.horizontal, 12)
+    }
+    
+    @ViewBuilder
+    func WordsSection() -> some View {
+        if viewModel.list.sourceType == .textbook {
+            ForEach(groupedTextbookWords, id: \.chapter) { group in
+                Section {
+                    ForEach(group.words) { word in
+                        NavigationLink(value: AppPath.wordInfo(word)) {
+                            VStack(alignment: .leading) {
+                                WordInfoRow(wordInfo: word.bound())
+                            }
+                            .navigationViewStyle(.stack)
+                        }
+                    }
+                } header: {
+                    Text("Chapter \(group.chapter)")
                 }
             }
-            .foregroundColor(.accentColor)
-        } header: {
-            Text("List info")
+        } else {
+            ForEach(filteredWords) { word in
+                HStack {
+                    WordInfoRow(wordInfo: word.bound())
+                    Spacer()
+                }
+                    .appCard(outerPadding: 4)
+                    .padding(.horizontal, 16)
+            }
         }
     }
     
@@ -222,6 +308,41 @@ extension ListDetailView {
             Spacer()
             AppButton(text: "Study Vocab", action: onStudy)
                 .padding([.horizontal, .bottom])
+        }
+    }
+    
+    @ViewBuilder
+    func SettingsView() -> some View {
+        ZStack {
+            Color
+                .appBackground
+                .ignoresSafeArea()
+            ScrollView {
+                VStack {
+                    HStack {
+                        Text("Pin List")
+                        Spacer()
+                        Toggle(isOn: $isPinned, label: {})
+                            .onChange(of: isPinned) { bool in
+                                CoreDataManager.transaction(context: context) {
+                                    if bool && viewModel.list.pin == nil {
+                                        
+                                        let pin = PinnedItem(context: context)
+                                        pin.id = UUID().uuidString
+                                        pin.createdAt = Date()
+                                        pin.pinTitle = viewModel.list.title
+                                        pin.vocabList = viewModel.list
+                                    } else if let pin = viewModel.list.pin {
+                                        context.delete(pin)
+                                    }
+                                }
+                            }
+                    }
+                    .appCard(height: 30)
+                    
+                }
+                .padding(.horizontal, 12)
+            }
         }
     }
 }

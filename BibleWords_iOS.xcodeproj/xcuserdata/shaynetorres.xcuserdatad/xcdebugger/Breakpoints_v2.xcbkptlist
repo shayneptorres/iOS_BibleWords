@@ -3,4 +3,133 @@
    uuid = "D97B2651-A0A1-44A7-9988-15969889B6F2"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B7965728-4C5B-444E-AF23-68AA3FD53224"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BibleWords_iOS/UI/Vocab/ListDetailView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "126"
+            endingLineNumber = "126"
+            landmarkName = "filteredWords"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "38F639EE-FDC3-4512-AA15-02893194BD65"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BibleWords_iOS/UI/Vocab/ListDetailView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "128"
+            endingLineNumber = "128"
+            landmarkName = "filteredWords"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "38F639EE-FDC3-4512-AA15-02893194BD65 - ecfe28e71667c5e2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BibleWords_iOS.ListDetailView.filteredWords.getter : Swift.Array&lt;BibleWords_iOS.Bible.WordInfo&gt;"
+                  moduleName = "BibleWords_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/shaynetorres/Development/iOS/BibleWords_iOS/BibleWords_iOS/UI/Vocab/ListDetailView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "124"
+                  endingLineNumber = "124"
+                  offsetFromSymbolStart = "348">
+               </Location>
+               <Location
+                  uuid = "38F639EE-FDC3-4512-AA15-02893194BD65 - 4d5a5fcd9cfca7e1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (BibleWords_iOS.Bible.WordInfo) -&gt; Swift.Bool in BibleWords_iOS.ListDetailView.filteredWords.getter : Swift.Array&lt;BibleWords_iOS.Bible.WordInfo&gt;"
+                  moduleName = "BibleWords_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/shaynetorres/Development/iOS/BibleWords_iOS/BibleWords_iOS/UI/Vocab/ListDetailView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "124"
+                  endingLineNumber = "124"
+                  offsetFromSymbolStart = "64">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "72B00F2C-245B-4824-91A4-D08A4ED05D23"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BibleWords_iOS/UI/Vocab/ListDetailView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
+            landmarkName = "filteredWords"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "72B00F2C-245B-4824-91A4-D08A4ED05D23 - ecfe28e71667c5a0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BibleWords_iOS.ListDetailView.filteredWords.getter : Swift.Array&lt;BibleWords_iOS.Bible.WordInfo&gt;"
+                  moduleName = "BibleWords_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/shaynetorres/Development/iOS/BibleWords_iOS/BibleWords_iOS/UI/Vocab/ListDetailView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "126"
+                  endingLineNumber = "126"
+                  offsetFromSymbolStart = "636">
+               </Location>
+               <Location
+                  uuid = "72B00F2C-245B-4824-91A4-D08A4ED05D23 - 917b84d18448318c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (BibleWords_iOS.VocabWord) -&gt; Swift.Bool in BibleWords_iOS.ListDetailView.filteredWords.getter : Swift.Array&lt;BibleWords_iOS.Bible.WordInfo&gt;"
+                  moduleName = "BibleWords_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/shaynetorres/Development/iOS/BibleWords_iOS/BibleWords_iOS/UI/Vocab/ListDetailView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "126"
+                  endingLineNumber = "126"
+                  offsetFromSymbolStart = "32">
+               </Location>
+               <Location
+                  uuid = "72B00F2C-245B-4824-91A4-D08A4ED05D23 - 54cf290dcb09a80c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #3 (BibleWords_iOS.VocabWord) -&gt; BibleWords_iOS.Bible.WordInfo in BibleWords_iOS.ListDetailView.filteredWords.getter : Swift.Array&lt;BibleWords_iOS.Bible.WordInfo&gt;"
+                  moduleName = "BibleWords_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/shaynetorres/Development/iOS/BibleWords_iOS/BibleWords_iOS/UI/Vocab/ListDetailView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "126"
+                  endingLineNumber = "126"
+                  offsetFromSymbolStart = "44">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

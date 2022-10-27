@@ -62,6 +62,7 @@
 		B89CB56F290AEC1E0002FEF8 /* AppShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89CB56E290AEC1E0002FEF8 /* AppShadow.swift */; };
 		B89CB571290AED710002FEF8 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89CB570290AED710002FEF8 /* Activity.swift */; };
 		B89CB573290B09070002FEF8 /* DataIsBuildingCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89CB572290B09070002FEF8 /* DataIsBuildingCard.swift */; };
+		B89CB575290B1DC70002FEF8 /* PinnedItem+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89CB574290B1DC70002FEF8 /* PinnedItem+Extensions.swift */; };
 		B8A210E028FE688900BDF272 /* hebrew-bible.json in Resources */ = {isa = PBXBuildFile; fileRef = B8A210DF28FE688900BDF272 /* hebrew-bible.json */; };
 		B8A210E228FE6DB100BDF272 /* WordDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A210E128FE6DB100BDF272 /* WordDetailsView.swift */; };
 		B8A210E628FF553C00BDF272 /* ParsingListsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A210E528FF553C00BDF272 /* ParsingListsView.swift */; };
@@ -203,6 +204,7 @@
 		B89CB56E290AEC1E0002FEF8 /* AppShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppShadow.swift; sourceTree = "<group>"; };
 		B89CB570290AED710002FEF8 /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
 		B89CB572290B09070002FEF8 /* DataIsBuildingCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataIsBuildingCard.swift; sourceTree = "<group>"; };
+		B89CB574290B1DC70002FEF8 /* PinnedItem+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PinnedItem+Extensions.swift"; sourceTree = "<group>"; };
 		B8A210DF28FE688900BDF272 /* hebrew-bible.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "hebrew-bible.json"; sourceTree = "<group>"; };
 		B8A210E128FE6DB100BDF272 /* WordDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordDetailsView.swift; sourceTree = "<group>"; };
 		B8A210E528FF553C00BDF272 /* ParsingListsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsingListsView.swift; sourceTree = "<group>"; };
@@ -500,6 +502,7 @@
 				B89CB5522909E4E30002FEF8 /* StudySessionAnswerType.swift */,
 				B89CB5552909F8880002FEF8 /* LiveActivityManager.swift */,
 				B89CB570290AED710002FEF8 /* Activity.swift */,
+				B89CB574290B1DC70002FEF8 /* PinnedItem+Extensions.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -728,6 +731,7 @@
 				B8DD2E6E28F93CDF00AC9492 /* VocabListBuilder.swift in Sources */,
 				B8124D7028F9FF5E0053057C /* Date+Extensions.swift in Sources */,
 				B8124D5C28F944550053057C /* VocabWord+Extensions.swift in Sources */,
+				B89CB575290B1DC70002FEF8 /* PinnedItem+Extensions.swift in Sources */,
 				B8A210E628FF553C00BDF272 /* ParsingListsView.swift in Sources */,
 				B8124D7928FA0F120053057C /* HebrewConcepts.swift in Sources */,
 				B8DD2E7028F93CDF00AC9492 /* WordList+Extensions.swift in Sources */,
