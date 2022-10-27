@@ -61,8 +61,10 @@ struct ParsingListDetailView: View {
     @Environment(\.managedObjectContext) var context
     @ObservedObject var viewModel: ParsingListDetailViewModel
     
+    // MARK: Settings State
     @State var showParsingPracticeView = false
-    @State var showListSettings = false
+    @State var showSettings = false
+    @State var isPinned = false
     
     var groupedParsingInstances: [GroupedParsingInstances] {
         let instancesByLemma: [String:[Bible.WordInstance]] = Dictionary(grouping: viewModel.instances, by: { $0.lemma })
@@ -134,11 +136,74 @@ struct ParsingListDetailView: View {
                 .padding([.horizontal, .bottom])
             }
         }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    showSettings = true
+                }, label: {
+                    Image(systemName: "ellipsis.circle")
+                        .font(.title3)
+                })
+            }
+        }
+        .sheet(isPresented: $showSettings) {
+            SettingsView()
+        }
         .fullScreenCover(isPresented: $showParsingPracticeView) {
             PracticeParsingView(parsingList: viewModel.list, parsingInstances: viewModel.instances)
         }
         .navigationTitle(viewModel.list.defaultTitle)
         .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+extension ParsingListDetailView {
+    @ViewBuilder
+    func SettingsView() -> some View {
+        NavigationStack {
+            ZStack {
+                Color
+                    .appBackground
+                    .ignoresSafeArea()
+                ScrollView {
+                    VStack {
+                        HStack {
+                            Text("Pin List")
+                            Spacer()
+                            Toggle(isOn: $isPinned, label: {})
+                                .onChange(of: isPinned) { bool in
+                                    CoreDataManager.transaction(context: context) {
+                                        if bool && viewModel.list.pin == nil {
+                                            
+                                            let pin = PinnedItem(context: context)
+                                            pin.id = UUID().uuidString
+                                            pin.createdAt = Date()
+                                            pin.pinTitle = viewModel.list.title
+                                            pin.parsingList = viewModel.list
+                                        } else if let pin = viewModel.list.pin {
+                                            context.delete(pin)
+                                        }
+                                    }
+                                }
+                        }
+                        .appCard(height: 30)
+                        
+                    }
+                    .padding(12)
+                }
+            }
+            .toolbar {
+                Button(action: {
+                    showSettings = false
+                }, label: {
+                    Text("Dismiss")
+                        .bold()
+                })
+            }
+            .onAppear {
+                isPinned = viewModel.list.pin != nil
+            }
+        }
     }
 }
 

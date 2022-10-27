@@ -335,7 +335,7 @@ extension NewHomeView {
             if showFullStats {
                 HStack(alignment: .firstTextBaseline) {
                     Text("Today's Stats")
-                        .font(.headline)
+                        .font(.title2)
                         .bold()
                         .transition(.opacity)
                     Button(action: {
@@ -363,7 +363,7 @@ extension NewHomeView {
             }
             HStack(alignment: .center) {
                 Button(action: {
-                    
+                    paths.append(.reviewedWords)
                 }, label: {
                     VStack(spacing: 4) {
                         if showFullStats {
@@ -373,7 +373,7 @@ extension NewHomeView {
                                 .foregroundColor(.accentColor)
                         }
                         Image(systemName: "arrow.triangle.2.circlepath")
-                            .font(.headline)
+                            .font(.title2)
                             .foregroundColor(.accentColor)
                         Text("\(studySessionEntries.filter { $0.studyTypeInt == 1 }.count)")
                             .font(showFullStats ? .body : .subheadline)
@@ -385,7 +385,7 @@ extension NewHomeView {
                     .frame(maxWidth: .infinity)
                 })
                 Button(action: {
-                    
+                    paths.append(.newWords)
                 }, label: {
                     VStack(spacing: 4) {
                         if showFullStats {
@@ -395,7 +395,7 @@ extension NewHomeView {
                                 .foregroundColor(.accentColor)
                         }
                         Image(systemName: "gift")
-                            .font(.headline)
+                            .font(.title2)
                             .foregroundColor(.accentColor)
                         Text("\(studySessionEntries.filter { $0.studyTypeInt == 0 }.count)")
                             .font(showFullStats ? .body : .subheadline)
@@ -408,7 +408,7 @@ extension NewHomeView {
                     .frame(maxWidth: .infinity)
                 })
                 Button(action: {
-                    
+                    paths.append(.parsedWords)
                 }, label: {
                     VStack(spacing: 4) {
                         if showFullStats {
@@ -418,7 +418,7 @@ extension NewHomeView {
                                 .foregroundColor(.accentColor)
                         }
                         Image(systemName: "rectangle.and.hand.point.up.left.filled")
-                            .font(.headline)
+                            .font(.title2)
                             .foregroundColor(.accentColor)
                         Text("\(studySessionEntries.filter { $0.studyTypeInt == 2 }.count)")
                             .font(showFullStats ? .body : .subheadline)
@@ -441,7 +441,7 @@ extension NewHomeView {
                                 .foregroundColor(.accentColor)
                         }
                         Image(systemName: "clock.badge.exclamationmark")
-                            .font(.headline)
+                            .font(.title2)
                             .foregroundColor(.accentColor)
                         Text("\(dueWords.filter { ($0.list?.count ?? 0) > 0 }.count)")
                             .font(showFullStats ? .body : .subheadline)
@@ -470,6 +470,7 @@ extension NewHomeView {
             .padding(.top, 4)
             if showFullStats {
                 Divider()
+                    .padding(.top, 4)
                 HStack {
                     Button(action: {
                         showMoreStatsModal = true
@@ -481,11 +482,11 @@ extension NewHomeView {
                             .transition(.opacity)
                     })
                 }
+                .padding(.top, 4)
             }
         }
         .appCard()
         .padding(.horizontal, horizontalPadding)
-        .padding(.bottom, -8)
     }
     
     @ViewBuilder
@@ -576,9 +577,10 @@ extension NewHomeView {
         VStack {
             if showFullPins {
                 HStack(alignment: .firstTextBaseline) {
-                    Image(systemName: "pin")
+                    Image(systemName: "pin.fill")
                         .matchedGeometryEffect(id: "home.pins.pin-image", in: homeViewNamepace)
                         .font(.headline)
+                        .foregroundColor(.appOrange)
                     Text("Pinned Items")
                         .font(.headline)
                         .bold()
@@ -600,16 +602,18 @@ extension NewHomeView {
                 VStack(alignment: .leading, spacing: 14) {
                     ForEach(pins) { pin in
                         PinnedItemRow(pin: pin)
+                            .padding(.leading, 8)
                     }
                 }
                 .padding(.top, 8)
             } else {
                 HStack {
-                    Image(systemName: "pin")
+                    Image(systemName: "pin.fill")
                         .matchedGeometryEffect(id: "home.pins.pin-image", in: homeViewNamepace)
                         .font(.headline)
-                    HStack(spacing: 14) {
-                        ForEach(pins) { pin in
+                        .foregroundColor(.appOrange)
+                    HStack(spacing: 20) {
+                        ForEach(pins.prefix(5)) { pin in
                             ZStack {
                                 Image(systemName: pin.activityType.imageName)
                                     .font(.title2)
@@ -627,6 +631,9 @@ extension NewHomeView {
                             }
                             .matchedGeometryEffect(id: "pin-row.image.\(pin.id ?? "")", in: homeViewNamepace)
                             .frame(width: 30)
+                            .onTapGesture {
+                                onTap(pin: pin)
+                            }
                         }
                     }
                     Spacer()
@@ -668,12 +675,25 @@ extension NewHomeView {
             }
             .matchedGeometryEffect(id: "pin-row.image.\(pin.id ?? "")", in: homeViewNamepace)
             .frame(width: 30)
+            .padding(.trailing, 8)
             VStack(alignment: .leading) {
                 Text(pin.pinTitle ?? "")
                     .font(.subheadline)
                     .fontWeight(.regular)
             }
             Spacer()
+        }
+        .background(Color.clear.opacity(0.001))
+        .onTapGesture {
+            onTap(pin: pin)
+        }
+    }
+    
+    func onTap(pin: PinnedItem) {
+        if let vocabList = pin.vocabList {
+            paths.append(.vocabListDetail(list: vocabList, autoStudy: false))
+        } else if let parseList = pin.parsingList {
+            paths.append(.parsingListDetail(parseList))
         }
     }
     
@@ -685,6 +705,7 @@ extension NewHomeView {
                     Image(systemName: "timer")
                         .matchedGeometryEffect(id: "home.recent.recent-image", in: homeViewNamepace)
                         .font(.headline)
+                        .foregroundColor(.appOrange)
                     Text("Recent Activity")
                         .font(.headline)
                         .bold()
@@ -704,7 +725,7 @@ extension NewHomeView {
                 }
                 Divider()
                 VStack(alignment: .leading, spacing: 14) {
-                    ForEach(Array(sessions.prefix(5))) { session in
+                    ForEach(Array(sessions.prefix(8))) { session in
                         RecentActivityRow(session: session)
                     }
                 }
@@ -714,6 +735,7 @@ extension NewHomeView {
                     Image(systemName: "timer")
                         .matchedGeometryEffect(id: "home.recent.recent-image", in: homeViewNamepace)
                         .font(.headline)
+                        .foregroundColor(.appOrange)
                     HStack(spacing: 14) {
                         ForEach(Array(sessions.prefix(5))) { session in
                             Image(systemName: session.activityType.imageName)

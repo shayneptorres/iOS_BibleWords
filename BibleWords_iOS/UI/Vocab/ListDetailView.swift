@@ -159,7 +159,6 @@ struct ListDetailView: View {
                 }, label: {
                     Image(systemName: "ellipsis.circle")
                         .font(.title3)
-                        .bold()
                 })
             }
         }
@@ -272,9 +271,14 @@ extension ListDetailView {
             }
         } else {
             ForEach(filteredWords) { word in
-                HStack {
-                    WordInfoRow(wordInfo: word.bound())
-                    Spacer()
+                NavigationLink(value: AppPath.wordInfo(word)) {
+                    HStack {
+                        WordInfoRow(wordInfo: word.bound())
+                        Spacer()
+                        Image(systemName: "arrow.forward.circle")
+                            .font(.title3)
+                            .foregroundColor(.accentColor)
+                    }
                 }
                     .appCard(outerPadding: 4)
                     .padding(.horizontal, 16)
@@ -313,35 +317,45 @@ extension ListDetailView {
     
     @ViewBuilder
     func SettingsView() -> some View {
-        ZStack {
-            Color
-                .appBackground
-                .ignoresSafeArea()
-            ScrollView {
-                VStack {
-                    HStack {
-                        Text("Pin List")
-                        Spacer()
-                        Toggle(isOn: $isPinned, label: {})
-                            .onChange(of: isPinned) { bool in
-                                CoreDataManager.transaction(context: context) {
-                                    if bool && viewModel.list.pin == nil {
-                                        
-                                        let pin = PinnedItem(context: context)
-                                        pin.id = UUID().uuidString
-                                        pin.createdAt = Date()
-                                        pin.pinTitle = viewModel.list.title
-                                        pin.vocabList = viewModel.list
-                                    } else if let pin = viewModel.list.pin {
-                                        context.delete(pin)
+        NavigationStack {
+            ZStack {
+                Color
+                    .appBackground
+                    .ignoresSafeArea()
+                ScrollView {
+                    VStack {
+                        HStack {
+                            Text("Pin List")
+                            Spacer()
+                            Toggle(isOn: $isPinned, label: {})
+                                .onChange(of: isPinned) { bool in
+                                    CoreDataManager.transaction(context: context) {
+                                        if bool && viewModel.list.pin == nil {
+                                            
+                                            let pin = PinnedItem(context: context)
+                                            pin.id = UUID().uuidString
+                                            pin.createdAt = Date()
+                                            pin.pinTitle = viewModel.list.title
+                                            pin.vocabList = viewModel.list
+                                        } else if let pin = viewModel.list.pin {
+                                            context.delete(pin)
+                                        }
                                     }
                                 }
-                            }
+                        }
+                        .appCard(height: 30)
+                        
                     }
-                    .appCard(height: 30)
-                    
+                    .padding(12)
                 }
-                .padding(.horizontal, 12)
+            }
+            .toolbar {
+                Button(action: {
+                    showSettings = false
+                }, label: {
+                    Text("Dismiss")
+                        .bold()
+                })
             }
         }
     }

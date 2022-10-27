@@ -13,6 +13,8 @@ class DueWordsViewModel: ObservableObject, Equatable {
     @Published var isBuilding = true
     @Published var dueList: VocabWordList
     let id = UUID().uuidString
+    @Published var animationRotationAngle: CGFloat = 0.0
+    @Published var timer: Publishers.Autoconnect<Timer.TimerPublisher> = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     private var subscribers: [AnyCancellable] = []
     
     init(list: VocabWordList) {
@@ -20,10 +22,17 @@ class DueWordsViewModel: ObservableObject, Equatable {
         Task {
             API.main.coreDataReadyPublisher.sink { [weak self] isReady in
                 if isReady {
-                    self?.isBuilding = false
+                    withAnimation {
+                        self?.timer.upstream.connect().cancel()
+                        self?.isBuilding = false
+                    }
                 }
             }.store(in: &self.subscribers)
         }
+        
+        timer.sink { [weak self] _ in
+            self?.animationRotationAngle += 360
+        }.store(in: &subscribers)
     }
     
     static func == (lhs: DueWordsViewModel, rhs: DueWordsViewModel) -> Bool {
@@ -47,41 +56,40 @@ struct DueWordsView: View, Equatable {
         lhs.viewModel.dueList.id == rhs.viewModel.dueList.id
     }
     
+    var buttonTitle: String {
+        switch langFilter {
+        case .hebrew:
+            return "Study \(dueWords.filter { ($0.list?.count ?? 0) > 0 && $0.lang == Language.hebrew.rawValue }.count) Hebrew words"
+        case .aramaic:
+            return ""
+        case .greek:
+            return "Study \(dueWords.filter { ($0.list?.count ?? 0) > 0 && $0.lang == Language.greek.rawValue }.count) Greek words"
+        case .all:
+            return "Study All \(dueWords.filter { ($0.list?.count ?? 0) > 0 }.count) words"
+        }
+    }
+    
     var body: some View {
-        ZStack(alignment: .bottom) {
-            List {
+        ZStack {
+            Color
+                .appBackground
+                .ignoresSafeArea()
+            ScrollView {
                 if viewModel.isBuilding {
-                    DataLoadingRow()
+                    DataIsBuildingCard(rotationAngle: $viewModel.animationRotationAngle)
+                        .transition(.move(edge: .trailing))
+                        .padding(.horizontal, 12)
                 } else {
-                    Section {
-                        Picker("Language", selection: $langFilter) {
-                            Text("All").tag(Language.all)
-                            Text("Greek").tag(Language.greek)
-                            Text("Hebrew").tag(Language.hebrew)
-                        }.pickerStyle(.segmented)
-                        Group {
-                            Text("\(filteredDueWordInfos.count)")
-                                .foregroundColor(.accentColor)
-                                .bold()
-                            +
-                            Text(" words")
-                        }
-                    }
-                    Section {
-                        ForEach(filteredDueWordInfos.uniqueSorted) { wordInfo in
-                            NavigationLink(value: AppPath.wordInfo(wordInfo)) {
-                                WordInfoRow(wordInfo: wordInfo.bound())
-                            }
-                        }
-                    } footer: {
-                        Spacer()
-                            .frame(minHeight: 100)
-                    }
+                    LangFilterSection()
+                    DueWordsSection()
                 }
             }
-            AppButton(text: "Study Words", action: onStudyWords)
-                .padding([.horizontal, .bottom])
-            .disabled(viewModel.isBuilding)
+            VStack {
+                Spacer()
+                AppButton(text: buttonTitle, action: onStudyWords)
+                    .padding([.horizontal, .bottom])
+                .disabled(viewModel.isBuilding)
+            }
         }
         .fullScreenCover(isPresented: $showStudyWordsView) {
             if #available(iOS 16.1, *) {
@@ -137,6 +145,72 @@ extension DueWordsView {
         }
         
         showStudyWordsView = true
+    }
+}
+
+extension DueWordsView {
+    
+    @ViewBuilder
+    func LangFilterSection() -> some View {
+        HStack {
+            Button(action: {
+                langFilter = .all
+            }, label: {
+                VStack {
+                    Image(systemName: "sum")
+                        .font(.title2)
+                        .padding(.bottom, 4)
+                    Text("All: \(dueWords.filter { ($0.list?.count ?? 0) > 0 }.count)")
+                        .font(.footnote)
+                }
+                .foregroundColor(langFilter == .all ? .white : .accentColor)
+                .appCard(height: 60, backgroundColor: langFilter == .all ? .accentColor : Color(uiColor: .secondarySystemGroupedBackground))
+            })
+            Button(action: {
+                langFilter = .greek
+            }, label: {
+                VStack {
+                    Text("‎Ω")
+                        .font(.bible32)
+                    Text("Greek: \(dueWords.filter { ($0.list?.count ?? 0) > 0 && $0.lang == Language.greek.rawValue }.count)")
+                        .font(.footnote)
+                }
+                .foregroundColor(langFilter == .greek ? .white : .accentColor)
+                .appCard(height: 60, backgroundColor: langFilter == .greek ? .accentColor : Color(uiColor: .secondarySystemGroupedBackground))
+            })
+            Button(action: {
+                langFilter = .hebrew
+            }, label: {
+                VStack {
+                    Text("‎א")
+                        .font(.bible40)
+                    Text("Hebrew: \(dueWords.filter { ($0.list?.count ?? 0) > 0 && $0.lang == Language.hebrew.rawValue }.count)")
+                        .font(.footnote)
+                }
+                .foregroundColor(langFilter == .hebrew ? .white : .accentColor)
+                .appCard(height: 60, backgroundColor: langFilter == .hebrew ? .accentColor : Color(uiColor: .secondarySystemGroupedBackground))
+            })
+        }
+        .padding(.horizontal, 12)
+    }
+    
+    @ViewBuilder
+    func DueWordsSection() -> some View {
+        VStack(alignment: .leading, spacing: 0) {
+            ForEach(filteredDueWordInfos.uniqueSorted) { wordInfo in
+                NavigationLink(value: AppPath.wordInfo(wordInfo)) {
+                    HStack {
+                        WordInfoRow(wordInfo: wordInfo.bound())
+                        Spacer()
+                        Image(systemName: "arrow.forward.circle")
+                            .font(.headline)
+                            .foregroundColor(.accentColor)
+                    }
+                    .appCard()
+                }
+            }
+        }
+        .padding(.horizontal, 12)
     }
 }
 
