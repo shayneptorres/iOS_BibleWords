@@ -201,7 +201,7 @@ extension CustomWordListBuilderView {
                 }
             }
         }
-        .searchable(text: $viewModel.searchText, prompt: "Search for a greek/hebrew word")
+        .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search for a greek/hebrew word")
         .onChange(of: viewModel.searchText) { search in
             if search.isEmpty {
                 viewModel.clearSearch()

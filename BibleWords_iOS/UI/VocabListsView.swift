@@ -25,66 +25,58 @@ struct VocabListsView: View {
     @State var showCreateCustomListModal = false
     @State var showStatsInfoModal = false
     @State var showVocabListTypeInfoModal = false
+    @State var showCreateListPickerSection = false
     
     var body: some View {
         ZStack {
-            if lists.isEmpty {
-                List {
+            Color.appBackground
+                .ignoresSafeArea()
+            ScrollView {
+                if lists.isEmpty {
                     Text("It looks like you don't have any vocabulary lists yet. To Add one, tap the button at the bottom of the screen.")
                         .multilineTextAlignment(.center)
-                }
-            } else {
-                List {
-                    ForEach(lists) { list in
-                        HStack {
-                            NavigationLink(value: AppPath.vocabListDetail(list: list, autoStudy: false)) {
-                                HStack {
-                                    Text(list.defaultTitle)
-                                    Spacer()
-                                    Text(list.defaultDetails)
-                                }
-                            }
-                        }
-                        .swipeActions {
-                            Button(action: {
-                                withAnimation {
-                                    onDelete(list)
-                                }
-                            }, label: { Text("Delete") })
-                            .tint(.red)
-                        }
-                    }
+                        .appCard()
+                } else {
+                    ListsSection()
                 }
             }
             VStack {
                 Spacer()
-                AppButton(text: "Create new list") {
-                    showCreateListActionSheet = true
+                if showCreateListPickerSection {
+                    CreateListButtonsSection()
+                        .transition(.move(edge: .trailing))
+                } else {
+                    AppButton(text: "Create new list") {
+                        withAnimation {
+                            showCreateListPickerSection = true
+                        }
+                    }
+                    .transition(.move(edge: .leading))
+                    .padding(.horizontal)
+                    .padding(.bottom)
                 }
-                .padding(.horizontal)
-                .padding(.bottom)
             }
         }
         .navigationTitle("Vocab Lists")
-        .actionSheet(isPresented: $showCreateListActionSheet) {
-            ActionSheet(
-                title: Text("Create new vocab list"),
-                message: Text("What type of vocab list would you like to create?"), buttons: [
-                    .cancel(),
-                    .default(Text("Bible Passage(s) List")) {
-                        showCreateBiblePassageListModal = true
-                    },
-                    .default(Text("Default List")) {
-                        showSelectDefaultListModal = true
-                    },
-                    .default(Text("Custom Word List")) {
-                        showCreateCustomListModal = true
-                    },
-                    .default(Text("What are these?")) {
-                        showVocabListTypeInfoModal = true
-                    }
-                ])
-        }
+//        .actionSheet(isPresented: $showCreateListActionSheet) {
+//            ActionSheet(
+//                title: Text("Create new vocab list"),
+//                message: Text("What type of vocab list would you like to create?"), buttons: [
+//                    .cancel(),
+//                    .default(Text("Bible Passage(s) List")) {
+//                        showCreateBiblePassageListModal = true
+//                    },
+//                    .default(Text("Default List")) {
+//                        showSelectDefaultListModal = true
+//                    },
+//                    .default(Text("Custom Word List")) {
+//                        showCreateCustomListModal = true
+//                    },
+//                    .default(Text("What are these?")) {
+//                        showVocabListTypeInfoModal = true
+//                    }
+//                ])
+//        }
         .sheet(isPresented: $showCreateBiblePassageListModal) {
             NavigationStack {
                 BuildVocabListView()
@@ -107,6 +99,118 @@ struct VocabListsView: View {
         CoreDataManager.transaction(context: context) {
             context.delete(list)
         }
+    }
+}
+
+extension VocabListsView {
+    @ViewBuilder
+    func CreateListButtonsSection() -> some View {
+        VStack(spacing: 8) {
+            HStack {
+                Spacer()
+                Button(action: {
+                    withAnimation {
+                        showVocabListTypeInfoModal = true
+                    }
+                }, label: {
+                    Image(systemName: "questionmark.circle")
+                        .font(.title)
+                })
+                Spacer()
+                Button(action: {
+                    withAnimation {
+                        showCreateListPickerSection = false
+                    }
+                }, label: {
+                    Image(systemName: "xmark.circle")
+                        .font(.title)
+                })
+                Spacer()
+            }
+            HStack {
+                Button(action: {
+                    withAnimation {
+                        showCreateBiblePassageListModal = true
+                        showCreateListPickerSection = false
+                    }
+                }, label: {
+                    VStack {
+                        Image(systemName: "text.book.closed.fill")
+                            .font(.title2)
+                            .padding(.bottom, 4)
+                        Text("Passage\nList")
+                            .font(.caption2)
+                    }
+                    .foregroundColor(.accentColor)
+                    .appCard(height: 60, innerPadding: 8)
+                })
+                Button(action: {
+                    withAnimation {
+                        showSelectDefaultListModal = true
+                        showCreateListPickerSection = false
+                    }
+                }, label: {
+                    VStack {
+                        Image(systemName: "list.bullet.rectangle.portrait.fill")
+                            .font(.title2)
+                            .padding(.bottom, 4)
+                        Text("Default\nList")
+                            .font(.caption2)
+                    }
+                    .foregroundColor(.accentColor)
+                    .appCard(height: 60, innerPadding: 8)
+                })
+                Button(action: {
+                    withAnimation {
+                        showCreateCustomListModal = true
+                        showCreateListPickerSection = false
+                    }
+                }, label: {
+                    VStack {
+                        Image(systemName: "hand.point.up.braille.fill")
+                            .font(.title2)
+                            .padding(.bottom, 4)
+                        Text("Custom\nList")
+                            .font(.caption2)
+                    }
+                    .foregroundColor(.accentColor)
+                    .appCard(height: 60, innerPadding: 8)
+                })
+            }
+        }
+        .padding(.horizontal, 12)
+    }
+    
+    @ViewBuilder
+    func ListsSection() -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            ForEach(lists) { list in
+                NavigationLink(value: AppPath.vocabListDetail(list: list, autoStudy: false)) {
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text(list.defaultTitle)
+                                .bold()
+                            Text(list.defaultDetails)
+                                .font(.caption)
+                                .foregroundColor(Color(uiColor: .secondaryLabel))
+                        }
+                        Spacer()
+                        Image(systemName: "arrow.forward.circle")
+                            .font(.headline)
+                            .foregroundColor(.accentColor)
+                    }
+                }
+                .appCard(outerPadding: 0)
+                .contextMenu {
+                    Button(role: .destructive, action: {
+                        onDelete(list)
+                    }, label: {
+                        Label("Delete", systemImage: "trash")
+                    })
+                }
+            }
+        }
+        .padding(.horizontal, 12)
     }
 }
 
