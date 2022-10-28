@@ -17,6 +17,7 @@ struct VocabListStudyView: View, Equatable {
     @Environment(\.managedObjectContext) var managedObjectContext
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @Environment(\.verticalSizeClass) var verticalSizeClass
     
     @Namespace private var animation
     @Binding var vocabList: VocabWordList
@@ -41,52 +42,15 @@ struct VocabListStudyView: View, Equatable {
             ZStack {
                 Color(uiColor: .secondarySystemBackground)
                     .ignoresSafeArea()
-                if horizontalSizeClass == .compact {
-                    VStack {
-                        HeaderView()
-                        VStack {
-                            LemmaCardView()
-                            if prevWord != nil {
-                                HStack {
-                                    Button(action: {
-                                        onPrev()
-                                    }, label: {
-                                        Image(systemName: "arrow.uturn.left")
-                                        Text("Previous word")
-                                            .font(.subheadline)
-                                    })
-                                    .padding()
-                                    Spacer()
-                                }
-                            }
-                            if displayMode == .lemmaGloss || displayMode == .learnWord {
-                                DefinitionView()
-                            }
-                            Spacer()
-                            DynamicUserInteractionView()
-                        }
-                    }
-                    .padding(.horizontal)
+                
+                if verticalSizeClass == .regular && horizontalSizeClass == .compact {
+                    PortraitView()
+                } else if verticalSizeClass == .compact && horizontalSizeClass == .regular {
+                    LandscapeView()
+                } else if verticalSizeClass == .compact && horizontalSizeClass == .compact {
+                    LandscapeView()
                 } else {
-                    GeometryReader { proxy in
-                        HStack {
-                            VStack {
-                                HeaderView()
-                                LemmaCardView()
-                                if displayMode == .lemmaGloss || displayMode == .learnWord {
-                                    DefinitionView()
-                                }
-                                Spacer()
-                            }
-                            .frame(width: proxy.size.width * 0.60)
-                            .frame(maxHeight: .infinity)
-                            VStack {
-                                DynamicUserInteractionView()
-                            }
-                            .frame(width: proxy.size.width * 0.4)
-                            .frame(maxHeight: .infinity)
-                        }
-                    }
+                    LandscapeView()
                 }
             }
             .toolbar {
@@ -117,6 +81,58 @@ struct VocabListStudyView: View, Equatable {
             .onAppear {
                 startDate = Date()
                 updateCurrentWord()
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func PortraitView() -> some View {
+        VStack {
+            HeaderView()
+            VStack {
+                LemmaCardView()
+                if prevWord != nil {
+                    HStack {
+                        Button(action: {
+                            onPrev()
+                        }, label: {
+                            Image(systemName: "arrow.uturn.left")
+                            Text("Previous word")
+                                .font(.subheadline)
+                        })
+                        .padding()
+                        Spacer()
+                    }
+                }
+                if displayMode == .lemmaGloss || displayMode == .learnWord {
+                    DefinitionView()
+                }
+                Spacer()
+                DynamicUserInteractionView()
+            }
+        }
+        .padding(.horizontal)
+    }
+    
+    @ViewBuilder
+    func LandscapeView() -> some View {
+        GeometryReader { proxy in
+            HStack {
+                VStack {
+                    HeaderView()
+                    LemmaCardView()
+                    if displayMode == .lemmaGloss || displayMode == .learnWord {
+                        DefinitionView()
+                    }
+                    Spacer()
+                }
+                .frame(width: proxy.size.width * 0.60)
+                .frame(maxHeight: .infinity)
+                VStack {
+                    DynamicUserInteractionView()
+                }
+                .frame(width: proxy.size.width * 0.4)
+                .frame(maxHeight: .infinity)
             }
         }
     }
@@ -270,11 +286,6 @@ extension VocabListStudyView {
         
         
         newWordsIds = Array(allNewIds)
-        
-        if dueWordIds.isEmpty && newWordsIds.isEmpty {
-            endLiveActivity()
-            presentationMode.wrappedValue.dismiss()
-        }
     }
     
     func updateCurrentWord() {
@@ -297,6 +308,12 @@ extension VocabListStudyView {
         matchingVocabWords.forEach { matchingVocabIdDict[$0.id ?? ""] = $0 }
         
         updateWords(vocabWordDict: matchingVocabIdDict)
+        
+        guard !dueWordIds.isEmpty || !newWordsIds.isEmpty else {
+            onDone()
+            return
+        }
+        
         if dueWordIds.isEmpty, let nextNewWordId = newWordsIds.first {
             if matchingVocabIdDict[nextNewWordId] == nil {
                 CoreDataManager.transaction(context: managedObjectContext) {
@@ -333,7 +350,6 @@ extension VocabListStudyView {
         }
         updateOrCreateLiveActivity()
         UserDefaultKey.shouldRefreshWidgetTimeline.set(val: true)
-        AppGroupManager.updateStats(managedObjectContext)
     }
     
     func onPrev() {
@@ -361,6 +377,7 @@ extension VocabListStudyView {
             }
         }
         endLiveActivity()
+        AppGroupManager.updateStats(managedObjectContext)
         presentationMode.wrappedValue.dismiss()
     }
     

@@ -9,9 +9,10 @@ import Foundation
 import SwiftUI
 
 struct Design {
-    
     static let defaultCornerRadius: CGFloat = 20
     static let smallCornerRadius: CGFloat = 12
+    
+    static let viewHorziontalPadding: CGFloat = 16
     
 }
 

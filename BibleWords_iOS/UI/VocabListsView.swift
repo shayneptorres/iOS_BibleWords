@@ -178,7 +178,7 @@ extension VocabListsView {
                 })
             }
         }
-        .padding(.horizontal, 12)
+        .padding(.horizontal, Design.viewHorziontalPadding)
     }
     
     @ViewBuilder
@@ -210,7 +210,7 @@ extension VocabListsView {
                 }
             }
         }
-        .padding(.horizontal, 12)
+        .padding(.horizontal, Design.viewHorziontalPadding)
     }
 }
 

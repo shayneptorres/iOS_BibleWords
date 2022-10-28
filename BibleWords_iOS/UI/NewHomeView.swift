@@ -110,7 +110,7 @@ struct NewHomeView: View {
                     if viewModel.isBuilding {
                         DataIsBuildingCard(rotationAngle: $viewModel.animationRotationAngle)
                             .transition(.move(edge: .trailing))
-                            .padding(.horizontal, horizontalPadding)
+                            .padding(.horizontal, Design.viewHorziontalPadding)
                     }
                     StatsCardView()
                     QuickActionsSection()
@@ -486,7 +486,7 @@ extension NewHomeView {
             }
         }
         .appCard()
-        .padding(.horizontal, horizontalPadding)
+        .padding(.horizontal, Design.viewHorziontalPadding)
     }
     
     @ViewBuilder
@@ -569,7 +569,7 @@ extension NewHomeView {
                     .appCard(height: 60, innerPadding: 4)
             })
         }
-        .padding(.horizontal, horizontalPadding)
+        .padding(.horizontal, Design.viewHorziontalPadding)
     }
     
     @ViewBuilder
@@ -652,7 +652,7 @@ extension NewHomeView {
             }
         }
         .appCard()
-        .padding(.horizontal, horizontalPadding)
+        .padding(.horizontal, Design.viewHorziontalPadding)
     }
     
     @ViewBuilder
@@ -677,6 +677,9 @@ extension NewHomeView {
             .frame(width: 30)
             .padding(.trailing, 8)
             VStack(alignment: .leading) {
+                Text(pin.activityType.title)
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
                 Text(pin.pinTitle ?? "")
                     .font(.subheadline)
                     .fontWeight(.regular)
@@ -760,7 +763,7 @@ extension NewHomeView {
             }
         }
         .appCard()
-        .padding(.horizontal, horizontalPadding)
+        .padding(.horizontal, Design.viewHorziontalPadding)
     }
         
     @ViewBuilder
@@ -771,7 +774,7 @@ extension NewHomeView {
                 .font(.largeTitle)
                 .foregroundColor(.accentColor)
             VStack(alignment: .leading) {
-                Text(session.activityType.title)
+                Text(session.activityType.description)
                     .font(.subheadline)
                     .fontWeight(.regular)
                 Text(session.activityTitle ?? "")

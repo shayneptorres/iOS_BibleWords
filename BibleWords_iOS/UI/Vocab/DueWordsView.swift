@@ -46,6 +46,8 @@ struct DueWordsView: View, Equatable {
         predicate: NSPredicate(format: "dueDate <= %@ && currentInterval > 0", Date() as CVarArg)
     ) var dueWords: FetchedResults<VocabWord>
     @Environment(\.managedObjectContext) var context
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @Environment(\.verticalSizeClass) var verticalSizeClass
     
     @ObservedObject var viewModel: DueWordsViewModel
     @State var langFilter: Language = .all
@@ -161,7 +163,7 @@ extension DueWordsView {
                         .font(.title2)
                         .padding(.bottom, 4)
                     Text("All: \(dueWords.filter { ($0.list?.count ?? 0) > 0 }.count)")
-                        .font(.footnote)
+                        .font(.subheadline)
                 }
                 .foregroundColor(langFilter == .all ? .white : .accentColor)
                 .appCard(height: 60, backgroundColor: langFilter == .all ? .accentColor : Color(uiColor: .secondarySystemGroupedBackground))
@@ -173,7 +175,7 @@ extension DueWordsView {
                     Text("‎Ω")
                         .font(.bible32)
                     Text("Greek: \(dueWords.filter { ($0.list?.count ?? 0) > 0 && $0.lang == Language.greek.rawValue }.count)")
-                        .font(.footnote)
+                        .font(.subheadline)
                 }
                 .foregroundColor(langFilter == .greek ? .white : .accentColor)
                 .appCard(height: 60, backgroundColor: langFilter == .greek ? .accentColor : Color(uiColor: .secondarySystemGroupedBackground))
@@ -185,7 +187,7 @@ extension DueWordsView {
                     Text("‎א")
                         .font(.bible40)
                     Text("Hebrew: \(dueWords.filter { ($0.list?.count ?? 0) > 0 && $0.lang == Language.hebrew.rawValue }.count)")
-                        .font(.footnote)
+                        .font(.subheadline)
                 }
                 .foregroundColor(langFilter == .hebrew ? .white : .accentColor)
                 .appCard(height: 60, backgroundColor: langFilter == .hebrew ? .accentColor : Color(uiColor: .secondarySystemGroupedBackground))
@@ -196,7 +198,7 @@ extension DueWordsView {
     
     @ViewBuilder
     func DueWordsSection() -> some View {
-        VStack(alignment: .leading, spacing: 0) {
+        VStack(alignment: .leading, spacing: 8) {
             ForEach(filteredDueWordInfos.uniqueSorted) { wordInfo in
                 NavigationLink(value: AppPath.wordInfo(wordInfo)) {
                     HStack {
@@ -206,7 +208,7 @@ extension DueWordsView {
                             .font(.headline)
                             .foregroundColor(.accentColor)
                     }
-                    .appCard()
+                    .appCard(outerPadding: 0)
                 }
             }
         }

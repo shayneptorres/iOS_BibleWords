@@ -23,6 +23,19 @@ enum ActivityType: Int16 {
     var title: String {
         switch self {
         case .vocab:
+            return "Vocab List"
+        case .parsing:
+            return "Parsing List"
+        case .read:
+            return "Bible Reading"
+        case .paradigm:
+            return "Paradigm"
+        }
+    }
+    
+    var description: String {
+        switch self {
+        case .vocab:
             return "Studied Vocab"
         case .parsing:
             return "Practiced Parsing"

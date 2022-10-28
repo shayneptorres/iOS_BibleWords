@@ -13,7 +13,7 @@ class ListDetailViewModel: ObservableObject, Equatable {
     @Published var autoStudy: Bool = false
     @Published var isBuilding = true
     @Published var animationRotationAngle: CGFloat = 0.0
-    @Published var timer: Publishers.Autoconnect<Timer.TimerPublisher> = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    @Published var timer: Publishers.Autoconnect<Timer.TimerPublisher>? = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @Published var wordIds: [String] = []
     @Published var words: [Bible.WordInfo] = []
     @Published var studyWords = false
@@ -47,8 +47,9 @@ class ListDetailViewModel: ObservableObject, Equatable {
         wordsAreReady.sink { [weak self] builtWords in
             DispatchQueue.main.async {
                 if !builtWords.isEmpty {
-                    self?.timer.upstream.connect().cancel()
-//                    self?.wordIds = builtWords.map { $0.id }
+                    self?.timer?.upstream.connect().cancel()
+                    self?.timer = nil
+                    self?.wordIds = builtWords.map { $0.id }
                     self?.words = builtWords.uniqueInfos
                     self?.isBuilding = false
                     if self?.autoStudy == true {
@@ -58,7 +59,7 @@ class ListDetailViewModel: ObservableObject, Equatable {
             }
         }.store(in: &subscribers)
         
-        timer.sink { [weak self] _ in
+        timer?.sink { [weak self] _ in
             self?.animationRotationAngle += 360
         }.store(in: &subscribers)
     }
@@ -139,7 +140,7 @@ struct ListDetailView: View {
             ScrollView {
                 if viewModel.isBuilding {
                     DataIsBuildingCard(rotationAngle: $viewModel.animationRotationAngle)
-                        .padding(.horizontal, 12)
+                        .padding(.horizontal, Design.viewHorziontalPadding)
                 } else {
                     WordFilterSection()
                     WordsSection()
@@ -249,40 +250,23 @@ extension ListDetailView {
                 .appCard(height: 60, backgroundColor: wordFilter == .due ? .accentColor : Color(uiColor: .secondarySystemGroupedBackground))
             })
         }
-        .padding(.horizontal, 12)
+        .padding(.horizontal, Design.viewHorziontalPadding)
     }
     
     @ViewBuilder
     func WordsSection() -> some View {
-        if viewModel.list.sourceType == .textbook {
-            ForEach(groupedTextbookWords, id: \.chapter) { group in
-                Section {
-                    ForEach(group.words) { word in
-                        NavigationLink(value: AppPath.wordInfo(word)) {
-                            VStack(alignment: .leading) {
-                                WordInfoRow(wordInfo: word.bound())
-                            }
-                            .navigationViewStyle(.stack)
-                        }
-                    }
-                } header: {
-                    Text("Chapter \(group.chapter)")
+        ForEach(filteredWords) { word in
+            NavigationLink(value: AppPath.wordInfo(word)) {
+                HStack {
+                    WordInfoRow(wordInfo: word.bound())
+                    Spacer()
+                    Image(systemName: "arrow.forward.circle")
+                        .font(.title3)
+                        .foregroundColor(.accentColor)
                 }
             }
-        } else {
-            ForEach(filteredWords) { word in
-                NavigationLink(value: AppPath.wordInfo(word)) {
-                    HStack {
-                        WordInfoRow(wordInfo: word.bound())
-                        Spacer()
-                        Image(systemName: "arrow.forward.circle")
-                            .font(.title3)
-                            .foregroundColor(.accentColor)
-                    }
-                }
-                    .appCard(outerPadding: 4)
-                    .padding(.horizontal, 16)
-            }
+                .appCard(outerPadding: 4)
+                .padding(.horizontal, Design.viewHorziontalPadding)
         }
     }
     

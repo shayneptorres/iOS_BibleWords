@@ -18,6 +18,7 @@ struct AppCard: ViewModifier {
             .padding(.horizontal, innerPadding)
             .padding(.vertical, 12)
             .background(backgroundColor, in: RoundedRectangle(cornerRadius: Design.defaultCornerRadius))
+//            .appShadow()
             .padding(.bottom, outerPadding)
     }
 }
