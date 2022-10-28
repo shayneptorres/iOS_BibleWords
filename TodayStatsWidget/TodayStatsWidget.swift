@@ -29,8 +29,30 @@ struct Provider: TimelineProvider {
 }
 
 struct TodayStatsWidgetEntryView : View {
+    @Environment(\.widgetFamily) private var family
     var entry: TodayStatsEntry
 
+    var body: some View {
+        switch family {
+        case .systemSmall:
+            StatsSmallView(entry: entry)
+        case .systemMedium:
+            StatsMediumWidgetView(entry: entry)
+        case .accessoryRectangular:
+            StatsAccessoryRectangularView(entry: entry)
+        case .accessoryCircular:
+            StatsAccessoryCircularView(entry: entry)
+        case .accessoryInline:
+            StatsAccessoryInlineView(entry: entry)
+        default:
+            Text("🥲")
+        }
+    }
+}
+
+struct StatsSmallView: View {
+    var entry: TodayStatsEntry
+    
     var body: some View {
         ZStack {
             ContainerRelativeShape()
@@ -87,6 +109,126 @@ struct TodayStatsWidgetEntryView : View {
     }
 }
 
+struct StatsMediumWidgetView: View {
+    let entry: TodayStatsEntry
+    
+    var body: some View {
+        ZStack {
+            ContainerRelativeShape()
+                .fill(Color.widgetBGColor)
+            VStack {
+                Text("Today's Stats")
+                    .font(.title2)
+                    .bold()
+                    .padding(.top, 12)
+                    .padding(.bottom, 20)
+                    .foregroundColor(Color.widgetTextColor)
+                HStack(alignment: .center) {
+                    HStack {
+                        VStack {
+                            Image(systemName: "arrow.triangle.2.circlepath")
+                                .foregroundColor(Color.widgetTextColor)
+                                .font(.headline)
+                                .bold()
+                            Text("\(entry.reviewedCount)")
+                        }
+                        .frame(maxWidth: .infinity)
+                        VStack {
+                            Image(systemName: "gift")
+                                .foregroundColor(Color.widgetTextColor)
+                                .font(.headline)
+                                .bold()
+                            Text("\(entry.newCount)")
+                        }
+                        .frame(maxWidth: .infinity)
+                        VStack {
+                            Image(systemName: "rectangle.and.hand.point.up.left.filled")
+                                .foregroundColor(Color.widgetTextColor)
+                                .font(.headline)
+                                .bold()
+                            Text("\(entry.parsedCount)")
+                        }
+                        .frame(maxWidth: .infinity)
+                        VStack {
+                            Image(systemName: "clock.badge.exclamationmark")
+                                .foregroundColor(Color.widgetTextColor)
+                                .font(.headline)
+                                .bold()
+                            Text("\(entry.dueCount)")
+                        }
+                        .frame(maxWidth: .infinity)
+                    }
+                    .padding(.bottom, 8)
+                }
+                Button(action: {
+                    
+                }, label: {
+                    Text("Study Due Words")
+                        .bold()
+                        .foregroundColor(.white)
+                        .padding(12)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.widgetTextColor.gradient)
+                        .cornerRadius(20)
+                        .padding(.horizontal, 30)
+                        .padding(.bottom, 8)
+                })
+                Spacer()
+            }
+        }
+    }
+}
+
+struct StatsAccessoryRectangularView: View {
+    let entry: TodayStatsEntry
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 2) {
+            HStack {
+                Image(systemName: "arrow.triangle.2.circlepath")
+                    .widgetAccentable()
+                    .bold()
+                    .frame(width: 20)
+                Text("Rev")
+                Spacer()
+                Text("\(entry.reviewedCount)")
+            }
+            HStack {
+                Image(systemName: "clock.badge.exclamationmark")
+                    .widgetAccentable()
+                    .bold()
+                    .frame(width: 20)
+                Text("Due")
+                Spacer()
+                Text("\(entry.dueCount)")
+            }
+        }
+    }
+}
+
+struct StatsAccessoryCircularView: View {
+    let entry: TodayStatsEntry
+    
+    var body: some View {
+        ZStack {
+            VStack {
+                Image(systemName: "clock.badge.exclamationmark")
+                Text("\(entry.dueCount)")
+                    .font(.title3)
+            }
+        }
+    }
+}
+
+struct StatsAccessoryInlineView: View {
+    let entry: TodayStatsEntry
+    
+    var body: some View {
+        Label("\(entry.dueCount)", systemImage: "clock.badge.exclamationmark")
+    }
+}
+
+
 @main
 struct TodayStatsWidget: Widget {
     let kind: String = "TodayStatsWidget"
@@ -97,7 +239,13 @@ struct TodayStatsWidget: Widget {
         }
         .configurationDisplayName("Today's Stats")
         .description("Provides a quick glance at your current App stats (reviewed words, new words, parsed words, and due words)")
-        .supportedFamilies([.systemSmall])
+        .supportedFamilies([
+            .systemSmall,
+            .systemMedium,
+            .accessoryRectangular,
+            .accessoryCircular,
+            .accessoryInline
+        ])
     }
 }
 
