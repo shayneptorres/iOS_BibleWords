@@ -42,16 +42,18 @@ struct VocabListStudyView: View, Equatable {
             ZStack {
                 Color(uiColor: .secondarySystemBackground)
                     .ignoresSafeArea()
-                
-                if verticalSizeClass == .regular && horizontalSizeClass == .compact {
-                    PortraitView()
-                } else if verticalSizeClass == .compact && horizontalSizeClass == .regular {
-                    LandscapeView()
-                } else if verticalSizeClass == .compact && horizontalSizeClass == .compact {
-                    LandscapeView()
-                } else {
-                    LandscapeView()
+                VStack {
+                    if verticalSizeClass == .regular && horizontalSizeClass == .compact {
+                        CompactWidthView()
+                    } else if verticalSizeClass == .compact && horizontalSizeClass == .regular {
+                        RegularWidthView()
+                    } else if verticalSizeClass == .compact && horizontalSizeClass == .compact {
+                        RegularWidthView()
+                    } else {
+                        RegularWidthView()
+                    }
                 }
+                .padding(.horizontal, Design.smallViewHorziontalPadding)
             }
             .toolbar {
                 ToolbarItemGroup(placement: .principal) {
@@ -86,7 +88,7 @@ struct VocabListStudyView: View, Equatable {
     }
     
     @ViewBuilder
-    func PortraitView() -> some View {
+    func CompactWidthView() -> some View {
         VStack {
             HeaderView()
             VStack {
@@ -115,24 +117,28 @@ struct VocabListStudyView: View, Equatable {
     }
     
     @ViewBuilder
-    func LandscapeView() -> some View {
+    func RegularWidthView() -> some View {
         GeometryReader { proxy in
-            HStack {
-                VStack {
-                    HeaderView()
-                    LemmaCardView()
-                    if displayMode == .lemmaGloss || displayMode == .learnWord {
-                        DefinitionView()
+            if proxy.size.height > proxy.size.width {
+                CompactWidthView()
+            } else {
+                HStack {
+                    VStack {
+                        HeaderView()
+                        LemmaCardView()
+                        if displayMode == .lemmaGloss || displayMode == .learnWord {
+                            DefinitionView()
+                        }
+                        Spacer()
                     }
-                    Spacer()
+                    .frame(width: proxy.size.width * 0.60)
+                    .frame(maxHeight: .infinity)
+                    VStack {
+                        DynamicUserInteractionView()
+                    }
+                    .frame(width: proxy.size.width * 0.4)
+                    .frame(maxHeight: .infinity)
                 }
-                .frame(width: proxy.size.width * 0.60)
-                .frame(maxHeight: .infinity)
-                VStack {
-                    DynamicUserInteractionView()
-                }
-                .frame(width: proxy.size.width * 0.4)
-                .frame(maxHeight: .infinity)
             }
         }
     }
@@ -694,7 +700,7 @@ extension VocabListStudyView {
             }
                 .frame(maxWidth: .infinity)
         )
-        .frame(maxHeight: 300)
+        .frame(minHeight: 100)
     }
     
     func DynamicLemmaGlossInteractionView() -> some View {
