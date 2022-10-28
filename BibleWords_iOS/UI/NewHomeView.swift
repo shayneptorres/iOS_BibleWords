@@ -36,7 +36,8 @@ struct NewHomeView: View {
     @Environment(\.managedObjectContext) var context
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.scenePhase) var scenePhase
-    
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @Environment(\.verticalSizeClass) var verticalSizeClass
     
     // MARK: Fetch Requests
     @FetchRequest(
@@ -106,16 +107,40 @@ struct NewHomeView: View {
             ZStack {
                 Color.appBackground
                     .ignoresSafeArea()
-                ScrollView {
-                    if viewModel.isBuilding {
-                        DataIsBuildingCard(rotationAngle: $viewModel.animationRotationAngle)
-                            .transition(.move(edge: .trailing))
-                            .padding(.horizontal, Design.viewHorziontalPadding)
+                if horizontalSizeClass == .regular {
+                    HStack {
+                        VStack {
+                            ScrollView {
+                                if viewModel.isBuilding {
+                                    DataIsBuildingCard(rotationAngle: $viewModel.animationRotationAngle)
+                                        .transition(.move(edge: .leading))
+                                        .padding(.horizontal, Design.viewHorziontalPadding)
+                                }
+                                StatsCardView()
+                                QuickActionsSection()
+                            }
+                        }
+                        .frame(maxWidth: .infinity)
+                        VStack {
+                            ScrollView {
+                                PinnedItemsSection()
+                                RecentActivitySection()
+                            }
+                        }
+                        .frame(maxWidth: .infinity)
                     }
-                    StatsCardView()
-                    QuickActionsSection()
-                    PinnedItemsSection()
-                    RecentActivitySection()
+                } else {
+                    ScrollView {
+                        if viewModel.isBuilding {
+                            DataIsBuildingCard(rotationAngle: $viewModel.animationRotationAngle)
+                                .transition(.move(edge: .trailing))
+                                .padding(.horizontal, Design.viewHorziontalPadding)
+                        }
+                        StatsCardView()
+                        QuickActionsSection()
+                        PinnedItemsSection()
+                        RecentActivitySection()
+                    }
                 }
             }
             .navigationTitle("Bible Words")

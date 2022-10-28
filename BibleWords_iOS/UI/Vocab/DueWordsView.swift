@@ -76,21 +76,49 @@ struct DueWordsView: View, Equatable {
             Color
                 .appBackground
                 .ignoresSafeArea()
-            ScrollView {
-                if viewModel.isBuilding {
-                    DataIsBuildingCard(rotationAngle: $viewModel.animationRotationAngle)
-                        .transition(.move(edge: .trailing))
-                        .padding(.horizontal, 12)
-                } else {
-                    LangFilterSection()
-                    DueWordsSection()
+            if horizontalSizeClass == .regular {
+                HStack {
+                    ZStack {
+                        VStack {
+                            VerticalLangFilterSection()
+                                .padding(.top)
+                            AppButton(text: buttonTitle, action: onStudyWords)
+                                .padding(.horizontal)
+                            .disabled(viewModel.isBuilding)
+                        }
+                        .frame(maxWidth: .infinity)
+                    }
+                    VStack {
+                        if viewModel.isBuilding {
+                            DataIsBuildingCard(rotationAngle: $viewModel.animationRotationAngle)
+                                .transition(.move(edge: .trailing))
+                                .padding(.horizontal, 12)
+                            Spacer()
+                        } else {
+                            ScrollView {
+                                DueWordsSection()
+                            }
+                        }
+                    }
+                    .frame(maxWidth: .infinity)
                 }
-            }
-            VStack {
-                Spacer()
-                AppButton(text: buttonTitle, action: onStudyWords)
-                    .padding([.horizontal, .bottom])
-                .disabled(viewModel.isBuilding)
+            } else {
+                ScrollView {
+                    if viewModel.isBuilding {
+                        DataIsBuildingCard(rotationAngle: $viewModel.animationRotationAngle)
+                            .transition(.move(edge: .trailing))
+                            .padding(.horizontal, 12)
+                    } else {
+                        HorizontalLangFilterSection()
+                        DueWordsSection()
+                    }
+                }
+                VStack {
+                    Spacer()
+                    AppButton(text: buttonTitle, action: onStudyWords)
+                        .padding([.horizontal, .bottom])
+                    .disabled(viewModel.isBuilding)
+                }
             }
         }
         .fullScreenCover(isPresented: $showStudyWordsView) {
@@ -103,6 +131,7 @@ struct DueWordsView: View, Equatable {
         .navigationDestination(for: Bible.WordInfo.self) { word in
             WordInfoDetailsView(word: word)
         }
+        .navigationBarTitleDisplayMode(horizontalSizeClass == .compact ? .large : .inline)
         .navigationTitle("Your Due Words")
     }
     
@@ -153,8 +182,52 @@ extension DueWordsView {
 extension DueWordsView {
     
     @ViewBuilder
-    func LangFilterSection() -> some View {
+    func HorizontalLangFilterSection() -> some View {
         HStack {
+            Button(action: {
+                langFilter = .all
+            }, label: {
+                VStack {
+                    Image(systemName: "sum")
+                        .font(.title2)
+                        .padding(.bottom, 4)
+                    Text("All: \(dueWords.filter { ($0.list?.count ?? 0) > 0 }.count)")
+                        .font(.subheadline)
+                }
+                .foregroundColor(langFilter == .all ? .white : .accentColor)
+                .appCard(height: 60, backgroundColor: langFilter == .all ? .accentColor : Color(uiColor: .secondarySystemGroupedBackground))
+            })
+            Button(action: {
+                langFilter = .greek
+            }, label: {
+                VStack {
+                    Text("‎Ω")
+                        .font(.bible32)
+                    Text("Greek: \(dueWords.filter { ($0.list?.count ?? 0) > 0 && $0.lang == Language.greek.rawValue }.count)")
+                        .font(.subheadline)
+                }
+                .foregroundColor(langFilter == .greek ? .white : .accentColor)
+                .appCard(height: 60, backgroundColor: langFilter == .greek ? .accentColor : Color(uiColor: .secondarySystemGroupedBackground))
+            })
+            Button(action: {
+                langFilter = .hebrew
+            }, label: {
+                VStack {
+                    Text("‎א")
+                        .font(.bible40)
+                    Text("Hebrew: \(dueWords.filter { ($0.list?.count ?? 0) > 0 && $0.lang == Language.hebrew.rawValue }.count)")
+                        .font(.subheadline)
+                }
+                .foregroundColor(langFilter == .hebrew ? .white : .accentColor)
+                .appCard(height: 60, backgroundColor: langFilter == .hebrew ? .accentColor : Color(uiColor: .secondarySystemGroupedBackground))
+            })
+        }
+        .padding(.horizontal, 12)
+    }
+    
+    @ViewBuilder
+    func VerticalLangFilterSection() -> some View {
+        VStack(spacing: 4) {
             Button(action: {
                 langFilter = .all
             }, label: {
