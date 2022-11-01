@@ -93,19 +93,6 @@ struct VocabListStudyView: View, Equatable {
             HeaderView()
             VStack {
                 LemmaCardView()
-                if prevWord != nil {
-                    HStack {
-                        Button(action: {
-                            onPrev()
-                        }, label: {
-                            Image(systemName: "arrow.uturn.left")
-                            Text("Previous word")
-                                .font(.subheadline)
-                        })
-                        .padding()
-                        Spacer()
-                    }
-                }
                 if displayMode == .lemmaGloss || displayMode == .learnWord {
                     DefinitionView()
                 }
@@ -273,6 +260,7 @@ extension VocabListStudyView {
             if LiveActivityMonitor.main.studyActivity != nil {
                 Task {
                     await LiveActivityMonitor.main.studyActivity?.end(dismissalPolicy: .immediate)
+                    LiveActivityMonitor.main.studyActivity = nil
                 }
             }
         }
@@ -478,7 +466,7 @@ extension VocabListStudyView {
             Text(currentWord?.lemma ?? "")
                 .padding(.vertical)
                 .font(.bible100)
-                .minimumScaleFactor(0.5)
+                .minimumScaleFactor(0.3)
                 .lineLimit(1)
                 .frame(maxWidth: .infinity, maxHeight: 225)
                 .padding(.horizontal)
@@ -516,6 +504,8 @@ extension VocabListStudyView {
                         }, label: {
                             Image(systemName: "arrow.uturn.backward.circle")
                                 .font(.title2)
+                            Text("Previous word")
+                                .font(.subheadline)
                         })
                         .padding()
                     }

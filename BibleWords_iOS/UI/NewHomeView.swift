@@ -398,7 +398,7 @@ extension NewHomeView {
                                 .foregroundColor(.accentColor)
                         }
                         Image(systemName: "arrow.triangle.2.circlepath")
-                            .font(.title2)
+                            .font(.title)
                             .foregroundColor(.accentColor)
                         Text("\(studySessionEntries.filter { $0.studyTypeInt == 1 }.count)")
                             .font(showFullStats ? .body : .subheadline)
@@ -420,7 +420,7 @@ extension NewHomeView {
                                 .foregroundColor(.accentColor)
                         }
                         Image(systemName: "gift")
-                            .font(.title2)
+                            .font(.title)
                             .foregroundColor(.accentColor)
                         Text("\(studySessionEntries.filter { $0.studyTypeInt == 0 }.count)")
                             .font(showFullStats ? .body : .subheadline)
@@ -442,9 +442,10 @@ extension NewHomeView {
                                 .font(.footnote)
                                 .foregroundColor(.accentColor)
                         }
-                        Image(systemName: "rectangle.and.hand.point.up.left.filled")
-                            .font(.title2)
-                            .foregroundColor(.accentColor)
+                        ActivityType.parsing.image
+                            .resizable()
+                            .frame(width: 32, height: 32)
+                            .aspectRatio(contentMode: .fit)
                         Text("\(studySessionEntries.filter { $0.studyTypeInt == 2 }.count)")
                             .font(showFullStats ? .body : .subheadline)
                             .foregroundColor(Color(uiColor: .label))
@@ -466,7 +467,7 @@ extension NewHomeView {
                                 .foregroundColor(.accentColor)
                         }
                         Image(systemName: "clock.badge.exclamationmark")
-                            .font(.title2)
+                            .font(.title)
                             .foregroundColor(.accentColor)
                         Text("\(dueWords.filter { ($0.list?.count ?? 0) > 0 }.count)")
                             .font(showFullStats ? .body : .subheadline)
@@ -550,19 +551,21 @@ extension NewHomeView {
             }, label: {
                 VStack(spacing: 8) {
                     Image(systemName: "book")
-                        .font(.title2)
-                    Text("Bible")
+                        .font(.largeTitle)
+                    Text("Read")
                         .font(.caption2)
                         .bold()
                 }
-                .appCard(height: 60, innerPadding: 8)
+                .appCard(height: 76, innerPadding: 8)
             })
             Button(action: {
                 paths.append(.allVocabLists)
             }, label: {
                 VStack(spacing: 8) {
-                    Image(systemName: ActivityType.vocab.imageName)
-                        .font(.title2)
+                    ActivityType.vocab.image
+                        .resizable()
+                        .frame(width: 54, height: 54)
+                        .aspectRatio(contentMode: .fit)
                     Text("Vocab")
                         .font(.caption2)
                         .bold()
@@ -573,9 +576,11 @@ extension NewHomeView {
                 paths.append(.allParsingLists)
             }, label: {
                 VStack(spacing: 8) {
-                    Image(systemName: ActivityType.parsing.imageName)
-                        .font(.title2)
-                    Text("Parsing")
+                    ActivityType.parsing.image
+                        .resizable()
+                        .frame(width: 54, height: 54)
+                        .aspectRatio(contentMode: .fit)
+                    Text("Parse")
                         .font(.caption2)
                         .bold()
                 }
@@ -586,12 +591,12 @@ extension NewHomeView {
             }, label: {
                 VStack(spacing: 8) {
                     Image(systemName: ActivityType.paradigm.imageName)
-                        .font(.title2)
-                    Text("Paradigm")
+                        .font(.largeTitle)
+                    Text("Learn")
                         .font(.caption2)
                         .bold()
                 }
-                    .appCard(height: 60, innerPadding: 4)
+                    .appCard(height: 76, innerPadding: 8)
             })
         }
         .padding(.horizontal, Design.viewHorziontalPadding)
@@ -640,7 +645,7 @@ extension NewHomeView {
                     HStack(spacing: 20) {
                         ForEach(pins.prefix(5)) { pin in
                             ZStack {
-                                Image(systemName: pin.activityType.imageName)
+                                pin.activityType.image
                                     .font(.title2)
                                     .foregroundColor(.accentColor)
                                 VStack {
@@ -684,7 +689,7 @@ extension NewHomeView {
     func PinnedItemRow(pin: PinnedItem) -> some View {
         HStack(alignment: .center) {
             ZStack {
-                Image(systemName: pin.activityType.imageName)
+                pin.activityType.image
                     .font(.largeTitle)
                     .foregroundColor(.accentColor)
                 VStack {
