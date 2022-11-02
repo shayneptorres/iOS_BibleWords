@@ -55,7 +55,7 @@ struct Parsing {
                 return [.masculine, .feminine, .common]
             case .greek:
                 return [.masculine, .feminine, .neuter]
-            case .all:
+            case .all, .custom:
                 return []
             }
         }
@@ -94,7 +94,7 @@ struct Parsing {
                 return Number.allCases
             case .greek:
                 return [.singular, .plural]
-            case .all:
+            case .all, .custom:
                 return []
             }
         }

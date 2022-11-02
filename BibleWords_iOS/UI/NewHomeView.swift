@@ -207,7 +207,7 @@ struct NewHomeView: View {
                 case .hebrewParadigms:
                     ConceptsView()
                 case .wordInfo(let info):
-                    WordInfoDetailsView(word: info)
+                    WordInfoDetailsView(word: info.bound())
                 case .wordInstance(let instance):
                     WordInPassageView(word: instance.wordInfo.bound(), instance: instance.bound())
                 default:
@@ -287,9 +287,10 @@ struct NewHomeView: View {
             }
             
 //            CoreDataManager.transaction(context: context) {
-//                let deleteFetchRequest = NSFetchRequest<PinnedItem>(entityName: "PinnedItem")
+//                let deleteFetchRequest = NSFetchRequest<VocabWordList>(entityName: "VocabWordList")
+//                deleteFetchRequest.predicate = NSPredicate(format: "id == ''")
 //                
-//                var pins: [PinnedItem] = []
+//                var pins: [VocabWordList] = []
 //                do {
 //                    pins = try context.fetch(deleteFetchRequest)
 //                } catch let err {
@@ -771,7 +772,7 @@ extension NewHomeView {
                         .foregroundColor(.appOrange)
                     HStack(spacing: 14) {
                         ForEach(Array(sessions.prefix(5))) { session in
-                            Image(systemName: session.activityType.imageName)
+                            session.activityType.image
                                 .matchedGeometryEffect(id: "session-row.image.\(session.id ?? "")", in: homeViewNamepace)
                                 .font(.title2)
                                 .foregroundColor(.accentColor)
@@ -799,7 +800,7 @@ extension NewHomeView {
     @ViewBuilder
     func RecentActivityRow(session: StudySession) -> some View {
         HStack(alignment: .center) {
-            Image(systemName: session.activityType.imageName)
+            session.activityType.image
                 .matchedGeometryEffect(id: "session-row.image.\(session.id ?? "")", in: homeViewNamepace)
                 .font(.largeTitle)
                 .foregroundColor(.accentColor)

@@ -70,7 +70,7 @@ struct VocabWordIntervalStatsView: View {
             }
         }
         .navigationDestination(for: Bible.WordInfo.self) { word in
-            WordInfoDetailsView(word: word)
+            WordInfoDetailsView(word: word.bound())
         }
         .onAppear {
             guard intervalWords.isEmpty else { return }

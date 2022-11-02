@@ -189,6 +189,15 @@ struct Bible {
             instances = instancesArr.map { WordInstance(dict: $0) }
         }
         
+        init(id: String, text: String, definition: String) {
+            self.id = id
+            self.lemma = text
+            self.definition = definition
+            self.usage = ""
+            self.chapter = "-1"
+            self.instances = []
+        }
+        
         func vocabWord(context: NSManagedObjectContext) -> VocabWord? {
             let vocabFetchRequest = NSFetchRequest<VocabWord>(entityName: "VocabWord")
             vocabFetchRequest.predicate = NSPredicate(format: "SELF.id == %@", self.id)

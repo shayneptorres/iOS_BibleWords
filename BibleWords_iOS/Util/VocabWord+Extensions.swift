@@ -14,6 +14,7 @@ enum Language: Int16 {
     case aramaic
     case greek
     case all
+    case custom
     
     var title: String {
         switch self {
@@ -21,6 +22,7 @@ enum Language: Int16 {
         case .greek: return "Greek"
         case .aramaic: return "Aramaic"
         case .all: return "All"
+        case .custom: return "Custom"
         }
     }
     
@@ -34,6 +36,7 @@ enum Language: Int16 {
         case .greek: return .bible24
         case .aramaic: return .bible40
         case .all: return .bible40
+        case .custom: return .bible32
         }
     }
     
@@ -43,6 +46,7 @@ enum Language: Int16 {
         case .greek: return .bible32
         case .aramaic: return .bible40
         case .all: return .bible40
+        case .custom: return .bible32
         }
     }
     
@@ -52,17 +56,23 @@ enum Language: Int16 {
         case .greek: return .bible72
         case .aramaic: return .bible100
         case .all: return .bible100
+        case .custom: return .bible72
         }
     }
+}
+
+enum VocabWordType: Int16 {
+    case appProvided = 0
+    case userImported = 1
 }
 
 extension VocabWord: Bindable {
     
     var lemma: String {
-        if (customLemma ?? "").isEmpty {
+        if (customText ?? "").isEmpty {
             return wordInfo.lemma
         } else {
-            return customLemma ?? ""
+            return customText ?? ""
         }
     }
     
@@ -75,10 +85,16 @@ extension VocabWord: Bindable {
     }
     
     var wordInfo: Bible.WordInfo {
-        if Language(rawValue: self.lang) == .greek {
-            return Bible.main.greekLexicon.word(for: self.id ?? "", source: self.sourceId ?? "") ?? .init([:])
+        if self.wordTypeInt == VocabWordType.userImported.rawValue {
+            return Bible.WordInfo.init(id: self.id ?? "",
+                                text: self.customText ?? "",
+                                definition: self.customDefinition ?? "")
         } else {
-            return Bible.main.hebrewLexicon.word(for: self.id ?? "", source: self.sourceId ?? "") ?? .init([:])
+            if Language(rawValue: self.lang) == .greek {
+                return Bible.main.greekLexicon.word(for: self.id ?? "", source: self.sourceId ?? "") ?? .init([:])
+            } else {
+                return Bible.main.hebrewLexicon.word(for: self.id ?? "", source: self.sourceId ?? "") ?? .init([:])
+            }
         }
     }
     /// An array of the different Spaced Repitition intervals, in seconds
@@ -114,7 +130,7 @@ extension VocabWord {
     convenience init(context: NSManagedObjectContext, id: String, lemma: String, def: String, lang: Language) {
         self.init(context: context)
         self.id = id
-        self.customLemma = lemma
+        self.customText = lemma
         self.customDefinition = def
         self.createdAt = Date()
         self.currentInterval = 0
@@ -124,6 +140,10 @@ extension VocabWord {
     
     var isDue: Bool {
         return self.dueDate ?? Date() <= Date() && self.currentInterval > 0
+    }
+    
+    var wordType: VocabWordType {
+        return VocabWordType(rawValue: self.wordTypeInt) ?? .userImported
     }
 }
 

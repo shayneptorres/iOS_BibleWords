@@ -144,7 +144,7 @@ struct BuildVocabListView: View {
             }
         }
         .navigationDestination(for: Bible.WordInfo.self) { wordInfo in
-            WordInfoDetailsView(word: wordInfo)
+            WordInfoDetailsView(word: wordInfo.bound())
         }
         .interactiveDismissDisabled(true)
     }

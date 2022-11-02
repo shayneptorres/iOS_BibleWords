@@ -114,7 +114,7 @@ struct CustomWordListBuilderView: View {
                 case .selectedWords:
                     SeeSelectedWordsView()
                 case .wordInfo(let word):
-                    WordInfoDetailsView(word: word)
+                    WordInfoDetailsView(word: word.bound())
                 case .wordInstance(let instance):
                     WordInPassageView(word: instance.wordInfo.bound(), instance: instance.bound())
                 default:

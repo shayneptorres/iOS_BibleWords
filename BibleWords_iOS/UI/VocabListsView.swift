@@ -26,6 +26,7 @@ struct VocabListsView: View {
     @State var showStatsInfoModal = false
     @State var showVocabListTypeInfoModal = false
     @State var showCreateListPickerSection = false
+    @State var showImportCSVFileView = false
     
     var body: some View {
         ZStack {
@@ -58,25 +59,6 @@ struct VocabListsView: View {
             }
         }
         .navigationTitle("Vocab Lists")
-//        .actionSheet(isPresented: $showCreateListActionSheet) {
-//            ActionSheet(
-//                title: Text("Create new vocab list"),
-//                message: Text("What type of vocab list would you like to create?"), buttons: [
-//                    .cancel(),
-//                    .default(Text("Bible Passage(s) List")) {
-//                        showCreateBiblePassageListModal = true
-//                    },
-//                    .default(Text("Default List")) {
-//                        showSelectDefaultListModal = true
-//                    },
-//                    .default(Text("Custom Word List")) {
-//                        showCreateCustomListModal = true
-//                    },
-//                    .default(Text("What are these?")) {
-//                        showVocabListTypeInfoModal = true
-//                    }
-//                ])
-//        }
         .sheet(isPresented: $showCreateBiblePassageListModal) {
             NavigationStack {
                 BuildVocabListView()
@@ -92,6 +74,9 @@ struct VocabListsView: View {
         }
         .sheet(isPresented: $showVocabListTypeInfoModal) {
             VocabListTypeInfoView()
+        }
+        .sheet(isPresented: $showImportCSVFileView) {
+            ImportCSVView()
         }
     }
     
@@ -162,15 +147,15 @@ extension VocabListsView {
                 })
                 Button(action: {
                     withAnimation {
-                        showCreateCustomListModal = true
+                        showImportCSVFileView = true
                         showCreateListPickerSection = false
                     }
                 }, label: {
                     VStack {
-                        Image(systemName: "hand.point.up.braille.fill")
+                        Image(systemName: "arrow.down.doc")
                             .font(.title2)
                             .padding(.bottom, 4)
-                        Text("Custom\nList")
+                        Text("Import\nLost")
                             .font(.caption2)
                     }
                     .foregroundColor(.accentColor)
@@ -190,6 +175,7 @@ extension VocabListsView {
                         VStack(alignment: .leading) {
                             Text(list.defaultTitle)
                                 .bold()
+                                .multilineTextAlignment(.leading)
                             Text(list.defaultDetails)
                                 .font(.caption)
                                 .foregroundColor(Color(uiColor: .secondaryLabel))

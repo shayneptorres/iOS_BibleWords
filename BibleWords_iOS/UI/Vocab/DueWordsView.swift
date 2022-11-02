@@ -68,6 +68,8 @@ struct DueWordsView: View, Equatable {
             return "Study \(dueWords.filter { ($0.list?.count ?? 0) > 0 && $0.lang == Language.greek.rawValue }.count) Greek words"
         case .all:
             return "Study All \(dueWords.filter { ($0.list?.count ?? 0) > 0 }.count) words"
+        case .custom:
+            return "Study Custom \(dueWords.filter { ($0.list?.count ?? 0) > 0 && $0.lang == Language.custom.rawValue  }.count) words"
         }
     }
     
@@ -112,6 +114,8 @@ struct DueWordsView: View, Equatable {
                         HorizontalLangFilterSection()
                         DueWordsSection()
                     }
+                    Spacer()
+                        .frame(height: 150)
                 }
                 VStack {
                     Spacer()
@@ -129,7 +133,7 @@ struct DueWordsView: View, Equatable {
             }
         }
         .navigationDestination(for: Bible.WordInfo.self) { word in
-            WordInfoDetailsView(word: word)
+            WordInfoDetailsView(word: word.bound())
         }
         .navigationBarTitleDisplayMode(horizontalSizeClass == .compact ? .large : .inline)
         .navigationTitle("Your Due Words")
@@ -143,6 +147,8 @@ struct DueWordsView: View, Equatable {
             return dueWords.filter { ($0.list?.count ?? 0) > 0 && $0.lang == Language.greek.rawValue }
         case .hebrew:
             return dueWords.filter { ($0.list?.count ?? 0) > 0 && $0.lang == Language.hebrew.rawValue }
+        case .custom:
+            return dueWords.filter { ($0.list?.count ?? 0) > 0 && $0.lang == Language.custom.rawValue }
         case .aramaic:
             return []
         }
@@ -155,6 +161,8 @@ struct DueWordsView: View, Equatable {
         case .greek:
             return filteredDueWords.map { $0.wordInfo }
         case .hebrew:
+            return filteredDueWords.map { $0.wordInfo }
+        case .custom:
             return filteredDueWords.map { $0.wordInfo }
         case .aramaic:
             return []

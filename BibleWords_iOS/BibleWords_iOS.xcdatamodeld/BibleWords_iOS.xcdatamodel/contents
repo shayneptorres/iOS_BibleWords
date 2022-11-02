@@ -54,11 +54,13 @@
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="currentInterval" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="customDefinition" optional="YES" attributeType="String"/>
-        <attribute name="customLemma" optional="YES" attributeType="String"/>
+        <attribute name="customText" optional="YES" attributeType="String"/>
         <attribute name="dueDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="lang" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="relatedWordId" optional="YES" attributeType="String"/>
         <attribute name="sourceId" optional="YES" attributeType="String"/>
+        <attribute name="wordTypeInt" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="list" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="VocabWordList" inverseName="words" inverseEntity="VocabWordList"/>
         <relationship name="pin" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="PinnedItem" inverseName="vocabWord" inverseEntity="PinnedItem"/>
         <relationship name="sessionEntries" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StudySessionEntry" inverseName="word" inverseEntity="StudySessionEntry"/>

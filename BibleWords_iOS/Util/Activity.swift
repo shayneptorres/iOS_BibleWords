@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 protocol RecentActivity: Identifiable {
     var id: String { get }
@@ -49,13 +50,26 @@ enum ActivityType: Int16 {
     var imageName: String {
         switch self {
         case .vocab:
-            return "list.bullet.rectangle"
+            return "ic_vocab"
         case .parsing:
             return "rectangle.and.hand.point.up.left.filled"
         case .read:
             return "book"
         case .paradigm:
-            return "square.3.layers.3d.down.backward"
+            return "lightbulb"
+        }
+    }
+    
+    var image: Image {
+        switch self {
+        case .vocab:
+            return Image("ic_vocab")
+        case .parsing:
+            return Image("ic_parse")
+        case .read:
+            return Image(systemName: "book")
+        case .paradigm:
+            return Image(systemName: "lightbulb")
         }
     }
 }

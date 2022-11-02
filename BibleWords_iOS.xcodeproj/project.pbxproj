@@ -37,6 +37,8 @@
 		B81C31742903B310002DBF6B /* WidgetShareable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81C31732903B310002DBF6B /* WidgetShareable.swift */; };
 		B81C31772903B4FE002DBF6B /* WidgetShareable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81C31732903B310002DBF6B /* WidgetShareable.swift */; };
 		B81C31792903B5EB002DBF6B /* WidgetStatsUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81C31782903B5EB002DBF6B /* WidgetStatsUtil.swift */; };
+		B82D5BB42911AEB100474D61 /* SwiftCSV in Frameworks */ = {isa = PBXBuildFile; productRef = B82D5BB32911AEB100474D61 /* SwiftCSV */; };
+		B82D5BB62911AF0F00474D61 /* ImportCSVView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82D5BB52911AF0F00474D61 /* ImportCSVView.swift */; };
 		B83875EF2909BEC6002682FE /* Widget-AppOnly.swift in Sources */ = {isa = PBXBuildFile; fileRef = B83875EE2909BEC6002682FE /* Widget-AppOnly.swift */; };
 		B83875F52909C726002682FE /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B81C315F2903AE1F002DBF6B /* WidgetKit.framework */; };
 		B83875F62909C726002682FE /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B81C31612903AE1F002DBF6B /* SwiftUI.framework */; };
@@ -182,6 +184,7 @@
 		B81C31752903B386002DBF6B /* BibleWords_iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BibleWords_iOS.entitlements; sourceTree = "<group>"; };
 		B81C31762903B3BE002DBF6B /* TodayStatsWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TodayStatsWidgetExtension.entitlements; sourceTree = "<group>"; };
 		B81C31782903B5EB002DBF6B /* WidgetStatsUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetStatsUtil.swift; sourceTree = "<group>"; };
+		B82D5BB52911AF0F00474D61 /* ImportCSVView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportCSVView.swift; sourceTree = "<group>"; };
 		B83875EE2909BEC6002682FE /* Widget-AppOnly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Widget-AppOnly.swift"; sourceTree = "<group>"; };
 		B83875F42909C725002682FE /* StudyingLiveActivityExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = StudyingLiveActivityExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		B83875F82909C726002682FE /* StudyingLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyingLiveActivity.swift; sourceTree = "<group>"; };
@@ -282,6 +285,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B82D5BB42911AEB100474D61 /* SwiftCSV in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,6 +334,7 @@
 				B8A210EB29007CCD00BDF272 /* DefaultVocabListSelectorView.swift */,
 				B8E2FB4429072D4C00C17F75 /* CustomWordListBuilderView.swift */,
 				B8E2FB462907ADFB00C17F75 /* VocabListTypeInfoView.swift */,
+				B82D5BB52911AF0F00474D61 /* ImportCSVView.swift */,
 			);
 			path = Vocab;
 			sourceTree = "<group>";
@@ -598,6 +603,9 @@
 				B83875FE2909C726002682FE /* PBXTargetDependency */,
 			);
 			name = BibleWords_iOS;
+			packageProductDependencies = (
+				B82D5BB32911AEB100474D61 /* SwiftCSV */,
+			);
 			productName = BibleWords_iOS;
 			productReference = B8DD2E0728F93CB100AC9492 /* BibleWords_iOS.app */;
 			productType = "com.apple.product-type.application";
@@ -632,6 +640,9 @@
 				Base,
 			);
 			mainGroup = B8DD2DFE28F93CB100AC9492;
+			packageReferences = (
+				B82D5BB22911AEB100474D61 /* XCRemoteSwiftPackageReference "SwiftCSV" */,
+			);
 			productRefGroup = B8DD2E0828F93CB100AC9492 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -769,6 +780,7 @@
 				B8DD2E7828F93CDF00AC9492 /* Font+Extensions.swift in Sources */,
 				B8A210F42901BF4600BDF272 /* ParsingListDetailView.swift in Sources */,
 				B8A210F62901CA7200BDF272 /* PracticeParsingView.swift in Sources */,
+				B82D5BB62911AF0F00474D61 /* ImportCSVView.swift in Sources */,
 				B81C31742903B310002DBF6B /* WidgetShareable.swift in Sources */,
 				B8E2FB4D2908B71A00C17F75 /* WidgetStatsUtil.swift in Sources */,
 				B89CB571290AED710002FEF8 /* Activity.swift in Sources */,
@@ -1141,6 +1153,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B82D5BB22911AEB100474D61 /* XCRemoteSwiftPackageReference "SwiftCSV" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/swiftcsv/SwiftCSV.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.8.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B82D5BB32911AEB100474D61 /* SwiftCSV */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B82D5BB22911AEB100474D61 /* XCRemoteSwiftPackageReference "SwiftCSV" */;
+			productName = SwiftCSV;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		B8DD2E1528F93CB300AC9492 /* BibleWords_iOS.xcdatamodeld */ = {

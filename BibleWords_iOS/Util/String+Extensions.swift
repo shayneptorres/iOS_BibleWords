@@ -12,6 +12,10 @@ extension String {
         return Int(self) ?? -1
     }
     
+    var toInt16: Int16 {
+        return Int16(self) ?? -1
+    }
+    
     var strippingAccents: String {
         applyingTransform(.stripDiacritics, reverse: false) ?? ""
     }
