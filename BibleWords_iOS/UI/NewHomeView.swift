@@ -107,41 +107,18 @@ struct NewHomeView: View {
             ZStack {
                 Color.appBackground
                     .ignoresSafeArea()
-                if horizontalSizeClass == .regular {
-                    HStack {
-                        VStack {
-                            ScrollView {
-                                if viewModel.isBuilding {
-                                    DataIsBuildingCard(rotationAngle: $viewModel.animationRotationAngle)
-                                        .transition(.move(edge: .leading))
-                                        .padding(.horizontal, Design.viewHorziontalPadding)
-                                }
-                                StatsCardView()
-                                QuickActionsSection()
-                            }
-                        }
-                        .frame(maxWidth: .infinity)
-                        VStack {
-                            ScrollView {
-                                PinnedItemsSection()
-                                RecentActivitySection()
-                            }
-                        }
-                        .frame(maxWidth: .infinity)
-                    }
-                } else {
-                    ScrollView {
-                        if viewModel.isBuilding {
-                            DataIsBuildingCard(rotationAngle: $viewModel.animationRotationAngle)
-                                .transition(.move(edge: .trailing))
-                                .padding(.horizontal, Design.viewHorziontalPadding)
-                        }
-                        StatsCardView()
-                        QuickActionsSection()
-                        PinnedItemsSection()
-                        RecentActivitySection()
+                VStack {
+                    if verticalSizeClass == .regular && horizontalSizeClass == .compact {
+                        CompactWidthView()
+                    } else if verticalSizeClass == .compact && horizontalSizeClass == .regular {
+                        RegularWidthView()
+                    } else if verticalSizeClass == .compact && horizontalSizeClass == .compact {
+                        RegularWidthView()
+                    } else {
+                        RegularWidthView()
                     }
                 }
+                .padding(.horizontal, Design.smallViewHorziontalPadding)
             }
             .navigationTitle("Bible Words")
             .navigationDestination(for: AppPath.self) { path in
@@ -285,22 +262,6 @@ struct NewHomeView: View {
                     }
                 }                
             }
-            
-//            CoreDataManager.transaction(context: context) {
-//                let deleteFetchRequest = NSFetchRequest<VocabWordList>(entityName: "VocabWordList")
-//                deleteFetchRequest.predicate = NSPredicate(format: "id == ''")
-//                
-//                var pins: [VocabWordList] = []
-//                do {
-//                    pins = try context.fetch(deleteFetchRequest)
-//                } catch let err {
-//                    print(err)
-//                }
-//                
-//                for pin in pins {
-//                    context.delete(pin)
-//                }
-//            }
         }
         .onChange(of: scenePhase) { newPhase in
             if newPhase == .active {
@@ -310,6 +271,52 @@ struct NewHomeView: View {
             } else if newPhase == .background {
                 print("Background")
                 AppGroupManager.updateStats(context)
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func CompactWidthView() -> some View {
+        ScrollView {
+            if viewModel.isBuilding {
+                DataIsBuildingCard(rotationAngle: $viewModel.animationRotationAngle)
+                    .transition(.move(edge: .trailing))
+                    .padding(.horizontal, Design.viewHorziontalPadding)
+            }
+            StatsCardView()
+            QuickActionsSection()
+            PinnedItemsSection()
+            RecentActivitySection()
+        }
+    }
+    
+    @ViewBuilder
+    func RegularWidthView() -> some View {
+        GeometryReader { proxy in
+            if proxy.size.height > proxy.size.width {
+                CompactWidthView()
+            } else {
+                HStack {
+                    VStack {
+                        ScrollView {
+                            if viewModel.isBuilding {
+                                DataIsBuildingCard(rotationAngle: $viewModel.animationRotationAngle)
+                                    .transition(.move(edge: .leading))
+                                    .padding(.horizontal, Design.viewHorziontalPadding)
+                            }
+                            StatsCardView()
+                            QuickActionsSection()
+                        }
+                    }
+                    .frame(maxWidth: .infinity)
+                    VStack {
+                        ScrollView {
+                            PinnedItemsSection()
+                            RecentActivitySection()
+                        }
+                    }
+                    .frame(maxWidth: .infinity)
+                }
             }
         }
     }

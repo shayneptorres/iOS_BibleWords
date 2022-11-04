@@ -112,10 +112,10 @@ struct ParadigmPracticeView: View {
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
-        }
-        .onAppear {
-            paradigms = paradigmTypes.flatMap { $0.group.items }.shuffled().filter { $0.text != "_" }
-            setCurrentParadigm()
+            .onAppear {
+                paradigms = paradigmTypes.flatMap { $0.group.items }.shuffled().filter { $0.text != "_" }
+                setCurrentParadigm()
+            }
         }
     }
     

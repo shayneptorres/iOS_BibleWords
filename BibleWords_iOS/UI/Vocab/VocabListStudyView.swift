@@ -473,19 +473,7 @@ extension VocabListStudyView {
                 .background(Color(UIColor.systemBackground))
                 .foregroundColor(Color(uiColor: .label))
                 .cornerRadius(Design.defaultCornerRadius)
-                .onLongPressGesture {
-                    let pasteboard = UIPasteboard.general
-                    pasteboard.string = currentWord?.lemma ?? ""
-                    let generator = UINotificationFeedbackGenerator()
-                    generator.notificationOccurred(.success)
-                }
             HStack {
-                Button(action: {
-                    showWordInfoView = true
-                }, label: {
-//                    Image(systemName: "info.circle")
-                })
-                .padding()
                 Spacer()
                 Button(action: {
                     showWordInfoView = true
@@ -687,6 +675,22 @@ extension VocabListStudyView {
                     AnswerButton(answerType: .easy, detail: onEasyIntervalStr, action: onEasy)
                 }
                 .frame(maxWidth: .infinity)
+                Menu("Set Interval") {
+                    ForEach(0..<VocabWord.defaultSRIntervals.count, id: \.self) { i in
+                        Button(action: {
+                            CoreDataManager.transaction(context: managedObjectContext) {
+                                currentWord?.currentInterval = i.toInt32
+                                let nextTime = VocabWord.defaultSRIntervals[Int(i)]
+                                currentWord?.dueDate = Date().addingTimeInterval(TimeInterval(nextTime))
+                                
+                                updateCurrentWord()
+                            }
+                        }, label: {
+                            Text("\(VocabWord.defaultSRIntervals[i].toPrettyTime)").tag(i.toInt32)
+                        })
+                    }
+                }
+                .frame(height: 45)
             }
                 .frame(maxWidth: .infinity)
         )

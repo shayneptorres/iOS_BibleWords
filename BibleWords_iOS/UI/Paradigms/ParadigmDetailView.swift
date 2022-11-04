@@ -65,7 +65,7 @@ struct ParadigmDetailView: View {
                 .padding([.horizontal, .bottom])
             }
         }
-        .sheet(isPresented: $showPracticeView) {
+        .fullScreenCover(isPresented: $showPracticeView) {
             ParadigmPracticeView(paradigmTypes: concepts)
         }
         .navigationTitle(title)

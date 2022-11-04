@@ -132,6 +132,10 @@ struct ListDetailView: View {
         }
     }
     
+    var sortedWords: [Bible.WordInfo] {
+        return filteredWords.sortedInfos
+    }
+    
     var body: some View {
         ZStack {
             Color
@@ -255,7 +259,7 @@ extension ListDetailView {
     
     @ViewBuilder
     func WordsSection() -> some View {
-        ForEach(filteredWords) { word in
+        ForEach(sortedWords) { word in
             NavigationLink(value: AppPath.wordInfo(word)) {
                 HStack {
                     WordInfoRow(wordInfo: word.bound())

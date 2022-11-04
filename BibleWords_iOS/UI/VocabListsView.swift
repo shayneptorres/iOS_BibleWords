@@ -37,6 +37,7 @@ struct VocabListsView: View {
                     Text("It looks like you don't have any vocabulary lists yet. To Add one, tap the button at the bottom of the screen.")
                         .multilineTextAlignment(.center)
                         .appCard()
+                        .padding(.horizontal)
                 } else {
                     ListsSection()
                 }
@@ -155,7 +156,7 @@ extension VocabListsView {
                         Image(systemName: "arrow.down.doc")
                             .font(.title2)
                             .padding(.bottom, 4)
-                        Text("Import\nLost")
+                        Text("Import\nList")
                             .font(.caption2)
                     }
                     .foregroundColor(.accentColor)

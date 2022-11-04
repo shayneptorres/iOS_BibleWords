@@ -223,7 +223,7 @@ extension PracticeParsingView {
             }
                 .frame(maxWidth: .infinity)
         )
-        .frame(maxHeight: 300)
+        .frame(minHeight: 100)
     }
 }
 

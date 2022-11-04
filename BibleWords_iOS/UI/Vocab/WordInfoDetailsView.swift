@@ -160,6 +160,14 @@ struct WordInfoDetailsView: View {
         }
         .navigationTitle("Word Info")
         .navigationBarTitleDisplayMode(.inline)
+        .navigationDestination(for: AppPath.self) { path in
+            switch path {
+            case .wordInstance(let instance):
+                WordInPassageView(word: instance.wordInfo.bound(), instance: instance.bound())
+            default:
+                Text("🫥")
+            }
+        }
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 Button("Done", action: { presentationMode.wrappedValue.dismiss() })

@@ -48,7 +48,10 @@ enum HebrewConceptGroup: Int, CaseIterable {
                 .qalPassiveParticiple3rdה,
                 .qalImperative,
                 .qalImperative3rdה,
-                .principalParts
+                .principalParts,
+                .niphalPrincipalParts,
+                .pielPrincipalParts,
+                .hiphilPrincipalParts
             ]
         case .nouns:
             return [
@@ -96,6 +99,9 @@ enum HebrewConcept: Int, CaseIterable {
     case hebrewNumbersBigNumbers
     case hebrewOrdinalNumbers
     case principalParts
+    case niphalPrincipalParts
+    case pielPrincipalParts
+    case hiphilPrincipalParts
     
     var group: LanguageConcept {
         switch self {
@@ -430,6 +436,29 @@ enum HebrewConcept: Int, CaseIterable {
                 .init(text: "אָמַר", definition: "say\nYiqtol: יֹאמַר \nInf. Const: לֵאמֹר \nParticiple: אֹמֵר", details: "(I-א)"),
                 .init(text: "אָהַב", definition: "to love\nYiqtol: יֶאֱהַב \nInf. Const: אַהֲבַת \nParticiple: אֹהֵב", details: "(I-א)"),
                 
+            ])
+        case .niphalPrincipalParts:
+            return .init(title: "Niphal Principal Parts", items: [
+                .init(text: "נִקְטַל", definition: "Qatal", details: "The preformative is נ. The preformative נ has an i-class vowel. The stem vowel is a-class."),
+                .init(text: "יִקָּטֵל", definition: "Yiqtol", details: "They appear to have had a preformative הִן. The נ of the הִן preformative has assimilated to the first letter of the root and doubled it. "),
+                .init(text: "הִקָּטֵל", definition: "Infinitive Construct", details: "They appear to have had a preformative הִן. The נ of the הִן preformative has assimilated to the first letter of the root and doubled it. "),
+                .init(text: "נִקְטָל", definition: "Participle", details: "The preformative is נ. The preformative נ has an i-class vowel. The stem vowel is a-class."),
+            ])
+        case .pielPrincipalParts:
+            return .init(title: "Piel Principal Parts", items: [
+                .init(text: "קִטֵּל", definition: "Qatal 3ms", details: "The qatal always has the i-class vowel under the first radical. The qatal stem vowel consistently is as follows: For the 3ms, there is an i-class stem vowel (קִטֵּל), which reduces in the 3fs and (קִטְּלָה) 3cp (קִטְּלוּ). In the second and first person, the stem vowel is a-class (קִטַּ֫לְתָּ)."),
+                .init(text: "קִטַּ֫לְתָּ", definition: "Qatal 2ms", details: "The qatal always has the i-class vowel under the first radical. The qatal stem vowel consistently is as follows: For the 3ms, there is an i-class stem vowel (קִטֵּל), which reduces in the 3fs and (קִטְּלָה) 3cp (קִטְּלוּ). In the second and first person, the stem vowel is a-class (קִטַּ֫לְתָּ)."),
+                .init(text: "יְקַטֵּל", definition: "Yiqtol", details: "In the yiqtol, the infinitive construct, and the participle (that is, in all non-qatal forms), we have the following pattern. The root has a vowel pattern having a-class with the first radical followed by i-class for the stem vowel. If there is a preformative (yiqtol and participle), it has a Shewa."),
+                .init(text: "קַטֵּל", definition: "Infinitive Construct", details: "In the yiqtol, the infinitive construct, and the participle (that is, in all non-qatal forms), we have the following pattern. The root has a vowel pattern having a-class with the first radical followed by i-class for the stem vowel. If there is a preformative (yiqtol and participle), it has a Shewa."),
+                .init(text: "מְקַטֵּל", definition: "Participle", details: "In the yiqtol, the infinitive construct, and the participle (that is, in all non-qatal forms), we have the following pattern. The root has a vowel pattern having a-class with the first radical followed by i-class for the stem vowel. If there is a preformative (yiqtol and participle), it has a Shewa."),
+            ])
+        case .hiphilPrincipalParts:
+            return .init(title: "Hiphil Principal Parts", items: [
+                .init(text: "הִקְטִיל", definition: "Qatal 3ms", details: "The qatal has the i-class vowel under the preformative ה. The stem vowel is as follows: In the third person forms, the stem vowel is typically Hireq-Yod (i-class). In the second person forms, the stem vowel is typically Pathach (a-class)."),
+                .init(text: "הִקְטַ֫לְתָּ", definition: "Qatal 2ms", details: "The qatal has the i-class vowel under the preformative ה. The stem vowel is as follows: In the third person forms, the stem vowel is typically Hireq-Yod (i-class). In the second person forms, the stem vowel is typically Pathach (a-class)."),
+                .init(text: "יַקְטִיל", definition: "Yiqtol", details: "In all the other forms (yiqtol, participle, imperative, and infinitive construct), the vowel pattern is typically Pathach under the preformative followed by Hireq-Yod. The i-class stem vowel is Tsere or Seghol in some forms, such as the imperative ms (הַקְטֵל)."),
+                .init(text: "הַקְטִיל", definition: "Infinitive Construct", details: "In all the other forms (yiqtol, participle, imperative, and infinitive construct), the vowel pattern is typically Pathach under the preformative followed by Hireq-Yod. The i-class stem vowel is Tsere or Seghol in some forms, such as the imperative ms (הַקְטֵל)."),
+                .init(text: "מַקְטִיל", definition: "Participle", details: "In all the other forms (yiqtol, participle, imperative, and infinitive construct), the vowel pattern is typically Pathach under the preformative followed by Hireq-Yod. The i-class stem vowel is Tsere or Seghol in some forms, such as the imperative ms (הַקְטֵל)."),
             ])
         }
     }
