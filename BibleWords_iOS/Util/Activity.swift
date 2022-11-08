@@ -64,8 +64,10 @@ enum ActivityType: Int16 {
         switch self {
         case .vocab:
             return Image("ic_vocab")
+                .renderingMode(.template)
         case .parsing:
             return Image("ic_parse")
+                .renderingMode(.template)
         case .read:
             return Image(systemName: "book")
         case .paradigm:
