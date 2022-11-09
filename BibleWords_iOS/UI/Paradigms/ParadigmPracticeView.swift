@@ -102,13 +102,16 @@ struct ParadigmPracticeView: View {
                     }
                     .toolbar {
                         Button(action: {
-                            showCurrentEntries = false
+                            if currentParadigmIndex == paradigms.count - 1 {
+                                showCurrentEntries = false
+                                presentationMode.wrappedValue.dismiss()
+                            }
                         }, label: {
                             Text("Dismiss")
                                 .bold()
                         })
                     }
-                    .navigationBarTitle("Current Progress")
+                    .navigationBarTitle(currentParadigmIndex == paradigms.count - 1 ? "Study Report" : "Current Progress")
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
@@ -277,7 +280,8 @@ extension ParadigmPracticeView {
     
     func setNextParadigm() {
         if currentParadigmIndex == paradigms.count - 1 {
-            presentationMode.wrappedValue.dismiss()
+//            presentationMode.wrappedValue.dismiss()
+            showCurrentEntries = true
         } else {
             currentParadigmIndex += 1
             setCurrentParadigm()

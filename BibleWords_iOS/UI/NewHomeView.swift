@@ -86,6 +86,7 @@ struct NewHomeView: View {
     
     // MARK: State
     @State var paths: [AppPath] = []
+    @State var dueCount = 0
     @State var showFullStats = false
     @State var showFullPins = false
     @State var showFullRecent = false
@@ -191,6 +192,9 @@ struct NewHomeView: View {
                     Text("Not implemented")
                 }
             }
+            .onAppear {
+                updateDueCount()
+            }
         }
         .fullScreenCover(isPresented: $showBibleReadingView) {
             NavigationStack {
@@ -271,6 +275,24 @@ struct NewHomeView: View {
             } else if newPhase == .background {
                 print("Background")
                 AppGroupManager.updateStats(context)
+            }
+        }
+    }
+    
+    func updateDueCount() {
+        DispatchQueue.global().async {
+            let vocabFetchRequest = NSFetchRequest<VocabWord>(entityName: "VocabWord")
+            vocabFetchRequest.predicate = NSPredicate(format: "dueDate <= %@ && currentInterval > 0", Date() as CVarArg)
+            var fetchedVocabWords: [VocabWord] = []
+            do {
+                fetchedVocabWords = try context.fetch(vocabFetchRequest)
+            } catch let err {
+                print(err)
+            }
+            
+            fetchedVocabWords = fetchedVocabWords.filter { ($0.list?.count ?? 0) > 0 }
+            DispatchQueue.main.async {
+                dueCount = fetchedVocabWords.count
             }
         }
     }
@@ -477,7 +499,7 @@ extension NewHomeView {
                         Image(systemName: "clock.badge.exclamationmark")
                             .font(.title)
                             .foregroundColor(.accentColor)
-                        Text("\(dueWords.filter { ($0.list?.count ?? 0) > 0 }.count)")
+                        Text("\(dueCount)")
                             .font(showFullStats ? .body : .subheadline)
                             .foregroundColor(Color(uiColor: .label))
                         if showFullStats {
