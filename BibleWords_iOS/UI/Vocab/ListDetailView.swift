@@ -181,9 +181,9 @@ struct ListDetailView: View {
         }
         .fullScreenCover(isPresented: $studyWords) {
             if #available(iOS 16.1, *) {
-                VocabListStudyView(vocabList: $viewModel.list, allWordInfoIds: viewModel.wordIds)
+                StudyVocabListView(vocabList: $viewModel.list, allWordInfoIds: viewModel.wordIds)
             } else {
-                VocabListStudyView(vocabList: $viewModel.list, allWordInfoIds: viewModel.wordIds)
+                StudyVocabListView(vocabList: $viewModel.list, allWordInfoIds: viewModel.wordIds)
             }
         }
         .navigationTitle(viewModel.list.defaultTitle)

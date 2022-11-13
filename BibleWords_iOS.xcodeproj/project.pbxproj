@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B8124D5A28F944110053057C /* VocabListStudyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8124D5928F944110053057C /* VocabListStudyView.swift */; };
+		B8124D5A28F944110053057C /* StudyVocabListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8124D5928F944110053057C /* StudyVocabListView.swift */; };
 		B8124D5C28F944550053057C /* VocabWord+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8124D5B28F944550053057C /* VocabWord+Extensions.swift */; };
 		B8124D5E28F9446C0053057C /* Time+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8124D5D28F9446C0053057C /* Time+Extensions.swift */; };
 		B8124D6028F948FD0053057C /* AppButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8124D5F28F948FD0053057C /* AppButton.swift */; };
@@ -152,7 +152,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		B8124D5928F944110053057C /* VocabListStudyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VocabListStudyView.swift; sourceTree = "<group>"; };
+		B8124D5928F944110053057C /* StudyVocabListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudyVocabListView.swift; sourceTree = "<group>"; };
 		B8124D5B28F944550053057C /* VocabWord+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VocabWord+Extensions.swift"; sourceTree = "<group>"; };
 		B8124D5D28F9446C0053057C /* Time+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Time+Extensions.swift"; sourceTree = "<group>"; };
 		B8124D5F28F948FD0053057C /* AppButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppButton.swift; sourceTree = "<group>"; };
@@ -324,7 +324,7 @@
 			children = (
 				B8124D7C28FA0F990053057C /* HomeView.swift */,
 				B8DD2E3D28F93CDD00AC9492 /* ListDetailView.swift */,
-				B8124D5928F944110053057C /* VocabListStudyView.swift */,
+				B8124D5928F944110053057C /* StudyVocabListView.swift */,
 				B8124D6128F958830053057C /* VocabWordDefinitionView.swift */,
 				B8DD2E3E28F93CDD00AC9492 /* WordInfoDetailsView.swift */,
 				B8DD2E3F28F93CDD00AC9492 /* BuildVocabListView.swift */,
@@ -723,7 +723,7 @@
 				B8124D5E28F9446C0053057C /* Time+Extensions.swift in Sources */,
 				B8E2FB3C2905176400C17F75 /* Text+Extensions.swift in Sources */,
 				B8124D6228F958830053057C /* VocabWordDefinitionView.swift in Sources */,
-				B8124D5A28F944110053057C /* VocabListStudyView.swift in Sources */,
+				B8124D5A28F944110053057C /* StudyVocabListView.swift in Sources */,
 				B8124D6028F948FD0053057C /* AppButton.swift in Sources */,
 				B8E2FB492907B1A900C17F75 /* InfoImageTextRow.swift in Sources */,
 				B8DD2E1428F93CB300AC9492 /* Persistence.swift in Sources */,

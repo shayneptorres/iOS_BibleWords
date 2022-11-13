@@ -1,5 +1,5 @@
 //
-//  VocabListStudyView.swift
+//  StudyVocabListView.swift
 //  BibleWords
 //
 //  Created by Shayne Torres on 9/23/22.
@@ -9,8 +9,8 @@ import SwiftUI
 import CoreData
 import ActivityKit
 
-struct VocabListStudyView: View, Equatable {
-    static func == (lhs: VocabListStudyView, rhs: VocabListStudyView) -> Bool {
+struct StudyVocabListView: View, Equatable {
+    static func == (lhs: StudyVocabListView, rhs: StudyVocabListView) -> Bool {
         return (lhs.vocabList.id ?? "") == (rhs.vocabList.id ?? "")
     }
     
@@ -131,7 +131,7 @@ struct VocabListStudyView: View, Equatable {
     }
 }
 
-extension VocabListStudyView {
+extension StudyVocabListView {
     enum DisplayMode: Int {
         case lemma
         case lemmaGloss
@@ -443,7 +443,7 @@ extension VocabListStudyView {
     }
 }
 
-extension VocabListStudyView {
+extension StudyVocabListView {
     func HeaderView() -> some View {
         HStack(alignment: .center) {
             Text("Words due: \(dueWordIds.count)")
@@ -664,33 +664,64 @@ extension VocabListStudyView {
     
     func FullLemmaGlossInteractionView() -> some View {
         return AnyView(
-            VStack {
-                HStack {
-                    AnswerButton(answerType: .wrong, detail: onWrongIntervalStr, action: onWrong)
+            HStack {
+                VStack {
+                    AnswerButton(answerType: .easy, detail: onEasyIntervalStr, action: onEasy)
+                    Menu(content: {
+                        ForEach(0..<VocabWord.defaultSRIntervals.count, id: \.self) { i in
+                            Button(action: {
+                                CoreDataManager.transaction(context: managedObjectContext) {
+                                    currentWord?.currentInterval = i.toInt32
+                                    let nextTime = VocabWord.defaultSRIntervals[Int(i)]
+                                    currentWord?.dueDate = Date().addingTimeInterval(TimeInterval(nextTime))
+
+                                    updateCurrentWord()
+                                }
+                            }, label: {
+                                Text("\(VocabWord.defaultSRIntervals[i].toPrettyTime)").tag(i.toInt32)
+                            })
+                        }
+                    }, label: {
+                        Text("Set Interval")
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .background(Color(uiColor: .systemGray))
+                            .cornerRadius(Design.defaultCornerRadius)
+                    })
                     AnswerButton(answerType: .hard, detail: onHardIntervalStr, action: onHard)
                 }
                 .frame(maxWidth: .infinity)
-                HStack {
+                VStack {
                     AnswerButton(answerType: .good, detail: onGoodIntervalStr, action: onGood)
-                    AnswerButton(answerType: .easy, detail: onEasyIntervalStr, action: onEasy)
+                    AnswerButton(answerType: .wrong, detail: onWrongIntervalStr, action: onWrong)
                 }
                 .frame(maxWidth: .infinity)
-                Menu("Set Interval") {
-                    ForEach(0..<VocabWord.defaultSRIntervals.count, id: \.self) { i in
-                        Button(action: {
-                            CoreDataManager.transaction(context: managedObjectContext) {
-                                currentWord?.currentInterval = i.toInt32
-                                let nextTime = VocabWord.defaultSRIntervals[Int(i)]
-                                currentWord?.dueDate = Date().addingTimeInterval(TimeInterval(nextTime))
-                                
-                                updateCurrentWord()
-                            }
-                        }, label: {
-                            Text("\(VocabWord.defaultSRIntervals[i].toPrettyTime)").tag(i.toInt32)
-                        })
-                    }
-                }
-                .frame(height: 45)
+//                HStack {
+//                    AnswerButton(answerType: .wrong, detail: onWrongIntervalStr, action: onWrong)
+//                    AnswerButton(answerType: .hard, detail: onHardIntervalStr, action: onHard)
+//                }
+//                .frame(maxWidth: .infinity)
+//                HStack {
+//                    AnswerButton(answerType: .good, detail: onGoodIntervalStr, action: onGood)
+//                    AnswerButton(answerType: .easy, detail: onEasyIntervalStr, action: onEasy)
+//                }
+//                .frame(maxWidth: .infinity)
+//                Menu("Set Interval") {
+//                    ForEach(0..<VocabWord.defaultSRIntervals.count, id: \.self) { i in
+//                        Button(action: {
+//                            CoreDataManager.transaction(context: managedObjectContext) {
+//                                currentWord?.currentInterval = i.toInt32
+//                                let nextTime = VocabWord.defaultSRIntervals[Int(i)]
+//                                currentWord?.dueDate = Date().addingTimeInterval(TimeInterval(nextTime))
+//
+//                                updateCurrentWord()
+//                            }
+//                        }, label: {
+//                            Text("\(VocabWord.defaultSRIntervals[i].toPrettyTime)").tag(i.toInt32)
+//                        })
+//                    }
+//                }
+//                .frame(height: 45)
             }
                 .frame(maxWidth: .infinity)
         )
@@ -759,7 +790,7 @@ extension VocabListStudyView {
 
 //struct VocabListStudyView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        VocabListStudyView(
+//        StudyVocabListView(
 //            vocabList: .constant(.simple(for: PersistenceController.preview.container.viewContext, lang: .greek)),
 //            dueWords: [
 //                .newGreek(for: PersistenceController.preview.container.viewContext),

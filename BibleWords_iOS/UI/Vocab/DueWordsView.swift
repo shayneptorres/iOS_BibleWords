@@ -127,9 +127,9 @@ struct DueWordsView: View, Equatable {
         }
         .fullScreenCover(isPresented: $showStudyWordsView) {
             if #available(iOS 16.1, *) {
-                VocabListStudyView(vocabList: $viewModel.dueList, allWordInfoIds: [])
+                StudyVocabListView(vocabList: $viewModel.dueList, allWordInfoIds: [])
             } else {
-                VocabListStudyView(vocabList: $viewModel.dueList, allWordInfoIds: [])
+                StudyVocabListView(vocabList: $viewModel.dueList, allWordInfoIds: [])
             }
         }
         .navigationDestination(for: Bible.WordInfo.self) { word in
