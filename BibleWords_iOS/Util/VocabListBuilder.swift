@@ -43,7 +43,10 @@ class VocabListBuilder {
         
         let verses = chapters.flatMap { $0 }
         let words = verses.flatMap { $0 }
-        let refWordIds = Set<String>.init(words.compactMap { $0["id"] as? String }).map { $0.getDigits }
+        var refWordIds = Set<String>.init(words.compactMap { $0["id"] as? String }).map { $0 }
+        if bookStart < 40 {
+            refWordIds = refWordIds.map { $0.getDigits }
+        }
         let wordInfos = refWordIds.compactMap {
             if bookStart >= 40 {
                 return Bible.main.greekLexicon.word(for: $0)
