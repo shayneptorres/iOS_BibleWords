@@ -409,7 +409,6 @@ extension NewHomeView {
                     }, label: {
                         Image(systemName: "chevron.up")
                             .font(.headline)
-                            .foregroundColor(.accentColor)
                     })
                     .matchedGeometryEffect(id: "home.stats.chevron-button", in: homeViewNamepace)
                 }
@@ -425,14 +424,11 @@ extension NewHomeView {
                             Spacer()
                             Text("Reviewed")
                                 .font(.footnote)
-                                .foregroundColor(.accentColor)
                         }
                         Image(systemName: "arrow.triangle.2.circlepath")
                             .font(.title)
-                            .foregroundColor(.accentColor)
                         Text("\(studySessionEntries.filter { $0.studyTypeInt == 1 }.count)")
                             .font(showFullStats ? .body : .subheadline)
-                            .foregroundColor(Color(uiColor: .label))
                         if showFullStats {
                             Spacer()
                         }
@@ -447,19 +443,15 @@ extension NewHomeView {
                             Spacer()
                             Text("New")
                                 .font(.footnote)
-                                .foregroundColor(.accentColor)
                         }
                         Image(systemName: "gift")
                             .font(.title)
-                            .foregroundColor(.accentColor)
                         Text("\(studySessionEntries.filter { $0.studyTypeInt == 0 }.count)")
                             .font(showFullStats ? .body : .subheadline)
-                            .foregroundColor(Color(uiColor: .label))
                         if showFullStats {
                             Spacer()
                         }
                     }
-                    .foregroundColor(.black)
                     .frame(maxWidth: .infinity)
                 })
                 Button(action: {
@@ -470,7 +462,6 @@ extension NewHomeView {
                             Spacer()
                             Text("Parsed")
                                 .font(.footnote)
-                                .foregroundColor(.accentColor)
                         }
                         ActivityType.parsing.image
                             .resizable()
@@ -478,12 +469,10 @@ extension NewHomeView {
                             .aspectRatio(contentMode: .fit)
                         Text("\(studySessionEntries.filter { $0.studyTypeInt == 2 }.count)")
                             .font(showFullStats ? .body : .subheadline)
-                            .foregroundColor(Color(uiColor: .label))
                         if showFullStats {
                             Spacer()
                         }
                     }
-                    .foregroundColor(.black)
                     .frame(maxWidth: .infinity)
                 })
                 Button(action: {
@@ -494,19 +483,15 @@ extension NewHomeView {
                             Spacer()
                             Text("Due")
                                 .font(.footnote)
-                                .foregroundColor(.accentColor)
                         }
                         Image(systemName: "clock.badge.exclamationmark")
                             .font(.title)
-                            .foregroundColor(.accentColor)
                         Text("\(dueCount)")
                             .font(showFullStats ? .body : .subheadline)
-                            .foregroundColor(Color(uiColor: .label))
                         if showFullStats {
                             Spacer()
                         }
                     }
-                    .foregroundColor(.black)
                     .frame(maxWidth: .infinity)
                 })
                 if !showFullStats {
@@ -532,7 +517,6 @@ extension NewHomeView {
                         showMoreStatsModal = true
                     }, label: {
                         Text("More Stats")
-                            .foregroundColor(.accentColor)
                             .font(.headline)
                             .bold()
                             .transition(.opacity)
@@ -541,7 +525,8 @@ extension NewHomeView {
                 .padding(.top, 4)
             }
         }
-        .appCard()
+        .foregroundColor(.white)
+        .appCard(backgroundColor: Color.accentColor)
         .padding(.horizontal, Design.viewHorziontalPadding)
     }
     
@@ -586,7 +571,8 @@ extension NewHomeView {
                         .font(.caption2)
                         .bold()
                 }
-                .appCard(height: 76, innerPadding: 8)
+                .appCard(height: 76, innerPadding: 8, backgroundColor: .accentColor)
+                .foregroundColor(.white)
             })
             Button(action: {
                 paths.append(.allVocabLists)
@@ -596,12 +582,12 @@ extension NewHomeView {
                         .resizable()
                         .frame(width: 54, height: 54)
                         .aspectRatio(contentMode: .fit)
-                        .foregroundColor(.accentColor)
                     Text("Vocab")
                         .font(.caption2)
                         .bold()
                 }
-                .appCard(height: 60, innerPadding: 8)
+                .appCard(height: 60, innerPadding: 8, backgroundColor: .accentColor)
+                .foregroundColor(.white)
             })
             Button(action: {
                 paths.append(.allParsingLists)
@@ -611,12 +597,12 @@ extension NewHomeView {
                         .resizable()
                         .frame(width: 54, height: 54)
                         .aspectRatio(contentMode: .fit)
-                        .foregroundColor(.accentColor)
                     Text("Parse")
                         .font(.caption2)
                         .bold()
                 }
-                    .appCard(height: 60, innerPadding: 8)
+                    .appCard(height: 60, innerPadding: 8, backgroundColor: .accentColor)
+                    .foregroundColor(.white)
             })
             Button(action: {
                 paths.append(.hebrewParadigms)
@@ -628,7 +614,8 @@ extension NewHomeView {
                         .font(.caption2)
                         .bold()
                 }
-                    .appCard(height: 76, innerPadding: 8)
+                    .appCard(height: 76, innerPadding: 8, backgroundColor: .accentColor)
+                    .foregroundColor(.white)
             })
         }
         .padding(.horizontal, Design.viewHorziontalPadding)

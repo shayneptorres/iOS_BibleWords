@@ -14,9 +14,9 @@ typealias GroupedWordInfos = (chapter: Int, words: [Bible.WordInfo])
 struct BuildVocabListView: View {
     @Environment(\.managedObjectContext) var context
     @Environment(\.presentationMode) var presentationMode
-    @State var bibleRanges: [BibleRange] = []
+    @State var bibleRanges: [BibleRange] = [.init()]
     @State var prevBibleRanges: [BibleRange] = []
-    @State var textbookRanges: [TextbookRange] = []
+//    @State var textbookRanges: [TextbookRange] = []
     @State var prevTextbookRanges: [TextbookRange] = []
     @State var builtWords: [Bible.WordInfo] = []
     @State var isBuilding = false
@@ -25,51 +25,23 @@ struct BuildVocabListView: View {
     
     var body: some View {
         List {
-            if (bibleRanges.isEmpty && textbookRanges.isEmpty) {
+            if bibleRanges.isEmpty {
                 Text("You have not added any ranges yet. Tap the button below to get stared.")
                     .multilineTextAlignment(.center)
             }
-            if textbookRanges.isEmpty && !bibleRanges.isEmpty {
+            if !bibleRanges.isEmpty {
                 BibleRangesView()
             }
-            if !textbookRanges.isEmpty && bibleRanges.isEmpty {
-                TextbookRangesView()
-            }
             Section {
-                Menu(content: {
-                    if textbookRanges.isEmpty {
-                        Button(action: { withAnimation {
-                            bibleRanges.append(.init())
-                        } }, label: { Label("From Bible", systemImage: "book.closed") })
-                    }
-                    if bibleRanges.isEmpty {
-                        Button(action: { showTextbookPicker = true }, label: { Label("From Textbook", systemImage: "book.closed") })
-                    }
+                Button(action: {
+                    bibleRanges.append(.init())
                 }, label: {
-                    HStack {
-                        Text((bibleRanges.isEmpty && textbookRanges.isEmpty) ? "Add range" : "Add another range")
-                        Spacer()
-                    }
+                    Text(bibleRanges.isEmpty ? "Add range" : "Add another range")
                 })
-            }
-            if !bibleRanges.isEmpty || !textbookRanges.isEmpty {
-                Section {
-                    Button(action: {
-                        onBuild()
-                    }, label: {
-                        Label(isBuilding ? "Building..." : "Build list", systemImage: "list.bullet")
-                    })
-                    .disabled(bibleRanges.isEmpty && textbookRanges.isEmpty && API.main.builtTextbooks.value.isEmpty)
-                    Button(action: {
-                        onSave()
-                    }, label: {
-                        Label("Save list", systemImage: "checkmark.circle")
-                    })
-                    .disabled(builtWords.isEmpty)
-                }
             }
         }
         .navigationTitle("New Vocab List")
+        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 Button(action: { presentationMode.wrappedValue.dismiss() }, label: {
@@ -82,10 +54,21 @@ struct BuildVocabListView: View {
                     hideKeyboard()
                 }
             }
-        }
-        .sheet(isPresented: $showTextbookPicker) {
-            TextbookSelectorView { textbook in
-                add(textbookRange: .init(info: textbook, chapStart: 1, chapEnd: 1))
+            ToolbarItemGroup(placement: .bottomBar) {
+                Button(action: {
+                    onBuild()
+                }, label: {
+                    Label(isBuilding ? "Building..." : "Build list", systemImage: "hammer")
+                })
+                .labelStyle(.titleAndIcon)
+                Spacer()
+                Button(action: {
+                    onSave()
+                }, label: {
+                    Label("Save list", systemImage: "note.text.badge.plus")
+                })
+                .labelStyle(.titleAndIcon)
+                .disabled(builtWords.isEmpty)
             }
         }
         .sheet(isPresented: $showBuiltWords) {
@@ -95,50 +78,44 @@ struct BuildVocabListView: View {
                         Section {
                             Text("\(builtWords.count) words")
                         }
-                        if !textbookRanges.isEmpty {
-                            Section {
-                                ForEach(groupedTextbookWords, id: \.chapter) { group in
-                                    Section {
-                                        ForEach(group.words) { word in
-                                            NavigationLink(value: word) {
-                                                WordInfoRow(wordInfo: word.bound())
-                                            }
-                                        }
-                                    } header: {
-                                        Text("Chapter \(group.chapter)")
-                                    }
+                        Section {
+                            ForEach(builtWords) { word in
+                                VStack(alignment: .leading) {
+                                    Text(word.lemma)
+                                        .font(word.language.meduimBibleFont)
+                                        .padding(.bottom, 4)
+                                        .foregroundColor(.accentColor)
+                                    Text(word.id)
+                                        .font(.subheadline)
+                                        .foregroundColor(Color(uiColor: .secondaryLabel))
+                                        .multilineTextAlignment(.leading)
+                                    Text(word.definition)
+                                        .font(.subheadline)
+                                        .foregroundColor(Color(uiColor: .secondaryLabel))
+                                        .multilineTextAlignment(.leading)
                                 }
-                            } footer: {
-                                Spacer().frame(height: 100)
                             }
-                        } else {
-                            Section {
-                                ForEach(builtWords) { word in
-                                    NavigationLink(value: word) {
-                                        WordInfoRow(wordInfo: word.bound())
-                                    }
-                                }
-                            } footer: {
-                                Spacer().frame(height: 100)
-                            }
+                        } footer: {
+                            Spacer().frame(height: 100)
                         }
-                    }
-                    VStack {
-                        Spacer()
-                        AppButton(text: "Save list") {
-                            showBuiltWords = false
-                            onSave()
-                        }
-                        .padding(.horizontal)
                     }
                 }
                 .toolbar {
                     ToolbarItemGroup(placement: .principal) {
-                        NavHeaderTitleDetailView(title: !bibleRanges.isEmpty ? bibleRanges.title : textbookRanges.title,
-                                                 detail: !bibleRanges.isEmpty ? bibleRanges.details : textbookRanges.details)
+                        NavHeaderTitleDetailView(title: bibleRanges.title,
+                                                 detail: bibleRanges.details)
                     }
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
                         Button(action: { showBuiltWords = false }, label: { Text("Dismiss").bold() })
+                    }
+                    ToolbarItemGroup(placement: .bottomBar) {
+                        Button(action: {
+                            showBuiltWords = false
+                            onSave()
+                        }, label: {
+                            Label("Save List", systemImage: "note.text.badge.plus")
+                        })
+                        .labelStyle(.titleAndIcon)
                     }
                 }
             }
@@ -154,39 +131,11 @@ struct BuildVocabListView: View {
         bibleRanges.remove(at: index)
     }
     
-    func onRemove(range: TextbookRange) {
-        guard let index = textbookRanges.firstIndex(where: { $0.id == range.id }) else { return }
-        textbookRanges.remove(at: index)
-    }
-    
-    func add(textbookRange: TextbookRange) {
-        textbookRanges.append(textbookRange)
-        fetchTextbookData()
-    }
-    
-    func fetchTextbookData() {
-        Task {
-            await API.main.fetchGarretHebrew()
-        }
-    }
-    
-    var groupedTextbookWords: [GroupedWordInfos] {
-        if textbookRanges.isEmpty {
-            return []
-        }
-        let wordsByChapter: [String:[Bible.WordInfo]] = Dictionary(grouping: builtWords, by: { $0.chapter })
-        return wordsByChapter
-            .map { GroupedWordInfos(chapter: $0.key.toInt, words: $0.value) }
-            .sorted { $0.chapter < $1.chapter }
-    }
-    
     func onSave() {
         // save list
         CoreDataManager.transaction(context: context) {
             let list = VocabWordList(context: context)
             list.id = UUID().uuidString
-            list.title = "LIST"
-            list.details = "DETAILS"
             list.lastStudied = Date()
             list.createdAt = Date()
             
@@ -195,6 +144,9 @@ struct BuildVocabListView: View {
                 let newRange = VocabWordRange.new(context: context, range: range)
                 list.addToRanges(newRange)
             }
+            
+            list.title = list.defaultTitle
+            list.details = list.defaultDetails
             
             let vocabFetchRequest = NSFetchRequest<VocabWord>(entityName: "VocabWord")
             vocabFetchRequest.predicate = NSPredicate(format: "SELF.id IN %@", builtWords.map { $0.id })
@@ -210,66 +162,29 @@ struct BuildVocabListView: View {
                 list.addToWords(word)
             }
             
-            for range in textbookRanges {
-                let newRange = VocabWordRange(context: context)
-                newRange.id = UUID().uuidString
-                newRange.createdAt = Date()
-                newRange.bookStart = -1
-                newRange.bookEnd = -1
-                newRange.chapStart = range.chapStart.toInt16
-                newRange.chapEnd = range.chapEnd.toInt16
-                newRange.occurrences = -1
-                newRange.sourceId = range.info.id
-                list.addToRanges(newRange)
-            }
             presentationMode.wrappedValue.dismiss()
         }
     }
     
     func onBuild() {
         isBuilding = true
-        if bibleRanges.isEmpty {
-            if prevTextbookRanges == textbookRanges {
-                showBuiltWords = true
-                return
+        
+        DispatchQueue.global().async {
+            builtWords.removeAll()
+            var words: Set<Bible.WordInfo> = []
+            
+            for range in bibleRanges {
+                VocabListBuilder.buildVocabList(bookStart: range.bookStart,
+                                                     chapStart: range.chapStart,
+                                                     bookEnd: range.bookEnd,
+                                                     chapEnd: range.chapEnd,
+                                                occurrences: range.occurrencesInt).forEach { words.insert($0) }
             }
             
-            DispatchQueue.global().async {
-                builtWords.removeAll()
-                var words: Set<Bible.WordInfo> = []
-                
-                for range in textbookRanges {
-                    VocabListBuilder.buildHebrewTextbookList(sourceId: range.info.id, chapterStart: range.chapStart, chapterEnd: range.chapEnd).forEach { words.insert($0) }
-                }
-                
-                builtWords = Array(words)
-                prevTextbookRanges = textbookRanges
-                isBuilding = false
-                showBuiltWords = true
-            }
-        } else {
-            if prevBibleRanges == bibleRanges {
-                showBuiltWords = true
-                return
-            }
-            
-            DispatchQueue.global().async {
-                builtWords.removeAll()
-                var words: Set<Bible.WordInfo> = []
-                
-                for range in bibleRanges {
-                    VocabListBuilder.buildVocabList(bookStart: range.bookStart,
-                                                         chapStart: range.chapStart,
-                                                         bookEnd: range.bookEnd,
-                                                         chapEnd: range.chapEnd,
-                                                    occurrences: range.occurrencesInt).forEach { words.insert($0) }
-                }
-                
-                builtWords = Array(words)
-                prevBibleRanges = bibleRanges
-                isBuilding = false
-                showBuiltWords = true
-            }
+            builtWords = Array(words)
+            prevBibleRanges = bibleRanges
+            isBuilding = false
+            showBuiltWords = true
         }
     }
 }
@@ -278,14 +193,6 @@ extension BuildVocabListView {
     func BibleRangesView() -> some View {
         ForEach($bibleRanges) { range in
             BibleRangePickerView(range: range, onDelete: {
-                withAnimation { onRemove(range: range.wrappedValue) }
-            })
-        }
-    }
-    
-    func TextbookRangesView() -> some View {
-        ForEach($textbookRanges) { range in
-            TextbookRangePickerView(range: range, onDelete: {
                 withAnimation { onRemove(range: range.wrappedValue) }
             })
         }

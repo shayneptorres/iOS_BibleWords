@@ -137,22 +137,13 @@ struct ListDetailView: View {
     }
     
     var body: some View {
-        ZStack {
-            Color
-                .appBackground
-                .ignoresSafeArea()
-            ScrollView {
-                if viewModel.isBuilding {
-                    DataIsBuildingCard(rotationAngle: $viewModel.animationRotationAngle)
-                        .padding(.horizontal, Design.viewHorziontalPadding)
-                } else {
-                    WordFilterSection()
-                    WordsSection()
-                }
-                Spacer()
-                    .frame(height: 150)
+        List {
+            if viewModel.isBuilding {
+                DataIsBuildingCard(rotationAngle: $viewModel.animationRotationAngle)
+                    .padding(.horizontal, Design.viewHorziontalPadding)
+            } else {
+                WordsSection()
             }
-            StudyButton()
         }
         .toolbar {
             ToolbarItemGroup(placement: .principal) {
@@ -164,6 +155,38 @@ struct ListDetailView: View {
                 }, label: {
                     Image(systemName: "ellipsis.circle")
                         .font(.title3)
+                })
+            }
+            ToolbarItemGroup(placement: .bottomBar) {
+                Button(action: { wordFilter = .all }, label: {
+                    VStack {
+                        Text("Total")
+                        Text("\(viewModel.words.count)")
+                            .bold()
+                    }
+                    .font(.subheadline)
+                })
+                Button(action: { wordFilter = .new }, label: {
+                    VStack {
+                        Text("New")
+                        Text("\(viewModel.words.filter { $0.isNewVocab(context: context) }.count)")
+                            .bold()
+                    }
+                    .font(.subheadline)
+                })
+                Button(action: { wordFilter = .due }, label: {
+                    VStack {
+                        Text("Due")
+                        Text("\(viewModel.list.wordsArr.filter { $0.isDue }.count)")
+                            .bold()
+                    }
+                    .font(.subheadline)
+                    
+                })
+                Spacer()
+                Button(action: onStudy, label: {
+                    Label("Study", systemImage: "brain.head.profile")
+                        .labelStyle(.titleAndIcon)
                 })
             }
         }
@@ -261,16 +284,8 @@ extension ListDetailView {
     func WordsSection() -> some View {
         ForEach(sortedWords) { word in
             NavigationLink(value: AppPath.wordInfo(word)) {
-                HStack {
-                    WordInfoRow(wordInfo: word.bound())
-                    Spacer()
-                    Image(systemName: "arrow.forward.circle")
-                        .font(.title3)
-                        .foregroundColor(.accentColor)
-                }
+                WordInfoRow(wordInfo: word.bound())
             }
-                .appCard(outerPadding: 4)
-                .padding(.horizontal, Design.viewHorziontalPadding)
         }
     }
     
@@ -323,7 +338,7 @@ extension ListDetailView {
                                             let pin = PinnedItem(context: context)
                                             pin.id = UUID().uuidString
                                             pin.createdAt = Date()
-                                            pin.pinTitle = viewModel.list.title
+                                            pin.pinTitle = viewModel.list.defaultTitle
                                             pin.vocabList = viewModel.list
                                         } else if let pin = viewModel.list.pin {
                                             context.delete(pin)

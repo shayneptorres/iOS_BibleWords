@@ -14,6 +14,7 @@ struct WordInfoRow: View {
         VStack(alignment: .leading) {
             Text(wordInfo.lemma)
                 .font(wordInfo.language.meduimBibleFont)
+                .foregroundColor(.accentColor)
                 .padding(.bottom, 4)
             Text(wordInfo.definition)
                 .font(.subheadline)

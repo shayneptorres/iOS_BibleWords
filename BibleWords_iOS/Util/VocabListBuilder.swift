@@ -43,9 +43,9 @@ class VocabListBuilder {
         
         let verses = chapters.flatMap { $0 }
         let words = verses.flatMap { $0 }
-        var refWordIds = Set<String>.init(words.compactMap { $0["id"] as? String }).map { $0 }
+        var refWordIds = Set<String>.init(words.compactMap { $0["id"] as? String })
         if bookStart < 40 {
-            refWordIds = refWordIds.map { $0.getDigits }
+            refWordIds = Set<String>.init(refWordIds.map { $0.getDigits })
         }
         let wordInfos = refWordIds.compactMap {
             if bookStart >= 40 {

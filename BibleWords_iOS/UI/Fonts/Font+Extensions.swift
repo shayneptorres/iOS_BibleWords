@@ -26,6 +26,10 @@ extension Font {
     public static let bible100 = Font.custom(greekFont,size: 100)
     public static let bible120 = Font.custom(greekFont,size: 120)
     
+    public static func bible(size: CGFloat) -> Font {
+        Font.custom(greekFont,size: size)
+    }
+    
 //    public static let hebrew12 = Font.custom(hebrewFont,size: 12)
 //    public static let hebrew13 = Font.custom(hebrewFont,size: 13)
 //    public static let hebrew15 = Font.custom(hebrewFont,size: 15)

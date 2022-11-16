@@ -31,18 +31,20 @@ struct ReadPassageView: View {
     let viewModel = DataDependentViewModel()
     @Binding var passage: Passage
     @Binding var selectedWord: Bible.WordInstance
+    @Binding var fontSize: CGFloat
+    var buffer: CGFloat = 0
     
     var body: some View {
         ScrollView {
             ScrollViewReader { reader in
                 if passage.book.rawValue < 40 {
-                    HebrewPassageTextView(words: $passage.words, selectedWord: $selectedWord).id(1)
+                    HebrewPassageTextView(words: $passage.words, selectedWord: $selectedWord, fontSize: $fontSize, buffer: buffer).id(1)
                         .padding(8)
                         .onChange(of: passage) { i in
                             reader.scrollTo(1, anchor: .top)
                         }
                 } else {
-                    GreekPassageTextView(words: $passage.words, selectedWord: $selectedWord).id(2)
+                    GreekPassageTextView(words: $passage.words, selectedWord: $selectedWord, fontSize: $fontSize, buffer: buffer).id(2)
                         .padding(8)
                         .onChange(of: passage) { i in
                             reader.scrollTo(2, anchor: .top)
@@ -66,8 +68,9 @@ extension ReadPassageView {
 struct GreekPassageTextView: View {
     @Binding var words: [Bible.WordInstance]
     @Binding var selectedWord: Bible.WordInstance
+    @Binding var fontSize: CGFloat
+    var buffer: CGFloat = 0
     @State private var size: CGSize = .zero
-    let buffer: CGFloat = 50
     
     var body : some View {
         var width = CGFloat.zero
@@ -78,7 +81,7 @@ struct GreekPassageTextView: View {
                 ZStack(alignment: .topLeading) {
                     ForEach(0..<self.words.count, id: \.self) { i in
                         Text(self.words[i].surface + " ")
-                            .font(self.words[i].strongId == "verse-num" ? .system(size: 20) : .bible24)
+                            .font(self.words[i].strongId == "verse-num" ? .system(size: 20) : .bible(size: fontSize * 0.75))
                             .padding([.horizontal, .vertical], 4)
                             .onTapGesture {
                                 if self.words[i].strongId != "verse-num" {
@@ -119,8 +122,9 @@ struct GreekPassageTextView: View {
 struct HebrewPassageTextView: View {
     @Binding var words: [Bible.WordInstance]
     @Binding var selectedWord: Bible.WordInstance
+    @Binding var fontSize: CGFloat
+    var buffer: CGFloat = 0
     @State private var size: CGSize = .zero
-    let buffer: CGFloat = 75
     
     var body : some View {
         var height = CGFloat.zero
@@ -131,7 +135,7 @@ struct HebrewPassageTextView: View {
                 ZStack(alignment: .topTrailing) {
                     ForEach(0..<self.words.count, id: \.self) { i in
                         Text(self.words[i].surface + " ")
-                            .font(self.words[i].strongId == "verse-num" ? .system(size: 30) : .bible40)
+                            .font(self.words[i].strongId == "verse-num" ? .system(size: 30) : .bible(size: fontSize))
                             .padding([.horizontal, .vertical], 4)
                             .onTapGesture {
                                 if self.words[i].strongId != "verse-num" {
@@ -147,6 +151,11 @@ struct HebrewPassageTextView: View {
                                     rowWidths.append(0)
                                 }
                                 
+                                if self.words[i].strongId == "verse-num" {
+                                    rowWidths[rowWidths.count - 1] = 0
+                                    height -= (d.height + 16)
+                                    rowWidths.append(0)
+                                }
                                 let result = d[.trailing] - rowWidths[rowWidths.count - 1]
                                 if i < self.words.count-1 {
                                     rowWidths[rowWidths.count - 1] -= d.width

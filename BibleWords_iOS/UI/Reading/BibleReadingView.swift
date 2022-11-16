@@ -10,17 +10,18 @@ import SwiftUI
 struct BibleReadingView: View {
     @Environment(\.presentationMode) var presentationMode
     @State var passage: Passage = .init(book: .psalms, chapter: 1, verse: -1)
+    @ObservedObject var viewModel = DataDependentViewModel()
     @State var searchBook: Bible.Book = .psalms
     @State var searchChapter = 1
-    
     @State var prevBook: Bible.Book = .psalms
-    
     @State var searchVerse = -1
     @State var showPassageSelector = false
     @State var showWordDetail = false
     @State var showInstanceInfo = false
+    @State var showViewSettingsView = false
     @State var selectedWord: Bible.WordInstance = .init(dict: [:])
-    @ObservedObject var viewModel = DataDependentViewModel()
+    @State var fontSize: CGFloat = 45
+    @State var viewColor: Color = .appBackground
     
     private let btnFontSize: CGFloat = 40
     
@@ -30,7 +31,7 @@ struct BibleReadingView: View {
                 DataLoadingRow()
             } else {
                 ZStack {
-                    ReadPassageView(passage: $passage, selectedWord: $selectedWord)
+                    ReadPassageView(passage: $passage, selectedWord: $selectedWord, fontSize: $fontSize, buffer: 50)
                     VStack {
                         Spacer()
                         if showWordDetail {
@@ -64,6 +65,40 @@ struct BibleReadingView: View {
                 WordInfoDetailsView(word: selectedWord.wordInfo.bound())
             }
         }
+        .sheet(isPresented: $showViewSettingsView) {
+            NavigationStack {
+                List {
+                    NavigationLink(destination: {
+                        List {
+                            Stepper(value: $fontSize, label: {
+                                Label("Font Size", systemImage: "textformat.size")
+                            })
+                            Section {
+                                ReadPassageView(
+                                    passage: .constant(.init(book: .genesis, chapter: 1, verse: 1)),
+                                    selectedWord: .constant(.init(dict: [:])),
+                                    fontSize: $fontSize)
+                                ReadPassageView(
+                                    passage: .constant(.init(book: .john, chapter: 1, verse: 1)),
+                                    selectedWord: .constant(.init(dict: [:])),
+                                    fontSize: $fontSize)
+                            }
+                        }
+                    }, label: {
+                        Label("Font size", systemImage: "textformat.size")
+                    })
+                }
+                .navigationTitle("View Settings")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem {
+                        Button("Dismiss", action: {
+                            showViewSettingsView = false
+                        })
+                    }
+                }
+            }
+        }
         .onChange(of: selectedWord) { w in
             selectedWord = w
             showPassageSelector = false
@@ -71,12 +106,19 @@ struct BibleReadingView: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItemGroup(placement: .primaryAction) {
+            ToolbarItemGroup(placement: .navigationBarLeading) {
                 Button(action: {
                     presentationMode.wrappedValue.dismiss()
                 }, label: {
-                    Text("Done")
+                    Text("Dismiss")
                         .bold()
+                })
+            }
+            ToolbarItemGroup(placement: .primaryAction) {
+                Button(action: {
+                    showViewSettingsView = true
+                }, label: {
+                    Image(systemName: "eye")
                 })
             }
             ToolbarItemGroup(placement: .principal) {
@@ -104,7 +146,7 @@ extension BibleReadingView {
                 Spacer()
                 Picker("", selection: $searchBook) {
                     ForEach(Bible.Book.allCases, id: \.rawValue) { book in
-                        Text(book.title).tag(book)
+                        Text(book.shortTitle).tag(book)
                     }
                 }
                 .onChange(of: self.searchBook) { value in

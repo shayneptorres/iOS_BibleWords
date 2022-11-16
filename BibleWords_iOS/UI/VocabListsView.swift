@@ -29,37 +29,48 @@ struct VocabListsView: View {
     @State var showImportCSVFileView = false
     
     var body: some View {
-        ZStack {
-            Color.appBackground
-                .ignoresSafeArea()
-            ScrollView {
-                if lists.isEmpty {
-                    Text("It looks like you don't have any vocabulary lists yet. To Add one, tap the button at the bottom of the screen.")
-                        .multilineTextAlignment(.center)
-                        .appCard()
-                        .padding(.horizontal)
-                } else {
-                    ListsSection()
-                }
-            }
-            VStack {
-                Spacer()
-                if showCreateListPickerSection {
-                    CreateListButtonsSection()
-                        .transition(.move(edge: .trailing))
-                } else {
-                    AppButton(text: "Create new list") {
-                        withAnimation {
-                            showCreateListPickerSection = true
-                        }
-                    }
-                    .transition(.move(edge: .leading))
+        List {
+            if lists.isEmpty {
+                Text("It looks like you don't have any vocabulary lists yet. To Add one, tap the button at the bottom of the screen.")
+                    .multilineTextAlignment(.center)
+                    .appCard()
                     .padding(.horizontal)
-                    .padding(.bottom)
-                }
+            } else {
+                ListsSection()
+            }
+        }
+        .toolbar {
+            ToolbarItemGroup(placement: .bottomBar) {
+                Spacer()
+                Button(action: {
+                    showCreateListActionSheet = true
+                }, label: {
+                    Label("New Vocab List", systemImage: "note.text.badge.plus")
+                })
+                .labelStyle(.titleAndIcon)
             }
         }
         .navigationTitle("Vocab Lists")
+        .navigationBarTitleDisplayMode(.inline)
+        .confirmationDialog("New Vocab List", isPresented: $showCreateListActionSheet, actions: {
+            Button(action: {
+                showSelectDefaultListModal = true
+            }, label: {
+                Text("Frequency List")
+            })
+            Button(action: {
+                showCreateBiblePassageListModal = true
+            }, label: {
+                Text("Passage List")
+            })
+            Button(action: {
+                showImportCSVFileView = true
+            }, label: {
+                Text("Import List")
+            })
+        }, message: {
+            Text("What type of vocab list do you want to create?")
+        })
         .sheet(isPresented: $showCreateBiblePassageListModal) {
             NavigationStack {
                 BuildVocabListView()
@@ -169,35 +180,33 @@ extension VocabListsView {
     
     @ViewBuilder
     func ListsSection() -> some View {
-        VStack(alignment: .leading, spacing: 8) {
-            ForEach(lists) { list in
-                NavigationLink(value: AppPath.vocabListDetail(list: list, autoStudy: false)) {
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text(list.defaultTitle)
-                                .bold()
-                                .multilineTextAlignment(.leading)
-                            Text(list.defaultDetails)
-                                .font(.caption)
-                                .foregroundColor(Color(uiColor: .secondaryLabel))
-                        }
-                        Spacer()
-                        Image(systemName: "arrow.forward.circle")
-                            .font(.headline)
-                            .foregroundColor(.accentColor)
-                    }
-                }
-                .appCard(outerPadding: 0)
-                .contextMenu {
-                    Button(role: .destructive, action: {
-                        onDelete(list)
-                    }, label: {
-                        Label("Delete", systemImage: "trash")
-                    })
+        ForEach(lists) { list in
+            NavigationLink(value: AppPath.vocabListDetail(list: list, autoStudy: false)) {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(list.defaultTitle)
+                        .bold()
+                        .multilineTextAlignment(.leading)
+                        .foregroundColor(.accentColor)
+                    Text(list.defaultDetails)
+                        .font(.caption)
+                        .foregroundColor(Color(uiColor: .secondaryLabel))
                 }
             }
+            .contextMenu {
+                Button(role: .destructive, action: {
+                    onDelete(list)
+                }, label: {
+                    Label("Delete", systemImage: "trash")
+                })
+            }
+            .swipeActions {
+                Button(action: {
+                    onDelete(list)
+                }, label: {
+                    Text("Delete")
+                })
+            }
         }
-        .padding(.horizontal, Design.viewHorziontalPadding)
     }
 }
 

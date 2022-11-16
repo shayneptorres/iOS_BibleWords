@@ -69,7 +69,9 @@ extension VocabWordList {
     }
     
     var defaultDetails: String {
-        guard !rangesArr.isEmpty else { return "-" }
+        guard !rangesArr.isEmpty else {
+            return "Custom Imported List"
+        }
         
         if sources.first(where: { $0.id != API.Source.Info.app.id }) != nil {
             // we have ranges from a textbook

@@ -68,7 +68,8 @@ struct DefaultVocabListSelectorView: View {
                     Text("Dismiss")
                 })
             }
-            .navigationTitle("Preset Vocab Lists")
+            .navigationTitle("Frequency Vocab Lists")
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }

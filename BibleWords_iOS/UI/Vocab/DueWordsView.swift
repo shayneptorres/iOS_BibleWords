@@ -74,54 +74,14 @@ struct DueWordsView: View, Equatable {
     }
     
     var body: some View {
-        ZStack {
-            Color
-                .appBackground
-                .ignoresSafeArea()
-            if horizontalSizeClass == .regular {
-                HStack {
-                    ZStack {
-                        VStack {
-                            VerticalLangFilterSection()
-                                .padding(.top)
-                            AppButton(text: buttonTitle, action: onStudyWords)
-                                .padding(.horizontal)
-                            .disabled(viewModel.isBuilding)
-                        }
-                        .frame(maxWidth: .infinity)
-                    }
-                    VStack {
-                        if viewModel.isBuilding {
-                            DataIsBuildingCard(rotationAngle: $viewModel.animationRotationAngle)
-                                .transition(.move(edge: .trailing))
-                                .padding(.horizontal, 12)
-                            Spacer()
-                        } else {
-                            ScrollView {
-                                DueWordsSection()
-                            }
-                        }
-                    }
-                    .frame(maxWidth: .infinity)
-                }
+        List {
+            if viewModel.isBuilding {
+                DataIsBuildingCard(rotationAngle: $viewModel.animationRotationAngle)
+                    .transition(.move(edge: .trailing))
+                    .padding(.horizontal, 12)
             } else {
-                ScrollView {
-                    if viewModel.isBuilding {
-                        DataIsBuildingCard(rotationAngle: $viewModel.animationRotationAngle)
-                            .transition(.move(edge: .trailing))
-                            .padding(.horizontal, 12)
-                    } else {
-                        HorizontalLangFilterSection()
-                        DueWordsSection()
-                    }
-                    Spacer()
-                        .frame(height: 150)
-                }
-                VStack {
-                    Spacer()
-                    AppButton(text: buttonTitle, action: onStudyWords)
-                        .padding([.horizontal, .bottom])
-                    .disabled(viewModel.isBuilding)
+                Section {
+                    DueWordsSection()
                 }
             }
         }
@@ -135,8 +95,22 @@ struct DueWordsView: View, Equatable {
         .navigationDestination(for: Bible.WordInfo.self) { word in
             WordInfoDetailsView(word: word.bound())
         }
-        .navigationBarTitleDisplayMode(horizontalSizeClass == .compact ? .large : .inline)
+        .navigationBarTitleDisplayMode(.inline)
         .navigationTitle("Your Due Words")
+        .toolbar {
+            ToolbarItemGroup(placement: .bottomBar) {
+                Text("\(dueWords.count) words")
+                    .fontWeight(.semibold)
+                    .foregroundColor(.accentColor)
+                    .font(.subheadline)
+                Spacer()
+                Button(action: onStudyWords, label: {
+                    Label("Study Words", systemImage: "brain.head.profile")
+                        .bold()
+                })
+                .labelStyle(.titleAndIcon)
+            }
+        }
     }
     
     var filteredDueWords: [VocabWord] {
@@ -279,21 +253,11 @@ extension DueWordsView {
     
     @ViewBuilder
     func DueWordsSection() -> some View {
-        VStack(alignment: .leading, spacing: 8) {
-            ForEach(filteredDueWordInfos.uniqueSorted) { wordInfo in
-                NavigationLink(value: AppPath.wordInfo(wordInfo)) {
-                    HStack {
-                        WordInfoRow(wordInfo: wordInfo.bound())
-                        Spacer()
-                        Image(systemName: "arrow.forward.circle")
-                            .font(.headline)
-                            .foregroundColor(.accentColor)
-                    }
-                    .appCard(outerPadding: 0)
-                }
+        ForEach(filteredDueWordInfos.uniqueSorted) { wordInfo in
+            NavigationLink(value: AppPath.wordInfo(wordInfo)) {
+                WordInfoRow(wordInfo: wordInfo.bound())
             }
         }
-        .padding(.horizontal, 12)
     }
 }
 

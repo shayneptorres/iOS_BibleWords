@@ -48,17 +48,21 @@ struct ParsingListsView: View {
                     }
                 }
             }
-            VStack {
-                Spacer()
-                AppButton(text: "Create new list") {
-                    showBuildParingList = true
-                }
-                .padding(.bottom)
-            }
         }
         .sheet(isPresented: $showBuildParingList) {
             NavigationStack {
                 BuildParsingListView()
+            }
+        }
+        .toolbar {
+            ToolbarItemGroup(placement: .bottomBar) {
+                Spacer()
+                Button(action: {
+                    showBuildParingList = true
+                }, label: {
+                    Label("New Parsing List", systemImage: "note.text.badge.plus")
+                })
+                .labelStyle(.titleAndIcon)
             }
         }
         .navigationTitle("Parsing Lists")
