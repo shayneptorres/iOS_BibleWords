@@ -132,7 +132,7 @@ struct NewHomeView: View {
                     WordsSeenTodayView(entryType: .parsing)
                 case .dueWords:
                     if let list = dueList {
-                        DueWordsView(viewModel: .init(list: list))
+                        DueWordsView()
                     } else {
                         Text("Something went wrong")
                     }

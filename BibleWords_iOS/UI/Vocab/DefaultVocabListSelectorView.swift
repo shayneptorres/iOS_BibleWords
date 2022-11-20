@@ -144,20 +144,20 @@ extension DefaultVocabListSelectorView {
                         Text("\(builtWords.count) words")
                     }
                 }
-                VStack {
-                    Spacer()
-                    AppButton(text: "Save list") {
-                        onSave()
-                    }
-                    .padding(.horizontal)
-                }
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: Bible.WordInfo.self) { word in
                 WordInfoDetailsView(word: word.bound())
             }
             .toolbar {
-                Button(action: { showBuiltWordsList = false }, label: { Text("Dismiss").bold() })
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: { showBuiltWordsList = false }, label: { Text("Dismiss").bold() })
+                }
+                ToolbarItem(placement: .primaryAction) {
+                    Button(action: onSave, label: {
+                        Text("Save").bold()
+                    })
+                }
             }
             .interactiveDismissDisabled()
         }

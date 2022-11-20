@@ -1,5 +1,5 @@
 //
-//  StudyVocabListView.swift
+//  StudyVocabWordsView.swift
 //  BibleWords
 //
 //  Created by Shayne Torres on 9/23/22.
@@ -9,10 +9,7 @@ import SwiftUI
 import CoreData
 import ActivityKit
 
-struct StudyVocabListView: View, Equatable {
-    static func == (lhs: StudyVocabListView, rhs: StudyVocabListView) -> Bool {
-        return (lhs.vocabList.id ?? "") == (rhs.vocabList.id ?? "")
-    }
+struct StudyVocabWordsView: View {
     
     @Environment(\.managedObjectContext) var managedObjectContext
     @Environment(\.presentationMode) var presentationMode
@@ -20,13 +17,14 @@ struct StudyVocabListView: View, Equatable {
     @Environment(\.verticalSizeClass) var verticalSizeClass
     
     @Namespace private var animation
-    @Binding var vocabList: VocabWordList
+    @State var vocabList: VocabWordList?
     @State var dueWordIds: [String] = []
     @State var newWordsIds: [String] = []
     @State var allWordInfoIds: [String] = []
     @State var displayMode = DisplayMode.lemma
     @State var interfaceMode: InterfaceMode = .normal
     @State var currentWord: VocabWord?
+    @State var displayDef = ""
     @State var prevWord: VocabWord?
     @State var showWordDefView = false
     @State var showWordInfoView = false
@@ -35,7 +33,12 @@ struct StudyVocabListView: View, Equatable {
     @State var startDate = Date()
     @State var endDate = Date()
     
+    var isStudyingDueWords: Bool {
+        return vocabList == nil
+    }
+    
     let buttonHeight: CGFloat = 60
+    var onDismiss: (() -> Void)?
     
     var body: some View {
         NavigationView {
@@ -60,7 +63,7 @@ struct StudyVocabListView: View, Equatable {
                     VStack {
                         Text("Studying")
                             .font(.system(size: 17))
-                        Text(vocabList.title ?? "")
+                        Text(vocabList?.title ?? "Due Words")
                             .font(.system(size: 12))
                     }
                 }
@@ -72,7 +75,10 @@ struct StudyVocabListView: View, Equatable {
                 }
             }
             .sheet(isPresented: $showWordDefView, content: {
-                VocabWordDefinitionView(vocabWord: currentWord!.bound())
+                VocabWordDefinitionView(vocabWord: currentWord!.bound()) { updatedWord in
+                    currentWord = updatedWord
+                    displayDef = currentWord?.definition ?? ""
+                }
             })
             .sheet(isPresented: $showWordInfoView, content: {
                 NavigationStack {
@@ -131,7 +137,7 @@ struct StudyVocabListView: View, Equatable {
     }
 }
 
-extension StudyVocabListView {
+extension StudyVocabWordsView {
     enum DisplayMode: Int {
         case lemma
         case lemmaGloss
@@ -236,7 +242,7 @@ extension StudyVocabListView {
     func updateOrCreateLiveActivity() {
         if #available(iOS 16.1, *) {
             print("This code only runs on iOS 16.1 and up")
-            let studyAttributes = StudyAttributes(studyListName: vocabList.defaultTitle)
+            let studyAttributes = StudyAttributes(studyListName: vocabList?.defaultTitle ?? "Due Words")
             let studyAttState = StudyAttributes.StudyState(id: UUID().uuidString,
                                                            date: startDate,
                                                            text: currentWord?.lemma ?? "",
@@ -267,7 +273,11 @@ extension StudyVocabListView {
     }
 
     func updateWords(vocabWordDict: [String:VocabWord]) {
-        dueWordIds = vocabList.dueWords.compactMap { $0.id }.filter { $0 != "" }
+        if isStudyingDueWords {
+            dueWordIds = getDueWords().map { $0.id ?? "" }.filter { $0 != "" }
+        } else {
+            dueWordIds = vocabList?.dueWords.compactMap { $0.id }.filter { $0 != "" } ?? []
+        }
         
         let allNewIds = Set(allWordInfoIds
             .filter {
@@ -317,12 +327,14 @@ extension StudyVocabListView {
                                             lemma: wordInfo?.lemma ?? "",
                                             def: wordInfo?.definition ?? "",
                                             lang: wordInfo?.language ?? .greek)
-                    newWord.sourceId = vocabList.sources.first?.id ?? ""
+                    newWord.sourceId = vocabList?.sources.first?.id ?? ""
                     currentWord = newWord
-                    vocabList.addToWords(newWord)
+                    displayDef = currentWord?.definition ?? ""
+                    vocabList?.addToWords(newWord)
                 }
             } else {
                 currentWord = matchingVocabIdDict[nextNewWordId]!
+                displayDef = currentWord?.definition ?? ""
             }
         } else if !dueWordIds.isEmpty {
             let vocabFetchRequest = NSFetchRequest<VocabWord>(entityName: "VocabWord")
@@ -335,6 +347,7 @@ extension StudyVocabListView {
                 print(err)
             }
             currentWord = matchingVocabWords.first
+            displayDef = currentWord?.definition ?? ""
         }
 
         if currentWord?.currentInterval == 0 {
@@ -348,6 +361,7 @@ extension StudyVocabListView {
     
     func onPrev() {
         currentWord = prevWord
+        displayDef = currentWord?.definition ?? ""
         prevWord = nil
         displayMode = .lemma
     }
@@ -361,7 +375,7 @@ extension StudyVocabListView {
             session.id = UUID().uuidString
             session.startDate = startDate
             session.endDate = endDate
-            session.activityTitle = vocabList.title
+            session.activityTitle = vocabList?.title ?? "Due Words"
             session.activityTypeInt = ActivityType.vocab.rawValue
             
             
@@ -373,6 +387,7 @@ extension StudyVocabListView {
         endLiveActivity()
         AppGroupManager.updateStats(managedObjectContext)
         presentationMode.wrappedValue.dismiss()
+        onDismiss?()
     }
     
     func onWrong() {
@@ -441,9 +456,22 @@ extension StudyVocabListView {
             updateCurrentWord()
         }
     }
+    
+    func getDueWords() -> [VocabWord] {
+        let vocabFetchRequest = NSFetchRequest<VocabWord>(entityName: "VocabWord")
+        vocabFetchRequest.predicate = NSPredicate(format: "dueDate <= %@ && currentInterval > 0", Date() as CVarArg)
+        var fetchedVocabWords: [VocabWord] = []
+        do {
+            fetchedVocabWords = try managedObjectContext.fetch(vocabFetchRequest)
+        } catch let err {
+            print(err)
+        }
+        
+        return fetchedVocabWords.filter { ($0.list?.count ?? 0) > 0 }
+    }
 }
 
-extension StudyVocabListView {
+extension StudyVocabWordsView {
     func HeaderView() -> some View {
         HStack(alignment: .center) {
             Text("Words due: \(dueWordIds.count)")
@@ -498,7 +526,28 @@ extension StudyVocabListView {
                         .padding()
                     }
                     Spacer()
-                    if displayMode == .lemmaGloss || displayMode == .learnWord {
+                }
+            }
+            .frame(maxWidth: .infinity, maxHeight: 225)
+        }
+    }
+    
+    func DefinitionView() -> some View {
+        ZStack {
+            Text(displayDef)
+                .font(.system(size: 32))
+                .minimumScaleFactor(0.6)
+                .padding(.top, 8)
+                .frame(maxWidth: .infinity, maxHeight: 225)
+                .padding(.horizontal)
+                .background(Color(UIColor.systemBackground))
+                .foregroundColor(Color(uiColor: .label))
+                .cornerRadius(Design.defaultCornerRadius)
+            if displayMode == .lemmaGloss || displayMode == .learnWord {
+                VStack {
+                    Spacer()
+                    HStack {
+                        Spacer()
                         Button(action: { showWordDefView = true }, label: {
                             Image(systemName: "pencil.circle")
                                 .font(.title2)
@@ -507,15 +556,7 @@ extension StudyVocabListView {
                     }
                 }
             }
-            .frame(maxWidth: .infinity, maxHeight: 225)
         }
-    }
-    
-    func DefinitionView() -> some View {
-        Text(currentWord?.definition ?? "")
-            .font(.system(size: 32))
-            .minimumScaleFactor(0.6)
-            .padding(.top, 8)
     }
     
     func InterfaceButtonsView() -> some View {
@@ -664,68 +705,32 @@ extension StudyVocabListView {
     
     func FullLemmaGlossInteractionView() -> some View {
         return AnyView(
-            HStack {
-                VStack {
-                    AnswerButton(answerType: .easy, detail: onEasyIntervalStr, action: onEasy)
-                    Menu(content: {
-                        ForEach(0..<VocabWord.defaultSRIntervals.count, id: \.self) { i in
-                            Button(action: {
-                                CoreDataManager.transaction(context: managedObjectContext) {
-                                    currentWord?.currentInterval = i.toInt32
-                                    let nextTime = VocabWord.defaultSRIntervals[Int(i)]
-                                    currentWord?.dueDate = Date().addingTimeInterval(TimeInterval(nextTime))
+            VStack {
+                AnswerButton(answerType: .good, detail: onGoodIntervalStr, action: onGood)
+                AnswerButton(answerType: .wrong, detail: onWrongIntervalStr, action: onWrong)
+                Menu(content: {
+                    ForEach(0..<VocabWord.defaultSRIntervals.count, id: \.self) { i in
+                        Button(action: {
+                            CoreDataManager.transaction(context: managedObjectContext) {
+                                currentWord?.currentInterval = i.toInt32
+                                let nextTime = VocabWord.defaultSRIntervals[Int(i)]
+                                currentWord?.dueDate = Date().addingTimeInterval(TimeInterval(nextTime))
 
-                                    updateCurrentWord()
-                                }
-                            }, label: {
-                                Text("\(VocabWord.defaultSRIntervals[i].toPrettyTime)").tag(i.toInt32)
-                            })
-                        }
-                    }, label: {
-                        Text("Set Interval")
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                            .background(Color(uiColor: .systemGray))
-                            .cornerRadius(Design.defaultCornerRadius)
-                    })
-                    AnswerButton(answerType: .hard, detail: onHardIntervalStr, action: onHard)
-                }
-                .frame(maxWidth: .infinity)
-                VStack {
-                    AnswerButton(answerType: .good, detail: onGoodIntervalStr, action: onGood)
-                    AnswerButton(answerType: .wrong, detail: onWrongIntervalStr, action: onWrong)
-                }
-                .frame(maxWidth: .infinity)
-//                HStack {
-//                    AnswerButton(answerType: .wrong, detail: onWrongIntervalStr, action: onWrong)
-//                    AnswerButton(answerType: .hard, detail: onHardIntervalStr, action: onHard)
-//                }
-//                .frame(maxWidth: .infinity)
-//                HStack {
-//                    AnswerButton(answerType: .good, detail: onGoodIntervalStr, action: onGood)
-//                    AnswerButton(answerType: .easy, detail: onEasyIntervalStr, action: onEasy)
-//                }
-//                .frame(maxWidth: .infinity)
-//                Menu("Set Interval") {
-//                    ForEach(0..<VocabWord.defaultSRIntervals.count, id: \.self) { i in
-//                        Button(action: {
-//                            CoreDataManager.transaction(context: managedObjectContext) {
-//                                currentWord?.currentInterval = i.toInt32
-//                                let nextTime = VocabWord.defaultSRIntervals[Int(i)]
-//                                currentWord?.dueDate = Date().addingTimeInterval(TimeInterval(nextTime))
-//
-//                                updateCurrentWord()
-//                            }
-//                        }, label: {
-//                            Text("\(VocabWord.defaultSRIntervals[i].toPrettyTime)").tag(i.toInt32)
-//                        })
-//                    }
-//                }
-//                .frame(height: 45)
+                                updateCurrentWord()
+                            }
+                        }, label: {
+                            Text("\(VocabWord.defaultSRIntervals[i].toPrettyTime)").tag(i.toInt32)
+                        })
+                    }
+                }, label: {
+                    Text("Set Interval")
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity, maxHeight: 60)
+                        .background(Color(uiColor: .systemGray))
+                        .cornerRadius(Design.defaultCornerRadius)
+                })
             }
-                .frame(maxWidth: .infinity)
         )
-        .frame(minHeight: 100)
     }
     
     func DynamicLemmaGlossInteractionView() -> some View {
@@ -790,7 +795,7 @@ extension StudyVocabListView {
 
 //struct VocabListStudyView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        StudyVocabListView(
+//        StudyVocabWordsView(
 //            vocabList: .constant(.simple(for: PersistenceController.preview.container.viewContext, lang: .greek)),
 //            dueWords: [
 //                .newGreek(for: PersistenceController.preview.container.viewContext),

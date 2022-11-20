@@ -19,6 +19,7 @@ struct VocabWordDefinitionView: View {
     @State var customDefString = ""
     @State var useCustomDef = false
     @State var interval: Int32 = 1
+    @State var onDismiss: ((VocabWord) -> Void)?
     
     var body: some View {
         NavigationView {
@@ -91,8 +92,8 @@ struct VocabWordDefinitionView: View {
                 vocabWord.customDefinition = vocabWord.wordInfo.definition
             }
             vocabWord.currentInterval = interval
+            onDismiss?(vocabWord)
         }
-        
         presentationMode.wrappedValue.dismiss()
     }
 }

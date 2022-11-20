@@ -11,8 +11,13 @@ extension Int {
     var toInt16: Int16 {
         return Int16(self)
     }
+    
     var toInt32: Int32 {
         return Int32(self)
+    }
+    
+    var toDouble: Double {
+        return Double(self)
     }
 }
 

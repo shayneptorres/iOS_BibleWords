@@ -55,17 +55,34 @@ struct ParsingListsView: View {
             }
         }
         .toolbar {
-            ToolbarItemGroup(placement: .bottomBar) {
-                Spacer()
+            ToolbarItem(placement: .primaryAction) {
                 Button(action: {
                     showBuildParingList = true
                 }, label: {
-                    Label("New Parsing List", systemImage: "note.text.badge.plus")
+                    Image(systemName: "plus.circle")
+                        .fontWeight(.semibold)
                 })
                 .labelStyle(.titleAndIcon)
             }
         }
         .navigationTitle("Parsing Lists")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationDestination(for: AppPath.self) { path in
+            switch path {
+            case .parsingListDetail(let list):
+                ParsingListDetailView(viewModel: .init(list: list))
+            case .parsingSessionsList(let list):
+                ParsingListSessionsView(list: list.bound())
+            case .parsingSessionDetail(let session):
+                List {
+                    ForEach(session.entriesArr.sorted { $0.createdAt! < $1.createdAt! }) { entry in
+                        ParsingSessionEntryRow(entry: entry.bound())
+                    }
+                }
+            default:
+                Text("?")
+            }
+        }
     }
 }
 

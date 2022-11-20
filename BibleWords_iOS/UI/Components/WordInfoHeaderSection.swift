@@ -9,27 +9,44 @@ import SwiftUI
 
 struct WordInfoHeaderSection: View {
     @Binding var wordInfo: Bible.WordInfo
+    var onTapDef: (() -> Void)?
+
     var body: some View {
         Section {
-            VStack(alignment: .leading) {
-                Text("lemma")
-                    .font(.subheadline)
-                    .foregroundColor(Color(uiColor: .secondaryLabel))
-                Text(wordInfo.lemma)
-                    .font(.bible40)
-                    .onLongPressGesture {
-                        let pasteboard = UIPasteboard.general
-                        pasteboard.string = wordInfo.lemma
-                        let generator = UINotificationFeedbackGenerator()
-                        generator.notificationOccurred(.success)
-                    }
+            HStack {
+                VStack(alignment: .leading) {
+                    Text("lemma")
+                        .font(.subheadline)
+                        .foregroundColor(Color(uiColor: .secondaryLabel))
+                    Text(wordInfo.lemma)
+                        .font(.bible40)
+                }
+                Spacer()
+                Button(action: {
+                    let pasteboard = UIPasteboard.general
+                    pasteboard.string = wordInfo.lemma
+                    let generator = UINotificationFeedbackGenerator()
+                    generator.notificationOccurred(.success)
+                }, label: {
+                    Image(systemName: "arrow.right.doc.on.clipboard")
+                })
             }
-            VStack(alignment: .leading) {
-                Text("definition")
-                    .font(.subheadline)
-                    .foregroundColor(Color(uiColor: .secondaryLabel))
-                Text(wordInfo.definition)
-                    .font(.headline)
+            HStack {
+                VStack(alignment: .leading) {
+                    Text("definition")
+                        .font(.subheadline)
+                        .foregroundColor(Color(uiColor: .secondaryLabel))
+                    Text(wordInfo.definition)
+                        .font(.headline)
+                }
+                if onTapDef != nil {
+                    Spacer()
+                    Button(action: {
+                        onTapDef?()
+                    }, label: {
+                        Image(systemName: "mail.and.text.magnifyingglass")
+                    })
+                }
             }
             VStack(alignment: .leading) {
                 Text("Strong's ID")

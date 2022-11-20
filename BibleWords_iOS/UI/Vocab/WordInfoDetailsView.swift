@@ -17,144 +17,60 @@ struct WordInfoDetailsView: View {
     @State var showForms = true
     @State var showAppearances = true
     @State var showEditWordView = true
+    @State var showExternalDictOptions = false
     
     var body: some View {
         List {
-            WordInfoHeaderSection(wordInfo: $word)
-            if word.vocabWord(context: context)?.wordType == .appProvided {
-                Section {
-                    if showForms {
-                        ForEach(word.parsingInfo.instances.sorted { $0.parsingStr < $1.parsingStr }) { info in
-                            HStack {
-                                Text(info.textSurface)
-                                    .font(info.language.meduimBibleFont)
-                                Spacer()
-                                Text(info.parsingStr)
+            WordInfoHeaderSection(wordInfo: $word) {
+                showExternalDictOptions = true
+            }
+            Section {
+                if showForms {
+                    ForEach(word.parsingInfo.instances.sorted { $0.parsingStr < $1.parsingStr }) { info in
+                        HStack {
+                            Text(info.textSurface)
+                                .font(info.language.meduimBibleFont)
+                            Spacer()
+                            Text(info.parsingStr)
+                                .font(.footnote)
+                                .foregroundColor(Color(uiColor: .secondaryLabel))
+                        }
+                    }
+                }
+            } header: {
+                HStack {
+                    Text("\(word.parsingInfo.instances.count) Forms")
+                    Spacer()
+                    Button(action: { showForms.toggle() }, label: {
+                        Image(systemName: showForms ? "chevron.up" : "chevron.down")
+                    })
+                }
+            }
+            Section {
+                if showAppearances {
+                    ForEach(word.instances) { instance in
+                        NavigationLink(value: AppPath.wordInstance(instance)) {
+                            VStack(alignment: .leading) {
+                                Text(instance.prettyRefStr)
+                                    .bold()
+                                    .padding(.bottom, 2)
+                                Text(instance.textSurface)
+                                    .font(instance.language.meduimBibleFont)
+                                    .padding(.bottom, 4)
+                                Text(instance.parsingStr)
                                     .font(.footnote)
                                     .foregroundColor(Color(uiColor: .secondaryLabel))
                             }
                         }
                     }
-                } header: {
-                    HStack {
-                        Text("\(word.parsingInfo.instances.count) Forms")
-                        Spacer()
-                        Button(action: { showForms.toggle() }, label: {
-                            Image(systemName: showForms ? "chevron.up" : "chevron.down")
-                        })
-                    }
                 }
-                Section {
-                    if showAppearances {
-                        ForEach(word.instances) { instance in
-                            NavigationLink(value: AppPath.wordInstance(instance)) {
-                                VStack(alignment: .leading) {
-                                    Text(instance.prettyRefStr)
-                                        .bold()
-                                        .padding(.bottom, 2)
-                                    Text(instance.textSurface)
-                                        .font(instance.language.meduimBibleFont)
-                                        .padding(.bottom, 4)
-                                    Text(instance.parsingStr)
-                                        .font(.footnote)
-                                        .foregroundColor(Color(uiColor: .secondaryLabel))
-                                }
-                            }
-                        }
-                    }
-                } header: {
-                    HStack {
-                        Text("\(word.instances.count) Appearances")
-                        Spacer()
-                        Button(action: { showAppearances.toggle() }, label: {
-                            Image(systemName: showAppearances ? "chevron.up" : "chevron.down")
-                        })
-                    }
-                }
-            } else {
-                if word.vocabWord(context: context)?.relatedWordId == nil {
-                    Section {
-                        if suggestedLinkedWords.isEmpty {
-                            Text("Searching for suggested related words...")
-                        } else {
-                            ForEach(suggestedLinkedWords) { suggestedWord in
-                                Button(action: {
-                                    CoreDataManager.transaction(context: context) {
-                                        word.vocabWord(context: context)?.relatedWordId = suggestedWord.id
-                                    }
-                                    updater.toggle()
-                                }, label: {
-                                    VStack(alignment: .leading, spacing: 4) {
-                                        Text(suggestedWord.lemma)
-                                            .font(suggestedWord.language.meduimBibleFont)
-                                        Text(suggestedWord.definition)
-                                            .font(.footnote)
-                                            .foregroundColor(Color(uiColor: .secondaryLabel))
-                                    }
-                                })
-                            }
-                        }
-                    } header: {
-                        Text("Suggested Related Words")
-                    }
-                } else if let relatedWord = Bible.main.word(for: word.vocabWord(context: context)?.relatedWordId ?? "") {
-                    Button(action: {
-                        CoreDataManager.transaction(context: context) {
-                            word.vocabWord(context: context)?.relatedWordId = nil
-                        }
-                        updater.toggle()
-                    }, label: {
-                        Text("Reset Related Word")
+            } header: {
+                HStack {
+                    Text("\(word.instances.count) Appearances")
+                    Spacer()
+                    Button(action: { showAppearances.toggle() }, label: {
+                        Image(systemName: showAppearances ? "chevron.up" : "chevron.down")
                     })
-                    Section {
-                        if showForms {
-                            ForEach(relatedWord.parsingInfo.instances.sorted { $0.parsingStr < $1.parsingStr }) { info in
-                                HStack {
-                                    Text(info.textSurface)
-                                        .font(info.language.meduimBibleFont)
-                                    Spacer()
-                                    Text(info.parsingStr)
-                                        .font(.footnote)
-                                        .foregroundColor(Color(uiColor: .secondaryLabel))
-                                }
-                            }
-                        }
-                    } header: {
-                        HStack {
-                            Text("\(relatedWord.parsingInfo.instances.count) Forms")
-                            Spacer()
-                            Button(action: { showForms.toggle() }, label: {
-                                Image(systemName: showForms ? "chevron.up" : "chevron.down")
-                            })
-                        }
-                    }
-                    Section {
-                        if showAppearances {
-                            ForEach(relatedWord.instances) { instance in
-                                NavigationLink(value: AppPath.wordInstance(instance)) {
-                                    VStack(alignment: .leading) {
-                                        Text(instance.prettyRefStr)
-                                            .bold()
-                                            .padding(.bottom, 2)
-                                        Text(instance.textSurface)
-                                            .font(instance.language.meduimBibleFont)
-                                            .padding(.bottom, 4)
-                                        Text(instance.parsingStr)
-                                            .font(.footnote)
-                                            .foregroundColor(Color(uiColor: .secondaryLabel))
-                                    }
-                                }
-                            }
-                        }
-                    } header: {
-                        HStack {
-                            Text("\(relatedWord.instances.count) Appearances")
-                            Spacer()
-                            Button(action: { showAppearances.toggle() }, label: {
-                                Image(systemName: showAppearances ? "chevron.up" : "chevron.down")
-                            })
-                        }
-                    }
                 }
             }
         }
@@ -173,6 +89,15 @@ struct WordInfoDetailsView: View {
                 Button("Done", action: { presentationMode.wrappedValue.dismiss() })
             }
         }
+        .confirmationDialog("Search External Dictionaries", isPresented: $showExternalDictOptions, actions: {
+            ForEach(getAvailableExternalDicts(), id: \.name) { dict in
+                Button(dict.name, action: {
+                    openExternalLink(url: dict.url)
+                })   
+            }
+        }, message: {
+            Text("Which External Dictionary would you like to view for this word?")
+        })
         .onAppear {
             if let vocab = word.vocabWord(context: context) {
                 if vocab.wordType == .userImported && vocab.relatedWordId == nil {
@@ -200,6 +125,51 @@ struct WordInfoDetailsView: View {
                     }
                 }
             }
+        }
+    }
+}
+
+extension WordInfoDetailsView {
+    struct ExternalDict {
+        let name: String
+        let url: URL
+    }
+    
+    func getAvailableExternalDicts() -> [ExternalDict] {
+        
+        var externalDicts: [ExternalDict] = []
+        
+        if word.language == .greek {
+            let liddleScott = "https://ref.ly/logosres/lsj?hw=\(word.lemma.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? "")"
+            if let url = URL(string: liddleScott) {
+                if UIApplication.shared.canOpenURL(url) {
+                    externalDicts.append(.init(name: "Liddell Scott", url: url))
+                }
+            }
+            
+            let bdag = "https://ref.ly/logosres/bdag?hw=\(word.lemma.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? "")"
+            if let url = URL(string: bdag) {
+                if UIApplication.shared.canOpenURL(url) {
+                    externalDicts.append(.init(name: "BDAG", url: url))
+                }
+            }
+        } else {
+            let halot = "https://ref.ly/logosres/hal?hw=\(word.lemma.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? "")"
+            if let url = URL(string: halot) {
+                if UIApplication.shared.canOpenURL(url) {
+                    externalDicts.append(.init(name: "HALOT", url: url))
+                }
+            }
+        }
+        
+        return externalDicts
+    }
+    
+    func openExternalLink(url: URL) {
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+        } else {
+            print("Cannot open link")
         }
     }
 }

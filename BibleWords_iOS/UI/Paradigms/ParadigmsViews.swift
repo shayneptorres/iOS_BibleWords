@@ -42,9 +42,35 @@ struct ConceptsView: View {
                         Text(group.title)
                     }
                 }
-                Spacer().frame(height: 150)
             }
-            ButtonView()
+        }
+        .toolbar {
+            if mode == .multiSelect {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        mode = .singleSelect
+                        selectedConcepts.removeAll()
+                    }, label: {
+                        Text("Cancel").bold()
+                    })
+                }
+            }
+            ToolbarItem(placement: .primaryAction) {
+                if mode == .singleSelect {
+                    Button(action: {
+                        mode = .multiSelect
+                    }, label: {
+                        Text("Select").bold()
+                    })
+                } else {
+                    Button(action: {
+                        showParadigmDetailView = true
+                    }, label: {
+                        Text("Practice").bold()
+                    })
+                    .disabled(selectedConcepts.isEmpty)
+                }
+            }
         }
         .navigationDestination(isPresented: $showParadigmDetailView) {
             ParadigmDetailView(concepts: selectedConcepts)

@@ -21,6 +21,30 @@ extension Date {
         return formatter.string(from: self)
     }
     
+    var toShortPrettyDateTime: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "M/d/y h:mm a"
+//        formatter.dateFormat = "M.d.y, h:mm a"
+        return formatter.string(from: self)
+    }
+    
+    var prettyTimeSinceNow: String {
+        let timeSinceNow = timeIntervalSinceNow
+        if timeSinceNow < 1.minutes.toDouble {
+            return "< 1min"
+        } else if timeSinceNow < 1.hours.toDouble {
+            return "\(Int(timeSinceNow / 1.minutes.toDouble))min"
+        } else if timeSinceNow == 1.hours.toDouble {
+            return "1hr"
+        } else if timeSinceNow > 1.hours.toDouble {
+            let hours = Int(timeSinceNow / 1.hours.toDouble)
+            var minutes = Int(timeSinceNow / 1.minutes.toDouble) - (60 * hours)
+//            minutes = minutes - ()
+            return "\(hours)hr and \(minutes)min"
+        }
+        return "Sometime"
+    }
+    
     static var startOfToday: Date {
         let cal = Calendar.current
         return cal.startOfDay(for: Date())

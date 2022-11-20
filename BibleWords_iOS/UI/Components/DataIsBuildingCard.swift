@@ -21,7 +21,6 @@ struct DataIsBuildingCard: View {
                 .font(.title3)
                 .fontWeight(.semibold)
         }
-        .appCard(height: 10)
     }
 }
 

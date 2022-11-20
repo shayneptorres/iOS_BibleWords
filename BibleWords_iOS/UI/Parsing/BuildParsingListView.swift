@@ -90,25 +90,22 @@ struct BuildParsingListView: View {
                     Spacer().frame(height: 100)
                 }
             }
-            VStack {
-                Spacer()
-                AppButton(text: isBuilding ? "Building list..." : "Build List", systemImage: "hammer", action: onBuild)
-                    .disabled(isBuilding)
-                    .padding([.horizontal, .bottom])
-            }
         }
         .toolbar {
-            ToolbarItemGroup(placement: .navigationBarTrailing) {
+            ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: {
                     presentationMode.wrappedValue.dismiss()
                 }, label: {
-                    Text("Done")
+                    Text("Dismiss")
                         .bold()
                 })
             }
-            ToolbarItemGroup(placement: .keyboard) {
-                Spacer()
-                Button("Done", action: { hideKeyboard() })
+            ToolbarItem(placement: .primaryAction) {
+                Button(action: onBuild, label: {
+                    Text(isBuilding ? "Building list..." : "Build List")
+                        .fontWeight(.semibold)
+                })
+                .labelStyle(.titleAndIcon)
             }
         }
         .sheet(isPresented: .init(get: {selectorType != .none}, set: {_ in})) {
@@ -230,15 +227,14 @@ extension BuildParsingListView {
                         }
                     }
                 }
-                VStack {
-                    Spacer()
-                    AppButton(text: "Save Parsing List") {
-                        onSave()
-                    }
-                }
             }
             .toolbar {
-                Button(action: {showBuildParingInfos = false}, label: {Text("Dismiss").bold()})
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {showBuildParingInfos = false}, label: {Text("Dismiss").bold()})
+                }
+                ToolbarItem(placement: .primaryAction) {
+                    Button(action: onSave, label: {Text("Save").bold()})
+                }
             }
         }
     }

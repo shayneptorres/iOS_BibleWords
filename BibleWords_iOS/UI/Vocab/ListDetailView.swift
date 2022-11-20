@@ -108,6 +108,14 @@ struct ListDetailView: View {
         case all
         case new
         case due
+        
+        var title: String {
+            switch self {
+            case .all: return "All words"
+            case .new: return "New words"
+            case .due: return "Due words"
+            }
+        }
     }
     
     @Environment(\.managedObjectContext) var context
@@ -115,6 +123,7 @@ struct ListDetailView: View {
     @State var showWordInstances = false
     @State var showEditView = false
     @State var wordFilter = Filter.all
+    @State var showFilterActionSheet = false
     @State var studyWords = false
     
     // MARK: Settings State
@@ -140,50 +149,60 @@ struct ListDetailView: View {
         List {
             if viewModel.isBuilding {
                 DataIsBuildingCard(rotationAngle: $viewModel.animationRotationAngle)
-                    .padding(.horizontal, Design.viewHorziontalPadding)
             } else {
+                HStack {
+                    Button(action: { showFilterActionSheet = true }, label: {
+                        VStack {
+                            Image(systemName: "slider.horizontal.3")
+                                .padding(.bottom, 4)
+                            Text(wordFilter.title)
+                                .bold()
+                                .font(.subheadline)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 80)
+                        .background(Color.accentColor)
+                        .cornerRadius(12)
+                    })
+                    Button(action: { studyWords = true }, label: {
+                        VStack {
+                            Image(systemName: "brain.head.profile")
+                                .padding(.bottom, 4)
+                            Text("Study")
+                                .bold()
+                                .font(.subheadline)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 80)
+                        .background(Color.accentColor)
+                        .cornerRadius(12)
+                    })
+                    Button(action: {  }, label: {
+                        VStack {
+                            Image(systemName: "pencil")
+                                .padding(.bottom, 4)
+                            Text("Edit")
+                                .bold()
+                                .font(.subheadline)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 80)
+                        .background(Color.accentColor)
+                        .cornerRadius(12)
+                    })
+                }
+                .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+                .listRowBackground(Color.appBackground)
+                .foregroundColor(.white)
+                
+//                FilterSection()
                 WordsSection()
             }
         }
+        .buttonStyle(.borderless)
+        .toolbar(.hidden, for: .tabBar)
         .toolbar {
-            ToolbarItemGroup(placement: .principal) {
-                NavHeaderTitleDetailView(title: viewModel.list.defaultTitle, detail: viewModel.list.defaultDetails)
-            }
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: {
-                    showSettings = true
-                }, label: {
-                    Image(systemName: "ellipsis.circle")
-                        .font(.title3)
-                })
-            }
-            ToolbarItemGroup(placement: .bottomBar) {
-                Button(action: { wordFilter = .all }, label: {
-                    VStack {
-                        Text("Total")
-                        Text("\(viewModel.words.count)")
-                            .bold()
-                    }
-                    .font(.subheadline)
-                })
-                Button(action: { wordFilter = .new }, label: {
-                    VStack {
-                        Text("New")
-                        Text("\(viewModel.words.filter { $0.isNewVocab(context: context) }.count)")
-                            .bold()
-                    }
-                    .font(.subheadline)
-                })
-                Button(action: { wordFilter = .due }, label: {
-                    VStack {
-                        Text("Due")
-                        Text("\(viewModel.list.wordsArr.filter { $0.isDue }.count)")
-                            .bold()
-                    }
-                    .font(.subheadline)
-                    
-                })
-                Spacer()
+            ToolbarItem(placement: .primaryAction) {
                 Button(action: onStudy, label: {
                     Label("Study", systemImage: "brain.head.profile")
                         .labelStyle(.titleAndIcon)
@@ -202,12 +221,27 @@ struct ListDetailView: View {
                 
             }
         }
+        .confirmationDialog("Filter Words", isPresented: $showFilterActionSheet, actions: {
+            Button(action: {
+                wordFilter = .all
+            }, label: {
+                Label("All words: \(viewModel.words.count)", systemImage: "")
+            })
+            Button(action: {
+                wordFilter = .new
+            }, label: {
+                Label("New words: \(viewModel.words.filter { $0.isNewVocab(context: context) }.count)", systemImage: "")
+            })
+            Button(action: {
+                wordFilter = .due
+            }, label: {
+                Label("Due words: \(viewModel.list.wordsArr.filter { $0.isDue }.count)", systemImage: "")
+            })
+        }, message: {
+            Text("Filter Words")
+        })
         .fullScreenCover(isPresented: $studyWords) {
-            if #available(iOS 16.1, *) {
-                StudyVocabListView(vocabList: $viewModel.list, allWordInfoIds: viewModel.wordIds)
-            } else {
-                StudyVocabListView(vocabList: $viewModel.list, allWordInfoIds: viewModel.wordIds)
-            }
+            StudyVocabWordsView(vocabList: viewModel.list, allWordInfoIds: viewModel.wordIds)
         }
         .navigationTitle(viewModel.list.defaultTitle)
         .navigationBarTitleDisplayMode(.inline)
@@ -281,10 +315,53 @@ extension ListDetailView {
     }
     
     @ViewBuilder
+    func FilterSection() -> some View {
+        HStack {
+            Button(action: { wordFilter = .all }, label: {
+                VStack {
+                    Text("Total")
+                    Text("\(viewModel.words.count)")
+                        .bold()
+                }
+                .font(.subheadline)
+            })
+            .frame(maxWidth: .infinity)
+            Button(action: { wordFilter = .new }, label: {
+                VStack {
+                    Text("New")
+                    Text("\(viewModel.words.filter { $0.isNewVocab(context: context) }.count)")
+                        .bold()
+                }
+                .font(.subheadline)
+            })
+            .frame(maxWidth: .infinity)
+            Button(action: { wordFilter = .due }, label: {
+                VStack {
+                    Text("Due")
+                    Text("\(viewModel.list.wordsArr.filter { $0.isDue }.count)")
+                        .bold()
+                }
+                .font(.subheadline)
+                
+            })
+            .frame(maxWidth: .infinity)
+        }
+        .padding(.vertical, 4)
+    }
+    
+    @ViewBuilder
     func WordsSection() -> some View {
-        ForEach(sortedWords) { word in
-            NavigationLink(value: AppPath.wordInfo(word)) {
-                WordInfoRow(wordInfo: word.bound())
+        Section {
+            ForEach(sortedWords) { word in
+                NavigationLink(value: AppPath.wordInfo(word)) {
+                    WordInfoRow(wordInfo: word.bound())
+                }
+            }
+        } header: {
+            switch wordFilter {
+            case .all: Text("All Words")
+            case .new: Text("All New Words")
+            case .due: Text("All Due Words")
             }
         }
     }

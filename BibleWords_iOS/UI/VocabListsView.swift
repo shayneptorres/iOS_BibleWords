@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct VocabListsView: View {
     enum Routes: Hashable {
@@ -19,7 +20,16 @@ struct VocabListsView: View {
         animation: .default)
     var lists: FetchedResults<VocabWordList>
     
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \StudySessionEntry.createdAt, ascending: false)],
+        predicate: NSPredicate(format: "createdAt >= %@", Date.startOfToday as CVarArg)
+    ) var studySessionEntries: FetchedResults<StudySessionEntry>
+    
+    @State var paths: [AppPath] = []
+    @State var dueVocabWords: [VocabWord] = []
+    
     @State var showCreateListActionSheet = false
+    @State var showStatsView  = false
     @State var showCreateBiblePassageListModal = false
     @State var showSelectDefaultListModal = false
     @State var showCreateCustomListModal = false
@@ -29,67 +39,119 @@ struct VocabListsView: View {
     @State var showImportCSVFileView = false
     
     var body: some View {
-        List {
-            if lists.isEmpty {
-                Text("It looks like you don't have any vocabulary lists yet. To Add one, tap the button at the bottom of the screen.")
-                    .multilineTextAlignment(.center)
-                    .appCard()
-                    .padding(.horizontal)
-            } else {
-                ListsSection()
+        NavigationStack(path: $paths) {
+            List {
+                if lists.isEmpty {
+                    Text("It looks like you don't have any vocabulary lists yet. To Add one, tap the button at the bottom of the screen.")
+                        .multilineTextAlignment(.center)
+                        .appCard()
+                        .padding(.horizontal)
+                } else {
+                    StatsCardSection()
+                    ListsSection()
+                }
             }
-        }
-        .toolbar {
-            ToolbarItemGroup(placement: .bottomBar) {
-                Spacer()
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        showStatsView = true
+                    }, label: {
+                        Image(systemName: "chart.line.uptrend.xyaxis")
+                            .fontWeight(.semibold)
+                    })
+                    .labelStyle(.titleAndIcon)
+                }
+                ToolbarItem(placement: .primaryAction) {
+                    Button(action: {
+                        showCreateListActionSheet = true
+                    }, label: {
+                        Image(systemName: "plus.circle")
+                            .fontWeight(.semibold)
+                    })
+                    .labelStyle(.titleAndIcon)
+                }
+            }
+            .navigationTitle("Vocab Lists")
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationDestination(for: AppPath.self) { path in
+                switch path {
+                case .vocabListDetail(let list, _):
+                    ListDetailView(viewModel: .init(list: list))
+                case .reviewedWords:
+                    WordsSeenTodayView(entryType: .reviewedWord)
+                case .newWords:
+                    WordsSeenTodayView(entryType: .newWord)
+                case .dueWords:
+                    DueWordsView()
+                case .wordInfo(let info):
+                    WordInfoDetailsView(word: info.bound())
+                case .wordInstance(let instance):
+                    WordInPassageView(word: instance.wordInfo.bound(), instance: instance.bound())
+                default:
+                    Text("?")
+                }
+            }
+            .confirmationDialog("New Vocab List", isPresented: $showCreateListActionSheet, actions: {
                 Button(action: {
-                    showCreateListActionSheet = true
+                    showSelectDefaultListModal = true
                 }, label: {
-                    Label("New Vocab List", systemImage: "note.text.badge.plus")
+                    Text("Frequency List")
                 })
-                .labelStyle(.titleAndIcon)
+                Button(action: {
+                    showCreateBiblePassageListModal = true
+                }, label: {
+                    Text("Passage List")
+                })
+                Button(action: {
+                    showImportCSVFileView = true
+                }, label: {
+                    Text("Import List")
+                })
+            }, message: {
+                Text("What type of vocab list do you want to create?")
+            })
+            .sheet(isPresented: $showStatsView) {
+                MoreStatsView()
+            }
+            .sheet(isPresented: $showCreateBiblePassageListModal) {
+                NavigationStack {
+                    BuildVocabListView()
+                }
+            }
+            .sheet(isPresented: $showSelectDefaultListModal) {
+                NavigationStack {
+                    DefaultVocabListSelectorView()
+                }
+            }
+            .sheet(isPresented: $showCreateCustomListModal) {
+                CustomWordListBuilderView(viewModel: .init(list: nil))
+            }
+            .sheet(isPresented: $showVocabListTypeInfoModal) {
+                VocabListTypeInfoView()
+            }
+            .sheet(isPresented: $showImportCSVFileView) {
+                ImportCSVView()
+            }
+            .onAppear {
+                refreshDueWords()
+            }
+            .refreshable {
+                refreshDueWords()
             }
         }
-        .navigationTitle("Vocab Lists")
-        .navigationBarTitleDisplayMode(.inline)
-        .confirmationDialog("New Vocab List", isPresented: $showCreateListActionSheet, actions: {
-            Button(action: {
-                showSelectDefaultListModal = true
-            }, label: {
-                Text("Frequency List")
-            })
-            Button(action: {
-                showCreateBiblePassageListModal = true
-            }, label: {
-                Text("Passage List")
-            })
-            Button(action: {
-                showImportCSVFileView = true
-            }, label: {
-                Text("Import List")
-            })
-        }, message: {
-            Text("What type of vocab list do you want to create?")
-        })
-        .sheet(isPresented: $showCreateBiblePassageListModal) {
-            NavigationStack {
-                BuildVocabListView()
-            }
+    }
+    
+    func refreshDueWords() {
+        let vocabFetchRequest = NSFetchRequest<VocabWord>(entityName: "VocabWord")
+        vocabFetchRequest.predicate = NSPredicate(format: "dueDate <= %@ && currentInterval > 0", Date() as CVarArg)
+        var fetchedVocabWords: [VocabWord] = []
+        do {
+            fetchedVocabWords = try context.fetch(vocabFetchRequest)
+        } catch let err {
+            print(err)
         }
-        .sheet(isPresented: $showSelectDefaultListModal) {
-            NavigationStack {
-                DefaultVocabListSelectorView()
-            }
-        }
-        .sheet(isPresented: $showCreateCustomListModal) {
-            CustomWordListBuilderView(viewModel: .init(list: nil))
-        }
-        .sheet(isPresented: $showVocabListTypeInfoModal) {
-            VocabListTypeInfoView()
-        }
-        .sheet(isPresented: $showImportCSVFileView) {
-            ImportCSVView()
-        }
+        
+        dueVocabWords = fetchedVocabWords.filter { ($0.list?.count ?? 0) > 0 }
     }
     
     func onDelete(_ list: VocabWordList) {
@@ -176,6 +238,58 @@ extension VocabListsView {
             }
         }
         .padding(.horizontal, Design.viewHorziontalPadding)
+    }
+    
+    @ViewBuilder
+    func StatsCardSection() -> some View {
+        Section {
+            HStack(alignment: .center) {
+                Button(action: {
+                    paths.append(.reviewedWords)
+                }, label: {
+                    VStack(spacing: 4) {
+                        Text("Reviewed")
+                            .font(.footnote)
+                        Image(systemName: "arrow.triangle.2.circlepath")
+                            .font(.title)
+                        Text("\(studySessionEntries.filter { $0.studyTypeInt == 1 }.count)")
+                            .font(.subheadline)
+                    }
+                    .frame(maxWidth: .infinity)
+                })
+                .buttonStyle(.borderless)
+                Button(action: {
+                    paths.append(.newWords)
+                }, label: {
+                    VStack(spacing: 4) {
+                        Text("New")
+                            .font(.footnote)
+                        Image(systemName: "gift")
+                            .font(.title)
+                        Text("\(studySessionEntries.filter { $0.studyTypeInt == 0 }.count)")
+                            .font(.subheadline)
+                    }
+                    .frame(maxWidth: .infinity)
+                })
+                .buttonStyle(.borderless)
+                Button(action: {
+                    paths.append(.dueWords)
+                }, label: {
+                    VStack(spacing: 4) {
+                        Text("Due")
+                            .font(.footnote)
+                        Image(systemName: "clock.badge.exclamationmark")
+                            .font(.title)
+                        Text("\(dueVocabWords.count)")
+                            .font(.subheadline)
+                    }
+                    .frame(maxWidth: .infinity)
+                })
+            }
+            .buttonStyle(.borderless)
+        }
+        .listRowBackground(Color.accentColor)
+        .foregroundColor(.white)
     }
     
     @ViewBuilder
