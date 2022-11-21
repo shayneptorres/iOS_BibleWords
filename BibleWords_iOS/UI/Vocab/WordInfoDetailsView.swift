@@ -14,7 +14,7 @@ struct WordInfoDetailsView: View {
     @State var updater = false
     @State var suggestedLinkedWords: [Bible.WordInfo] = []
     @State var isSearchingSuggestedWords = false
-    @State var showForms = true
+    @State var showForms = false
     @State var showAppearances = true
     @State var showEditWordView = true
     @State var showExternalDictOptions = false

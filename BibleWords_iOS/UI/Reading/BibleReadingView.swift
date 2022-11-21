@@ -127,6 +127,10 @@ struct BibleReadingView: View {
                     .bold()
             }
         }
+        .onAppear {
+            searchBook = passage.book
+            searchChapter = passage.chapter
+        }
     }
 }
 

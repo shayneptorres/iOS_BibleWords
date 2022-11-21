@@ -125,6 +125,7 @@ struct ListDetailView: View {
     @State var wordFilter = Filter.all
     @State var showFilterActionSheet = false
     @State var studyWords = false
+    @State var showReadingView = false
     
     // MARK: Settings State
     @State var showSettings = false
@@ -177,38 +178,30 @@ struct ListDetailView: View {
                         .background(Color.accentColor)
                         .cornerRadius(12)
                     })
-                    Button(action: {  }, label: {
-                        VStack {
-                            Image(systemName: "pencil")
-                                .padding(.bottom, 4)
-                            Text("Edit")
-                                .bold()
-                                .font(.subheadline)
-                        }
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 80)
-                        .background(Color.accentColor)
-                        .cornerRadius(12)
-                    })
+                    if let firstRange = viewModel.list.rangesArr.first {
+                        Button(action: { showReadingView = true }, label: {
+                            VStack {
+                                Image(systemName: "books.vertical")
+                                    .padding(.bottom, 4)
+                                Text("Read")
+                                    .bold()
+                                    .font(.subheadline)
+                            }
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 80)
+                            .background(Color.accentColor)
+                            .cornerRadius(12)
+                        })
+                    }
                 }
                 .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
                 .listRowBackground(Color.appBackground)
                 .foregroundColor(.white)
-                
-//                FilterSection()
                 WordsSection()
             }
         }
         .buttonStyle(.borderless)
         .toolbar(.hidden, for: .tabBar)
-        .toolbar {
-            ToolbarItem(placement: .primaryAction) {
-                Button(action: onStudy, label: {
-                    Label("Study", systemImage: "brain.head.profile")
-                        .labelStyle(.titleAndIcon)
-                })
-            }
-        }
         .sheet(isPresented: $showSettings) {
             SettingsView()
         }
@@ -242,6 +235,17 @@ struct ListDetailView: View {
         })
         .fullScreenCover(isPresented: $studyWords) {
             StudyVocabWordsView(vocabList: viewModel.list, allWordInfoIds: viewModel.wordIds)
+        }
+        .fullScreenCover(isPresented: $showReadingView) {
+            if let firstRange = viewModel.list.rangesArr.first {
+                NavigationStack {
+                    BibleReadingView(passage: .init(
+                        book: Bible.Book(rawValue: firstRange.bookStart.toInt) ?? .genesis,
+                        chapter: firstRange.chapStart.toInt,
+                        verse: -1
+                    ))
+                }
+            }
         }
         .navigationTitle(viewModel.list.defaultTitle)
         .navigationBarTitleDisplayMode(.inline)
@@ -358,11 +362,7 @@ extension ListDetailView {
                 }
             }
         } header: {
-            switch wordFilter {
-            case .all: Text("All Words")
-            case .new: Text("All New Words")
-            case .due: Text("All Due Words")
-            }
+            Text("\(filteredWords.count) words")
         }
     }
     

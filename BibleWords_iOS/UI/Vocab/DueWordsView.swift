@@ -89,6 +89,7 @@ struct DueWordsView: View, Equatable {
     @State var dueSoonWords: [VocabWord] = []
     @State var studyWords: [VocabWord] = []
     @State var soonFilter = SoonFilter.hour1
+    @State var showSoonWords = false
     
     static func == (lhs: DueWordsView, rhs: DueWordsView) -> Bool {
         return true
@@ -116,51 +117,38 @@ struct DueWordsView: View, Equatable {
                     .transition(.move(edge: .trailing))
                     .padding(.horizontal, 12)
             } else {
-                Section {
-                    NavigationLink(destination: {
-                        List {
-                            Section {
-                                HStack {
-                                    Text("\(dueSoonWords.count)")
-                                        .bold()
-                                        .foregroundColor(.accentColor)
-                                    Text(" words due in the next")
-                                    Spacer()
-                                    Menu(content: {
-                                        ForEach(SoonFilter.allCases, id: \.title) { filter in
-                                            Button(action: {
-                                                soonFilter = filter
-                                                refreshSoonDueWords()
-                                            }, label: {
-                                                Text(filter.title)
-                                            })
-                                        }
-                                    }, label: {
-                                        Label(soonFilter.title, systemImage: "clock.arrow.circlepath")
-                                            .foregroundColor(.accentColor)
-                                    })
-                                }
-                            }
-                            ForEach(dueSoonWords.sorted { $0.dueDate ?? Date() < $1.dueDate ?? Date() }) { word in
-                                HStack {
-                                    VStack(alignment: .leading, spacing: 4) {
-                                        WordInfoRow(wordInfo: word.wordInfo.bound())
-                                        Text("Due in \(word.dueDate?.prettyTimeSinceNow ?? "-")")
-                                            .bold()
-                                            .font(.caption)
-                                            .foregroundColor(Color(uiColor: .secondaryLabel))
-                                    }
-                                    Spacer()
-                                }
-                            }
+                HStack {
+                    Button(action: { showSoonWords = true }, label: {
+                        VStack {
+                            Image(systemName: "calendar.badge.clock")
+                                .padding(.bottom, 4)
+                            Text("Words Due Soon")
+                                .bold()
+                                .font(.subheadline)
                         }
-                        .navigationTitle("Words Due Soon")
-                        .navigationBarTitleDisplayMode(.inline)
-                    }, label: {
-                        Text("Upcoming Due Words")
-                            .foregroundColor(.accentColor)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 80)
+                        .background(Color.accentColor)
+                        .cornerRadius(12)
+                    })
+                    Button(action: { showStudyWordsView = true }, label: {
+                        VStack {
+                            Image(systemName: "brain.head.profile")
+                                .padding(.bottom, 4)
+                            Text("Study")
+                                .bold()
+                                .font(.subheadline)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 80)
+                        .background(Color.accentColor)
+                        .cornerRadius(12)
                     })
                 }
+                .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+                .listRowBackground(Color.appBackground)
+                .foregroundColor(.white)
+                .buttonStyle(.borderless)
                 Section {
                     DueWordsSection()
                 }
@@ -171,6 +159,56 @@ struct DueWordsView: View, Equatable {
                 refreshWords()
             }
         }
+        .sheet(isPresented: $showSoonWords, content: {
+            NavigationStack {
+                List {
+                    Section {
+                        HStack {
+                            Text("\(dueSoonWords.count)")
+                                .bold()
+                                .foregroundColor(.accentColor)
+                            Text(" words due in the next")
+                            Spacer()
+                            Menu(content: {
+                                ForEach(SoonFilter.allCases, id: \.title) { filter in
+                                    Button(action: {
+                                        soonFilter = filter
+                                        refreshSoonDueWords()
+                                    }, label: {
+                                        Text(filter.title)
+                                    })
+                                }
+                            }, label: {
+                                Label(soonFilter.title, systemImage: "clock.arrow.circlepath")
+                                    .foregroundColor(.accentColor)
+                            })
+                        }
+                    }
+                    ForEach(dueSoonWords.sorted { $0.dueDate ?? Date() < $1.dueDate ?? Date() }) { word in
+                        HStack {
+                            VStack(alignment: .leading, spacing: 4) {
+                                WordInfoRow(wordInfo: word.wordInfo.bound())
+                                Text("Due in \(word.dueDate?.prettyTimeSinceNow ?? "-")")
+                                    .bold()
+                                    .font(.caption)
+                                    .foregroundColor(Color(uiColor: .secondaryLabel))
+                            }
+                            Spacer()
+                        }
+                    }
+                }
+                .toolbar {
+                    Button(action: {
+                        showSoonWords = false
+                    }, label: {
+                        Text("Dismiss")
+                            .bold()
+                    })
+                }
+                .navigationTitle("Words Due Soon")
+                .navigationBarTitleDisplayMode(.inline)
+            }
+        })
         .navigationDestination(for: Bible.WordInfo.self) { word in
             WordInfoDetailsView(word: word.bound())
         }
@@ -186,19 +224,14 @@ struct DueWordsView: View, Equatable {
                         .font(.system(size: 12))
                 }
             }
-            ToolbarItem(placement: .primaryAction) {
-                Button(action: onStudyWords, label: {
-                    Label("Study", systemImage: "brain.head.profile")
-                })
-                .labelStyle(.titleAndIcon)
-            }
         }
         .onAppear {
             refreshWords()
         }
         .refreshable {
             refreshWords()
-        }.onReceive(refreshtimer) { _ in
+        }
+        .onReceive(refreshtimer) { _ in
             withAnimation {
                 refreshWords()
             }

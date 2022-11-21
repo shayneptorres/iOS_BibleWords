@@ -688,10 +688,9 @@ extension StudyVocabWordsView {
     
     func AnswerButton(answerType: SessionEntryAnswerType, detail: String, action: @escaping (() -> ())) -> some View {
         return Button(action: action, label: {
-            VStack {
+            HStack {
                 answerType.buttonImage
                     .font(.largeTitle)
-                    .padding(.bottom, 4)
                 Text(detail)
                     .font(.subheadline)
                     .bold()
