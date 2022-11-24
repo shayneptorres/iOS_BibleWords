@@ -37,11 +37,13 @@
         <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="entries" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="StudySessionEntry" inverseName="session" inverseEntity="StudySessionEntry"/>
         <relationship name="parsingList" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ParsingList" inverseName="studySessions" inverseEntity="ParsingList"/>
+        <relationship name="vocabEntries" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="VocabStudySessionEntry" inverseName="session" inverseEntity="VocabStudySessionEntry"/>
     </entity>
     <entity name="StudySessionEntry" representedClassName="StudySessionEntry" syncable="YES" codeGenerationType="class">
         <attribute name="answerTypeInt" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="interval" optional="YES" attributeType="Integer 32" defaultValueString="-1" usesScalarValueType="YES"/>
         <attribute name="relatedId" optional="YES" attributeType="String"/>
         <attribute name="studiedDescription" optional="YES" attributeType="String"/>
         <attribute name="studiedDetail" optional="YES" attributeType="String"/>
@@ -49,6 +51,15 @@
         <attribute name="studyTypeInt" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="session" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StudySession" inverseName="entries" inverseEntity="StudySession"/>
         <relationship name="word" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VocabWord" inverseName="sessionEntries" inverseEntity="VocabWord"/>
+    </entity>
+    <entity name="VocabStudySessionEntry" representedClassName="VocabStudySessionEntry" syncable="YES" codeGenerationType="class">
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="interval" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="prevInterval" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="wasNewWord" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <relationship name="session" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StudySession" inverseName="vocabEntries" inverseEntity="StudySession"/>
+        <relationship name="word" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VocabWord" inverseName="studySessionEntries" inverseEntity="VocabWord"/>
     </entity>
     <entity name="VocabWord" representedClassName="VocabWord" syncable="YES" codeGenerationType="class">
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -64,6 +75,7 @@
         <relationship name="list" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="VocabWordList" inverseName="words" inverseEntity="VocabWordList"/>
         <relationship name="pin" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="PinnedItem" inverseName="vocabWord" inverseEntity="PinnedItem"/>
         <relationship name="sessionEntries" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StudySessionEntry" inverseName="word" inverseEntity="StudySessionEntry"/>
+        <relationship name="studySessionEntries" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="VocabStudySessionEntry" inverseName="word" inverseEntity="VocabStudySessionEntry"/>
     </entity>
     <entity name="VocabWordList" representedClassName="VocabWordList" syncable="YES" codeGenerationType="class">
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>

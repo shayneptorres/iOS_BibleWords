@@ -12,16 +12,34 @@ import Combine
 typealias GroupedWordInfos = (chapter: Int, words: [Bible.WordInfo])
 
 struct BuildVocabListView: View {
+    enum Filter: CaseIterable {
+        case all
+        case new
+        
+        var title: String {
+            switch self {
+            case .all: return "All words"
+            case .new: return "New words"
+            }
+        }
+    }
     @Environment(\.managedObjectContext) var context
     @Environment(\.presentationMode) var presentationMode
     @State var bibleRanges: [BibleRange] = [.init()]
     @State var prevBibleRanges: [BibleRange] = []
-//    @State var textbookRanges: [TextbookRange] = []
     @State var prevTextbookRanges: [TextbookRange] = []
     @State var builtWords: [Bible.WordInfo] = []
     @State var isBuilding = false
     @State var showBuiltWords = false
     @State var showTextbookPicker = false
+    @State var buildWordsFilter = Filter.all
+    
+    var filteredBuiltWords: [Bible.WordInfo] {
+        switch buildWordsFilter {
+        case .all: return builtWords
+        case .new: return builtWords.filter { $0.isNewVocab(context: context) }
+        }
+    }
     
     var body: some View {
         List {
@@ -43,7 +61,7 @@ struct BuildVocabListView: View {
         .navigationTitle("New Vocab List")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItemGroup(placement: .navigationBarTrailing) {
+            ToolbarItemGroup(placement: .navigationBarLeading) {
                 Button(action: { presentationMode.wrappedValue.dismiss() }, label: {
                     Text("Cancel")
                         .bold()
@@ -54,49 +72,44 @@ struct BuildVocabListView: View {
                     hideKeyboard()
                 }
             }
-            ToolbarItemGroup(placement: .bottomBar) {
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
                 Button(action: {
                     onBuild()
                 }, label: {
                     Label(isBuilding ? "Building..." : "Build list", systemImage: "hammer")
                 })
                 .labelStyle(.titleAndIcon)
-                Spacer()
-                Button(action: {
-                    onSave()
-                }, label: {
-                    Label("Save list", systemImage: "note.text.badge.plus")
-                })
-                .labelStyle(.titleAndIcon)
-                .disabled(builtWords.isEmpty)
             }
         }
         .sheet(isPresented: $showBuiltWords) {
-            NavigationStack {
+            NavigationView {
                 ZStack {
                     List {
+                        Picker(selection: $buildWordsFilter, content: {
+                            ForEach(Filter.allCases, id: \.title) { filter in
+                                Text(filter.title).tag(filter)
+                            }
+                        }, label: {})
+                        .pickerStyle(.segmented)
+                        .labelsHidden()
+                        .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+                        .listRowBackground(Color.appBackground)
+                        .buttonStyle(.borderless)
                         Section {
-                            Text("\(builtWords.count) words")
-                        }
-                        Section {
-                            ForEach(builtWords) { word in
+                            ForEach(filteredBuiltWords) { word in
                                 VStack(alignment: .leading) {
                                     Text(word.lemma)
                                         .font(word.language.meduimBibleFont)
                                         .padding(.bottom, 4)
                                         .foregroundColor(.accentColor)
-                                    Text(word.id)
-                                        .font(.subheadline)
-                                        .foregroundColor(Color(uiColor: .secondaryLabel))
-                                        .multilineTextAlignment(.leading)
                                     Text(word.definition)
                                         .font(.subheadline)
                                         .foregroundColor(Color(uiColor: .secondaryLabel))
                                         .multilineTextAlignment(.leading)
                                 }
                             }
-                        } footer: {
-                            Spacer().frame(height: 100)
+                        } header: {
+                            Text("\(filteredBuiltWords.count) words")
                         }
                     }
                 }
@@ -105,23 +118,22 @@ struct BuildVocabListView: View {
                         NavHeaderTitleDetailView(title: bibleRanges.title,
                                                  detail: bibleRanges.details)
                     }
-                    ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    ToolbarItemGroup(placement: .navigationBarLeading) {
                         Button(action: { showBuiltWords = false }, label: { Text("Dismiss").bold() })
                     }
-                    ToolbarItemGroup(placement: .bottomBar) {
+                    ToolbarItemGroup(placement: .navigationBarTrailing) {
                         Button(action: {
                             showBuiltWords = false
                             onSave()
                         }, label: {
-                            Label("Save List", systemImage: "note.text.badge.plus")
+                            Label("Save", systemImage: "note.text.badge.plus")
                         })
                         .labelStyle(.titleAndIcon)
                     }
                 }
+                .navigationTitle("")
+                .navigationBarTitleDisplayMode(.inline)
             }
-        }
-        .navigationDestination(for: Bible.WordInfo.self) { wordInfo in
-            WordInfoDetailsView(word: wordInfo.bound())
         }
         .interactiveDismissDisabled(true)
     }
@@ -372,7 +384,7 @@ extension View {
 
 struct BuildVocabListView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationStack {
+        NavigationView {
             BuildVocabListView()
         }
     }

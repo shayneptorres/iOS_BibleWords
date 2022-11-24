@@ -24,8 +24,8 @@ struct AppButton: View {
         Button(action: action, label: {
             if systemImage != nil {
                 Label(text, systemImage: systemImage!)
+//                    .bold()
                     .appButton(type: type, height: height)
-                    .bold()
 //                    .padding(.horizontal, horizontalPadding)
             } else {
                 Text(text)
@@ -72,7 +72,6 @@ struct AppButtonModifier: ViewModifier {
         } else {
             return AnyView(
                 RoundedRectangle(cornerRadius: Design.defaultCornerRadius)
-                    .fill(Color.accentColor.gradient)
                     .cornerRadius(Design.defaultCornerRadius)
             )
         }
@@ -96,9 +95,3 @@ extension Image {
         modifier(AppButtonModifier(buttonType: type, width: width, height: height))
     }
 }
-
-//struct AppButton_Previews: PreviewProvider {
-//    static var previews: some View {
-////        AppButton()
-//    }
-//}

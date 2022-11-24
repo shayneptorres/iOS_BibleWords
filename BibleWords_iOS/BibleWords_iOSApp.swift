@@ -21,21 +21,21 @@ struct BibleWords_iOSApp: App {
             TabView {
                 VocabListsView()
                 .tabItem {
-                    Label("Vocab", systemImage: "list.dash.header.rectangle")
+                    Label("Vocab", systemImage: "list.bullet.rectangle")
                 }
-                NavigationStack {
+                NavigationView {
                     ParsingListsView()
                 }
                 .tabItem {
                     Label("Parse", systemImage: "filemenu.and.selection")
                 }
-                NavigationStack {
+                NavigationView {
                     ConceptsView()
                 }
                 .tabItem {
                     Label("Learn", systemImage: "brain.head.profile")
                 }
-                NavigationStack {
+                NavigationView {
                     List {
                         Button(action: {
                             showBibleReader = true
@@ -44,7 +44,7 @@ struct BibleWords_iOSApp: App {
                         })
                     }
                     .fullScreenCover(isPresented: $showBibleReader) {
-                        NavigationStack {
+                        NavigationView {
                             BibleReadingView()
                         }
                     }

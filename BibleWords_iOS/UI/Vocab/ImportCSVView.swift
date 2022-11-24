@@ -20,7 +20,7 @@ struct ImportCSVView: View {
     @State var showFilePicker = false
     
     var body: some View {
-        NavigationStack {
+        NavigationView {
             List {
                 TextField("List Name", text: $listName)
                 Button(action: {

@@ -113,7 +113,7 @@ struct BuildParsingListView: View {
                 .onDisappear {
                     selectorType = .none
                 }
-                .presentationDetents([.height(selectorType.sheetHeight)])
+//                .presentationDetents([.height(selectorType.sheetHeight)])
         }
         .sheet(isPresented: $showBuildParingInfos) {
             BuiltParsingWordsView()
@@ -187,7 +187,7 @@ extension BuildParsingListView {
 typealias GroupedParsingInstances = (lemma: String, instances: [Bible.WordInstance])
 extension BuildParsingListView {
     func BuiltParsingWordsView() -> some View {
-        NavigationStack {
+        NavigationView {
             ZStack {
                 List {
                     HStack {
@@ -678,7 +678,7 @@ extension BuildParsingListView {
 
 struct BuildParsingListView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationStack {
+        NavigationView {
             BuildParsingListView()
         }
     }

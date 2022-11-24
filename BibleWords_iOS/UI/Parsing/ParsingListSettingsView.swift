@@ -15,19 +15,15 @@ struct ParsingListSettingsView: View {
     @Binding var list: ParsingList
     
     var body: some View {
-        NavigationStack {
+        NavigationView {
             List {
-                NavigationLink(value: SettingPage.sessionReports) {
+                NavigationLink(destination: {
+                    ParsingListSessionsView(list: $list)
+                }, label: {
                     Text("Session Reports")
-                }
+                })
             }
             .onAppear {
-            }
-            .navigationDestination(for: SettingPage.self) { setting in
-                switch setting {
-                case .sessionReports:
-                    ParsingListSessionsView(list: $list)
-                }
             }
         }
     }

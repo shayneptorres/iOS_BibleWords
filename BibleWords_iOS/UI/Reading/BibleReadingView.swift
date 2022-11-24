@@ -61,12 +61,12 @@ struct BibleReadingView: View {
             }
         }
         .sheet(isPresented: $showInstanceInfo) {
-            NavigationStack {
-                WordInfoDetailsView(word: selectedWord.wordInfo.bound())
+            NavigationView {
+                WordInfoDetailsView(word: selectedWord.wordInfo.bound(), isPresentedModally: true)
             }
         }
         .sheet(isPresented: $showViewSettingsView) {
-            NavigationStack {
+            NavigationView {
                 List {
                     NavigationLink(destination: {
                         List {
@@ -243,7 +243,7 @@ extension BibleReadingView {
 
 struct BibleReadingView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationStack {
+        NavigationView {
             BibleReadingView()
         }
     }

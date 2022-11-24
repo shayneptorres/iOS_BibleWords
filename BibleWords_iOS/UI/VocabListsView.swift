@@ -23,9 +23,8 @@ struct VocabListsView: View {
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \StudySessionEntry.createdAt, ascending: false)],
         predicate: NSPredicate(format: "createdAt >= %@", Date.startOfToday as CVarArg)
-    ) var studySessionEntries: FetchedResults<StudySessionEntry>
+    ) var studySessionEntries: FetchedResults<VocabStudySessionEntry>
     
-    @State var paths: [AppPath] = []
     @State var dueVocabWords: [VocabWord] = []
     
     @State var showCreateListActionSheet = false
@@ -37,9 +36,24 @@ struct VocabListsView: View {
     @State var showVocabListTypeInfoModal = false
     @State var showCreateListPickerSection = false
     @State var showImportCSVFileView = false
+    @State var showReviewedWords = false
+    @State var showNewWords = false
+    @State var showDueWords = false
+
+    var ntLists: [VocabWordList] {
+        return lists.filter { !$0.rangesArr.isEmpty && $0.rangesArr.first?.bookStart.toInt ?? 0 >= 40 }
+    }
+    
+    var otLists: [VocabWordList] {
+        return lists.filter { !$0.rangesArr.isEmpty && $0.rangesArr.first?.bookStart.toInt ?? 0 <= 39 }
+    }
+    
+    var importedLists: [VocabWordList] {
+        return lists.filter { $0.rangesArr.isEmpty }
+    }
     
     var body: some View {
-        NavigationStack(path: $paths) {
+        NavigationView {
             List {
                 if lists.isEmpty {
                     Text("It looks like you don't have any vocabulary lists yet. To Add one, tap the button at the bottom of the screen.")
@@ -48,8 +62,19 @@ struct VocabListsView: View {
                         .padding(.horizontal)
                 } else {
                     StatsCardSection()
-                    ListsSection()
+                    if !ntLists.isEmpty {
+                        NTListsSection()
+                    }
+                    if !otLists.isEmpty {
+                        OTListsSection()
+                    }
+                    if !importedLists.isEmpty {
+                        ImportedListsSection()                        
+                    }
                 }
+            }
+            .refreshable {
+                refreshDueWords()
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -57,7 +82,6 @@ struct VocabListsView: View {
                         showStatsView = true
                     }, label: {
                         Image(systemName: "chart.line.uptrend.xyaxis")
-                            .fontWeight(.semibold)
                     })
                     .labelStyle(.titleAndIcon)
                 }
@@ -66,31 +90,12 @@ struct VocabListsView: View {
                         showCreateListActionSheet = true
                     }, label: {
                         Image(systemName: "plus.circle")
-                            .fontWeight(.semibold)
                     })
                     .labelStyle(.titleAndIcon)
                 }
             }
-            .navigationTitle("Vocab Lists")
+            .navigationTitle("Vocabulary")
             .navigationBarTitleDisplayMode(.inline)
-            .navigationDestination(for: AppPath.self) { path in
-                switch path {
-                case .vocabListDetail(let list, _):
-                    ListDetailView(viewModel: .init(list: list))
-                case .reviewedWords:
-                    WordsSeenTodayView(entryType: .reviewedWord)
-                case .newWords:
-                    WordsSeenTodayView(entryType: .newWord)
-                case .dueWords:
-                    DueWordsView()
-                case .wordInfo(let info):
-                    WordInfoDetailsView(word: info.bound())
-                case .wordInstance(let instance):
-                    WordInPassageView(word: instance.wordInfo.bound(), instance: instance.bound())
-                default:
-                    Text("?")
-                }
-            }
             .confirmationDialog("New Vocab List", isPresented: $showCreateListActionSheet, actions: {
                 Button(action: {
                     showSelectDefaultListModal = true
@@ -114,17 +119,12 @@ struct VocabListsView: View {
                 MoreStatsView()
             }
             .sheet(isPresented: $showCreateBiblePassageListModal) {
-                NavigationStack {
+                NavigationView {
                     BuildVocabListView()
                 }
             }
             .sheet(isPresented: $showSelectDefaultListModal) {
-                NavigationStack {
-                    DefaultVocabListSelectorView()
-                }
-            }
-            .sheet(isPresented: $showCreateCustomListModal) {
-                CustomWordListBuilderView(viewModel: .init(list: nil))
+                DefaultVocabListSelectorView()
             }
             .sheet(isPresented: $showVocabListTypeInfoModal) {
                 VocabListTypeInfoView()
@@ -132,10 +132,22 @@ struct VocabListsView: View {
             .sheet(isPresented: $showImportCSVFileView) {
                 ImportCSVView()
             }
-            .onAppear {
-                refreshDueWords()
+            .sheet(isPresented: $showReviewedWords) {
+                NavigationView {
+                    WordsSeenTodayView(entryType: .reviewedWord)
+                }
             }
-            .refreshable {
+            .sheet(isPresented: $showNewWords) {
+                NavigationView {
+                    WordsSeenTodayView(entryType: .newWord)
+                }
+            }
+            .sheet(isPresented: $showDueWords) {
+                NavigationView {
+                    DueWordsView()
+                }
+            }
+            .onAppear {
                 refreshDueWords()
             }
         }
@@ -245,35 +257,43 @@ extension VocabListsView {
         Section {
             HStack(alignment: .center) {
                 Button(action: {
-                    paths.append(.reviewedWords)
+                    showReviewedWords = true
                 }, label: {
                     VStack(spacing: 4) {
                         Text("Reviewed")
                             .font(.footnote)
                         Image(systemName: "arrow.triangle.2.circlepath")
                             .font(.title)
-                        Text("\(studySessionEntries.filter { $0.studyTypeInt == 1 }.count)")
+                        Text("\(studySessionEntries.filter { $0.wasNewWord == false }.count)")
                             .font(.subheadline)
                     }
                     .frame(maxWidth: .infinity)
+                    .frame(height: 100)
+                    .background(Color.accentColor)
+                    .cornerRadius(12)
                 })
                 .buttonStyle(.borderless)
+                .foregroundColor(.white)
                 Button(action: {
-                    paths.append(.newWords)
+                    showNewWords = true
                 }, label: {
                     VStack(spacing: 4) {
                         Text("New")
                             .font(.footnote)
                         Image(systemName: "gift")
                             .font(.title)
-                        Text("\(studySessionEntries.filter { $0.studyTypeInt == 0 }.count)")
+                        Text("\(studySessionEntries.filter { $0.wasNewWord == true }.count)")
                             .font(.subheadline)
                     }
                     .frame(maxWidth: .infinity)
+                    .frame(height: 100)
+                    .background(Color.accentColor)
+                    .cornerRadius(12)
                 })
                 .buttonStyle(.borderless)
+                .foregroundColor(.white)
                 Button(action: {
-                    paths.append(.dueWords)
+                    showDueWords = true
                 }, label: {
                     VStack(spacing: 4) {
                         Text("Due")
@@ -284,43 +304,141 @@ extension VocabListsView {
                             .font(.subheadline)
                     }
                     .frame(maxWidth: .infinity)
+                    .frame(height: 100)
+                    .background(Color.accentColor)
+                    .cornerRadius(12)
                 })
             }
             .buttonStyle(.borderless)
+            .foregroundColor(.white)
+        } header: {
+            Text("Today's Stats")
         }
-        .listRowBackground(Color.accentColor)
-        .foregroundColor(.white)
+        .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+        .listRowBackground(Color.appBackground)
+        .buttonStyle(.borderless)
     }
     
     @ViewBuilder
-    func ListsSection() -> some View {
-        ForEach(lists) { list in
-            NavigationLink(value: AppPath.vocabListDetail(list: list, autoStudy: false)) {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(list.defaultTitle)
-                        .bold()
-                        .multilineTextAlignment(.leading)
-                        .foregroundColor(.accentColor)
-                    Text(list.defaultDetails)
-                        .font(.caption)
-                        .foregroundColor(Color(uiColor: .secondaryLabel))
+    func NTListsSection() -> some View {
+        Section {
+            ForEach(ntLists) { list in
+                NavigationLink(destination: {
+                    NavigationLazyView(ListDetailView(viewModel: .init(list: list)))
+                }) {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(list.defaultTitle)
+                            .bold()
+                            .multilineTextAlignment(.leading)
+                            .foregroundColor(.accentColor)
+                        Text(list.defaultDetails)
+                            .font(.caption)
+                            .foregroundColor(Color(uiColor: .secondaryLabel))
+                    }
+                }
+                .contextMenu {
+                    Button(role: .destructive, action: {
+                        onDelete(list)
+                    }, label: {
+                        Label("Delete", systemImage: "trash")
+                    })
+                }
+                .swipeActions {
+                    Button(action: {
+                        onDelete(list)
+                    }, label: {
+                        Text("Delete")
+                    })
+                    .tint(.red)
                 }
             }
-            .contextMenu {
-                Button(role: .destructive, action: {
-                    onDelete(list)
-                }, label: {
-                    Label("Delete", systemImage: "trash")
-                })
-            }
-            .swipeActions {
-                Button(action: {
-                    onDelete(list)
-                }, label: {
-                    Text("Delete")
-                })
-            }
+        } header: {
+            Text("Greek Vocab")
         }
+    }
+    
+    @ViewBuilder
+    func OTListsSection() -> some View {
+        Section {
+            ForEach(otLists) { list in
+                NavigationLink(destination: {
+                    NavigationLazyView(ListDetailView(viewModel: .init(list: list)))
+                }) {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(list.defaultTitle)
+                            .bold()
+                            .multilineTextAlignment(.leading)
+                            .foregroundColor(.accentColor)
+                        Text(list.defaultDetails)
+                            .font(.caption)
+                            .foregroundColor(Color(uiColor: .secondaryLabel))
+                    }
+                }
+                .contextMenu {
+                    Button(role: .destructive, action: {
+                        onDelete(list)
+                    }, label: {
+                        Label("Delete", systemImage: "trash")
+                    })
+                }
+                .swipeActions {
+                    Button(action: {
+                        onDelete(list)
+                    }, label: {
+                        Text("Delete")
+                    })
+                }
+            }
+        } header: {
+            Text("Hebrew Vocab")
+        }
+    }
+    
+    @ViewBuilder
+    func ImportedListsSection() -> some View {
+        Section {
+            ForEach(importedLists) { list in
+                NavigationLink(destination: {
+                    NavigationLazyView(ListDetailView(viewModel: .init(list: list)))
+                }) {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(list.defaultTitle)
+                            .bold()
+                            .multilineTextAlignment(.leading)
+                            .foregroundColor(.accentColor)
+                        Text(list.defaultDetails)
+                            .font(.caption)
+                            .foregroundColor(Color(uiColor: .secondaryLabel))
+                    }
+                }
+                .contextMenu {
+                    Button(role: .destructive, action: {
+                        onDelete(list)
+                    }, label: {
+                        Label("Delete", systemImage: "trash")
+                    })
+                }
+                .swipeActions {
+                    Button(action: {
+                        onDelete(list)
+                    }, label: {
+                        Text("Delete")
+                    })
+                }
+            }
+        } header: {
+            Text("Imported Vocab")
+        }
+    }
+}
+
+struct NavigationLazyView<Content: View>: View {
+    let build: () -> Content
+    init(_ build: @autoclosure @escaping () -> Content) {
+        self.build = build
+    }
+    var body: Content {
+        build()
     }
 }
 

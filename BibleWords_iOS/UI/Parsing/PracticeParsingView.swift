@@ -30,7 +30,7 @@ struct PracticeParsingView: View {
     @State var endDate = Date()
     
     var body: some View {
-        NavigationStack {
+        NavigationView {
             ZStack {
                 Color(uiColor: .secondarySystemBackground)
                     .ignoresSafeArea()
@@ -121,7 +121,6 @@ extension PracticeParsingView {
             Text(currentInstance?.displayParsingStr ?? "")
                 .multilineTextAlignment(.center)
                 .font(.title3)
-                .bold()
                 .padding(.bottom)
             HStack {
                 VStack(alignment: .center) {

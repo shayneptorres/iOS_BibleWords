@@ -9,10 +9,12 @@ import SwiftUI
 import Combine
 
 struct WordsSeenTodayView: View {
+    @Environment(\.presentationMode) var presentationMode
+    
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \StudySessionEntry.createdAt, ascending: false)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \VocabStudySessionEntry.createdAt, ascending: false)],
         predicate: NSPredicate(format: "createdAt >= %@", Date.startOfToday as CVarArg)
-    ) var wordEntries: FetchedResults<StudySessionEntry>
+    ) var wordEntries: FetchedResults<VocabStudySessionEntry>
     
     @ObservedObject var viewModel = DataDependentViewModel()
     var entryType = SessionEntryType.newWord
@@ -20,9 +22,9 @@ struct WordsSeenTodayView: View {
     var words: [Bible.WordInfo] {
         switch entryType {
         case .newWord:
-            return wordEntries.filter { $0.studyTypeInt == 0 }.compactMap { $0.word?.wordInfo }
+            return wordEntries.filter { $0.wasNewWord }.compactMap { $0.word?.wordInfo }
         case .reviewedWord:
-            return wordEntries.filter { $0.studyTypeInt == 1 }.compactMap { $0.word?.wordInfo }
+            return wordEntries.filter { !$0.wasNewWord }.compactMap { $0.word?.wordInfo }
         case .parsing:
             return []
         }
@@ -51,17 +53,26 @@ struct WordsSeenTodayView: View {
             } else {
                 if [SessionEntryType.newWord, .reviewedWord].contains(entryType) {
                     ForEach(words.uniqueSorted) { word in
-                        NavigationLink(value: AppPath.wordInfo(word)) {
+                        NavigationLink(destination: {
+                            WordInfoDetailsView(word: word.bound())
+                        }, label: {
                             WordInfoRow(wordInfo: word.bound())
-                        }
+                        })
                     }
                 } else {
-                    ForEach(wordEntries.filter { $0.studyTypeInt == 2 }) { entry in
-                        ParsingSessionEntryRow(entry: entry.bound())
-                    }
+                    Text("TODO: Implement :)")
                 }
             }
-        }.navigationTitle(title)
+        }
+        .navigationTitle(title)
+        .toolbar {
+            Button(action: {
+                presentationMode.wrappedValue.dismiss()
+            }, label: {
+                Text("Dismiss")
+                    .bold()
+            })
+        }
     }
 }
 

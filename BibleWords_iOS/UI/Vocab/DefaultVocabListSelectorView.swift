@@ -18,13 +18,17 @@ struct DefaultVocabListSelectorView: View {
     @State var selectedLang: Language = .all
     
     var body: some View {
-        NavigationStack {
+        NavigationView {
             List {
                 Picker("Language", selection: $selectedLang) {
                     Text("All").tag(Language.all)
                     Text("Greek").tag(Language.greek)
                     Text("Hebrew").tag(Language.hebrew)
-                }.pickerStyle(.segmented)
+                }
+                .pickerStyle(.segmented)
+                .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+                .listRowBackground(Color.appBackground)
+                .buttonStyle(.borderless)
                 if selectedLang == .hebrew || selectedLang == .all {
                     Section {
                         ForEach(DefaultVocabListType.hebrewTypes, id: \.rawValue) { type in
@@ -130,15 +134,17 @@ extension DefaultVocabListSelectorView {
 
 extension DefaultVocabListSelectorView {
     func BuiltWordsList() -> some View {
-        NavigationStack {
+        NavigationView {
             ZStack {
                 List {
                     Text(selectedListType.rowTitle)
                     Section {
                         ForEach(builtWords) { word in
-                            NavigationLink(value: word) {
+                            NavigationLink(destination: {
+                                WordInfoDetailsView(word: word.bound())
+                            }, label: {
                                 WordInfoRow(wordInfo: word.bound())
-                            }
+                            })
                         }
                     } header: {
                         Text("\(builtWords.count) words")
@@ -146,9 +152,6 @@ extension DefaultVocabListSelectorView {
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
-            .navigationDestination(for: Bible.WordInfo.self) { word in
-                WordInfoDetailsView(word: word.bound())
-            }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(action: { showBuiltWordsList = false }, label: { Text("Dismiss").bold() })

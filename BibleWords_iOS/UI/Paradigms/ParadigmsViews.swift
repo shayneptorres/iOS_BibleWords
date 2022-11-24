@@ -33,7 +33,12 @@ struct ConceptsView: View {
                                         Text(concept.group.title)
                                             .foregroundColor(Color(uiColor: .label))
                                         Spacer()
-                                        Image(systemName: selectedConcepts.contains(concept) ? "circle.dashed.inset.filled" : "circle.dashed")
+                                        if selectedConcepts.contains(concept) {
+                                            Image(systemName: "circle.dashed.inset.filled")
+                                                .foregroundColor(.accentColor)
+                                        } else {
+                                            Image(systemName: "circle.dashed")
+                                        }
                                     }
                                 })
                             }
@@ -44,9 +49,10 @@ struct ConceptsView: View {
                 }
             }
         }
+        // TODO: update this view so user can actually use this view
         .toolbar {
-            if mode == .multiSelect {
-                ToolbarItem(placement: .navigationBarLeading) {
+            ToolbarItem(placement: .navigationBarLeading) {
+                if mode == .multiSelect {
                     Button(action: {
                         mode = .singleSelect
                         selectedConcepts.removeAll()
@@ -72,8 +78,8 @@ struct ConceptsView: View {
                 }
             }
         }
-        .navigationDestination(isPresented: $showParadigmDetailView) {
-            ParadigmDetailView(concepts: selectedConcepts)
+        .fullScreenCover(isPresented: $showParadigmDetailView) {
+            ParadigmDetailView(concepts: selectedConcepts)   
         }
         .navigationTitle("Hebrew Paradigms")
         .navigationBarTitleDisplayMode(.inline)

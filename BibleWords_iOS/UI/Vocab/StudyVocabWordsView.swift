@@ -29,7 +29,7 @@ struct StudyVocabWordsView: View {
     @State var showWordDefView = false
     @State var showWordInfoView = false
     
-    @State var entries: [StudySessionEntry] = []
+    @State var entries: [VocabStudySessionEntry] = []
     @State var startDate = Date()
     @State var endDate = Date()
     
@@ -81,8 +81,8 @@ struct StudyVocabWordsView: View {
                 }
             })
             .sheet(isPresented: $showWordInfoView, content: {
-                NavigationStack {
-                    WordInfoDetailsView(word: (currentWord?.wordInfo ?? .init([:])).bound())
+                NavigationView {
+                    WordInfoDetailsView(word: (currentWord?.wordInfo ?? .init([:])).bound(), isPresentedModally: true)
                 }
             })
             .navigationBarTitleDisplayMode(.inline)
@@ -217,7 +217,7 @@ extension StudyVocabWordsView {
     
     func onLearn() {
         CoreDataManager.transaction(context: managedObjectContext) {
-            let entry = StudySessionEntry.new(context: managedObjectContext, word: currentWord, answer: .wrong)
+            let entry = VocabStudySessionEntry.new(context: managedObjectContext, word: currentWord, prevInterval: (currentWord?.currentInterval ?? 0).toInt, interval: 1, newWord: true)
             entries.append(entry)
             
             currentWord?.currentInterval = 1
@@ -378,10 +378,9 @@ extension StudyVocabWordsView {
             session.activityTitle = vocabList?.title ?? "Due Words"
             session.activityTypeInt = ActivityType.vocab.rawValue
             
-            
             for entry in entries {
                 // add entries
-                session.addToEntries(entry)
+                session.addToVocabEntries(entry)
             }
         }
         endLiveActivity()
@@ -392,7 +391,7 @@ extension StudyVocabWordsView {
     
     func onWrong() {
         CoreDataManager.transaction(context: managedObjectContext) {
-            let entry = StudySessionEntry.new(context: managedObjectContext, word: currentWord, answer: .wrong)
+            let entry = VocabStudySessionEntry.new(context: managedObjectContext, word: currentWord, prevInterval: (currentWord?.currentInterval ?? 0).toInt, interval: 1)
             entries.append(entry)
             
             currentWord?.currentInterval = 1.toInt32
@@ -402,21 +401,7 @@ extension StudyVocabWordsView {
         }
     }
     
-    func onHard() {
-        guard (currentWord?.currentInterval) != nil else { return }
-        let interval = hardInterval
-        CoreDataManager.transaction(context: managedObjectContext) {
-            let entry = StudySessionEntry.new(context: managedObjectContext, word: currentWord, answer: .hard)
-            entries.append(entry)
-            
-            currentWord?.currentInterval = interval.toInt32
-            let nextTime = VocabWord.defaultSRIntervals[interval]
-            currentWord?.dueDate = Date().addingTimeInterval(TimeInterval(nextTime))
-            updateCurrentWord()
-        }
-    }
-    
-    func onGood() {
+    func onCorrect() {
         guard let currentInterval = currentWord?.currentInterval else { return }
         var nextInterval = currentInterval.toInt
         if (currentInterval + 1) >= VocabWord.defaultSRIntervals.count {
@@ -426,33 +411,12 @@ extension StudyVocabWordsView {
         }
         
         CoreDataManager.transaction(context: managedObjectContext) {
-            let entry = StudySessionEntry.new(context: managedObjectContext, word: currentWord, answer: .good)
+            let entry = VocabStudySessionEntry.new(context: managedObjectContext, word: currentWord, prevInterval: (currentWord?.currentInterval ?? 0).toInt, interval: nextInterval)
             entries.append(entry)
             
             currentWord?.currentInterval = nextInterval.toInt32
             let nextTime = VocabWord.defaultSRIntervals[Int(nextInterval)]
             currentWord?.dueDate = Date().addingTimeInterval(TimeInterval(nextTime))
-            updateCurrentWord()
-        }
-    }
-    
-    func onEasy() {
-        guard let currentInterval = currentWord?.currentInterval else { return }
-        var nextInterVal = currentInterval.toInt
-        if currentInterval + 2 >= VocabWord.defaultSRIntervals.count {
-            nextInterVal = VocabWord.defaultSRIntervals.count - 1
-        } else {
-            nextInterVal = (currentInterval + 2).toInt
-        }
-        
-        CoreDataManager.transaction(context: managedObjectContext) {
-            let entry = StudySessionEntry.new(context: managedObjectContext, word: currentWord, answer: .easy)
-            entries.append(entry)
-            
-            currentWord?.currentInterval = nextInterVal.toInt32
-            let nextTime = VocabWord.defaultSRIntervals[Int(nextInterVal)]
-            currentWord?.dueDate = Date().addingTimeInterval(TimeInterval(nextTime))
-            
             updateCurrentWord()
         }
     }
@@ -646,7 +610,6 @@ extension StudyVocabWordsView {
     
     func DynamicLemmaInteractionView() -> some View {
         TapToRevealView()
-//        RevealBtnView()
     }
     
     func DynamicLearnInteractionView() -> some View {
@@ -663,7 +626,6 @@ extension StudyVocabWordsView {
                         HStack {
                             Image(systemName: "gift.fill")
                                 .font(.title2)
-                                .bold()
                                 .foregroundColor(.accentColor)
                             Text("New Word!")
                                 .font(.title2)
@@ -705,12 +667,15 @@ extension StudyVocabWordsView {
     func FullLemmaGlossInteractionView() -> some View {
         return AnyView(
             VStack {
-                AnswerButton(answerType: .good, detail: onGoodIntervalStr, action: onGood)
+                AnswerButton(answerType: .good, detail: onGoodIntervalStr, action: onCorrect)
                 AnswerButton(answerType: .wrong, detail: onWrongIntervalStr, action: onWrong)
                 Menu(content: {
                     ForEach(0..<VocabWord.defaultSRIntervals.count, id: \.self) { i in
                         Button(action: {
                             CoreDataManager.transaction(context: managedObjectContext) {
+                                let entry = VocabStudySessionEntry.new(context: managedObjectContext, word: currentWord, prevInterval: (currentWord?.currentInterval ?? 0).toInt, interval: i)
+                                entries.append(entry)
+                                
                                 currentWord?.currentInterval = i.toInt32
                                 let nextTime = VocabWord.defaultSRIntervals[Int(i)]
                                 currentWord?.dueDate = Date().addingTimeInterval(TimeInterval(nextTime))
@@ -732,47 +697,6 @@ extension StudyVocabWordsView {
         )
     }
     
-    func DynamicLemmaGlossInteractionView() -> some View {
-        if interfaceMode == .normal {
-            return AnyView(
-                VStack {
-                    InterfaceButtonsView()
-                    HStack {
-                        AnswerButton(answerType: .wrong, detail: onWrongIntervalStr, action: onWrong)
-                        AnswerButton(answerType: .hard, detail: onHardIntervalStr, action: onHard)
-                        AnswerButton(answerType: .good, detail: onGoodIntervalStr, action: onGood)
-                        AnswerButton(answerType: .easy, detail: onEasyIntervalStr, action: onEasy)
-                    }
-                    .frame(height: buttonHeight)
-                    .frame(maxWidth: .infinity)
-                    .padding(.bottom)
-                }
-            )
-
-        } else {
-            return AnyView(
-                HStack {
-                    Spacer()
-                        .frame(maxWidth: interfaceMode == .rightHanded ? .infinity : 0)
-                    VStack {
-                        InterfaceButtonsView()
-                        AnswerButton(answerType: .wrong, detail: onWrongIntervalStr, action: onWrong)
-                            .frame(maxHeight: 60)
-                        AnswerButton(answerType: .hard, detail: onHardIntervalStr, action: onHard)
-                            .frame(maxHeight: 60)
-                        AnswerButton(answerType: .good, detail: onGoodIntervalStr, action: onGood)
-                            .frame(maxHeight: 60)
-                        AnswerButton(answerType: .easy, detail: onEasyIntervalStr, action: onEasy)
-                            .frame(maxHeight: 60)
-                    }
-                    Spacer()
-                        .frame(maxWidth: interfaceMode == .leftHanded ? .infinity : 0)
-                }
-                    .animation(.easeInOut(duration: 0.2), value: interfaceMode)
-            )
-        }
-    }
-    
     func DynamicUserInteractionView() -> some View {
         if displayMode == .learnWord {
             return AnyView(
@@ -784,23 +708,9 @@ extension StudyVocabWordsView {
             )
         } else {
             return AnyView(
-//                DynamicLemmaGlossInteractionView()
                 FullLemmaGlossInteractionView()
             )
         }
     }
     
 }
-
-//struct VocabListStudyView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        StudyVocabWordsView(
-//            vocabList: .constant(.simple(for: PersistenceController.preview.container.viewContext, lang: .greek)),
-//            dueWords: [
-//                .newGreek(for: PersistenceController.preview.container.viewContext),
-//                .newGreek(for: PersistenceController.preview.container.viewContext),
-//                .newGreek(for: PersistenceController.preview.container.viewContext)
-//            ]
-//        )
-//    }
-//}

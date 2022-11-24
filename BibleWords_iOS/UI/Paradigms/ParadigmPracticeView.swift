@@ -84,7 +84,7 @@ struct ParadigmPracticeView: View {
                 }
             }
             .sheet(isPresented: $showCurrentEntries) {
-                NavigationStack {
+                NavigationView {
                     List(entries) { entry in
                         VStack(alignment: .leading, spacing: 4) {
                             Text(entry.item.text)

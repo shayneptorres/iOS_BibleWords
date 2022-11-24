@@ -121,8 +121,12 @@ extension VocabWord: Bindable {
                                             5.years,
                                             10.years]
     
-    var sessionEntriesArr: [StudySessionEntry] {
-        return (sessionEntries?.allObjects ?? []) as! [StudySessionEntry]
+    var currIntervalString: String {
+        return "\(VocabWord.defaultSRIntervals[Int(currentInterval)].toPrettyTime)"
+    }
+    
+    var studySessionEntriesArr: [VocabStudySessionEntry] {
+        return (studySessionEntries?.allObjects ?? []) as? [VocabStudySessionEntry] ?? []
     }
 }
 

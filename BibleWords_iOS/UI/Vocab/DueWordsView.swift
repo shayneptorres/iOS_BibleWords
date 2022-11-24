@@ -78,6 +78,7 @@ struct DueWordsView: View, Equatable {
     }
     
     @Environment(\.managedObjectContext) var context
+    @Environment(\.presentationMode) var presentationMode
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
     
@@ -146,7 +147,7 @@ struct DueWordsView: View, Equatable {
                     })
                 }
                 .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
-                .listRowBackground(Color.appBackground)
+                .listRowBackground(Color(uiColor: .systemGroupedBackground))
                 .foregroundColor(.white)
                 .buttonStyle(.borderless)
                 Section {
@@ -160,7 +161,7 @@ struct DueWordsView: View, Equatable {
             }
         }
         .sheet(isPresented: $showSoonWords, content: {
-            NavigationStack {
+            NavigationView {
                 List {
                     Section {
                         HStack {
@@ -209,13 +210,17 @@ struct DueWordsView: View, Equatable {
                 .navigationBarTitleDisplayMode(.inline)
             }
         })
-        .navigationDestination(for: Bible.WordInfo.self) { word in
-            WordInfoDetailsView(word: word.bound())
-        }
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle("")
-        .toolbar(.hidden, for: .tabBar)
         .toolbar {
+            ToolbarItemGroup(placement: .primaryAction) {
+                Button(action: {
+                    presentationMode.wrappedValue.dismiss()
+                }, label: {
+                    Text("Dismiss")
+                        .bold()
+                })
+            }
             ToolbarItemGroup(placement: .principal) {
                 VStack {
                     Text("Your Due Words")
@@ -399,7 +404,9 @@ extension DueWordsView {
     @ViewBuilder
     func DueWordsSection() -> some View {
         ForEach(filteredDueWordInfos.uniqueSorted) { wordInfo in
-            NavigationLink(value: AppPath.wordInfo(wordInfo)) {
+            NavigationLink(destination: {
+                WordInfoDetailsView(word: wordInfo.bound())
+            }) {
                 WordInfoRow(wordInfo: wordInfo.bound())
             }
         }

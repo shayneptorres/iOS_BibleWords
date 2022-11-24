@@ -102,16 +102,6 @@ struct WordInPassageView: View {
                 }
                 .font(instance.language.largeBibleFont)
             }
-//            Section {
-//                Text(instance.prettyRefStr)
-//                    .font(.title3)
-//                Text(instance.textSurface)
-//                    .font(instance.language.meduimBibleFont)
-//                Text(instance.parsingStr)
-//                    .font(.title3)
-//
-//                }
-//            }
         }
         .navigationTitle(instance.prettyRefStr)
         .navigationBarTitleDisplayMode(.inline)

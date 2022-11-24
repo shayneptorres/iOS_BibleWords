@@ -88,9 +88,11 @@ struct ParsingListDetailView: View {
                         Text("\(viewModel.list.range?.occurrences ?? 0)+ occurrences")
                     }
                     Section {
-                        NavigationLink(value: AppPath.parsingSessionsList(viewModel.list)) {
+                        NavigationLink(destination: {
+                            ParsingListSessionsView(list: viewModel.list.bound())
+                        }, label: {
                             Text("Parsing Sessions Reports")
-                        }
+                        })
                         .navigationViewStyle(.stack)
                     }
                     HStack {
@@ -109,7 +111,29 @@ struct ParsingListDetailView: View {
                     }
                     Section {
                         ForEach(groupedParsingInstances.sorted { $0.lemma < $1.lemma }, id: \.lemma) { group in
-                            NavigationLink(value: AppPath.wordInstanceList(group.instances)) {
+                            NavigationLink(destination: {
+                                List {
+                                    Section {
+                                        ForEach(group.instances) { instance in
+                                            VStack(alignment: .leading) {
+                                                Text(instance.textSurface)
+                                                    .font(instance.language.meduimBibleFont)
+                                                    .padding(.bottom, 4)
+                                                Text(instance.parsingStr)
+                                                    .font(.subheadline)
+                                                    .foregroundColor(Color(uiColor: .secondaryLabel))
+                                            }
+                                        }
+                                    } header: {
+                                        Text("Forms")
+                                    }
+                                }
+                                .toolbar {
+                                    ToolbarItemGroup(placement: .principal) {
+                                        Text(group.instances.first?.lemma ?? "").font(.bible24)
+                                    }
+                                }
+                            }) {
                                 HStack {
                                     Text(group.lemma)
                                         .font(viewModel.list.language.meduimBibleFont)
@@ -160,7 +184,7 @@ struct ParsingListDetailView: View {
 extension ParsingListDetailView {
     @ViewBuilder
     func SettingsView() -> some View {
-        NavigationStack {
+        NavigationView {
             ZStack {
                 Color
                     .appBackground

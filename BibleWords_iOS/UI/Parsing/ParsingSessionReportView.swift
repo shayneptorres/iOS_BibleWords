@@ -13,7 +13,7 @@ struct ParsingSessionReportView: View {
     let list: ParsingList
     
     var body: some View {
-        NavigationStack {
+        NavigationView {
             ZStack {
                 List {
                     ForEach(session.entriesArr.sorted { $0.createdAt! < $1.createdAt! }) { entry in

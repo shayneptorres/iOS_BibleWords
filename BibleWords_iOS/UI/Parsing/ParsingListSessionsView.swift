@@ -17,10 +17,9 @@ struct ParsingListSessionsView: View {
             if list.sessionsArr.isEmpty {
                 Text("You haven't completed any parsing sessions yet. To practice your parsing, go back to the previous page and tap the 'Practice Parsing' button at the bottom of the screen")
                     .multilineTextAlignment(.center)
-                    .fontWeight(.semibold)
             } else {
                 ForEach(list.sessionsArr.sorted { $0.startDate! > $1.startDate! }) { session in
-                    NavigationLink(value: AppPath.parsingSessionDetail(session)) {
+                    NavigationView {
                         VStack(alignment: .leading) {
                             Text(session.startDate?.toPrettyDate ?? "")
                                 .padding(.bottom, 4)
@@ -69,13 +68,6 @@ struct ParsingListSessionsView: View {
         }
         .navigationTitle("Parsing Sessions")
         .navigationBarTitleDisplayMode(.inline)
-        .navigationDestination(for: StudySession.self) { session in
-            List {
-                ForEach(session.entriesArr.sorted { $0.createdAt! < $1.createdAt! }) { entry in
-                    ParsingSessionEntryRow(entry: entry.bound())
-                }
-            }
-        }
     }
     
     func onDelete(session: StudySession) {

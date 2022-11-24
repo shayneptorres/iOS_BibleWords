@@ -11,12 +11,13 @@ struct WordInfoDetailsView: View {
     @Environment(\.managedObjectContext) var context
     @Environment(\.presentationMode) var presentationMode
     @Binding var word: Bible.WordInfo
+    var isPresentedModally = false
     @State var updater = false
     @State var suggestedLinkedWords: [Bible.WordInfo] = []
     @State var isSearchingSuggestedWords = false
     @State var showForms = false
     @State var showAppearances = true
-    @State var showEditWordView = true
+    @State var showEditWordView = false
     @State var showExternalDictOptions = false
     
     var body: some View {
@@ -24,69 +25,87 @@ struct WordInfoDetailsView: View {
             WordInfoHeaderSection(wordInfo: $word) {
                 showExternalDictOptions = true
             }
+            FormsAppearancesSection()
             Section {
-                if showForms {
-                    ForEach(word.parsingInfo.instances.sorted { $0.parsingStr < $1.parsingStr }) { info in
-                        HStack {
-                            Text(info.textSurface)
-                                .font(info.language.meduimBibleFont)
-                            Spacer()
-                            Text(info.parsingStr)
-                                .font(.footnote)
-                                .foregroundColor(Color(uiColor: .secondaryLabel))
-                        }
+                HStack {
+                    Label("Current Interval: ", systemImage: "chart.bar")
+                    Spacer()
+                    if let vocabWord = word.vocabWord(context: context) {
+                        Text("\(vocabWord.currIntervalString)")
+                            .bold()
+                            .foregroundColor(.accentColor)
+                    } else {
+                        Text("New")
+                            .bold()
+                            .foregroundColor(.accentColor)
                     }
                 }
-            } header: {
-                HStack {
-                    Text("\(word.parsingInfo.instances.count) Forms")
-                    Spacer()
-                    Button(action: { showForms.toggle() }, label: {
-                        Image(systemName: showForms ? "chevron.up" : "chevron.down")
-                    })
-                }
-            }
-            Section {
-                if showAppearances {
-                    ForEach(word.instances) { instance in
-                        NavigationLink(value: AppPath.wordInstance(instance)) {
-                            VStack(alignment: .leading) {
-                                Text(instance.prettyRefStr)
-                                    .bold()
-                                    .padding(.bottom, 2)
-                                Text(instance.textSurface)
-                                    .font(instance.language.meduimBibleFont)
-                                    .padding(.bottom, 4)
-                                Text(instance.parsingStr)
-                                    .font(.footnote)
+                NavigationLink(destination: {
+                    List((word.vocabWord(context: context)?.studySessionEntriesArr ?? []).sorted { $0.createdAt ?? Date() > $1.createdAt ?? Date() }) { entry in
+                        HStack {
+                            if entry.wasNewWord {
+                                Image(systemName: "gift")
+                                    .font(.title)
+                            } else if entry.prevInterval < entry.interval {
+                                Image(systemName: "arrow.up.forward")
+                                    .foregroundColor(.green)
+                                    .font(.title)
+                            } else {
+                                Image(systemName: "arrow.down.forward")
+                                    .foregroundColor(.red)
+                                    .font(.title)
+                            }
+                            VStack(alignment: .leading, spacing: 4) {
+                                HStack {
+                                    if entry.wasNewWord {
+                                        Text("Learned")
+                                    } else {
+                                        Text("\(entry.intervalStr)")
+                                    }
+                                }
+                                Text(entry.createdAt?.toShortPrettyDateTime ?? "")
+                                    .font(.caption)
                                     .foregroundColor(Color(uiColor: .secondaryLabel))
                             }
+                            Spacer()
                         }
                     }
-                }
+                    .navigationTitle("Study History")
+                    .navigationBarTitleDisplayMode(.inline)
+                }, label: {
+                    Label("Study History", systemImage: "chart.xyaxis.line")
+                })
             } header: {
-                HStack {
-                    Text("\(word.instances.count) Appearances")
-                    Spacer()
-                    Button(action: { showAppearances.toggle() }, label: {
-                        Image(systemName: showAppearances ? "chevron.up" : "chevron.down")
-                    })
-                }
+                Text("Study Stats")
             }
         }
+
+        .sheet(isPresented: $showEditWordView, content: {
+//            VocabWordDefinitionView(vocabWord: word.vocabWord(context: context)) { updatedWord in
+//                
+//            }
+        })
         .navigationTitle("Word Info")
         .navigationBarTitleDisplayMode(.inline)
-        .navigationDestination(for: AppPath.self) { path in
-            switch path {
-            case .wordInstance(let instance):
-                WordInPassageView(word: instance.wordInfo.bound(), instance: instance.bound())
-            default:
-                Text("🫥")
-            }
-        }
         .toolbar {
+            ToolbarItemGroup(placement: .navigationBarLeading) {
+                if isPresentedModally {
+                    Button(action: {
+                        presentationMode.wrappedValue.dismiss()
+                    }, label: {
+                        Text("Dismiss")
+                            .bold()
+                    })
+                } else {
+                    
+                }
+            }
             ToolbarItemGroup(placement: .navigationBarTrailing) {
-                Button("Done", action: { presentationMode.wrappedValue.dismiss() })
+                Button(action: {
+                    showEditWordView = true
+                }, label: {
+                    Image(systemName: "pencil.circle")
+                })
             }
         }
         .confirmationDialog("Search External Dictionaries", isPresented: $showExternalDictOptions, actions: {
@@ -125,6 +144,90 @@ struct WordInfoDetailsView: View {
                     }
                 }
             }
+        }
+    }
+}
+
+extension WordInfoDetailsView {
+    @ViewBuilder
+    func FormsAppearancesSection() -> some View {
+        Section {
+            NavigationLink(destination: {
+                List {
+                    ForEach(word.parsingInfo.instances.sorted { $0.parsingStr < $1.parsingStr }) { info in
+                        HStack {
+                            Text(info.textSurface)
+                                .font(info.language.meduimBibleFont)
+                            Spacer()
+                            Text(info.parsingStr)
+                                .font(.footnote)
+                                .foregroundColor(Color(uiColor: .secondaryLabel))
+                        }
+                    }
+                }
+                .toolbar {
+                    ToolbarItem(placement: .principal) {
+                        Text(word.lemma)
+                            .font(word.language.meduimBibleFont)
+                    }
+                }
+            }, label: {
+                Label(title: {
+                    Text("\(word.parsingInfo.instances.count)")
+                        .bold()
+                        .foregroundColor(.accentColor)
+                    +
+                    Text(" forms")
+                }, icon: {
+                    Image(systemName: "eye")
+                })
+            })
+            NavigationLink(destination: {
+                List {
+                    ForEach(word.instances) { instance in
+                        NavigationLink(destination: {
+                            WordInPassageView(word: instance.wordInfo.bound(), instance: instance.bound())
+                        }) {
+                            VStack(alignment: .leading) {
+                                Text(instance.prettyRefStr)
+                                    .bold()
+                                    .padding(.bottom, 2)
+                                Text(instance.textSurface)
+                                    .font(instance.language.meduimBibleFont)
+                                    .padding(.bottom, 4)
+                                Text(instance.parsingStr)
+                                    .font(.footnote)
+                                    .foregroundColor(Color(uiColor: .secondaryLabel))
+                                VStack(alignment: instance.language == .greek ? .leading : .trailing) {
+                                    Text(instance.wordInPassage) { string in
+                                        let attributedStr = instance.textSurface
+                                        if let range = string.range(of: attributedStr) { /// here!
+                                            string[range].foregroundColor = .accentColor
+                                        }
+                                    }
+                                    .font(instance.language.largeBibleFont)
+                                }
+                            }
+                        }
+                    }
+                }
+                .toolbar {
+                    ToolbarItem(placement: .principal) {
+                        Text(word.lemma)
+                            .font(word.language.meduimBibleFont)
+                    }
+                }
+            }, label: {
+                Label(title: {
+                    Text("\(word.instances.count)")
+                        .bold()
+                        .foregroundColor(.accentColor)
+                    +
+                    Text(" appearances")
+                }, icon: {
+                    Image(systemName: "book")
+                })
+            })
         }
     }
 }

@@ -17,15 +17,19 @@ struct MoreStatsView: View {
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
-        NavigationStack {
+        NavigationView {
             List {
                 Section {
-                    NavigationLink(value: SettingPath.vocabInterval) {
+                    NavigationLink(destination: {
+                        VocabWordIntervalStatsView()
+                    }, label: {
                         Text("Vocab Word Progress")
-                    }
-                    NavigationLink(value: SettingPath.answerStats) {
-                        Text("Vocab Word Answer Stats")
-                    }
+                    })
+//                    NavigationLink(destination: {
+//                        VocabWordDifficultyStatsView()
+//                    }, label: {
+//                        Text("Vocab Word Answer Stats")
+//                    })
                 } header: {
                     Text("Vocab Word Stats")
                 }
@@ -39,14 +43,6 @@ struct MoreStatsView: View {
                 })
             }
             .navigationTitle("App Statistics")
-            .navigationDestination(for: SettingPath.self) { path in
-                switch path {
-                case .vocabInterval:
-                    VocabWordIntervalStatsView()
-                case .answerStats:
-                    VocabWordDifficultyStatsView()
-                }
-            }
         }
     }
 }

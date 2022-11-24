@@ -11,7 +11,7 @@ struct VocabListTypeInfoView: View {
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
-        NavigationStack {
+        NavigationView {
             List {
                 InfoImageTextRow(imageName: "text.book.closed.fill", boldText: "Bible Passage List", text: " is a list that allows you to study vocab words based on a specific bible passage or range of passages. You can enter any range of Bible books, chapters, and number of occurrences and then build a list with all words that fit the above mentioned criteria. This type of list is helpful if you are wanting to read through books of the bible")
                 InfoImageTextRow(imageName: "list.bullet.rectangle.portrait.fill", boldText: "Default List", text: " is preset list that will allow you to study all words from the Old or New Testament that occur more than the given amount of times. This list is a good way to build up your core vocabulary of words that occur most often in the Bible")

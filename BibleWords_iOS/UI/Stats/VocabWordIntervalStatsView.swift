@@ -45,7 +45,27 @@ struct VocabWordIntervalStatsView: View {
                 }
                 Section {
                     ForEach(displayIntervals, id: \.self) { intervalInt in
-                        NavigationLink(value: intervalWords[intervalInt] ?? []) {
+                        NavigationLink(destination: {
+                            List(intervalWords[intervalInt] ?? []) { word in
+                                NavigationLink(destination: {
+                                    WordInfoDetailsView(word: word.bound())
+                                }) {
+                                    WordInfoRow(wordInfo: word.bound())
+                                }
+                            }
+                            .toolbar {
+                                ToolbarItemGroup(placement: .principal) {
+                                    VStack {
+                                        Text("\(VocabWord.defaultSRIntervals[intervalInt].toPrettyTime)")
+                                            .font(.system(size: 17))
+                                            .bold()
+                                        Text("\((intervalWords[intervalInt] ?? []).count) words")
+                                            .font(.system(size: 12))
+                                    }
+                                }
+                            }
+                            .navigationBarTitleDisplayMode(.inline)
+                        }) {
                             HStack {
                                 Text(VocabWord.defaultSRIntervals[intervalInt].toPrettyTime)
                                 Spacer()
@@ -62,16 +82,6 @@ struct VocabWordIntervalStatsView: View {
         }
         .navigationBarTitle("Vocab Interval Stats")
         .navigationBarTitleDisplayMode(.inline)
-        .navigationDestination(for: [Bible.WordInfo].self) { words in
-            List(words) { word in
-                NavigationLink(value: word) {
-                    WordInfoRow(wordInfo: word.bound())
-                }
-            }
-        }
-        .navigationDestination(for: Bible.WordInfo.self) { word in
-            WordInfoDetailsView(word: word.bound())
-        }
         .onAppear {
             guard intervalWords.isEmpty else { return }
             getVocabStatData()

@@ -25,23 +25,11 @@ class ListDetailViewModel: ObservableObject, Equatable {
         self.autoStudy = autoStudy
         
         Task {
-            if list.sourceType == .app {
-                API.main.coreDataReadyPublisher.sink { [weak self] isReady in
-                    if isReady {
-                        self?.buildBibleWords()
-                    }
-                }.store(in: &self.subscribers)
-            } else {
-                API.main.builtTextbooks.sink { [weak self] builtTextbooks in
-                    if builtTextbooks.contains(.garretHebrew) {
-                        self?.buildTextbookWords()
-                    } else {
-                        Task {
-                            await API.main.fetchGarretHebrew()
-                        }
-                    }
-                }.store(in: &self.subscribers)
-            }
+            API.main.coreDataReadyPublisher.sink { [weak self] isReady in
+                if isReady {
+                    self?.buildBibleWords()
+                }
+            }.store(in: &self.subscribers)
         }
         
         wordsAreReady.sink { [weak self] builtWords in
@@ -104,16 +92,16 @@ class ListDetailViewModel: ObservableObject, Equatable {
 }
 
 struct ListDetailView: View {
-    enum Filter {
+    enum Filter: CaseIterable {
         case all
         case new
         case due
         
         var title: String {
             switch self {
-            case .all: return "All words"
-            case .new: return "New words"
-            case .due: return "Due words"
+            case .all: return "All"
+            case .new: return "New"
+            case .due: return "Due"
             }
         }
     }
@@ -131,19 +119,20 @@ struct ListDetailView: View {
     @State var showSettings = false
     @State var isPinned = false
     
-    var filteredWords: [Bible.WordInfo] {
-        switch wordFilter {
-        case .all:
-            return viewModel.words
-        case .new:
-            return viewModel.words.filter { $0.isNewVocab(context: context) }
-        case .due:
-            return viewModel.list.wordsArr.filter { $0.isDue }.map { $0.wordInfo }
-        }
+    var allWords: [Bible.WordInfo] {
+        viewModel.words
+    }
+    
+    var newWords: [Bible.WordInfo] {
+        viewModel.words.filter { $0.isNewVocab(context: context) }
+    }
+    
+    var dueWords: [Bible.WordInfo] {
+        viewModel.list.wordsArr.filter { $0.isDue }.map { $0.wordInfo }
     }
     
     var sortedWords: [Bible.WordInfo] {
-        return filteredWords.sortedInfos
+        return words(for: wordFilter).sortedInfos
     }
     
     var body: some View {
@@ -151,39 +140,13 @@ struct ListDetailView: View {
             if viewModel.isBuilding {
                 DataIsBuildingCard(rotationAngle: $viewModel.animationRotationAngle)
             } else {
-                HStack {
-                    Button(action: { showFilterActionSheet = true }, label: {
-                        VStack {
-                            Image(systemName: "slider.horizontal.3")
-                                .padding(.bottom, 4)
-                            Text(wordFilter.title)
-                                .bold()
-                                .font(.subheadline)
-                        }
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 80)
-                        .background(Color.accentColor)
-                        .cornerRadius(12)
-                    })
-                    Button(action: { studyWords = true }, label: {
-                        VStack {
-                            Image(systemName: "brain.head.profile")
-                                .padding(.bottom, 4)
-                            Text("Study")
-                                .bold()
-                                .font(.subheadline)
-                        }
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 80)
-                        .background(Color.accentColor)
-                        .cornerRadius(12)
-                    })
-                    if let firstRange = viewModel.list.rangesArr.first {
-                        Button(action: { showReadingView = true }, label: {
+                Section {
+                    HStack {
+                        Button(action: { studyWords = true }, label: {
                             VStack {
-                                Image(systemName: "books.vertical")
+                                Image(systemName: "brain.head.profile")
                                     .padding(.bottom, 4)
-                                Text("Read")
+                                Text("Study")
                                     .bold()
                                     .font(.subheadline)
                             }
@@ -192,27 +155,43 @@ struct ListDetailView: View {
                             .background(Color.accentColor)
                             .cornerRadius(12)
                         })
+                        if viewModel.list.rangesArr.first != nil {
+                            Button(action: { showReadingView = true }, label: {
+                                VStack {
+                                    Image(systemName: "books.vertical")
+                                        .padding(.bottom, 4)
+                                    Text("Read")
+                                        .bold()
+                                        .font(.subheadline)
+                                }
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 80)
+                                .background(Color.accentColor)
+                                .cornerRadius(12)
+                            })
+                        }
                     }
+                    .padding(.bottom, 8)
+                    Picker(selection: $wordFilter, content: {
+                        ForEach(Filter.allCases, id: \.title) { filter in
+                            Text("\(filter.title): \(words(for: filter).count)").tag(filter)
+                        }
+                    }, label: {})
+                    .frame(height: 40)
+                    .labelsHidden()
+                    .pickerStyle(.segmented)
                 }
+                .listRowSeparator(.hidden)
                 .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
                 .listRowBackground(Color.appBackground)
                 .foregroundColor(.white)
+                
                 WordsSection()
             }
         }
         .buttonStyle(.borderless)
-        .toolbar(.hidden, for: .tabBar)
         .sheet(isPresented: $showSettings) {
             SettingsView()
-        }
-        .sheet(isPresented: $showEditView) {
-            if viewModel.list.rangesArr.isEmpty {
-                CustomWordListBuilderView(viewModel: .init(list: $viewModel.list)) { editedList in
-                    viewModel.list = editedList
-                }
-            } else {
-                
-            }
         }
         .confirmationDialog("Filter Words", isPresented: $showFilterActionSheet, actions: {
             Button(action: {
@@ -238,7 +217,7 @@ struct ListDetailView: View {
         }
         .fullScreenCover(isPresented: $showReadingView) {
             if let firstRange = viewModel.list.rangesArr.first {
-                NavigationStack {
+                NavigationView {
                     BibleReadingView(passage: .init(
                         book: Bible.Book(rawValue: firstRange.bookStart.toInt) ?? .genesis,
                         chapter: firstRange.chapStart.toInt,
@@ -260,6 +239,17 @@ struct ListDetailView: View {
         return wordsByChapter
             .map { GroupedWordInfos(chapter: $0.key.toInt, words: $0.value) }
             .sorted { $0.chapter < $1.chapter }
+    }
+    
+    func words(for filter: Filter) -> [Bible.WordInfo] {
+        switch filter {
+        case .all:
+            return allWords
+        case .new:
+            return newWords
+        case .due:
+            return dueWords
+        }
     }
     
     func onStudy() {
@@ -357,12 +347,14 @@ extension ListDetailView {
     func WordsSection() -> some View {
         Section {
             ForEach(sortedWords) { word in
-                NavigationLink(value: AppPath.wordInfo(word)) {
+                NavigationLink(destination: {
+                    WordInfoDetailsView(word: word.bound())
+                }) {
                     WordInfoRow(wordInfo: word.bound())
                 }
             }
         } header: {
-            Text("\(filteredWords.count) words")
+            Text("\(words(for: wordFilter).count) words")
         }
     }
     
@@ -372,7 +364,9 @@ extension ListDetailView {
             ForEach(groupedTextbookWords, id: \.chapter) { group in
                 Section {
                     ForEach(group.words) { word in
-                        NavigationLink(value: AppPath.wordInfo(word)) {
+                        NavigationLink(destination: {
+                            WordInfoDetailsView(word: word.bound())
+                        }) {
                             VStack(alignment: .leading) {
                                 WordInfoRow(wordInfo: word.bound())
                             }
@@ -397,7 +391,7 @@ extension ListDetailView {
     
     @ViewBuilder
     func SettingsView() -> some View {
-        NavigationStack {
+        NavigationView {
             ZStack {
                 Color
                     .appBackground

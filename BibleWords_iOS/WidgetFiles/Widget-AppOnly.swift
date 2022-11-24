@@ -15,9 +15,9 @@ extension AppGroupManager {
             Task {            
                 AppGroupManager.clear()
                 
-                let sessionEntriesFetch = NSFetchRequest<StudySessionEntry>(entityName: "StudySessionEntry")
+                let sessionEntriesFetch = NSFetchRequest<VocabStudySessionEntry>(entityName: "VocabStudySessionEntry")
                 sessionEntriesFetch.predicate = NSPredicate(format: "createdAt >= %@", Date.startOfToday as CVarArg)
-                var entries: [StudySessionEntry] = []
+                var entries: [VocabStudySessionEntry] = []
                 do {
                     entries = try context.fetch(sessionEntriesFetch)
                 } catch let err {
@@ -36,9 +36,9 @@ extension AppGroupManager {
                 fetchedVocabWords = fetchedVocabWords.filter { ($0.list?.count ?? 0) > 0 }
                 let currentDate = Date()
                 var stats: [Stat] = []
-                var newCount = entries.filter { $0.studyTypeInt == 0 }.count
-                var reviewedCount = entries.filter { $0.studyTypeInt == 1 }.count
-                var parsedCount = entries.filter { $0.studyTypeInt == 2 }.count
+                var newCount = entries.filter { $0.wasNewWord == true }.count
+                var reviewedCount = entries.filter { $0.wasNewWord == false }.count
+//                var parsedCount = entries.filter { $0.studyTypeInt == 2 }.count // TODO: update parsing entries
                 var dueCount = 0
                 
                 for i in 0 ... 64 {
@@ -46,12 +46,12 @@ extension AppGroupManager {
                     if entryDate > Date.endOfToday {
                         newCount = 0
                         reviewedCount = 0
-                        parsedCount = 0
+//                        parsedCount = 0
                     }
                     dueCount = fetchedVocabWords.filter { $0.dueDate ?? Date() < entryDate }.count
                     stats.append(.init(date: entryDate,
                                        reviewedCount: reviewedCount,
-                                       parsedCount: parsedCount,
+                                       parsedCount: -1,
                                        newCount: newCount,
                                        dueCount: dueCount))
                 }

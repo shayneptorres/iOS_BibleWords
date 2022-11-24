@@ -27,7 +27,6 @@
 		B8124D8128FB285D0053057C /* BibleRange+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8124D8028FB285D0053057C /* BibleRange+Extensions.swift */; };
 		B8124D8328FB2AF90053057C /* NavHeaderTitleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8124D8228FB2AF90053057C /* NavHeaderTitleDetailView.swift */; };
 		B8124D8528FB366F0053057C /* DueWordsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8124D8428FB366F0053057C /* DueWordsView.swift */; };
-		B81C313F29032BD9002DBF6B /* NewHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81C313E29032BD9002DBF6B /* NewHomeView.swift */; };
 		B81C31602903AE1F002DBF6B /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B81C315F2903AE1F002DBF6B /* WidgetKit.framework */; };
 		B81C31622903AE1F002DBF6B /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B81C31612903AE1F002DBF6B /* SwiftUI.framework */; };
 		B81C31652903AE1F002DBF6B /* TodayStatsWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81C31642903AE1F002DBF6B /* TodayStatsWidget.swift */; };
@@ -45,6 +44,7 @@
 		B83875F92909C726002682FE /* StudyingLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B83875F82909C726002682FE /* StudyingLiveActivity.swift */; };
 		B83875FB2909C726002682FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B83875FA2909C726002682FE /* Assets.xcassets */; };
 		B83875FF2909C726002682FE /* StudyingLiveActivityExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B83875F42909C725002682FE /* StudyingLiveActivityExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B8706029292F2A2900AC21EA /* VocabStudySession+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8706028292F2A2900AC21EA /* VocabStudySession+Extensions.swift */; };
 		B899887E28FC94F000F00E0B /* WordInfoRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899887D28FC94F000F00E0B /* WordInfoRow.swift */; };
 		B899888028FCBCF100F00E0B /* StudySession+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899887F28FCBCF100F00E0B /* StudySession+Extensions.swift */; };
 		B899888228FD1A5100F00E0B /* NewWordsLearnedTodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899888128FD1A5100F00E0B /* NewWordsLearnedTodayView.swift */; };
@@ -172,7 +172,6 @@
 		B8124D8028FB285D0053057C /* BibleRange+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BibleRange+Extensions.swift"; sourceTree = "<group>"; };
 		B8124D8228FB2AF90053057C /* NavHeaderTitleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavHeaderTitleDetailView.swift; sourceTree = "<group>"; };
 		B8124D8428FB366F0053057C /* DueWordsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DueWordsView.swift; sourceTree = "<group>"; };
-		B81C313E29032BD9002DBF6B /* NewHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHomeView.swift; sourceTree = "<group>"; };
 		B81C315D2903AE1F002DBF6B /* TodayStatsWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TodayStatsWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		B81C315F2903AE1F002DBF6B /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		B81C31612903AE1F002DBF6B /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -191,6 +190,7 @@
 		B83875FA2909C726002682FE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B83875FC2909C726002682FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B83876032909C7E6002682FE /* BibleWords-iOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "BibleWords-iOS-Info.plist"; sourceTree = SOURCE_ROOT; };
+		B8706028292F2A2900AC21EA /* VocabStudySession+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VocabStudySession+Extensions.swift"; sourceTree = "<group>"; };
 		B899887D28FC94F000F00E0B /* WordInfoRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordInfoRow.swift; sourceTree = "<group>"; };
 		B899887F28FCBCF100F00E0B /* StudySession+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StudySession+Extensions.swift"; sourceTree = "<group>"; };
 		B899888128FD1A5100F00E0B /* NewWordsLearnedTodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordsLearnedTodayView.swift; sourceTree = "<group>"; };
@@ -508,6 +508,7 @@
 				B89CB5552909F8880002FEF8 /* LiveActivityManager.swift */,
 				B89CB570290AED710002FEF8 /* Activity.swift */,
 				B89CB574290B1DC70002FEF8 /* PinnedItem+Extensions.swift */,
+				B8706028292F2A2900AC21EA /* VocabStudySession+Extensions.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -525,7 +526,6 @@
 				B8DD2E0E28F93CB300AC9492 /* Assets.xcassets */,
 				B8DD2E4128F93CDD00AC9492 /* Fonts */,
 				B899888728FDAFE100F00E0B /* DataDependentViewModel.swift */,
-				B81C313E29032BD9002DBF6B /* NewHomeView.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -755,10 +755,10 @@
 				B89CB573290B09070002FEF8 /* DataIsBuildingCard.swift in Sources */,
 				B8E2FB4B290892C100C17F75 /* Array+Extensions.swift in Sources */,
 				B8A210EE2900989A00BDF272 /* WordInfoHeaderSection.swift in Sources */,
-				B81C313F29032BD9002DBF6B /* NewHomeView.swift in Sources */,
 				B89CB5502909D88E0002FEF8 /* LiveActivity+Shareable.swift in Sources */,
 				B8124D6A28F9C7100053057C /* String+Extensions.swift in Sources */,
 				B8A210F22901A90900BDF272 /* VocabWordRange+Extensions.swift in Sources */,
+				B8706029292F2A2900AC21EA /* VocabStudySession+Extensions.swift in Sources */,
 				B8DD2E6D28F93CDF00AC9492 /* Int+Extensions.swift in Sources */,
 				B8E2FB43290670A900C17F75 /* VocabWordDifficultyStatsView.swift in Sources */,
 				B8A210EA28FF5C3A00BDF272 /* BuildParsingListView.swift in Sources */,
@@ -1065,6 +1065,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1100,6 +1101,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

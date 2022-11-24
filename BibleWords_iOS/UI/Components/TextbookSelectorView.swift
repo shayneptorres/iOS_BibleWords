@@ -11,7 +11,7 @@ struct TextbookSelectorView: View {
     @Environment(\.presentationMode) var presentationMode
     var onSelect: (API.Source.Info) -> Void
     var body: some View {
-        NavigationStack {
+        NavigationView {
             List(API.Source.Info.textbookInfos) { textbook in
                 VStack {
                     Button(action: {

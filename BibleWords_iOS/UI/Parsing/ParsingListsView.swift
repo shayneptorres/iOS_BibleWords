@@ -23,7 +23,9 @@ struct ParsingListsView: View {
                         .multilineTextAlignment(.center)
                 } else {
                     ForEach(lists) { list in
-                        NavigationLink(value: AppPath.parsingListDetail(list)) {
+                        NavigationLink(destination: {
+                            NavigationLazyView(ParsingListDetailView(viewModel: .init(list: list)))
+                        }) {
                             VStack(alignment: .leading, spacing: 4) {
                                 HStack {
                                     Text(list.defaultTitle)
@@ -50,7 +52,7 @@ struct ParsingListsView: View {
             }
         }
         .sheet(isPresented: $showBuildParingList) {
-            NavigationStack {
+            NavigationView {
                 BuildParsingListView()
             }
         }
@@ -60,29 +62,28 @@ struct ParsingListsView: View {
                     showBuildParingList = true
                 }, label: {
                     Image(systemName: "plus.circle")
-                        .fontWeight(.semibold)
                 })
                 .labelStyle(.titleAndIcon)
             }
         }
         .navigationTitle("Parsing Lists")
         .navigationBarTitleDisplayMode(.inline)
-        .navigationDestination(for: AppPath.self) { path in
-            switch path {
-            case .parsingListDetail(let list):
-                ParsingListDetailView(viewModel: .init(list: list))
-            case .parsingSessionsList(let list):
-                ParsingListSessionsView(list: list.bound())
-            case .parsingSessionDetail(let session):
-                List {
-                    ForEach(session.entriesArr.sorted { $0.createdAt! < $1.createdAt! }) { entry in
-                        ParsingSessionEntryRow(entry: entry.bound())
-                    }
-                }
-            default:
-                Text("?")
-            }
-        }
+//        .navigationDestination(for: AppPath.self) { path in
+//            switch path {
+//            case .parsingListDetail(let list):
+//                ParsingListDetailView(viewModel: .init(list: list))
+//            case .parsingSessionsList(let list):
+//                ParsingListSessionsView(list: list.bound())
+//            case .parsingSessionDetail(let session):
+//                List {
+//                    ForEach(session.entriesArr.sorted { $0.createdAt! < $1.createdAt! }) { entry in
+//                        ParsingSessionEntryRow(entry: entry.bound())
+//                    }
+//                }
+//            default:
+//                Text("?")
+//            }
+//        }
     }
 }
 
@@ -96,7 +97,7 @@ extension ParsingListsView {
 
 struct ParsingLists_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationStack {
+        NavigationView {
             ParsingListsView()
         }
     }

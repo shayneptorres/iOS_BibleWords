@@ -27,7 +27,7 @@ extension VocabWordList {
     }
     
     var rangesArr: [VocabWordRange] {
-        return (ranges?.allObjects ?? []) as! [VocabWordRange]
+        return Array(ranges ?? []) as? [VocabWordRange] ?? []
     }
     
     var sourceType: SourceType {
