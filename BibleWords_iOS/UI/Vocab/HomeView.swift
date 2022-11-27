@@ -90,7 +90,7 @@
 //                                        Text(list.defaultDetails)
 //                                    }
 //                                    .padding(.bottom)
-//                                    Text("Last studied on: \((list.lastStudied ?? Date()).toPrettyDate)")
+//                                    Text("Last studied on: \((list.lastStudied ?? Date()).toPrettyDayMonthYearTimeString)")
 //                                        .font(.subheadline)
 //                                        .foregroundColor(Color(uiColor: .secondaryLabel))
 //                                }

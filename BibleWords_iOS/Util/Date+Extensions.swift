@@ -8,20 +8,40 @@
 import Foundation
 
 extension Date {
-    var toPrettyDate: String {
+    
+    var toPrettyDayMonthString: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "E, MMM d"
+        return formatter.string(from: self)
+    }
+    
+    var toPrettyDayMonthYearString: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "E MMM d, yyyy"
+        return formatter.string(from: self)
+    }
+    
+    var toPrettyDayMonthYearTimeString: String {
         let formatter = DateFormatter()
         formatter.dateFormat = "E MMM d, yyyy h:mm a"
         return formatter.string(from: self)
     }
     
-    var toShortPrettyDate: String {
+    var toPrettyShortDayMonthYearString: String {
         let formatter = DateFormatter()
         formatter.dateFormat = "M/d/y"
 //        formatter.dateFormat = "M.d.y, h:mm a"
         return formatter.string(from: self)
     }
     
-    var toShortPrettyDateTime: String {
+    var toPrettyShortDayMonthString: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "M/d"
+//        formatter.dateFormat = "M.d.y, h:mm a"
+        return formatter.string(from: self)
+    }
+    
+    var toPrettyShortDayMonthYearTimeString: String {
         let formatter = DateFormatter()
         formatter.dateFormat = "M/d/y h:mm a"
 //        formatter.dateFormat = "M.d.y, h:mm a"
@@ -39,7 +59,6 @@ extension Date {
         } else if timeSinceNow > 1.hours.toDouble {
             let hours = Int(timeSinceNow / 1.hours.toDouble)
             var minutes = Int(timeSinceNow / 1.minutes.toDouble) - (60 * hours)
-//            minutes = minutes - ()
             return "\(hours)hr and \(minutes)min"
         }
         return "Sometime"
@@ -55,9 +74,19 @@ extension Date {
         return cal.startOfDay(for: Date()).addingTimeInterval(Double(24.hours))
     }
     
+    var startOfDay: Date {
+        let cal = Calendar.current
+        return cal.startOfDay(for: self)
+    }
+    
+    var endOfDay: Date {
+        let cal = Calendar.current
+        return cal.startOfDay(for: self).addingTimeInterval(Double(24.hours))
+    }
+    
     func isSameDay(as date: Date) -> Bool {
         let cal = Calendar.current
-        return cal.isDateInToday(date)
+        return cal.isDate(self, inSameDayAs: date)
     }
     
 //    static var endOfToday: Date {

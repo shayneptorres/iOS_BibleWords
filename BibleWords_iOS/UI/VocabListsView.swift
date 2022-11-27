@@ -20,11 +20,6 @@ struct VocabListsView: View {
         animation: .default)
     var lists: FetchedResults<VocabWordList>
     
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \StudySessionEntry.createdAt, ascending: false)],
-        predicate: NSPredicate(format: "createdAt >= %@", Date.startOfToday as CVarArg)
-    ) var studySessionEntries: FetchedResults<VocabStudySessionEntry>
-    
     @State var dueVocabWords: [VocabWord] = []
     
     @State var showCreateListActionSheet = false
@@ -39,6 +34,8 @@ struct VocabListsView: View {
     @State var showReviewedWords = false
     @State var showNewWords = false
     @State var showDueWords = false
+    @State var showActivity = false
+    @State var showSettings = false
 
     var ntLists: [VocabWordList] {
         return lists.filter { !$0.rangesArr.isEmpty && $0.rangesArr.first?.bookStart.toInt ?? 0 >= 40 }
@@ -79,9 +76,9 @@ struct VocabListsView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(action: {
-                        showStatsView = true
+                        showSettings = true
                     }, label: {
-                        Image(systemName: "chart.line.uptrend.xyaxis")
+                        Image(systemName: "gearshape.fill")
                     })
                     .labelStyle(.titleAndIcon)
                 }
@@ -115,6 +112,16 @@ struct VocabListsView: View {
             }, message: {
                 Text("What type of vocab list do you want to create?")
             })
+            .sheet(isPresented: $showSettings) {
+                NavigationView {
+                    VocabSettingsView()
+                }
+            }
+            .sheet(isPresented: $showActivity) {
+                NavigationView {
+                    StudyActivityView()
+                }
+            }
             .sheet(isPresented: $showStatsView) {
                 MoreStatsView()
             }
@@ -131,16 +138,6 @@ struct VocabListsView: View {
             }
             .sheet(isPresented: $showImportCSVFileView) {
                 ImportCSVView()
-            }
-            .sheet(isPresented: $showReviewedWords) {
-                NavigationView {
-                    WordsSeenTodayView(entryType: .reviewedWord)
-                }
-            }
-            .sheet(isPresented: $showNewWords) {
-                NavigationView {
-                    WordsSeenTodayView(entryType: .newWord)
-                }
             }
             .sheet(isPresented: $showDueWords) {
                 NavigationView {
@@ -257,33 +254,12 @@ extension VocabListsView {
         Section {
             HStack(alignment: .center) {
                 Button(action: {
-                    showReviewedWords = true
+                    showActivity = true
                 }, label: {
                     VStack(spacing: 4) {
-                        Text("Reviewed")
-                            .font(.footnote)
-                        Image(systemName: "arrow.triangle.2.circlepath")
+                        Image(systemName: "chart.line.uptrend.xyaxis")
                             .font(.title)
-                        Text("\(studySessionEntries.filter { $0.wasNewWord == false }.count)")
-                            .font(.subheadline)
-                    }
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 100)
-                    .background(Color.accentColor)
-                    .cornerRadius(12)
-                })
-                .buttonStyle(.borderless)
-                .foregroundColor(.white)
-                Button(action: {
-                    showNewWords = true
-                }, label: {
-                    VStack(spacing: 4) {
-                        Text("New")
-                            .font(.footnote)
-                        Image(systemName: "gift")
-                            .font(.title)
-                        Text("\(studySessionEntries.filter { $0.wasNewWord == true }.count)")
-                            .font(.subheadline)
+                        Text("Activity")
                     }
                     .frame(maxWidth: .infinity)
                     .frame(height: 100)
@@ -296,12 +272,12 @@ extension VocabListsView {
                     showDueWords = true
                 }, label: {
                     VStack(spacing: 4) {
-                        Text("Due")
-                            .font(.footnote)
                         Image(systemName: "clock.badge.exclamationmark")
                             .font(.title)
-                        Text("\(dueVocabWords.count)")
-                            .font(.subheadline)
+                        Text("Due Words")
+//                            .font(.footnote)
+//                        Text("\(dueVocabWords.count)")
+//                            .font(.subheadline)
                     }
                     .frame(maxWidth: .infinity)
                     .frame(height: 100)
@@ -311,8 +287,6 @@ extension VocabListsView {
             }
             .buttonStyle(.borderless)
             .foregroundColor(.white)
-        } header: {
-            Text("Today's Stats")
         }
         .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
         .listRowBackground(Color.appBackground)

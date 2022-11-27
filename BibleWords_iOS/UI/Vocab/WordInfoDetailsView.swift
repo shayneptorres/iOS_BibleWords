@@ -41,33 +41,57 @@ struct WordInfoDetailsView: View {
                     }
                 }
                 NavigationLink(destination: {
-                    List((word.vocabWord(context: context)?.studySessionEntriesArr ?? []).sorted { $0.createdAt ?? Date() > $1.createdAt ?? Date() }) { entry in
-                        HStack {
-                            if entry.wasNewWord {
-                                Image(systemName: "gift")
-                                    .font(.title)
-                            } else if entry.prevInterval < entry.interval {
-                                Image(systemName: "arrow.up.forward")
-                                    .foregroundColor(.green)
-                                    .font(.title)
-                            } else {
-                                Image(systemName: "arrow.down.forward")
-                                    .foregroundColor(.red)
-                                    .font(.title)
+                    List {
+                        if (word.vocabWord(context: context)?.studySessionEntriesArr ?? []).isEmpty {
+                            Text("There is no study data available for this word yet. When you begin to study it then data will show up here.")
+                        } else {
+                            Section {
+                                WordProgressLineChart(intervals: .init(
+                                    get: {
+                                        (
+                                            word.vocabWord(context: context)?.studySessionEntriesArr ?? []
+                                        )
+                                        .sorted {
+                                            $0.createdAt ?? Date() > $1.createdAt ?? Date()
+                                        }
+                                        .map { $0.interval.toInt }
+                                    },
+                                    set: { _ in })
+                                )
+                                .frame(height: 300)
                             }
-                            VStack(alignment: .leading, spacing: 4) {
-                                HStack {
-                                    if entry.wasNewWord {
-                                        Text("Learned")
-                                    } else {
-                                        Text("\(entry.intervalStr)")
+                            Section {
+                                ForEach((word.vocabWord(context: context)?.studySessionEntriesArr ?? []).sorted {
+                                    $0.createdAt ?? Date() > $1.createdAt ?? Date() }) { entry in
+                                        HStack {
+                                            if entry.wasNewWord {
+                                                Image(systemName: "gift")
+                                                    .font(.title)
+                                            } else if entry.prevInterval < entry.interval {
+                                                Image(systemName: "arrow.up.forward")
+                                                    .foregroundColor(.green)
+                                                    .font(.title)
+                                            } else {
+                                                Image(systemName: "arrow.down.forward")
+                                                    .foregroundColor(.red)
+                                                    .font(.title)
+                                            }
+                                            VStack(alignment: .leading, spacing: 4) {
+                                                HStack {
+                                                    if entry.wasNewWord {
+                                                        Text("Learned")
+                                                    } else {
+                                                        Text("\(entry.intervalStr)")
+                                                    }
+                                                }
+                                                Text(entry.createdAt?.toPrettyShortDayMonthYearTimeString ?? "")
+                                                    .font(.caption)
+                                                    .foregroundColor(Color(uiColor: .secondaryLabel))
+                                            }
+                                            Spacer()
+                                        }
                                     }
-                                }
-                                Text(entry.createdAt?.toShortPrettyDateTime ?? "")
-                                    .font(.caption)
-                                    .foregroundColor(Color(uiColor: .secondaryLabel))
                             }
-                            Spacer()
                         }
                     }
                     .navigationTitle("Study History")

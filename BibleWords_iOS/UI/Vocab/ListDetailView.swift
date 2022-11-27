@@ -142,19 +142,6 @@ struct ListDetailView: View {
             } else {
                 Section {
                     HStack {
-                        Button(action: { studyWords = true }, label: {
-                            VStack {
-                                Image(systemName: "brain.head.profile")
-                                    .padding(.bottom, 4)
-                                Text("Study")
-                                    .bold()
-                                    .font(.subheadline)
-                            }
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 80)
-                            .background(Color.accentColor)
-                            .cornerRadius(12)
-                        })
                         if viewModel.list.rangesArr.first != nil {
                             Button(action: { showReadingView = true }, label: {
                                 VStack {
@@ -224,6 +211,16 @@ struct ListDetailView: View {
                         verse: -1
                     ))
                 }
+            }
+        }
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button(action: {
+                    studyWords = true
+                }, label: {
+                    Label("Study", systemImage: "brain.head.profile")
+                })
+                .labelStyle(.titleAndIcon)
             }
         }
         .navigationTitle(viewModel.list.defaultTitle)

@@ -70,7 +70,6 @@ struct ParadigmDetailView: View {
         }
         .navigationTitle(title)
         .navigationBarTitleDisplayMode(.inline)
-//        .toolbar(.hidden, for: .tabBar)
     }
     
     var paradigms: [LanguageConcept.Item] {

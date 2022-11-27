@@ -38,10 +38,39 @@ struct VocabWordIntervalStatsView: View {
                         Label("Percent", systemImage: "percent").tag(StatDisplay.byPercent)
                     }
                     HStack {
-                        Text("Total Vocab words studying: ")
+                        Label("Total Vocab words studying: ", systemImage: "sum")
                         Spacer()
                         Text("\(intervalWords.flatMap { $0.value }.count)")
+                            .bold()
+                            .foregroundColor(.accentColor)
                     }
+                    HStack {
+                        Label("Greek words studying: ", systemImage: "sum")
+                        Spacer()
+                        Text("\(intervalWords.flatMap { $0.value }.filter { $0.language == .greek }.count)")
+                            .bold()
+                            .foregroundColor(.accentColor)
+                    }
+                    HStack {
+                        Label("Hebrew words studying: ", systemImage: "sum")
+                        Spacer()
+                        Text("\(intervalWords.flatMap { $0.value }.filter { $0.language == .hebrew && !$0.instances.isEmpty }.count)")
+                            .bold()
+                            .foregroundColor(.accentColor)
+                    }
+                    HStack {
+                        Label("Custom words studying: ", systemImage: "sum")
+                        Spacer()
+                        Text("\(intervalWords.flatMap { $0.value }.filter { $0.instances.isEmpty }.count)")
+                            .bold()
+                            .foregroundColor(.accentColor)
+                    }
+                }
+                Section {
+                    VStack {
+                        WordIntervalBarChartView(intervalWords: $intervalWords)
+                    }
+                    .frame(height: 300)
                 }
                 Section {
                     ForEach(displayIntervals, id: \.self) { intervalInt in
@@ -113,6 +142,7 @@ struct VocabWordIntervalStatsView: View {
         } catch let err {
             print(err)
         }
+        words = words.filter { ($0.list?.count ?? 0) > 0 }
         
         API.main.coreDataReadyPublisher.sink { isReady in
             if isReady {

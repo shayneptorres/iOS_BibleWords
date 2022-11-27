@@ -21,7 +21,7 @@ struct ParsingListSessionsView: View {
                 ForEach(list.sessionsArr.sorted { $0.startDate! > $1.startDate! }) { session in
                     NavigationView {
                         VStack(alignment: .leading) {
-                            Text(session.startDate?.toPrettyDate ?? "")
+                            Text(session.startDate?.toPrettyDayMonthYearTimeString ?? "")
                                 .padding(.bottom, 4)
                             HStack {
                                 HStack {

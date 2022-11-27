@@ -78,8 +78,18 @@ struct ConceptsView: View {
                 }
             }
         }
-        .fullScreenCover(isPresented: $showParadigmDetailView) {
-            ParadigmDetailView(concepts: selectedConcepts)   
+        .sheet(isPresented: $showParadigmDetailView) {
+            NavigationView {
+                ParadigmDetailView(concepts: selectedConcepts)
+                    .toolbar {
+                        Button(action: {
+                            showParadigmDetailView = false
+                        }, label: {
+                            Text("Dismiss")
+                                .bold()
+                        })
+                    }
+            }
         }
         .navigationTitle("Hebrew Paradigms")
         .navigationBarTitleDisplayMode(.inline)

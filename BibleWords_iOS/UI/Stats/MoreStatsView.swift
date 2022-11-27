@@ -25,6 +25,11 @@ struct MoreStatsView: View {
                     }, label: {
                         Text("Vocab Word Progress")
                     })
+                    NavigationLink(destination: {
+                        StudyActivityView()
+                    }, label: {
+                        Text("Study Activity")
+                    })
 //                    NavigationLink(destination: {
 //                        VocabWordDifficultyStatsView()
 //                    }, label: {

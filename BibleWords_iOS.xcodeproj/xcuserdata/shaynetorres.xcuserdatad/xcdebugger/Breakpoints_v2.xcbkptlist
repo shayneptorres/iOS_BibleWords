@@ -190,8 +190,8 @@
             filePath = "BibleWords_iOS/UI/VocabListsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "157"
-            endingLineNumber = "157"
+            startingLineNumber = "154"
+            endingLineNumber = "154"
             landmarkName = "refreshDueWords()"
             landmarkType = "7">
          </BreakpointContent>
@@ -242,6 +242,165 @@
             endingLineNumber = "73"
             landmarkName = "body"
             landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B1BEA952-B719-4ADB-90D4-C29AFA6CF0E0"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BibleWords_iOS/UI/Stats/StudyActivityView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "165"
+            endingLineNumber = "165"
+            landmarkName = "sortData()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "B1BEA952-B719-4ADB-90D4-C29AFA6CF0E0 - b482189f7c1e8260"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BibleWords_iOS.StudyActivityView.sortData() -&gt; ()"
+                  moduleName = "BibleWords_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/shaynetorres/Development/iOS/BibleWords_iOS/BibleWords_iOS/UI/Stats/StudyActivityView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "85"
+                  endingLineNumber = "85"
+                  offsetFromSymbolStart = "1100">
+               </Location>
+               <Location
+                  uuid = "B1BEA952-B719-4ADB-90D4-C29AFA6CF0E0 - 451a11b424e5bb7f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (BibleWords_iOS.VocabStudySessionEntry) -&gt; Swift.Bool in BibleWords_iOS.StudyActivityView.sortData() -&gt; ()"
+                  moduleName = "BibleWords_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/shaynetorres/Development/iOS/BibleWords_iOS/BibleWords_iOS/UI/Stats/StudyActivityView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "85"
+                  endingLineNumber = "85"
+                  offsetFromSymbolStart = "300">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "90CF76FC-1DD2-4EC8-980A-9FC90126EDE0"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BibleWords_iOS/UI/Stats/StudyActivityView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "90CF76FC-1DD2-4EC8-980A-9FC90126EDE0 - 7175878e7bdd0d1e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Label&lt;SwiftUI.Text, SwiftUI.Image&gt;, SwiftUI.Spacer, Swift.Optional&lt;SwiftUI.Text&gt;)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Label&lt;SwiftUI.Text, SwiftUI.Image&gt;, SwiftUI.Spacer, Swift.Optional&lt;SwiftUI.Text&gt;)&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Label&lt;SwiftUI.Text, SwiftUI.Image&gt;, SwiftUI.Spacer, Swift.Optional&lt;SwiftUI.Text&gt;)&gt;&gt;)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Section&lt;SwiftUI.Text, SwiftUI.TupleView&lt;(SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Label&lt;SwiftUI.Text, SwiftUI.Image&gt;, SwiftUI.Spacer, Swift.Optional&lt;SwiftUI.Text&gt;)&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Label&lt;SwiftUI.Text, SwiftUI.Image&gt;, SwiftUI.Spacer, Swift.Optional&lt;SwiftUI.Text&gt;)&gt;&gt;)&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.TupleView&lt;(SwiftUI.Picker&lt;SwiftUI.Label&lt;SwiftUI.Text, SwiftUI.Image&gt;, BibleWords_iOS.StudyActivityView.Filter, SwiftUI.ForEach&lt;Swift.Array&lt;BibleWords_iOS.StudyActivityView.Filter&gt;, Swift.Int, &lt;&lt;opaque return type of SwiftUI.View.tag&lt;&#x3c4;_0_0 where &#x3c4;_1_0: Swift.Hashable&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;&gt;, &lt;&lt;opaque return type of SwiftUI.View.frame(width: Swift.Optional&lt;CoreGraphics.CGFloat&gt;, height: Swift.Optional&lt;CoreGraphics.CGFloat&gt;, alignment: SwiftUI.Alignment) -&gt; some&gt;&gt;.0)&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.TupleView&lt;(SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Label&lt;SwiftUI.Text, SwiftUI.Image&gt;, SwiftUI.Spacer, SwiftUI.Text)&gt;&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Label&lt;SwiftUI.Text, SwiftUI.Image&gt;, SwiftUI.Spacer, SwiftUI.Text)&gt;&gt;, SwiftUI.EmptyView&gt;)&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.ForEach&lt;Swift.ReversedCollection&lt;Swift.Array&lt;BibleWords_iOS.ActivityGroup&gt;&gt;, Swift.String, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Spacer, SwiftUI.Text)&gt;&gt;&gt;, SwiftUI.EmptyView&gt;)&gt; in BibleWords_iOS.StudyActivityView.body.getter : some"
+                  moduleName = "BibleWords_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/shaynetorres/Development/iOS/BibleWords_iOS/BibleWords_iOS/UI/Stats/StudyActivityView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "44"
+                  endingLineNumber = "44"
+                  offsetFromSymbolStart = "808">
+               </Location>
+               <Location
+                  uuid = "90CF76FC-1DD2-4EC8-980A-9FC90126EDE0 - 7175878e7bdd0d1e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Label&lt;SwiftUI.Text, SwiftUI.Image&gt;, SwiftUI.Spacer, Swift.Optional&lt;SwiftUI.Text&gt;)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Label&lt;SwiftUI.Text, SwiftUI.Image&gt;, SwiftUI.Spacer, Swift.Optional&lt;SwiftUI.Text&gt;)&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Label&lt;SwiftUI.Text, SwiftUI.Image&gt;, SwiftUI.Spacer, Swift.Optional&lt;SwiftUI.Text&gt;)&gt;&gt;)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Section&lt;SwiftUI.Text, SwiftUI.TupleView&lt;(SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Label&lt;SwiftUI.Text, SwiftUI.Image&gt;, SwiftUI.Spacer, Swift.Optional&lt;SwiftUI.Text&gt;)&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Label&lt;SwiftUI.Text, SwiftUI.Image&gt;, SwiftUI.Spacer, Swift.Optional&lt;SwiftUI.Text&gt;)&gt;&gt;)&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.TupleView&lt;(SwiftUI.Picker&lt;SwiftUI.Label&lt;SwiftUI.Text, SwiftUI.Image&gt;, BibleWords_iOS.StudyActivityView.Filter, SwiftUI.ForEach&lt;Swift.Array&lt;BibleWords_iOS.StudyActivityView.Filter&gt;, Swift.Int, &lt;&lt;opaque return type of SwiftUI.View.tag&lt;&#x3c4;_0_0 where &#x3c4;_1_0: Swift.Hashable&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;&gt;, &lt;&lt;opaque return type of SwiftUI.View.frame(width: Swift.Optional&lt;CoreGraphics.CGFloat&gt;, height: Swift.Optional&lt;CoreGraphics.CGFloat&gt;, alignment: SwiftUI.Alignment) -&gt; some&gt;&gt;.0)&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.TupleView&lt;(SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Label&lt;SwiftUI.Text, SwiftUI.Image&gt;, SwiftUI.Spacer, SwiftUI.Text)&gt;&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Label&lt;SwiftUI.Text, SwiftUI.Image&gt;, SwiftUI.Spacer, SwiftUI.Text)&gt;&gt;, SwiftUI.EmptyView&gt;)&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.ForEach&lt;Swift.ReversedCollection&lt;Swift.Array&lt;BibleWords_iOS.ActivityGroup&gt;&gt;, Swift.String, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Spacer, SwiftUI.Text)&gt;&gt;&gt;, SwiftUI.EmptyView&gt;)&gt; in BibleWords_iOS.StudyActivityView.body.getter : some"
+                  moduleName = "BibleWords_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/shaynetorres/Development/iOS/BibleWords_iOS/BibleWords_iOS/UI/Stats/StudyActivityView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "44"
+                  endingLineNumber = "44"
+                  offsetFromSymbolStart = "2040">
+               </Location>
+               <Location
+                  uuid = "90CF76FC-1DD2-4EC8-980A-9FC90126EDE0 - 3a2928ee0447eafe"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (BibleWords_iOS.ActivityGroup) -&gt; Swift.Bool in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Label&lt;SwiftUI.Text, SwiftUI.Image&gt;, SwiftUI.Spacer, Swift.Optional&lt;SwiftUI.Text&gt;)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Label&lt;SwiftUI.Text, SwiftUI.Image&gt;, SwiftUI.Spacer, Swift.Optional&lt;SwiftUI.Text&gt;)&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Label&lt;SwiftUI.Text, SwiftUI.Image&gt;, SwiftUI.Spacer, Swift.Optional&lt;SwiftUI.Text&gt;)&gt;&gt;)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Section&lt;SwiftUI.Text, SwiftUI.TupleView&lt;(SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Label&lt;SwiftUI.Text, SwiftUI.Image&gt;, SwiftUI.Spacer, Swift.Optional&lt;SwiftUI.Text&gt;)&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Label&lt;SwiftUI.Text, SwiftUI.Image&gt;, SwiftUI.Spacer, Swift.Optional&lt;SwiftUI.Text&gt;)&gt;&gt;)&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.TupleView&lt;(SwiftUI.Picker&lt;SwiftUI.Label&lt;SwiftUI.Text, SwiftUI.Image&gt;, BibleWords_iOS.StudyActivityView.Filter, SwiftUI.ForEach&lt;Swift.Array&lt;BibleWords_iOS.StudyActivityView.Filter&gt;, Swift.Int, &lt;&lt;opaque return type of SwiftUI.View.tag&lt;&#x3c4;_0_0 where &#x3c4;_1_0: Swift.Hashable&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;&gt;, &lt;&lt;opaque return type of SwiftUI.View.frame(width: Swift.Optional&lt;CoreGraphics.CGFloat&gt;, height: Swift.Optional&lt;CoreGraphics.CGFloat&gt;, alignment: SwiftUI.Alignment) -&gt; some&gt;&gt;.0)&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.TupleView&lt;(SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Label&lt;SwiftUI.Text, SwiftUI.Image&gt;, SwiftUI.Spacer, SwiftUI.Text)&gt;&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Label&lt;SwiftUI.Text, SwiftUI.Image&gt;, SwiftUI.Spacer, SwiftUI.Text)&gt;&gt;, SwiftUI.EmptyView&gt;)&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.ForEach&lt;Swift.ReversedCollection&lt;Swift.Array&lt;BibleWords_iOS.ActivityGroup&gt;&gt;, Swift.String, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Spacer, SwiftUI.Text)&gt;&gt;&gt;, SwiftUI.EmptyView&gt;)&gt; in BibleWords_iOS.StudyActivityView.body.getter : some"
+                  moduleName = "BibleWords_iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/shaynetorres/Development/iOS/BibleWords_iOS/BibleWords_iOS/UI/Stats/StudyActivityView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "44"
+                  endingLineNumber = "44"
+                  offsetFromSymbolStart = "32">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0AC024D9-DB93-4D7C-8974-E77F27A645BA"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BibleWords_iOS/BibleWords_iOSApp.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "80"
+            endingLineNumber = "80"
+            landmarkName = "body"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F936B116-A580-40E5-937D-AD552A0052F5"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BibleWords_iOS/UI/Vocab/VocabNotificationsView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "217"
+            endingLineNumber = "217"
+            landmarkName = "onSaveReminder()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "57AFECF9-2A5B-4A06-835E-1FCFCF61AB67"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BibleWords_iOS/Util/Notification+Extensions.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
+            landmarkName = "updateDueWordNotifications(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
