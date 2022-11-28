@@ -14,20 +14,48 @@ enum UserDefaultKey: String, CaseIterable {
     case hasFetchedAndSavedAllHebrewWords
     case hasFetchedAndSavedModernGrammarHebrewGarret
     case shouldRefreshWidgetTimeline
-    case homeViewShowFullStats
-    case homeViewShowFullPins
-    case homeViewShowFullRecents
+    case vocabPinnedLists
+    case vocabShowGreekLists
+    case vocabShowHebrewLists
+    case vocabShowImportedLists
+    
+    var defaultValue: Any {
+        switch self {
+        case .hasFetchedAndSavedAllGreekWords:
+            return false
+        case .hasFetchedAndSavedAllHebrewWords:
+            return false
+        case .hasFetchedAndSavedModernGrammarHebrewGarret:
+            return false
+        case .shouldRefreshWidgetTimeline:
+            return true
+        case .vocabPinnedLists:
+            return true
+        case .vocabShowGreekLists:
+            return true
+        case .vocabShowHebrewLists:
+            return true
+        case .vocabShowImportedLists:
+            return true
+        }
+    }
     
     func get<T: Any>(as: T.Type) -> T {
         switch self {
-        case .hasFetchedAndSavedAllGreekWords, .hasFetchedAndSavedAllHebrewWords, .hasFetchedAndSavedModernGrammarHebrewGarret, .shouldRefreshWidgetTimeline, .homeViewShowFullStats, .homeViewShowFullPins, .homeViewShowFullRecents:
-            return UserDefaults.standard.bool(forKey: self.rawValue) as! T
+        case .hasFetchedAndSavedAllGreekWords, .hasFetchedAndSavedAllHebrewWords, .hasFetchedAndSavedModernGrammarHebrewGarret, .shouldRefreshWidgetTimeline,  .vocabPinnedLists, .vocabShowGreekLists, .vocabShowHebrewLists, .vocabShowImportedLists:
+            
+            if let val = UserDefaults.standard.value(forKey: self.rawValue) as? T {
+                UserDefaults.standard.set(val, forKey: self.rawValue)
+                return val
+            } else {
+                return self.defaultValue as! T
+            }
         }
     }
     
     func set<T: Any>(val: T) {
         switch self {
-        case .hasFetchedAndSavedAllGreekWords, .hasFetchedAndSavedAllHebrewWords, .hasFetchedAndSavedModernGrammarHebrewGarret, .shouldRefreshWidgetTimeline, .homeViewShowFullStats, .homeViewShowFullPins, .homeViewShowFullRecents:
+        case .hasFetchedAndSavedAllGreekWords, .hasFetchedAndSavedAllHebrewWords, .hasFetchedAndSavedModernGrammarHebrewGarret, .shouldRefreshWidgetTimeline, .vocabPinnedLists, .vocabShowGreekLists, .vocabShowHebrewLists, .vocabShowImportedLists:
             UserDefaults.standard.set(val, forKey: self.rawValue)
         }
     }

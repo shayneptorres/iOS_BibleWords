@@ -77,31 +77,36 @@ struct VocabNotificationsView: View {
                     Text("Daily reminders are a helpful way to stay on track with your vocab. We all need some reminders in life.")
                 }
                 
-                Section {
-                    ForEach(dueWordAlerts) { dueWordAlert in
-                        Text("Alert at \(dueWordAlert.triggerCount) due words")
-                            .swipeActions {
-                                Button(action: {
-                                    delete(dueWordAlert: dueWordAlert)
-                                }, label: {
-                                    Text("Delete")
-                                })
-                                .tint(.red)
-                            }
-                    }
-                    Button(action: {
-                        showDueWordAlertForm = true
-                    }, label: {
-                        Label("Add Alert", systemImage: "bell")
-                    })
-                } header: {
-                    Text("Due Word Alerts")
-                } footer: {
-                    Text("Your due words can add up quick. Add Due Word Alerts to let you know when you have a certain amount of due words to review")
-                }
+//                Section {
+//                    ForEach(dueWordAlerts) { dueWordAlert in
+//                        Text("Alert at \(dueWordAlert.triggerCount) due words")
+//                            .swipeActions {
+//                                Button(action: {
+//                                    delete(dueWordAlert: dueWordAlert)
+//                                }, label: {
+//                                    Text("Delete")
+//                                })
+//                                .tint(.red)
+//                            }
+//                    }
+//                    Button(action: {
+//                        showDueWordAlertForm = true
+//                    }, label: {
+//                        Label("Add Alert", systemImage: "bell")
+//                    })
+//                } header: {
+//                    Text("Due Word Alerts")
+//                } footer: {
+//                    Text("Your due words can add up quick. Add Due Word Alerts to let you know when you have a certain amount of due words to review")
+//                }
             }
         }
         .onAppear {
+            UNUserNotificationCenter.current().getPendingNotificationRequests { notifications in
+                print(notifications)
+                print(notifications.count)
+                print("")
+            }
             getSetNotificationAuth()
             getPendingNotifications()
         }

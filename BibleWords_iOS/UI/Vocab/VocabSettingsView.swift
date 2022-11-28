@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct VocabSettingsView: View {
+    @Environment(\.presentationMode) var presentationMode
+    
     var body: some View {
         List {
             NavigationLink(destination: {
@@ -17,6 +19,14 @@ struct VocabSettingsView: View {
             })
         }
         .navigationTitle("Settings")
+        .toolbar {
+            Button(action: {
+                presentationMode.wrappedValue.dismiss()
+            }, label: {
+                Text("Dismiss")
+                    .bold()
+            })
+        }
     }
 }
 

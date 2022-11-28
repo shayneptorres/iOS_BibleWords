@@ -9,7 +9,6 @@ import SwiftUI
 
 struct WordInfoHeaderSection: View {
     @Binding var wordInfo: Bible.WordInfo
-    var onTapDef: (() -> Void)?
 
     var body: some View {
         Section {
@@ -38,14 +37,6 @@ struct WordInfoHeaderSection: View {
                         .foregroundColor(Color(uiColor: .secondaryLabel))
                     Text(wordInfo.definition)
                         .font(.headline)
-                }
-                if onTapDef != nil {
-                    Spacer()
-                    Button(action: {
-                        onTapDef?()
-                    }, label: {
-                        Image(systemName: "mail.and.text.magnifyingglass")
-                    })
                 }
             }
             VStack(alignment: .leading) {

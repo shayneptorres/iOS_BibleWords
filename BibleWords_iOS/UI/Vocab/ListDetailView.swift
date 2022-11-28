@@ -152,11 +152,36 @@ struct ListDetailView: View {
                                         .font(.subheadline)
                                 }
                                 .frame(maxWidth: .infinity)
-                                .frame(height: 80)
+                                .frame(height: 60)
                                 .background(Color.accentColor)
                                 .cornerRadius(12)
                             })
                         }
+                        Button(action: {
+                            CoreDataManager.transaction(context: context) {
+                                if viewModel.list.pin == nil {
+                                    let pin = PinnedItem(context: context)
+                                    pin.id = UUID().uuidString
+                                    pin.createdAt = Date()
+                                    pin.pinTitle = viewModel.list.defaultTitle
+                                    pin.vocabList = viewModel.list
+                                } else if let pin = viewModel.list.pin {
+                                    context.delete(pin)
+                                }
+                            }
+                        }, label: {
+                            VStack {
+                                Image(systemName: viewModel.list.pin == nil ? "pin" : "pin.slash")
+                                    .padding(.bottom, 4)
+                                Text("Pin")
+                                    .bold()
+                                    .font(.subheadline)
+                            }
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 60)
+                            .background(Color.accentColor)
+                            .cornerRadius(12)
+                        })
                     }
                     .padding(.bottom, 8)
                     Picker(selection: $wordFilter, content: {

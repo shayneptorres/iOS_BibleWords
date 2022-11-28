@@ -43,6 +43,7 @@ struct WordIntervalBarChartView: UIViewRepresentable {
         barChartView.xAxis.valueFormatter = IntervalBarChartFormatter()
         barChartView.pinchZoomEnabled = false
         barChartView.dragEnabled = false
+        barChartView.isUserInteractionEnabled = false
     
         return barChartView
     }
@@ -129,20 +130,16 @@ struct VocabActivityLineChart: UIViewRepresentable {
         lineChartView.data = updateChartData()
         let formatter = GroupXAxisBarChartFormatter()
         formatter.groups = groups
-        lineChartView.xAxis.valueFormatter = formatter
         lineChartView.leftAxis.drawGridLinesEnabled = false
-        lineChartView.rightAxis.drawGridLinesEnabled = false
         lineChartView.leftAxis.drawAxisLineEnabled = false
-//        lineChartView.rightAxis.drawAxisLineEnabled = false
         lineChartView.leftAxis.drawLabelsEnabled = false
-//        lineChartView.rightAxis.drawLabelsEnabled = false
+        lineChartView.rightAxis.drawGridLinesEnabled = false
         
+        lineChartView.xAxis.valueFormatter = formatter
         lineChartView.xAxis.labelPosition = .bottom
-//        lineChartView.xAxis.drawLabelsEnabled = false
-//        lineChartView.xAxis.drawAxisLineEnabled = false
-//        lineChartView.xAxis.drawAxisLineEnabled = false
         lineChartView.xAxis.drawGridLinesEnabled = false
         lineChartView.legend.enabled = false
+        lineChartView.isUserInteractionEnabled = false
         
         return lineChartView
     }
@@ -157,18 +154,33 @@ struct VocabActivityLineChart: UIViewRepresentable {
     func updateChartData() -> LineChartData {
         var chartDataEntries: [ChartDataEntry] = []
         
-        for (i, group) in groups.enumerated() {
-            chartDataEntries.append(ChartDataEntry(x: Double(i), y: Double(group.entries.count)))
+        let yesterdayToTodayGroups = Array(groups.suffix(2))
+        let allToYesterdayGroups = Array(groups.dropLast())
+        
+        for (i, group) in allToYesterdayGroups.enumerated() {
+            let entry = ChartDataEntry(x: Double(i), y: Double(group.entries.count))
+            chartDataEntries.append(entry)
         }
+        let allToYesterdayDataSet = LineChartDataSet(entries: chartDataEntries)
+        allToYesterdayDataSet.colors = [UIColor(.accentColor)]
+        allToYesterdayDataSet.circleColors = [UIColor(.black)]
+        chartDataEntries.removeAll()
         
-        let dataSet = LineChartDataSet(entries: chartDataEntries)
-        dataSet.colors = [UIColor(.accentColor)]
-//        let formatter = Formatter()
-//        formatter.groups = groups
-//        dataSet.valueFormatter = formatter
-        let chartData = LineChartData(dataSet: dataSet)
+        var yesterdayToTodayGroupIndex = groups.count - 2
+        for group in yesterdayToTodayGroups {
+            let entry = ChartDataEntry(x: yesterdayToTodayGroupIndex.toDouble, y: group.entries.count.toDouble)
+            chartDataEntries.append(entry)
+            yesterdayToTodayGroupIndex += 1
+        }
+        let yesterdayToTodayDataSet = LineChartDataSet(entries: chartDataEntries)
+        yesterdayToTodayDataSet.colors = [UIColor(.accentColor)]
+        yesterdayToTodayDataSet.circleColors = [UIColor(.black)]
+        yesterdayToTodayDataSet.lineDashPhase = 8
+        yesterdayToTodayDataSet.lineDashLengths = [4]
         
-        return chartData
+        let data = LineChartData(dataSets: [allToYesterdayDataSet, yesterdayToTodayDataSet])
+        
+        return data
     }
     
     class GroupXAxisBarChartFormatter: AxisValueFormatter {

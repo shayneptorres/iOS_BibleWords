@@ -23,30 +23,33 @@ struct VocabListsView: View {
     @State var dueVocabWords: [VocabWord] = []
     
     @State var showCreateListActionSheet = false
-    @State var showStatsView  = false
     @State var showCreateBiblePassageListModal = false
     @State var showSelectDefaultListModal = false
-    @State var showCreateCustomListModal = false
-    @State var showStatsInfoModal = false
     @State var showVocabListTypeInfoModal = false
-    @State var showCreateListPickerSection = false
     @State var showImportCSVFileView = false
-    @State var showReviewedWords = false
-    @State var showNewWords = false
     @State var showDueWords = false
     @State var showActivity = false
     @State var showSettings = false
+    
+    @State var showPinnedVocab = true
+    @State var showGreekVocab = true
+    @State var showHebrewVocab = true
+    @State var showImportedVocab = true
+    
+    var pinnedLists: [VocabWordList] {
+        return lists.filter { $0.pin != nil }
+    }
 
     var ntLists: [VocabWordList] {
-        return lists.filter { !$0.rangesArr.isEmpty && $0.rangesArr.first?.bookStart.toInt ?? 0 >= 40 }
+        return lists.filter { !$0.rangesArr.isEmpty && $0.rangesArr.first?.bookStart.toInt ?? 0 >= 40 && $0.pin == nil }
     }
     
     var otLists: [VocabWordList] {
-        return lists.filter { !$0.rangesArr.isEmpty && $0.rangesArr.first?.bookStart.toInt ?? 0 <= 39 }
+        return lists.filter { !$0.rangesArr.isEmpty && $0.rangesArr.first?.bookStart.toInt ?? 0 <= 39 && $0.pin == nil }
     }
     
     var importedLists: [VocabWordList] {
-        return lists.filter { $0.rangesArr.isEmpty }
+        return lists.filter { $0.rangesArr.isEmpty && $0.pin == nil }
     }
     
     var body: some View {
@@ -58,7 +61,10 @@ struct VocabListsView: View {
                         .appCard()
                         .padding(.horizontal)
                 } else {
-                    StatsCardSection()
+                    QuickActionsSection()
+                    if !pinnedLists.isEmpty {
+                        PinnedListsSetion()
+                    }
                     if !ntLists.isEmpty {
                         NTListsSection()
                     }
@@ -122,9 +128,7 @@ struct VocabListsView: View {
                     StudyActivityView()
                 }
             }
-            .sheet(isPresented: $showStatsView) {
-                MoreStatsView()
-            }
+
             .sheet(isPresented: $showCreateBiblePassageListModal) {
                 NavigationView {
                     BuildVocabListView()
@@ -146,6 +150,7 @@ struct VocabListsView: View {
             }
             .onAppear {
                 refreshDueWords()
+                setViews()
             }
         }
     }
@@ -163,6 +168,12 @@ struct VocabListsView: View {
         dueVocabWords = fetchedVocabWords.filter { ($0.list?.count ?? 0) > 0 }
     }
     
+    func setViews() {
+        showGreekVocab = UserDefaultKey.vocabShowGreekLists.get(as: Bool.self)
+        showHebrewVocab = UserDefaultKey.vocabShowHebrewLists.get(as: Bool.self)
+        showImportedVocab = UserDefaultKey.vocabShowImportedLists.get(as: Bool.self)
+    }
+    
     func onDelete(_ list: VocabWordList) {
         CoreDataManager.transaction(context: context) {
             context.delete(list)
@@ -171,86 +182,9 @@ struct VocabListsView: View {
 }
 
 extension VocabListsView {
-    @ViewBuilder
-    func CreateListButtonsSection() -> some View {
-        VStack(spacing: 8) {
-            HStack {
-                Spacer()
-                Button(action: {
-                    withAnimation {
-                        showVocabListTypeInfoModal = true
-                    }
-                }, label: {
-                    Image(systemName: "questionmark.circle")
-                        .font(.title)
-                })
-                Spacer()
-                Button(action: {
-                    withAnimation {
-                        showCreateListPickerSection = false
-                    }
-                }, label: {
-                    Image(systemName: "xmark.circle")
-                        .font(.title)
-                })
-                Spacer()
-            }
-            HStack {
-                Button(action: {
-                    withAnimation {
-                        showCreateBiblePassageListModal = true
-                        showCreateListPickerSection = false
-                    }
-                }, label: {
-                    VStack {
-                        Image(systemName: "text.book.closed.fill")
-                            .font(.title2)
-                            .padding(.bottom, 4)
-                        Text("Passage\nList")
-                            .font(.caption2)
-                    }
-                    .foregroundColor(.accentColor)
-                    .appCard(height: 60, innerPadding: 8)
-                })
-                Button(action: {
-                    withAnimation {
-                        showSelectDefaultListModal = true
-                        showCreateListPickerSection = false
-                    }
-                }, label: {
-                    VStack {
-                        Image(systemName: "list.bullet.rectangle.portrait.fill")
-                            .font(.title2)
-                            .padding(.bottom, 4)
-                        Text("Default\nList")
-                            .font(.caption2)
-                    }
-                    .foregroundColor(.accentColor)
-                    .appCard(height: 60, innerPadding: 8)
-                })
-                Button(action: {
-                    withAnimation {
-                        showImportCSVFileView = true
-                        showCreateListPickerSection = false
-                    }
-                }, label: {
-                    VStack {
-                        Image(systemName: "arrow.down.doc")
-                            .font(.title2)
-                            .padding(.bottom, 4)
-                        Text("Import\nList")
-                            .font(.caption2)
-                    }
-                    .foregroundColor(.accentColor)
-                    .appCard(height: 60, innerPadding: 8)
-                })
-            }
-        }
-        .padding(.horizontal, Design.viewHorziontalPadding)
-    }
     
     @ViewBuilder
-    func StatsCardSection() -> some View {
+    func QuickActionsSection() -> some View {
         Section {
             HStack(alignment: .center) {
                 Button(action: {
@@ -260,9 +194,10 @@ extension VocabListsView {
                         Image(systemName: "chart.line.uptrend.xyaxis")
                             .font(.title)
                         Text("Activity")
+                            .font(.subheadline)
                     }
                     .frame(maxWidth: .infinity)
-                    .frame(height: 100)
+                    .frame(height: 80)
                     .background(Color.accentColor)
                     .cornerRadius(12)
                 })
@@ -274,13 +209,11 @@ extension VocabListsView {
                     VStack(spacing: 4) {
                         Image(systemName: "clock.badge.exclamationmark")
                             .font(.title)
-                        Text("Due Words")
-//                            .font(.footnote)
-//                        Text("\(dueVocabWords.count)")
-//                            .font(.subheadline)
+                        Text("\(dueVocabWords.count) words due")
+                            .font(.subheadline)
                     }
                     .frame(maxWidth: .infinity)
-                    .frame(height: 100)
+                    .frame(height: 80)
                     .background(Color.accentColor)
                     .cornerRadius(12)
                 })
@@ -294,114 +227,208 @@ extension VocabListsView {
     }
     
     @ViewBuilder
-    func NTListsSection() -> some View {
+    func PinnedListsSetion() -> some View {
         Section {
-            ForEach(ntLists) { list in
-                NavigationLink(destination: {
-                    NavigationLazyView(ListDetailView(viewModel: .init(list: list)))
-                }) {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(list.defaultTitle)
-                            .bold()
-                            .multilineTextAlignment(.leading)
-                            .foregroundColor(.accentColor)
-                        Text(list.defaultDetails)
-                            .font(.caption)
-                            .foregroundColor(Color(uiColor: .secondaryLabel))
+            if showPinnedVocab {
+                ForEach(pinnedLists) { list in
+                    NavigationLink(destination: {
+                        NavigationLazyView(ListDetailView(viewModel: .init(list: list)))
+                    }) {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(list.defaultTitle)
+                                .bold()
+                                .multilineTextAlignment(.leading)
+                                .foregroundColor(.accentColor)
+                            Text(list.defaultDetails)
+                                .font(.caption)
+                                .foregroundColor(Color(uiColor: .secondaryLabel))
+                        }
                     }
-                }
-                .contextMenu {
-                    Button(role: .destructive, action: {
-                        onDelete(list)
-                    }, label: {
-                        Label("Delete", systemImage: "trash")
-                    })
-                }
-                .swipeActions {
-                    Button(action: {
-                        onDelete(list)
-                    }, label: {
-                        Text("Delete")
-                    })
-                    .tint(.red)
+                    .contextMenu {
+                        Button(role: .destructive, action: {
+                            onDelete(list)
+                        }, label: {
+                            Label("Delete", systemImage: "trash")
+                        })
+                    }
+                    .swipeActions {
+                        Button(action: {
+                            onDelete(list)
+                        }, label: {
+                            Text("Delete")
+                        })
+                        .tint(.red)
+                    }
                 }
             }
         } header: {
-            Text("Greek Vocab")
+            HStack {
+                Text("Pinned Vocab Lists")
+                Spacer()
+                Button(action: {
+                    withAnimation {
+                        showPinnedVocab.toggle()
+                        UserDefaultKey.vocabPinnedLists.set(val: showPinnedVocab)
+                    }
+                }, label: {
+                    Image(systemName: "chevron.up")
+                        .rotationEffect(showPinnedVocab ? Angle(degrees: 0) : Angle(degrees: 180))
+                })
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func NTListsSection() -> some View {
+        Section {
+            if showGreekVocab {
+                ForEach(ntLists) { list in
+                    NavigationLink(destination: {
+                        NavigationLazyView(ListDetailView(viewModel: .init(list: list)))
+                    }) {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(list.defaultTitle)
+                                .bold()
+                                .multilineTextAlignment(.leading)
+                                .foregroundColor(.accentColor)
+                            Text(list.defaultDetails)
+                                .font(.caption)
+                                .foregroundColor(Color(uiColor: .secondaryLabel))
+                        }
+                    }
+                    .contextMenu {
+                        Button(role: .destructive, action: {
+                            onDelete(list)
+                        }, label: {
+                            Label("Delete", systemImage: "trash")
+                        })
+                    }
+                    .swipeActions {
+                        Button(action: {
+                            onDelete(list)
+                        }, label: {
+                            Text("Delete")
+                        })
+                        .tint(.red)
+                    }
+                }
+            }
+        } header: {
+            HStack {
+                Text("Greek Vocab")
+                Spacer()
+                Button(action: {
+                    withAnimation {
+                        showGreekVocab.toggle()
+                        UserDefaultKey.vocabShowGreekLists.set(val: showGreekVocab)
+                    }
+                }, label: {
+                    Image(systemName: "chevron.up")
+                        .rotationEffect(showGreekVocab ? Angle(degrees: 0) : Angle(degrees: 180))
+                })
+            }
         }
     }
     
     @ViewBuilder
     func OTListsSection() -> some View {
         Section {
-            ForEach(otLists) { list in
-                NavigationLink(destination: {
-                    NavigationLazyView(ListDetailView(viewModel: .init(list: list)))
-                }) {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(list.defaultTitle)
-                            .bold()
-                            .multilineTextAlignment(.leading)
-                            .foregroundColor(.accentColor)
-                        Text(list.defaultDetails)
-                            .font(.caption)
-                            .foregroundColor(Color(uiColor: .secondaryLabel))
+            if showHebrewVocab {
+                ForEach(otLists) { list in
+                    NavigationLink(destination: {
+                        NavigationLazyView(ListDetailView(viewModel: .init(list: list)))
+                    }) {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(list.defaultTitle)
+                                .bold()
+                                .multilineTextAlignment(.leading)
+                                .foregroundColor(.accentColor)
+                            Text(list.defaultDetails)
+                                .font(.caption)
+                                .foregroundColor(Color(uiColor: .secondaryLabel))
+                        }
                     }
-                }
-                .contextMenu {
-                    Button(role: .destructive, action: {
-                        onDelete(list)
-                    }, label: {
-                        Label("Delete", systemImage: "trash")
-                    })
-                }
-                .swipeActions {
-                    Button(action: {
-                        onDelete(list)
-                    }, label: {
-                        Text("Delete")
-                    })
+                    .contextMenu {
+                        Button(role: .destructive, action: {
+                            onDelete(list)
+                        }, label: {
+                            Label("Delete", systemImage: "trash")
+                        })
+                    }
+                    .swipeActions {
+                        Button(action: {
+                            onDelete(list)
+                        }, label: {
+                            Text("Delete")
+                        })
+                    }
                 }
             }
         } header: {
-            Text("Hebrew Vocab")
+            HStack {
+                Text("Hebrew Vocab")
+                Spacer()
+                Button(action: {
+                    withAnimation {
+                        showHebrewVocab.toggle()
+                        UserDefaultKey.vocabShowHebrewLists.set(val: showHebrewVocab)
+                    }
+                }, label: {
+                    Image(systemName: "chevron.up")
+                        .rotationEffect(showHebrewVocab ? Angle(degrees: 0) : Angle(degrees: 180))
+                })
+            }
         }
     }
     
     @ViewBuilder
     func ImportedListsSection() -> some View {
         Section {
-            ForEach(importedLists) { list in
-                NavigationLink(destination: {
-                    NavigationLazyView(ListDetailView(viewModel: .init(list: list)))
-                }) {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(list.defaultTitle)
-                            .bold()
-                            .multilineTextAlignment(.leading)
-                            .foregroundColor(.accentColor)
-                        Text(list.defaultDetails)
-                            .font(.caption)
-                            .foregroundColor(Color(uiColor: .secondaryLabel))
+            if showImportedVocab {
+                ForEach(importedLists) { list in
+                    NavigationLink(destination: {
+                        NavigationLazyView(ListDetailView(viewModel: .init(list: list)))
+                    }) {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(list.defaultTitle)
+                                .bold()
+                                .multilineTextAlignment(.leading)
+                                .foregroundColor(.accentColor)
+                            Text(list.defaultDetails)
+                                .font(.caption)
+                                .foregroundColor(Color(uiColor: .secondaryLabel))
+                        }
                     }
-                }
-                .contextMenu {
-                    Button(role: .destructive, action: {
-                        onDelete(list)
-                    }, label: {
-                        Label("Delete", systemImage: "trash")
-                    })
-                }
-                .swipeActions {
-                    Button(action: {
-                        onDelete(list)
-                    }, label: {
-                        Text("Delete")
-                    })
+                    .contextMenu {
+                        Button(role: .destructive, action: {
+                            onDelete(list)
+                        }, label: {
+                            Label("Delete", systemImage: "trash")
+                        })
+                    }
+                    .swipeActions {
+                        Button(action: {
+                            onDelete(list)
+                        }, label: {
+                            Text("Delete")
+                        })
+                    }
                 }
             }
         } header: {
-            Text("Imported Vocab")
+            HStack {
+                Text("Imported Vocab")
+                Spacer()
+                Button(action: {
+                    withAnimation {
+                        showImportedVocab.toggle()
+                        UserDefaultKey.vocabShowImportedLists.set(val: showImportedVocab)
+                    }
+                }, label: {
+                    Image(systemName: "chevron.up")
+                        .rotationEffect(showImportedVocab ? Angle(degrees: 0) : Angle(degrees: 180))
+                })
+            }
         }
     }
 }

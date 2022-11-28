@@ -10,6 +10,7 @@ import SwiftUI
 struct WordInPassageView: View {
     @Binding var word: Bible.WordInfo
     @Binding var instance: Bible.WordInstance
+    @State var showBibleReader = false
     
     var body: some View {
         List {
@@ -30,7 +31,7 @@ struct WordInPassageView: View {
                     }
                     .frame(width: 110)
                     VStack {
-                        Text(instance.surface)
+                        Text(instance.textSurface)
                             .font(instance.language == .greek ? .bible24 : .bible32)
                     }
                 }
@@ -101,6 +102,18 @@ struct WordInPassageView: View {
                     }
                 }
                 .font(instance.language.largeBibleFont)
+            }
+            Section {
+                Button(action: {
+                    showBibleReader = true
+                }, label: {
+                    Label("Read in Bible", systemImage: "book")
+                })
+            }
+        }
+        .fullScreenCover(isPresented: $showBibleReader) {
+            NavigationView {
+                BibleReadingView(passage: .init(book: instance.bibleBook, chapter: instance.chapter, verse: -1))
             }
         }
         .navigationTitle(instance.prettyRefStr)

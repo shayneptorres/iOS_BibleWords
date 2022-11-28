@@ -28,6 +28,7 @@ struct StudyVocabWordsView: View {
     @State var prevWord: VocabWord?
     @State var showWordDefView = false
     @State var showWordInfoView = false
+    @State var showWordInPassageView = false
     
     @State var entries: [VocabStudySessionEntry] = []
     @State var startDate = Date()
@@ -85,6 +86,66 @@ struct StudyVocabWordsView: View {
                     WordInfoDetailsView(word: (currentWord?.wordInfo ?? .init([:])).bound(), isPresentedModally: true)
                 }
             })
+            .sheet(isPresented: $showWordInPassageView) {
+                NavigationView {
+                    List {
+                        if (currentWord?.wordInfo.instances ?? []).isEmpty {
+                            Text("Oops, it looks like this word was imported and does not have any associated bible passages. The developer will need to implement a feature to link custom words with words in the bible. Until then...")
+                        } else {
+                            Section {
+                                Text(displayDef)
+                            } header: {
+                                Text("Definition")
+                            }
+                            Section {
+                                ForEach(currentWord?.wordInfo.instances ?? []) { instance in
+                                    NavigationLink(destination: {
+                                        WordInPassageView(word: instance.wordInfo.bound(), instance: instance.bound())
+                                    }) {
+                                        VStack(alignment: .leading, spacing: 8) {
+                                            Text(instance.prettyRefStr)
+                                                .font(.title2)
+                                                .bold()
+                                            VStack(alignment: instance.language == .greek ? .leading : .trailing) {
+                                                Text(instance.wordInPassage) { string in
+                                                    let attributedStr = instance.textSurface
+                                                    if let range = string.range(of: attributedStr) { /// here!
+                                                        string[range].foregroundColor = .accentColor
+                                                    }
+                                                }
+                                                .font(instance.language.largeBibleFont)
+                                            }
+                                        }
+                                    }
+                                }
+                            } header: {
+                                if let instances = currentWord?.wordInfo.instances ?? [] {
+                                    if instances.count == 1 {
+                                        Text("1 Occurrence (HAPAX LEGOMON)")
+                                    } else {
+                                        Text("\(instances.count) Occurrences")
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .navigationBarTitle("", displayMode: .inline)
+                    .toolbar {
+                        ToolbarItem(placement: .principal) {
+                            Text(currentWord?.wordInfo.lemma ?? "")
+                                .font(currentWord?.wordInfo.language.meduimBibleFont ?? .bible32)
+                        }
+                        ToolbarItem(placement: .primaryAction) {
+                            Button(action: {
+                                showWordInPassageView = false
+                            }, label: {
+                                Text("Dismiss")
+                                    .bold()
+                            })
+                        }
+                    }
+                }
+            }
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
                 startDate = Date()
@@ -466,6 +527,19 @@ extension StudyVocabWordsView {
                 .foregroundColor(Color(uiColor: .label))
                 .cornerRadius(Design.defaultCornerRadius)
             HStack {
+                if !(currentWord?.wordInfo.instances ?? []).isEmpty {
+                    Button(action: {
+                        showWordInPassageView = true
+                    }, label: {
+                        HStack {
+                            Image(systemName: "book")
+                                .font(.title2)
+                            Text("\((currentWord?.wordInfo.instances ?? []).count)")
+                                .font(.subheadline)
+                        }
+                    })
+                    .padding()
+                }
                 Spacer()
                 Button(action: {
                     showWordInfoView = true

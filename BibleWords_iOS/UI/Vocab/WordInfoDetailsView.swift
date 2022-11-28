@@ -22,8 +22,13 @@ struct WordInfoDetailsView: View {
     
     var body: some View {
         List {
-            WordInfoHeaderSection(wordInfo: $word) {
-                showExternalDictOptions = true
+            WordInfoHeaderSection(wordInfo: $word)
+            Section {
+                Button(action: {
+                    showExternalDictOptions = true
+                }, label: {
+                    Label("Search other definitions", systemImage: "mail.and.text.magnifyingglass")
+                })
             }
             FormsAppearancesSection()
             Section {
@@ -212,16 +217,10 @@ extension WordInfoDetailsView {
                         NavigationLink(destination: {
                             WordInPassageView(word: instance.wordInfo.bound(), instance: instance.bound())
                         }) {
-                            VStack(alignment: .leading) {
+                            VStack(alignment: .leading, spacing: 4) {
                                 Text(instance.prettyRefStr)
+                                    .font(.title)
                                     .bold()
-                                    .padding(.bottom, 2)
-                                Text(instance.textSurface)
-                                    .font(instance.language.meduimBibleFont)
-                                    .padding(.bottom, 4)
-                                Text(instance.parsingStr)
-                                    .font(.footnote)
-                                    .foregroundColor(Color(uiColor: .secondaryLabel))
                                 VStack(alignment: instance.language == .greek ? .leading : .trailing) {
                                     Text(instance.wordInPassage) { string in
                                         let attributedStr = instance.textSurface
@@ -231,6 +230,7 @@ extension WordInfoDetailsView {
                                     }
                                     .font(instance.language.largeBibleFont)
                                 }
+                                .padding(.bottom, 4)
                             }
                         }
                     }
