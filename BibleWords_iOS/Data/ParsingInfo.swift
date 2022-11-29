@@ -185,10 +185,10 @@ struct Parsing {
             self.gloss = info.gloss
         }
         
-        var parsingStr: String {
-            var parsingStrings: [String] = []
+        var parsing: String {
+            var parsingings: [String] = []
             if type == .noun {
-                parsingStrings = [
+                parsingings = [
                     cases.map { $0.rawValue }.joined(separator: " or "),
                     persons.map { $0.rawValue }.joined(separator: " or "),
                     genders.map { $0.rawValue }.joined(separator: " or "),
@@ -196,7 +196,7 @@ struct Parsing {
                 ]
             } else if type == .verb {
                 if moods.map({ $0.rawValue.lowercased() }).contains("participle") {
-                    parsingStrings = [
+                    parsingings = [
                         tense?.rawValue ?? "",
                         voice?.rawValue ?? "",
                         moods.map { $0.rawValue }.joined(separator: " or "),
@@ -205,7 +205,7 @@ struct Parsing {
                         numbers.map { $0.rawValue }.joined(separator: " or "),
                     ]
                 } else {
-                    parsingStrings = [
+                    parsingings = [
                         tense?.rawValue ?? "",
                         voice?.rawValue ?? "",
                         stem?.rawValue ?? "",
@@ -217,7 +217,7 @@ struct Parsing {
                     ]
                 }
             }
-            return type.name + ", " + parsingStrings.joined(separator: ", ").replacingOccurrences(of: " ,", with: "")
+            return type.name + ", " + parsingings.joined(separator: ", ").replacingOccurrences(of: " ,", with: "")
         }
     }
     

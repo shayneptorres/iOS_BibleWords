@@ -138,18 +138,16 @@ struct ListDetailView: View {
     var body: some View {
         List {
             if viewModel.isBuilding {
-                DataIsBuildingCard(rotationAngle: $viewModel.animationRotationAngle)
+                DataLoadingRow(text: "Building vocab data...")
             } else {
                 Section {
                     HStack {
                         if viewModel.list.rangesArr.first != nil {
                             Button(action: { showReadingView = true }, label: {
-                                VStack {
+                                HStack {
                                     Image(systemName: "books.vertical")
-                                        .padding(.bottom, 4)
                                     Text("Read")
                                         .bold()
-                                        .font(.subheadline)
                                 }
                                 .frame(maxWidth: .infinity)
                                 .frame(height: 60)
@@ -170,12 +168,10 @@ struct ListDetailView: View {
                                 }
                             }
                         }, label: {
-                            VStack {
+                            HStack {
                                 Image(systemName: viewModel.list.pin == nil ? "pin" : "pin.slash")
-                                    .padding(.bottom, 4)
-                                Text("Pin")
+                                Text(viewModel.list.pin == nil ? "Pin" : "Unpin")
                                     .bold()
-                                    .font(.subheadline)
                             }
                             .frame(maxWidth: .infinity)
                             .frame(height: 60)

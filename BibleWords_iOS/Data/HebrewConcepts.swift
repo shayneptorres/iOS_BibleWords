@@ -119,380 +119,380 @@ enum HebrewConcept: Int, CaseIterable {
         switch self {
         case .qatalStrong:
             return .init(title: "Qal Qatal", items: [
-                .init(text: "קָטַל", definition: "He killed", details: "Qal Qatal Third Person Masculine Singluar"),
-                .init(text: "קָֽטְלוּ", definition: "They (m) killed", details: "Qal Qatal Third Person Masculine Plural"),
-                .init(text: "קָֽטְלָה", definition: "She killed", details: "Qal Qatal Third Person Feminine Singular"),
-                .init(text: "קָֽטְלוּ", definition: "They (f) killed", details: "Qal Qatal Third Person Feminine Plural"),
-                .init(text: "קָטַ֫לְתָּ", definition: "You (m) killed", details: "Qal Qatal Second Person Masculine Singular"),
-                .init(text: "קְטַלְתֶּם", definition: "You all (m) killed", details: "Qal Qatal Second Person Masculine Plural"),
-                .init(text: "קָטַלְתְּ", definition: "You (f) killed", details: "Qal Qatal Second Person Feminine Singular"),
-                .init(text: "קְטַלְתֶּן", definition: "You all (f) killed", details: "Qal Qatal Second Person Feminine Plural"),
-                .init(text: "קָטַ֫לְתִּי", definition: "I killed", details: "Qal Qatal First Person Common Singular"),
-                .init(text: "קָטַ֫לְנוּ", definition: "We killed", details: "Qal Qatal First Person Common Plural"),
+                .init(text: "קָטַל", definition: "He killed", parsing: "Qal Qatal Third Person Masculine Singluar", details: ""),
+                .init(text: "קָֽטְלוּ", definition: "They (m) killed", parsing: "Qal Qatal Third Person Masculine Plural", details: ""),
+                .init(text: "קָֽטְלָה", definition: "She killed", parsing: "Qal Qatal Third Person Feminine Singular", details: ""),
+                .init(text: "קָֽטְלוּ", definition: "They (f) killed", parsing: "Qal Qatal Third Person Feminine Plural", details: ""),
+                .init(text: "קָטַ֫לְתָּ", definition: "You (m) killed", parsing: "Qal Qatal Second Person Masculine Singular", details: ""),
+                .init(text: "קְטַלְתֶּם", definition: "You all (m) killed", parsing: "Qal Qatal Second Person Masculine Plural", details: ""),
+                .init(text: "קָטַלְתְּ", definition: "You (f) killed", parsing: "Qal Qatal Second Person Feminine Singular", details: ""),
+                .init(text: "קְטַלְתֶּן", definition: "You all (f) killed", parsing: "Qal Qatal Second Person Feminine Plural", details: ""),
+                .init(text: "קָטַ֫לְתִּי", definition: "I killed", parsing: "Qal Qatal First Person Common Singular", details: ""),
+                .init(text: "קָטַ֫לְנוּ", definition: "We killed", parsing: "Qal Qatal First Person Common Plural", details: ""),
             ])
         case .qatal3rdה:
             return .init(title: "Qal Qatal (III-ה)", items: [
-                .init(text: "בָּנָה", definition: "He built", details: "Qal Qatal Third Person Masculine Singular"),
-                .init(text: "בָּנוּ", definition: "They (m) built", details: "Qal Qatal Third Person Masculine Plural"),
-                .init(text: "בָּֽנְתָה", definition: "She built", details: "Qal Qatal Third Person Feminine Singular"),
-                .init(text: "בָּנוּ", definition: "They (f) built", details: "Qal Qatal Third Person Feminine Plural"),
-                .init(text: "בָּנִ֫יתָ", definition: "You (m) built", details: "Qal Qatal Second Person Masculine Singular"),
-                .init(text: "בְּנִיתֶם", definition: "You all (m) built", details: "Qal Qatal Second Person Masculine Plural"),
-                .init(text: "בָּנִית", definition: "You (f) built", details: "Qal Qatal Second Person Feminine Singular"),
-                .init(text: "בְּנִיתֶן", definition: "You all (f) built", details: "Qal Qatal Second Person Feminine Plural"),
-                .init(text: "בָּנִ֫יתִי", definition: "I built", details: "Qal Qatal First Person Common Singular"),
-                .init(text: "בָּנִ֫ינוּ", definition: "We built", details: "Qal Qatal First Person Common Plural"),
+                .init(text: "בָּנָה", definition: "He built", parsing: "Qal Qatal Third Person Masculine Singular", details: ""),
+                .init(text: "בָּנוּ", definition: "They (m) built", parsing: "Qal Qatal Third Person Masculine Plural", details: ""),
+                .init(text: "בָּֽנְתָה", definition: "She built", parsing: "Qal Qatal Third Person Feminine Singular", details: ""),
+                .init(text: "בָּנוּ", definition: "They (f) built", parsing: "Qal Qatal Third Person Feminine Plural", details: ""),
+                .init(text: "בָּנִ֫יתָ", definition: "You (m) built", parsing: "Qal Qatal Second Person Masculine Singular", details: ""),
+                .init(text: "בְּנִיתֶם", definition: "You all (m) built", parsing: "Qal Qatal Second Person Masculine Plural", details: ""),
+                .init(text: "בָּנִית", definition: "You (f) built", parsing: "Qal Qatal Second Person Feminine Singular", details: ""),
+                .init(text: "בְּנִיתֶן", definition: "You all (f) built", parsing: "Qal Qatal Second Person Feminine Plural", details: ""),
+                .init(text: "בָּנִ֫יתִי", definition: "I built", parsing: "Qal Qatal First Person Common Singular", details: ""),
+                .init(text: "בָּנִ֫ינוּ", definition: "We built", parsing: "Qal Qatal First Person Common Plural", details: ""),
             ])
         case .yiqtolStrong:
             return .init(title: "Qal Yiqtol", items: [
-                .init(text: "יִקְטֹל", definition: "He will kill", details: "Qal Yiqtol Third Person Masculine Singular"),
-                .init(text: "יִקְטְלוּ", definition: "They (m) will kill", details: "Qal Yiqtol Third Person Masculine Plural"),
-                .init(text: "תִּקְטֹל", definition: "She will kill", details: "Qal Yiqtol Third Person Feminine Singular"),
-                .init(text: "תִּקְטֹ֫לְנָה", definition: "They (f) will kill", details: "Qal Yiqtol Third Person Feminine Plural"),
-                .init(text: "תִּקְטֹל", definition: "You (m) will kill", details: "Qal Yiqtol Second Person Masculine Singular"),
-                .init(text: "תִּקְטְלוּ", definition: "You all (m) will kill", details: "Qal Yiqtol Second Person Masculine Plural"),
-                .init(text: "תִּקְטְלִי", definition: "You (f) will kill", details: "Qal Yiqtol Second Person Feminine Singular"),
-                .init(text: "תִּקְטֹ֫לְנָה", definition: "You all (f) will kill", details: "Qal Yiqtol Second Person Feminine Plural"),
-                .init(text: "אֶקְטֹל", definition: "I will kill", details: "Qal Yiqtol First Person Common Singular"),
-                .init(text: "נִקְטֹל", definition: "We will kill", details: "Qal Yiqtol First Person Common Plural"),
+                .init(text: "יִקְטֹל", definition: "He will kill", parsing: "Qal Yiqtol Third Person Masculine Singular", details: ""),
+                .init(text: "יִקְטְלוּ", definition: "They (m) will kill", parsing: "Qal Yiqtol Third Person Masculine Plural", details: ""),
+                .init(text: "תִּקְטֹל", definition: "She will kill", parsing: "Qal Yiqtol Third Person Feminine Singular", details: ""),
+                .init(text: "תִּקְטֹ֫לְנָה", definition: "They (f) will kill", parsing: "Qal Yiqtol Third Person Feminine Plural", details: ""),
+                .init(text: "תִּקְטֹל", definition: "You (m) will kill", parsing: "Qal Yiqtol Second Person Masculine Singular", details: ""),
+                .init(text: "תִּקְטְלוּ", definition: "You all (m) will kill", parsing: "Qal Yiqtol Second Person Masculine Plural", details: ""),
+                .init(text: "תִּקְטְלִי", definition: "You (f) will kill", parsing: "Qal Yiqtol Second Person Feminine Singular", details: ""),
+                .init(text: "תִּקְטֹ֫לְנָה", definition: "You all (f) will kill", parsing: "Qal Yiqtol Second Person Feminine Plural", details: ""),
+                .init(text: "אֶקְטֹל", definition: "I will kill", parsing: "Qal Yiqtol First Person Common Singular", details: ""),
+                .init(text: "נִקְטֹל", definition: "We will kill", parsing: "Qal Yiqtol First Person Common Plural", details: ""),
             ])
         case .yiqtol3rdה:
             return .init(title: "Qal Yiqtol (III-ה)", items: [
-                .init(text: "יִבְנֶה", definition: "He will build", details: "Qal Yiqtol Third Person Masculine Singular"),
-                .init(text: "יִבְנוּ", definition: "They (m) will build", details: "Qal Yiqtol Third Person Masculine Plural"),
-                .init(text: "תִּבְנֶה", definition: "She will build", details: "Qal Yiqtol Third Person Feminine Singular"),
-                .init(text: "תִּבְנֶ֫ינָה", definition: "They (f) will build", details: "Qal Yiqtol Third Person Feminine Plural"),
-                .init(text: "תִּבְנֶה", definition: "You (m) will build", details: "Qal Yiqtol Second Person Masculine Singular"),
-                .init(text: "תִּבְנוּ", definition: "You all (m) will build", details: "Qal Yiqtol Second Person Masculine Plural"),
-                .init(text: "תִּבְנִי", definition: "You (f) will build", details: "Qal Yiqtol Second Person Feminine Singular"),
-                .init(text: "תִּבְנֶ֫ינָה", definition: "You all (f) will build", details: "Qal Yiqtol Second Person Feminine Plural"),
-                .init(text: "אֶבְנֶה", definition: "I will build", details: "Qal Yiqtol First Person Common Singular"),
-                .init(text: "נִבְנֶה", definition: "We will build", details: "Qal Yiqtol First Person Common Plural"),
+                .init(text: "יִבְנֶה", definition: "He will build", parsing: "Qal Yiqtol Third Person Masculine Singular", details: ""),
+                .init(text: "יִבְנוּ", definition: "They (m) will build", parsing: "Qal Yiqtol Third Person Masculine Plural", details: ""),
+                .init(text: "תִּבְנֶה", definition: "She will build", parsing: "Qal Yiqtol Third Person Feminine Singular", details: ""),
+                .init(text: "תִּבְנֶ֫ינָה", definition: "They (f) will build", parsing: "Qal Yiqtol Third Person Feminine Plural", details: ""),
+                .init(text: "תִּבְנֶה", definition: "You (m) will build", parsing: "Qal Yiqtol Second Person Masculine Singular", details: ""),
+                .init(text: "תִּבְנוּ", definition: "You all (m) will build", parsing: "Qal Yiqtol Second Person Masculine Plural", details: ""),
+                .init(text: "תִּבְנִי", definition: "You (f) will build", parsing: "Qal Yiqtol Second Person Feminine Singular", details: ""),
+                .init(text: "תִּבְנֶ֫ינָה", definition: "You all (f) will build", parsing: "Qal Yiqtol Second Person Feminine Plural", details: ""),
+                .init(text: "אֶבְנֶה", definition: "I will build", parsing: "Qal Yiqtol First Person Common Singular", details: ""),
+                .init(text: "נִבְנֶה", definition: "We will build", parsing: "Qal Yiqtol First Person Common Plural", details: ""),
             ])
         case .constructSufformatives:
             return .init(title: "Construct Sufformatives", items: [
-                .init(text: "סוּס", definition: "The/a horse of", details: "Masculine Singular"),
-                .init(text: "סוּסַת", definition: "The/a mare of", details: "Feminine Singular"),
-                .init(text: "סוּסֵי", definition: "The horses of", details: "Masculine Plural"),
-                .init(text: "סוּסוֹת", definition: "The mares of", details: "Feminine Plural"),
+                .init(text: "סוּס", definition: "The/a horse of", parsing: "Masculine Singular", details: ""),
+                .init(text: "סוּסַת", definition: "The/a mare of", parsing: "Feminine Singular", details: ""),
+                .init(text: "סוּסֵי", definition: "The horses of", parsing: "Masculine Plural", details: ""),
+                .init(text: "סוּסוֹת", definition: "The mares of", parsing: "Feminine Plural", details: ""),
             ])
         case .pronominalSuffixesType1:
             return .init(title: "Pronominal Suffixes (Type 1)", items: [
-                .init(text: "סוּסוֹ", definition: "His horse", details: "Third Person Masculine Singular"),
-                .init(text: "סוּסָם", definition: "Their (m) horse", details: "Third Person Masculine Plural"),
-                .init(text: "סוּסָהּ", definition: "Her horse", details: "Third Person Feminine Singular"),
-                .init(text: "סוּסָן", definition: "Their (f) horse", details: "Third Person Feminine Plural"),
-                .init(text: "סוּסְךָ", definition: "Your (m) horse", details: "Second Person Masculine Singular"),
-                .init(text: "סוּסְכֶם", definition: "Your (mp) horse", details: "Second Person Masculine Plural"),
-                .init(text: "סוּסֵךְ", definition: "Your (f) horse", details: "Second Person Feminine Singular"),
-                .init(text: "סוּסְכֶן", definition: "Your (fp) horse", details: "Second Person Feminine Plural"),
-                .init(text: "סוּסִי", definition: "My horse", details: "First Person Common Singular"),
-                .init(text: "סוּסֵ֫נוּ", definition: "Our horse", details: "First Person Common Plural"),
+                .init(text: "סוּסוֹ", definition: "His horse", parsing: "Third Person Masculine Singular", details: ""),
+                .init(text: "סוּסָם", definition: "Their (m) horse", parsing: "Third Person Masculine Plural", details: ""),
+                .init(text: "סוּסָהּ", definition: "Her horse", parsing: "Third Person Feminine Singular", details: ""),
+                .init(text: "סוּסָן", definition: "Their (f) horse", parsing: "Third Person Feminine Plural", details: ""),
+                .init(text: "סוּסְךָ", definition: "Your (m) horse", parsing: "Second Person Masculine Singular", details: ""),
+                .init(text: "סוּסְכֶם", definition: "Your (mp) horse", parsing: "Second Person Masculine Plural", details: ""),
+                .init(text: "סוּסֵךְ", definition: "Your (f) horse", parsing: "Second Person Feminine Singular", details: ""),
+                .init(text: "סוּסְכֶן", definition: "Your (fp) horse", parsing: "Second Person Feminine Plural", details: ""),
+                .init(text: "סוּסִי", definition: "My horse", parsing: "First Person Common Singular", details: ""),
+                .init(text: "סוּסֵ֫נוּ", definition: "Our horse", parsing: "First Person Common Plural", details: ""),
             ])
         case .pronominalSuffixesType2:
             return .init(title: "Pronominal Suffixes (Type 2)", items: [
-                .init(text: "סוּסָיו", definition: "His horses", details: "Third Person Masculine Singular"),
-                .init(text: "סוּסֵיהֶם", definition: "Their (m) horses", details: "Third Person Masculine Plural"),
-                .init(text: "סוּסֶיהָ", definition: "Her horses", details: "Third Person Feminine Singular"),
-                .init(text: "סוּסֵיהֶן", definition: "Their (f) horses", details: "Third Person Feminine Plural"),
-                .init(text: "סוּסֶ֫יךָ", definition: "Your (m) horses", details: "Second Person Masculine Singular"),
-                .init(text: "סוּסֵיכֶם", definition: "Your (mp) horses", details: "Second Person Masculine Plural"),
-                .init(text: "סוּסַ֫יִךְ", definition: "Your (f) horses", details: "Second Person Feminine Singular"),
-                .init(text: "סוּסֵיכֶן", definition: "Your (fp) horses", details: "Second Person Feminine Plural"),
-                .init(text: "סוּסַי", definition: "My horses", details: "First Person Common Singular"),
-                .init(text: "סוּסֵ֫ינוּ", definition: "Our horses", details: "First Person Common Plural"),
+                .init(text: "סוּסָיו", definition: "His horses", parsing: "Third Person Masculine Singular", details: ""),
+                .init(text: "סוּסֵיהֶם", definition: "Their (m) horses", parsing: "Third Person Masculine Plural", details: ""),
+                .init(text: "סוּסֶיהָ", definition: "Her horses", parsing: "Third Person Feminine Singular", details: ""),
+                .init(text: "סוּסֵיהֶן", definition: "Their (f) horses", parsing: "Third Person Feminine Plural", details: ""),
+                .init(text: "סוּסֶ֫יךָ", definition: "Your (m) horses", parsing: "Second Person Masculine Singular", details: ""),
+                .init(text: "סוּסֵיכֶם", definition: "Your (mp) horses", parsing: "Second Person Masculine Plural", details: ""),
+                .init(text: "סוּסַ֫יִךְ", definition: "Your (f) horses", parsing: "Second Person Feminine Singular", details: ""),
+                .init(text: "סוּסֵיכֶן", definition: "Your (fp) horses", parsing: "Second Person Feminine Plural", details: ""),
+                .init(text: "סוּסַי", definition: "My horses", parsing: "First Person Common Singular", details: ""),
+                .init(text: "סוּסֵ֫ינוּ", definition: "Our horses", parsing: "First Person Common Plural", details: ""),
             ])
         case .qalActiveParticiple:
             return .init(title: "Qal Active Participle", items: [
-                .init(text: "קֹטֵל", definition: "", details: "Qal Active Participle Masculine Singular"),
-                .init(text: "קֹטְלִים", definition: "", details: "Qal Active Participle Masculine Plural"),
-                .init(text: "קֹטֶ֫לֶת", definition: "", details: "Qal Active Participle Feminine Singular"),
-                .init(text: "קֹטְלוֹת", definition: "", details: "Qal Active Participle Feminine Plural"),
+                .init(text: "קֹטֵל", definition: "", parsing: "Qal Active Participle Masculine Singular", details: ""),
+                .init(text: "קֹטְלִים", definition: "", parsing: "Qal Active Participle Masculine Plural", details: ""),
+                .init(text: "קֹטֶ֫לֶת", definition: "", parsing: "Qal Active Participle Feminine Singular", details: ""),
+                .init(text: "קֹטְלוֹת", definition: "", parsing: "Qal Active Participle Feminine Plural", details: ""),
             ])
         case .qalActiveParticiple3rdה:
             return .init(title: "Qal Active Participle (III-ה)", items: [
-                .init(text: "בֹּנֶה", definition: "", details: "Qal Active Participle Masculine Singular"),
-                .init(text: "בֹּנִים", definition: "", details: "Qal Active Participle Masculine Plural"),
-                .init(text: "בֹּנָה", definition: "", details: "Qal Active Participle Feminine Singular"),
-                .init(text: "בֹּנוֹת", definition: "", details: "Qal Active Participle Feminine Plural"),
+                .init(text: "בֹּנֶה", definition: "", parsing: "Qal Active Participle Masculine Singular", details: ""),
+                .init(text: "בֹּנִים", definition: "", parsing: "Qal Active Participle Masculine Plural", details: ""),
+                .init(text: "בֹּנָה", definition: "", parsing: "Qal Active Participle Feminine Singular", details: ""),
+                .init(text: "בֹּנוֹת", definition: "", parsing: "Qal Active Participle Feminine Plural", details: ""),
             ])
         case .qalPassiveParticiple:
             return .init(title: "Qal Passive Participle", items: [
-                .init(text: "קָטוּל", definition: "", details: "Qal Passive Participle Masculine Singular"),
-                .init(text: "קְטוּלִים", definition: "", details: "Qal Passive Participle Masculine Plural"),
-                .init(text: "קְטוּלָה", definition: "", details: "Qal Passive Participle Feminine Singular"),
-                .init(text: "קְטוּלוֹת", definition: "", details: "Qal Passive Participle Feminine Plural"),
+                .init(text: "קָטוּל", definition: "", parsing: "Qal Passive Participle Masculine Singular", details: ""),
+                .init(text: "קְטוּלִים", definition: "", parsing: "Qal Passive Participle Masculine Plural", details: ""),
+                .init(text: "קְטוּלָה", definition: "", parsing: "Qal Passive Participle Feminine Singular", details: ""),
+                .init(text: "קְטוּלוֹת", definition: "", parsing: "Qal Passive Participle Feminine Plural", details: ""),
             ])
         case .qalPassiveParticiple3rdה:
             return .init(title: "Qal Passive Participle (III-ה)", items: [
-                .init(text: "בָּנוּי", definition: "", details: "Qal Passive Participle Masculine Singular"),
-                .init(text: "בְּנוּיִם", definition: "", details: "Qal Passive Participle Masculine Plural"),
-                .init(text: "בְּנוּיָה", definition: "", details: "Qal Passive Participle Feminine Singular"),
-                .init(text: "בְּנוּיוֹת", definition: "", details: "Qal Passive Participle Feminine Plural"),
+                .init(text: "בָּנוּי", definition: "", parsing: "Qal Passive Participle Masculine Singular", details: ""),
+                .init(text: "בְּנוּיִם", definition: "", parsing: "Qal Passive Participle Masculine Plural", details: ""),
+                .init(text: "בְּנוּיָה", definition: "", parsing: "Qal Passive Participle Feminine Singular", details: ""),
+                .init(text: "בְּנוּיוֹת", definition: "", parsing: "Qal Passive Participle Feminine Plural", details: ""),
             ])
         case .demonstrativePronouns:
             return .init(title: "Demonstrative Pronouns", items: [
-                .init(text: "זֶה", definition: "This (m)", details: "Near Demonstrative Masculine Singular"),
-                .init(text: "הוּא", definition: "That (m)", details: "Far Demonstrative Masculine Singular"),
-                .init(text: "זֹאת", definition: "This (f)", details: "Near Demonstrative Feminine Singular"),
-                .init(text: "הִיא", definition: "That (f)", details: "Far Demonstrative Feminine Singular"),
-                .init(text: "הַם", definition: "Those (m)", details: "Far Demonstrative Masculine Plural"),
-                .init(text: "הֵ֫נָּה", definition: "Those (f)", details: "Far Demonstrative Feminine Plural"),
-                .init(text: "אֵ֫לֶּה", definition: "These (m/f)", details: "Near Demonstrative Common Plural"),
+                .init(text: "זֶה", definition: "This (m)", parsing: "Near Demonstrative Masculine Singular", details: ""),
+                .init(text: "הוּא", definition: "That (m)", parsing: "Far Demonstrative Masculine Singular", details: ""),
+                .init(text: "זֹאת", definition: "This (f)", parsing: "Near Demonstrative Feminine Singular", details: ""),
+                .init(text: "הִיא", definition: "That (f)", parsing: "Far Demonstrative Feminine Singular", details: ""),
+                .init(text: "הַם", definition: "Those (m)", parsing: "Far Demonstrative Masculine Plural", details: ""),
+                .init(text: "הֵ֫נָּה", definition: "Those (f)", parsing: "Far Demonstrative Feminine Plural", details: ""),
+                .init(text: "אֵ֫לֶּה", definition: "These (m/f)", parsing: "Near Demonstrative Common Plural", details: ""),
             ])
         case .subjectPronouns:
             return .init(title: "Subject Pronouns", items: [
-                .init(text: "הוּא", definition: "He", details: "Subject Pronoun Third Person Masculine Singular"),
-                .init(text: "הֵ֫מָּה / הֵם", definition: "They (m)", details: "Subject Pronoun Third Person Masculine Plural"),
-                .init(text: "הִיא", definition: "She", details: "Subject Pronoun Third Person Feminine Singular"),
-                .init(text: "הֵ֫נָּה", definition: "They (f)", details: "Subject Pronoun Third Person Feminine Plural"),
-                .init(text: "אַתָּה", definition: "You (m)", details: "Subject Pronoun Second Person Masculine Singular"),
-                .init(text: "אַתֶּם", definition: "You all (m)", details: "Subject Pronoun Second Person Masculine Plural"),
-                .init(text: "אַתְּ", definition: "You (f)", details: "Subject Pronoun Second Person Feminine Singular"),
-                .init(text: "אַתֵּ֫נָה / אַתֶּן", definition: "You all (f)", details: "Subject Pronoun Second Person Feminine Plural"),
-                .init(text: "אֲנִי/אָנֹכִי", definition: "I", details: "Subject Pronoun First Person Common Singular"),
-                .init(text: "אֲנַ֫חְנוּ", definition: "We", details: "Subject Pronoun First Person Common Plural"),
+                .init(text: "הוּא", definition: "He", parsing: "Subject Pronoun Third Person Masculine Singular", details: ""),
+                .init(text: "הֵ֫מָּה / הֵם", definition: "They (m)", parsing: "Subject Pronoun Third Person Masculine Plural", details: ""),
+                .init(text: "הִיא", definition: "She", parsing: "Subject Pronoun Third Person Feminine Singular", details: ""),
+                .init(text: "הֵ֫נָּה", definition: "They (f)", parsing: "Subject Pronoun Third Person Feminine Plural", details: ""),
+                .init(text: "אַתָּה", definition: "You (m)", parsing: "Subject Pronoun Second Person Masculine Singular", details: ""),
+                .init(text: "אַתֶּם", definition: "You all (m)", parsing: "Subject Pronoun Second Person Masculine Plural", details: ""),
+                .init(text: "אַתְּ", definition: "You (f)", parsing: "Subject Pronoun Second Person Feminine Singular", details: ""),
+                .init(text: "אַתֵּ֫נָה / אַתֶּן", definition: "You all (f)", parsing: "Subject Pronoun Second Person Feminine Plural", details: ""),
+                .init(text: "אֲנִי/אָנֹכִי", definition: "I", parsing: "Subject Pronoun First Person Common Singular", details: ""),
+                .init(text: "אֲנַ֫חְנוּ", definition: "We", parsing: "Subject Pronoun First Person Common Plural", details: ""),
             ])
 
         case .directObjectPronouns:
             return .init(title: "Direct Object Pronouns", items: [
-                .init(text: "אֹתוֹ", definition: "Him", details: "Dir. Obj. Pronoun Third Person Masculine Singular"),
-                .init(text: "אֹתָם / אֶתְהֶם", definition: "Them (m)", details: "Dir. Obj. Pronoun Third Person Masculine Plural"),
-                .init(text: "אֹתָהּ", definition: "Her", details: "Dir. Obj. Pronoun Third Person Feminine Singular"),
-                .init(text: "אֹתָן / אֶתְהֶן", definition: "Them (f)", details: "Dir. Obj. Pronoun Third Person Feminine Plural"),
-                .init(text: "אֹתְךָ", definition: "You (m)", details: "Dir. Obj. Pronoun Second Person Masculine Singular"),
-                .init(text: "אֶתְכֶם", definition: "You all (m)", details: "Dir. Obj. Pronoun Second Person Masculine Plural"),
-                .init(text: "אֹתָךְ", definition: "You (f)", details: "Dir. Obj. Pronoun Second Person Feminine Singular"),
-                .init(text: "_", definition: "Not extant", details: "Dir. Obj. Pronoun Second Person Feminine Plural"),
-                .init(text: "אֹתִי", definition: "Me", details: "Dir. Obj. Pronoun First Person Common Singular"),
-                .init(text: "אֹתָ֫נוּ", definition: "Us", details: "Dir. Obj. Pronoun First Person Common Plural"),
+                .init(text: "אֹתוֹ", definition: "Him", parsing: "Dir. Obj. Pronoun Third Person Masculine Singular", details: ""),
+                .init(text: "אֹתָם / אֶתְהֶם", definition: "Them (m)", parsing: "Dir. Obj. Pronoun Third Person Masculine Plural", details: ""),
+                .init(text: "אֹתָהּ", definition: "Her", parsing: "Dir. Obj. Pronoun Third Person Feminine Singular", details: ""),
+                .init(text: "אֹתָן / אֶתְהֶן", definition: "Them (f)", parsing: "Dir. Obj. Pronoun Third Person Feminine Plural", details: ""),
+                .init(text: "אֹתְךָ", definition: "You (m)", parsing: "Dir. Obj. Pronoun Second Person Masculine Singular", details: ""),
+                .init(text: "אֶתְכֶם", definition: "You all (m)", parsing: "Dir. Obj. Pronoun Second Person Masculine Plural", details: ""),
+                .init(text: "אֹתָךְ", definition: "You (f)", parsing: "Dir. Obj. Pronoun Second Person Feminine Singular", details: ""),
+                .init(text: "_", definition: "Not extant", parsing: "Dir. Obj. Pronoun Second Person Feminine Plural", details: ""),
+                .init(text: "אֹתִי", definition: "Me", parsing: "Dir. Obj. Pronoun First Person Common Singular", details: ""),
+                .init(text: "אֹתָ֫נוּ", definition: "Us", parsing: "Dir. Obj. Pronoun First Person Common Plural", details: ""),
             ])
         case .qalImperative:
             return .init(title: "Qal Imperative", items: [
-                .init(text: "קְטֹל", definition: "You (ms) kill (command)", details: "Qal Imperative Masculine Singular"),
-                .init(text: "קִטְלוּ", definition: "You (mp) kill (command)", details: "Qal Imperative Masculine Plural"),
-                .init(text: "קִטְלִי", definition: "You (fs) kill (command)", details: "Qal Imperative Feminine Singular"),
-                .init(text: "קְטֹלְנָה", definition: "You (mp) kill (command)", details: "Qal Imperative Feminine Plural"),
+                .init(text: "קְטֹל", definition: "You (ms) kill (command)", parsing: "Qal Imperative Masculine Singular", details: ""),
+                .init(text: "קִטְלוּ", definition: "You (mp) kill (command)", parsing: "Qal Imperative Masculine Plural", details: ""),
+                .init(text: "קִטְלִי", definition: "You (fs) kill (command)", parsing: "Qal Imperative Feminine Singular", details: ""),
+                .init(text: "קְטֹלְנָה", definition: "You (mp) kill (command)", parsing: "Qal Imperative Feminine Plural", details: ""),
             ])
         case .qalImperative3rdה:
             return .init(title: "Qal Imperative (III-ה)", items: [
-                .init(text: "בְּנֵה", definition: "You (ms) make (command)", details: "Qal Imperative Masculine Singular"),
-                .init(text: "בְּנוּ", definition: "You (mp) make (command)", details: "Qal Imperative Masculine Plural"),
-                .init(text: "בְּנִי", definition: "You (fs) make (command)", details: "Qal Imperative Feminine Singular"),
-                .init(text: "בְּנֶינָה", definition: "You (fp) make (command)", details: "Qal Imperative Feminine Plural"),
+                .init(text: "בְּנֵה", definition: "You (ms) make (command)", parsing: "Qal Imperative Masculine Singular", details: ""),
+                .init(text: "בְּנוּ", definition: "You (mp) make (command)", parsing: "Qal Imperative Masculine Plural", details: ""),
+                .init(text: "בְּנִי", definition: "You (fs) make (command)", parsing: "Qal Imperative Feminine Singular", details: ""),
+                .init(text: "בְּנֶינָה", definition: "You (fp) make (command)", parsing: "Qal Imperative Feminine Plural", details: ""),
             ])
         case .hebrewNumbers1_10:
             return .init(title: "Hebrew Numbers (1-10)", items: [
-                .init(text: "אֶחָד", definition: "One", details: "Masc. Abs"),
-                .init(text: "שְׁנַ֫יִם", definition: "Two", details: ""),
-                .init(text: "שָׁלֹשׁ", definition: "Three", details: ""),
-                .init(text: "אַרְבַּע", definition: "Four", details: ""),
-                .init(text: "חָמֵשׁ", definition: "Five", details: ""),
-                .init(text: "שֵׁשׁ", definition: "Six", details: ""),
-                .init(text: "שֶׁ֫בַע", definition: "Seven", details: ""),
-                .init(text: "שְׁמֹנֶה", definition: "Eight", details: ""),
-                .init(text: "תֵּ֫שַׁע", definition: "Nine", details: ""),
-                .init(text: "עֶ֫שֶׂר", definition: "Ten", details: ""),
+                .init(text: "אֶחָד", definition: "One", parsing: "Masc. Abs", details: ""),
+                .init(text: "שְׁנַ֫יִם", definition: "Two", parsing: "", details: ""),
+                .init(text: "שָׁלֹשׁ", definition: "Three", parsing: "", details: ""),
+                .init(text: "אַרְבַּע", definition: "Four", parsing: "", details: ""),
+                .init(text: "חָמֵשׁ", definition: "Five", parsing: "", details: ""),
+                .init(text: "שֵׁשׁ", definition: "Six", parsing: "", details: ""),
+                .init(text: "שֶׁ֫בַע", definition: "Seven", parsing: "", details: ""),
+                .init(text: "שְׁמֹנֶה", definition: "Eight", parsing: "", details: ""),
+                .init(text: "תֵּ֫שַׁע", definition: "Nine", parsing: "", details: ""),
+                .init(text: "עֶ֫שֶׂר", definition: "Ten", parsing: "", details: ""),
             ])
         case .hebrewNumbersAbsoluteConstruct1_10:
             return .init(title: "Hebrew Numbers (Absolute and Construct)", items: [
-                .init(text: "אֶחָד", definition: "One", details: "Masc. Abs"),
-                .init(text: "אַחַת", definition: "One", details: "Fem. Abs"),
+                .init(text: "אֶחָד", definition: "One", parsing: "Masc. Abs", details: ""),
+                .init(text: "אַחַת", definition: "One", parsing: "Fem. Abs", details: ""),
                 
-                .init(text: "שְׁנַ֫יִם", definition: "Two", details: "Masc. Abs."),
-                .init(text: "שְׁנֵי", definition: "Two", details: "Masc. Const."),
-                .init(text: "שְׁתַּ֫יִם", definition: "Two", details: "Fem. Abs"),
-                .init(text: "שְׁתֵּי", definition: "Two", details: "Fem. Const"),
+                .init(text: "שְׁנַ֫יִם", definition: "Two", parsing: "Masc. Abs.", details: ""),
+                .init(text: "שְׁנֵי", definition: "Two", parsing: "Masc. Const.", details: ""),
+                .init(text: "שְׁתַּ֫יִם", definition: "Two", parsing: "Fem. Abs", details: ""),
+                .init(text: "שְׁתֵּי", definition: "Two", parsing: "Fem. Const", details: ""),
                 
-                .init(text: "שָׁלֹשׁ", definition: "Three", details: "Masc. Abs."),
-                .init(text: "שְׁלֹשׁ", definition: "Three", details: "Masc. Const."),
-                .init(text: "שְׁלֹשָׁה", definition: "Three", details: "Fem. Abs."),
-                .init(text: "שְׁלֹ֫שֶׁת", definition: "Three", details: "Fem. Const."),
+                .init(text: "שָׁלֹשׁ", definition: "Three", parsing: "Masc. Abs.", details: ""),
+                .init(text: "שְׁלֹשׁ", definition: "Three", parsing: "Masc. Const.", details: ""),
+                .init(text: "שְׁלֹשָׁה", definition: "Three", parsing: "Fem. Abs.", details: ""),
+                .init(text: "שְׁלֹ֫שֶׁת", definition: "Three", parsing: "Fem. Const.", details: ""),
                 
-                .init(text: "אַרְבַּע", definition: "Four", details: "Masc. Abs. & Const."),
-                .init(text: "אַרְבָּעָה", definition: "Four", details: "Fem. Abs"),
-                .init(text: "אַרְבַּ֫עַת", definition: "Four", details: "Fem. Const."),
+                .init(text: "אַרְבַּע", definition: "Four", parsing: "Masc. Abs. & Const.", details: ""),
+                .init(text: "אַרְבָּעָה", definition: "Four", parsing: "Fem. Abs", details: ""),
+                .init(text: "אַרְבַּ֫עַת", definition: "Four", parsing: "Fem. Const.", details: ""),
                 
-                .init(text: "חָמֵשׁ", definition: "Five", details: "Masc. Abs"),
-                .init(text: "חֲמֵשׁ", definition: "Five", details: "Masc. Const."),
-                .init(text: "חֲמִשָּה", definition: "Five", details: "Fem. Abs"),
-                .init(text: "חֲמֵ֫שֶׁת", definition: "Five", details: "Fem. Const."),
+                .init(text: "חָמֵשׁ", definition: "Five", parsing: "Masc. Abs", details: ""),
+                .init(text: "חֲמֵשׁ", definition: "Five", parsing: "Masc. Const.", details: ""),
+                .init(text: "חֲמִשָּה", definition: "Five", parsing: "Fem. Abs", details: ""),
+                .init(text: "חֲמֵ֫שֶׁת", definition: "Five", parsing: "Fem. Const.", details: ""),
                 
-                .init(text: "שֵׁשׁ", definition: "Six", details: ""),
-                .init(text: "שֵׁשׁ", definition: "Six", details: ""),
-                .init(text: "שֵׁשׁ", definition: "Six", details: ""),
-                .init(text: "שֵׁשׁ", definition: "Six", details: ""),
+                .init(text: "שֵׁשׁ", definition: "Six", parsing: "", details: ""),
+                .init(text: "שֵׁשׁ", definition: "Six", parsing: "", details: ""),
+                .init(text: "שֵׁשׁ", definition: "Six", parsing: "", details: ""),
+                .init(text: "שֵׁשׁ", definition: "Six", parsing: "", details: ""),
                 
-                .init(text: "שֶׁ֫בַע", definition: "Seven", details: "Masc. Abs"),
-                .init(text: "שְׁבַע", definition: "Seven", details: "Masc. Const."),
-                .init(text: "שִׁבְעָה", definition: "Seven", details: "Fem. Abs."),
-                .init(text: "שִׁבְעַת", definition: "Seven", details: "Fem. Const."),
+                .init(text: "שֶׁ֫בַע", definition: "Seven", parsing: "Masc. Abs", details: ""),
+                .init(text: "שְׁבַע", definition: "Seven", parsing: "Masc. Const.", details: ""),
+                .init(text: "שִׁבְעָה", definition: "Seven", parsing: "Fem. Abs.", details: ""),
+                .init(text: "שִׁבְעַת", definition: "Seven", parsing: "Fem. Const.", details: ""),
                 
-                .init(text: "שְׁמֹנֶה", definition: "Eight", details: "Masc. Abs & Const."),
-                .init(text: "שְׁמֹנָה", definition: "Eight", details: "Fem. Abs."),
-                .init(text: "שְׁמֹנַת", definition: "Eight", details: "Fem. Const."),
+                .init(text: "שְׁמֹנֶה", definition: "Eight", parsing: "Masc. Abs & Const.", details: ""),
+                .init(text: "שְׁמֹנָה", definition: "Eight", parsing: "Fem. Abs.", details: ""),
+                .init(text: "שְׁמֹנַת", definition: "Eight", parsing: "Fem. Const.", details: ""),
                 
-                .init(text: "תֵּ֫שַׁע", definition: "Nine", details: "Masc. Abs."),
-                .init(text: "תְּשַׁע", definition: "Nine", details: "Masc. Const."),
-                .init(text: "תִּשְׁעָה", definition: "Nine", details: "Fem. Abs."),
-                .init(text: "תִּשְׁעַת", definition: "Nine", details: "Fem. Const."),
+                .init(text: "תֵּ֫שַׁע", definition: "Nine", parsing: "Masc. Abs.", details: ""),
+                .init(text: "תְּשַׁע", definition: "Nine", parsing: "Masc. Const.", details: ""),
+                .init(text: "תִּשְׁעָה", definition: "Nine", parsing: "Fem. Abs.", details: ""),
+                .init(text: "תִּשְׁעַת", definition: "Nine", parsing: "Fem. Const.", details: ""),
                 
-                .init(text: "עֶ֫שֶׂר", definition: "Ten", details: "Masc. Abs."),
-                .init(text: "עֶשֶׂר", definition: "Ten", details: "Masc. Const."),
-                .init(text: "עֲשָׂרָה", definition: "Ten", details: "Fem. Abs."),
-                .init(text: "עֲשֶׂ֫רֶת", definition: "Ten", details: "Fem. Const."),
+                .init(text: "עֶ֫שֶׂר", definition: "Ten", parsing: "Masc. Abs.", details: ""),
+                .init(text: "עֶשֶׂר", definition: "Ten", parsing: "Masc. Const.", details: ""),
+                .init(text: "עֲשָׂרָה", definition: "Ten", parsing: "Fem. Abs.", details: ""),
+                .init(text: "עֲשֶׂ֫רֶת", definition: "Ten", parsing: "Fem. Const.", details: ""),
             ])
         case .hebrewNumbers11_19:
             return .init(title: "Hebrew Numbers (11-19)", items: [
-                .init(text: "אַחַד עָשָׂר", definition: "Eleven", details: "with Masculine"),
-                .init(text: "עַשְׁתֵּי עָשָׂר", definition: "Eleven (alternate)", details: "with Masculine"),
+                .init(text: "אַחַד עָשָׂר", definition: "Eleven", parsing: "with Masculine", details: ""),
+                .init(text: "עַשְׁתֵּי עָשָׂר", definition: "Eleven (alternate)", parsing: "with Masculine", details: ""),
                 
-                .init(text: "שְׁנֵים עָשָׂר", definition: "Tweleve", details: "with Feminine"),
-                .init(text: "שְׁנֵי עָשָׂר", definition: "Tweleve (alternate)", details: "with Feminine"),
+                .init(text: "שְׁנֵים עָשָׂר", definition: "Tweleve", parsing: "with Feminine", details: ""),
+                .init(text: "שְׁנֵי עָשָׂר", definition: "Tweleve (alternate)", parsing: "with Feminine", details: ""),
                 
-                .init(text: "שְׁלֹשָׁה עָשָׂר", definition: "Thirteen", details: "with Masculine"),
-                .init(text: "שְׁלֹשׁ עֶשְׂרֵה", definition: "Thirteen", details: "with Feminine"),
+                .init(text: "שְׁלֹשָׁה עָשָׂר", definition: "Thirteen", parsing: "with Masculine", details: ""),
+                .init(text: "שְׁלֹשׁ עֶשְׂרֵה", definition: "Thirteen", parsing: "with Feminine", details: ""),
                 
-                .init(text: "אַרְבָּעָה עָשָׂר", definition: "Fourteen", details: "with Masculine"),
-                .init(text: "אָרְבָּע עֶשְׂרֵה", definition: "Fourteen", details: "with Feminine"),
+                .init(text: "אַרְבָּעָה עָשָׂר", definition: "Fourteen", parsing: "with Masculine", details: ""),
+                .init(text: "אָרְבָּע עֶשְׂרֵה", definition: "Fourteen", parsing: "with Feminine", details: ""),
                 
-                .init(text: "חֲמִשָּׁה עָשָׂר", definition: "Fifteen", details: "with Masculine"),
-                .init(text: "חֲמֵשׁ עֶשְׂרֵה", definition: "Fifteen", details: "with Feminine"),
+                .init(text: "חֲמִשָּׁה עָשָׂר", definition: "Fifteen", parsing: "with Masculine", details: ""),
+                .init(text: "חֲמֵשׁ עֶשְׂרֵה", definition: "Fifteen", parsing: "with Feminine", details: ""),
                 
-                .init(text: "שִׁשָּׁה עָשָׂר", definition: "Sixteen", details: "with Masculine"),
-                .init(text: "שֵׁשׁ עֶשְׂרֵה", definition: "Sixteen", details: "with Feminine"),
+                .init(text: "שִׁשָּׁה עָשָׂר", definition: "Sixteen", parsing: "with Masculine", details: ""),
+                .init(text: "שֵׁשׁ עֶשְׂרֵה", definition: "Sixteen", parsing: "with Feminine", details: ""),
                 
-                .init(text: "שִׁבְעָה עָשָׂר", definition: "Seventeen", details: "with Masculine"),
-                .init(text: "שְׁבַע אֶשְׂרֵה", definition: "Seventeen", details: "with Feminine"),
+                .init(text: "שִׁבְעָה עָשָׂר", definition: "Seventeen", parsing: "with Masculine", details: ""),
+                .init(text: "שְׁבַע אֶשְׂרֵה", definition: "Seventeen", parsing: "with Feminine", details: ""),
                 
-                .init(text: "שְׁמֹנָה עָשָׂר", definition: "Eighteen", details: "with Masculine"),
-                .init(text: "שְׁמֹנֶה עֶשְׂרֵה", definition: "Eighteen", details: "with Feminine"),
+                .init(text: "שְׁמֹנָה עָשָׂר", definition: "Eighteen", parsing: "with Masculine", details: ""),
+                .init(text: "שְׁמֹנֶה עֶשְׂרֵה", definition: "Eighteen", parsing: "with Feminine", details: ""),
                 
-                .init(text: "תִּשְׁעָה עָשָׂר", definition: "Nineteen", details: "with Masculine"),
-                .init(text: "תְּשַׁע עֶשְׂרֵה", definition: "Nineteen", details: "with Feminine"),
+                .init(text: "תִּשְׁעָה עָשָׂר", definition: "Nineteen", parsing: "with Masculine", details: ""),
+                .init(text: "תְּשַׁע עֶשְׂרֵה", definition: "Nineteen", parsing: "with Feminine", details: ""),
             ])
         case .hebrewNumbersTens:
             return .init(title: "Hebrew Numbers (Tens)", items: [
-                .init(text: "עֶשְׂרִים", definition: "Twenty", details: ""),
-                .init(text: "שְׁלֹשִׁים", definition: "Thirty", details: ""),
-                .init(text: "אַרְבָּעִים", definition: "Fourty", details: ""),
-                .init(text: "חֲמִשִּׁים", definition: "Fifty", details: ""),
-                .init(text: "שִׁשִּׁים", definition: "Sixty", details: ""),
-                .init(text: "שִׁבְעִים", definition: "Seventy", details: ""),
-                .init(text: "שְׁמֹנִים", definition: "Eighty", details: ""),
-                .init(text: "תִּשְׁעִים", definition: "Ninety", details: "")
+                .init(text: "עֶשְׂרִים", definition: "Twenty", parsing: "", details: ""),
+                .init(text: "שְׁלֹשִׁים", definition: "Thirty", parsing: "", details: ""),
+                .init(text: "אַרְבָּעִים", definition: "Fourty", parsing: "", details: ""),
+                .init(text: "חֲמִשִּׁים", definition: "Fifty", parsing: "", details: ""),
+                .init(text: "שִׁשִּׁים", definition: "Sixty", parsing: "", details: ""),
+                .init(text: "שִׁבְעִים", definition: "Seventy", parsing: "", details: ""),
+                .init(text: "שְׁמֹנִים", definition: "Eighty", parsing: "", details: ""),
+                .init(text: "תִּשְׁעִים", definition: "Ninety", parsing: "", details: "")
             ])
         case .hebrewNumbersBigNumbers:
             return .init(title: "Hebrew Numbers (Big Numbers)", items: [
-                .init(text: "מֵאָה", definition: "100", details: ""),
-                .init(text: "מָאתַ֫יִם", definition: "200", details: ""),
-                .init(text: "שְׁלֹשׁ מֵאוֹת", definition: "300", details: ""),
-                .init(text: "אַרְבַּע מֵאוֹת", definition: "400", details: ""),
-                .init(text: "אֶ֫לֶף", definition: "1,000", details: ""),
-                .init(text: "אַלְפַּ֫יִם", definition: "2,000", details: ""),
-                .init(text: "שְׁלֹ֫שֶׁת אֲלָפִים", definition: "3,000", details: ""),
-                .init(text: "אַרבַּ֫עַת אֲלָפִים", definition: "4,000", details: ""),
-                .init(text: "רְבָבָה", definition: "10,000", details: ""),
-                .init(text: "רִבּוֹתַ֫יִם", definition: "20,000", details: ""),
-                .init(text: "שְׁלֹשׁ רִבּוֹת", definition: "30,000", details: ""),
-                .init(text: "אַרְבָּע רִבּוֹת", definition: "40,000", details: ""),
-                .init(text: "53,400", definition: "שְׁלֹשׁה וַחֲמִשִּׁים אֶ֫לֶף וְאַרְבַּע מֵאוֹת", details: ""),
-                .init(text: "אַרְבָּע רִבּוֹת", definition: "40,000", details: ""),
+                .init(text: "מֵאָה", definition: "100", parsing: "", details: ""),
+                .init(text: "מָאתַ֫יִם", definition: "200", parsing: "", details: ""),
+                .init(text: "שְׁלֹשׁ מֵאוֹת", definition: "300", parsing: "", details: ""),
+                .init(text: "אַרְבַּע מֵאוֹת", definition: "400", parsing: "", details: ""),
+                .init(text: "אֶ֫לֶף", definition: "1,000", parsing: "", details: ""),
+                .init(text: "אַלְפַּ֫יִם", definition: "2,000", parsing: "", details: ""),
+                .init(text: "שְׁלֹ֫שֶׁת אֲלָפִים", definition: "3,000", parsing: "", details: ""),
+                .init(text: "אַרבַּ֫עַת אֲלָפִים", definition: "4,000", parsing: "", details: ""),
+                .init(text: "רְבָבָה", definition: "10,000", parsing: "", details: ""),
+                .init(text: "רִבּוֹתַ֫יִם", definition: "20,000", parsing: "", details: ""),
+                .init(text: "שְׁלֹשׁ רִבּוֹת", definition: "30,000", parsing: "", details: ""),
+                .init(text: "אַרְבָּע רִבּוֹת", definition: "40,000", parsing: "", details: ""),
+                .init(text: "53,400", definition: "שְׁלֹשׁה וַחֲמִשִּׁים אֶ֫לֶף וְאַרְבַּע מֵאוֹת", parsing: "", details: ""),
+                .init(text: "אַרְבָּע רִבּוֹת", definition: "40,000", parsing: "", details: ""),
             ])
         case .hebrewOrdinalNumbers:
             return .init(title: "Hebrew Ordinal Numbers", items: [
-                .init(text: "רִאשׁוֹן", definition: "First", details: "Masculine"),
-                .init(text: "רִשׁוֹנָה", definition: "First", details: "Feminine"),
+                .init(text: "רִאשׁוֹן", definition: "First", parsing: "Masculine", details: ""),
+                .init(text: "רִשׁוֹנָה", definition: "First", parsing: "Feminine", details: ""),
                 
-                .init(text: "שֵׁנִי", definition: "Second", details: "Masculine"),
-                .init(text: "שֵׁנִית", definition: "Second", details: "Feminine"),
+                .init(text: "שֵׁנִי", definition: "Second", parsing: "Masculine", details: ""),
+                .init(text: "שֵׁנִית", definition: "Second", parsing: "Feminine", details: ""),
                 
-                .init(text: "שְׁלִישִׁי", definition: "Third", details: "Masculine"),
-                .init(text: "שְׁלִישִׁית", definition: "Third", details: "Feminine"),
+                .init(text: "שְׁלִישִׁי", definition: "Third", parsing: "Masculine", details: ""),
+                .init(text: "שְׁלִישִׁית", definition: "Third", parsing: "Feminine", details: ""),
                 
-                .init(text: "רְבִיעִי", definition: "Fourth", details: "Masculine"),
-                .init(text: "רְבִיעִית", definition: "Fourth", details: "Feminine"),
+                .init(text: "רְבִיעִי", definition: "Fourth", parsing: "Masculine", details: ""),
+                .init(text: "רְבִיעִית", definition: "Fourth", parsing: "Feminine", details: ""),
                 
-                .init(text: "חֲמִישִׁי", definition: "Fifth", details: "Masculine"),
-                .init(text: "חֲמִישִׁית", definition: "Fifth", details: "Feminine"),
+                .init(text: "חֲמִישִׁי", definition: "Fifth", parsing: "Masculine", details: ""),
+                .init(text: "חֲמִישִׁית", definition: "Fifth", parsing: "Feminine", details: ""),
                 
-                .init(text: "שִׁשִּׁי", definition: "Sixth", details: "Masculine"),
-                .init(text: "שִׁשִּׁית", definition: "Sixth", details: "Feminine"),
+                .init(text: "שִׁשִּׁי", definition: "Sixth", parsing: "Masculine", details: ""),
+                .init(text: "שִׁשִּׁית", definition: "Sixth", parsing: "Feminine", details: ""),
                 
-                .init(text: "שְׁבִיעִי", definition: "Seventh", details: "Masculine"),
-                .init(text: "שְׁבִיעִית", definition: "Seventh", details: "Feminine"),
+                .init(text: "שְׁבִיעִי", definition: "Seventh", parsing: "Masculine", details: ""),
+                .init(text: "שְׁבִיעִית", definition: "Seventh", parsing: "Feminine", details: ""),
                 
-                .init(text: "שְׁמִינִי", definition: "Eighth", details: "Masculine"),
-                .init(text: "שְׁמִינִית", definition: "Eighth", details: "Feminine"),
+                .init(text: "שְׁמִינִי", definition: "Eighth", parsing: "Masculine", details: ""),
+                .init(text: "שְׁמִינִית", definition: "Eighth", parsing: "Feminine", details: ""),
                 
-                .init(text: "תְּשִׁיעִי", definition: "Ninth", details: "Masculine"),
-                .init(text: "תְּשִׁיעִית", definition: "Ninth", details: "Feminine"),
+                .init(text: "תְּשִׁיעִי", definition: "Ninth", parsing: "Masculine", details: ""),
+                .init(text: "תְּשִׁיעִית", definition: "Ninth", parsing: "Feminine", details: ""),
                 
-                .init(text: "עֲשִׂירִי", definition: "Tenth", details: "Masculine"),
-                .init(text: "עֲשִׂירִית", definition: "Tenth", details: "Feminine")
+                .init(text: "עֲשִׂירִי", definition: "Tenth", parsing: "Masculine", details: ""),
+                .init(text: "עֲשִׂירִית", definition: "Tenth", parsing: "Feminine", details: "")
             ])
         case .qalPrincipalParts:
             return .init(title: "Qal Principal Parts", items: [
-                .init(text: "קָטַל", definition: "To kill\nYiqtol: יִקְטֹל \nInf. Const: קְטֹל \nParticiple: קֹטֵל", details: "(Strong)"),
-                .init(text: "בָּנָה", definition: "To make, do\nYiqtol: יִבְנֶה \nInf. Const: בְּנוֹת \nParticiple: בּוֹנֶה", details: "(III-ח)\n"),
-                .init(text: "עָמַד", definition: "To stand\nYiqtol: יַעֲמֹד \nInf. Const: עֲמֹד \nParticiple: עֹמֵד", details: "(I-ע)\n"),
-                .init(text: "בָּחַר", definition: "To choose\nYiqtol: יִבְחַר \nInf. Const: בְּחֹר \nParticiple: בֹּחֵר", details: "(II-Guttural)"),
-                .init(text: "שָׁמַע", definition: "To hear, listen\nYiqtol: יִשְׁמַע \nInf. Const: שְׁמֹעַ \nParticiple: שֹׁמֵעַ", details: "(III-ח/ע)\n"),
-                .init(text: "מָצָא", definition: "To find\nYiqtol: יִמְצָא \nInf. Const: מְצֹא \nParticiple: מֹצֵא", details: "(III-א)"),
-                .init(text: "חָטָא", definition: "To sin\nYiqtol: יֶחֱטָא \nInf. Const: חֲטֹא \nParticiple: חוֹטֵא", details: "(I-ח + III-א)"),
-                .init(text: "נָפַל", definition: "To fall\nYiqtol: יִפֹּל \nInf. Const: נְפֹל \nParticiple: נֹפֵל", details: "(I-נ)"),
-                .init(text: "שָׁב", definition: "To return\nYiqtol: יָשׁוּב \nInf. Const: שׁוּב \nParticiple: שָׁב", details: "(I-י)"),
-                .init(text: "סָבַב", definition: "To encircle/surround/go about\nYiqtol: יָסֹב \nInf. Const: סְבֹב \nParticiple: סֹבֵב", details: "(Geminate)"),
-                .init(text: "יָשַׁב", definition: "To sit/dwell\nYiqtol: יֵשֵׁב,תֵּשֵׁב \nInf. Const: שֶׁבֶת \nParticiple: יֹשֵׁב", details: "(I-י)"),
-                .init(text: "יָרַשׁ", definition: "To possess\nYiqtol: יִירַשׁ \nInf. Const: רֶשֶׁת \nParticiple: יוֹרֵשׁ", details: "(I-י)"),
-                .init(text: "אָמַר", definition: "say\nYiqtol: יֹאמַר \nInf. Const: לֵאמֹר \nParticiple: אֹמֵר", details: "(I-א)"),
-                .init(text: "אָהַב", definition: "to love\nYiqtol: יֶאֱהַב \nInf. Const: אַהֲבַת \nParticiple: אֹהֵב", details: "(I-א)"),
+                .init(text: "קָטַל", definition: "To kill", parsing: "(Strong)", details: "Yiqtol: יִקְטֹל \nInf. Const: קְטֹל \nParticiple: קֹטֵל"),
+                .init(text: "בָּנָה", definition: "To make, do", parsing: "(III-ח)", details: "Yiqtol: יִבְנֶה \nInf. Const: בְּנוֹת \nParticiple: בּוֹנֶה"),
+                .init(text: "עָמַד", definition: "To stand", parsing: "(I-ע)\n", details: "Yiqtol: יַעֲמֹד \nInf. Const: עֲמֹד \nParticiple: עֹמֵד"),
+                .init(text: "בָּחַר", definition: "To choose", parsing: "(II-Guttural)", details: "Yiqtol: יִבְחַר \nInf. Const: בְּחֹר \nParticiple: בֹּחֵר"),
+                .init(text: "שָׁמַע", definition: "To hear, listen", parsing: "(III-ח/ע)\n", details: "Yiqtol: יִשְׁמַע \nInf. Const: שְׁמֹעַ \nParticiple: שֹׁמֵעַ"),
+                .init(text: "מָצָא", definition: "To find", parsing: "(III-א)", details: "Yiqtol: יִמְצָא \nInf. Const: מְצֹא \nParticiple: מֹצֵא"),
+                .init(text: "חָטָא", definition: "To sin", parsing: "(I-ח + III-א)", details: "Yiqtol: יֶחֱטָא \nInf. Const: חֲטֹא \nParticiple: חוֹטֵא"),
+                .init(text: "נָפַל", definition: "To fall", parsing: "(I-נ)", details: "Yiqtol: יִפֹּל \nInf. Const: נְפֹל \nParticiple: נֹפֵל"),
+                .init(text: "שָׁב", definition: "To return", parsing: "(I-י)", details: "Yiqtol: יָשׁוּב \nInf. Const: שׁוּב \nParticiple: שָׁב"),
+                .init(text: "סָבַב", definition: "To encircle/surround/go about", parsing: "(Geminate)", details: "Yiqtol: יָסֹב \nInf. Const: סְבֹב \nParticiple: סֹבֵב"),
+                .init(text: "יָשַׁב", definition: "To sit/dwell", parsing: "(I-י)", details: "Yiqtol: יֵשֵׁב,תֵּשֵׁב \nInf. Const: שֶׁבֶת \nParticiple: יֹשֵׁב"),
+                .init(text: "יָרַשׁ", definition: "To possess", parsing: "(I-י)", details: "Yiqtol: יִירַשׁ \nInf. Const: רֶשֶׁת \nParticiple: יוֹרֵשׁ"),
+                .init(text: "אָמַר", definition: "say", parsing: "(I-א)", details: "Yiqtol: יֹאמַר \nInf. Const: לֵאמֹר \nParticiple: אֹמֵר"),
+                .init(text: "אָהַב", definition: "to love", parsing: "(I-א)", details: "Yiqtol: יֶאֱהַב \nInf. Const: אַהֲבַת \nParticiple: אֹהֵב"),
                 
             ])
         case .niphalPrincipalParts:
             return .init(title: "Niphal Principal Parts", items: [
-                .init(text: "נִקְטַל", definition: "Niphal Qatal", details: "The preformative is נ. The preformative נ has an i-class vowel. The stem vowel is a-class."),
-                .init(text: "יִקָּטֵל", definition: "Niphal Yiqtol", details: "They appear to have had a preformative הִן. The נ of the הִן preformative has assimilated to the first letter of the root and doubled it. "),
-                .init(text: "הִקָּטֵל", definition: "Niphal Infinitive Construct", details: "They appear to have had a preformative הִן. The נ of the הִן preformative has assimilated to the first letter of the root and doubled it. "),
-                .init(text: "נִקְטָל", definition: "Niphal Participle", details: "The preformative is נ. The preformative נ has an i-class vowel. The stem vowel is a-class."),
+                .init(text: "נִקְטַל", definition: "", parsing: "Niphal Qatal", details: "The preformative is נ. The preformative נ has an i-class vowel. The stem vowel is a-class."),
+                .init(text: "יִקָּטֵל", definition: "", parsing: "Niphal Yiqtol", details: "They appear to have had a preformative הִן. The נ of the הִן preformative has assimilated to the first letter of the root and doubled it. "),
+                .init(text: "הִקָּטֵל", definition: "", parsing: "Niphal Infinitive Construct", details: "They appear to have had a preformative הִן. The נ of the הִן preformative has assimilated to the first letter of the root and doubled it. "),
+                .init(text: "נִקְטָל", definition: "", parsing: "Niphal Participle", details: "The preformative is נ. The preformative נ has an i-class vowel. The stem vowel is a-class."),
             ])
         case .pielPrincipalParts:
             return .init(title: "Piel Principal Parts", items: [
-                .init(text: "קִטֵּל", definition: "Piel Qatal 3ms", details: "The qatal always has the i-class vowel under the first radical. The qatal stem vowel consistently is as follows: For the 3ms, there is an i-class stem vowel (קִטֵּל), which reduces in the 3fs and (קִטְּלָה) 3cp (קִטְּלוּ). In the second and first person, the stem vowel is a-class (קִטַּ֫לְתָּ)."),
-                .init(text: "קִטַּ֫לְתָּ", definition: "Piel Qatal 2ms", details: "The qatal always has the i-class vowel under the first radical. The qatal stem vowel consistently is as follows: For the 3ms, there is an i-class stem vowel (קִטֵּל), which reduces in the 3fs and (קִטְּלָה) 3cp (קִטְּלוּ). In the second and first person, the stem vowel is a-class (קִטַּ֫לְתָּ)."),
-                .init(text: "יְקַטֵּל", definition: "Piel Yiqtol", details: "In the yiqtol, the infinitive construct, and the participle (that is, in all non-qatal forms), we have the following pattern. The root has a vowel pattern having a-class with the first radical followed by i-class for the stem vowel. If there is a preformative (yiqtol and participle), it has a Shewa."),
-                .init(text: "קַטֵּל", definition: "Piel Infinitive Construct", details: "In the yiqtol, the infinitive construct, and the participle (that is, in all non-qatal forms), we have the following pattern. The root has a vowel pattern having a-class with the first radical followed by i-class for the stem vowel. If there is a preformative (yiqtol and participle), it has a Shewa."),
-                .init(text: "מְקַטֵּל", definition: "Piel Participle", details: "In the yiqtol, the infinitive construct, and the participle (that is, in all non-qatal forms), we have the following pattern. The root has a vowel pattern having a-class with the first radical followed by i-class for the stem vowel. If there is a preformative (yiqtol and participle), it has a Shewa."),
+                .init(text: "קִטֵּל", definition: "", parsing: "Piel Qatal 3ms", details: "The qatal always has the i-class vowel under the first radical. The qatal stem vowel consistently is as follows: For the 3ms, there is an i-class stem vowel (קִטֵּל) which reduces in the 3fs and (קִטְּלָה) 3cp (קִטְּלוּ). In the second and first person, the stem vowel is a-class (קִטַּ֫לְתָּ)."),
+                .init(text: "קִטַּ֫לְתָּ", definition: "", parsing: "Piel Qatal 2ms", details: "The qatal always has the i-class vowel under the first radical. The qatal stem vowel consistently is as follows: For the 3ms, there is an i-class stem vowel (קִטֵּל), which reduces in the 3fs and (קִטְּלָה) 3cp (קִטְּלוּ). In the second and first person, the stem vowel is a-class (קִטַּ֫לְתָּ)."),
+                .init(text: "יְקַטֵּל", definition: "", parsing: "Piel Yiqtol", details: "In the yiqtol, the infinitive construct, and the participle (that is, in all non-qatal forms), we have the following pattern. The root has a vowel pattern having a-class with the first radical followed by i-class for the stem vowel. If there is a preformative (yiqtol and participle), it has a Shewa."),
+                .init(text: "קַטֵּל", definition: "", parsing: "Piel Infinitive Construct", details: "In the yiqtol, the infinitive construct, and the participle (that is, in all non-qatal forms), we have the following pattern. The root has a vowel pattern having a-class with the first radical followed by i-class for the stem vowel. If there is a preformative (yiqtol and participle), it has a Shewa."),
+                .init(text: "מְקַטֵּל", definition: "", parsing: "Piel Participle", details: "In the yiqtol, the infinitive construct, and the participle (that is, in all non-qatal forms), we have the following pattern. The root has a vowel pattern having a-class with the first radical followed by i-class for the stem vowel. If there is a preformative (yiqtol and participle), it has a Shewa."),
             ])
         case .hiphilPrincipalParts:
             return .init(title: "Hiphil Principal Parts", items: [
-                .init(text: "הִקְטִיל", definition: "Hiphil Qatal 3ms", details: "The qatal has the i-class vowel under the preformative ה. The stem vowel is as follows: In the third person forms, the stem vowel is typically Hireq-Yod (i-class). In the second person forms, the stem vowel is typically Pathach (a-class)."),
-                .init(text: "הִקְטַ֫לְתָּ", definition: "Hiphil Qatal 2ms", details: "The qatal has the i-class vowel under the preformative ה. The stem vowel is as follows: In the third person forms, the stem vowel is typically Hireq-Yod (i-class). In the second person forms, the stem vowel is typically Pathach (a-class)."),
-                .init(text: "יַקְטִיל", definition: "Hiphil Yiqtol", details: "In all the other forms (yiqtol, participle, imperative, and infinitive construct), the vowel pattern is typically Pathach under the preformative followed by Hireq-Yod. The i-class stem vowel is Tsere or Seghol in some forms, such as the imperative ms (הַקְטֵל)."),
-                .init(text: "הַקְטִיל", definition: "Hiphil Infinitive Construct", details: "In all the other forms (yiqtol, participle, imperative, and infinitive construct), the vowel pattern is typically Pathach under the preformative followed by Hireq-Yod. The i-class stem vowel is Tsere or Seghol in some forms, such as the imperative ms (הַקְטֵל)."),
-                .init(text: "מַקְטִיל", definition: "Hiphil Participle", details: "In all the other forms (yiqtol, participle, imperative, and infinitive construct), the vowel pattern is typically Pathach under the preformative followed by Hireq-Yod. The i-class stem vowel is Tsere or Seghol in some forms, such as the imperative ms (הַקְטֵל)."),
+                .init(text: "הִקְטִיל", definition: "", parsing: "Hiphil Qatal 3ms", details: "The qatal has the i-class vowel under the preformative ה. The stem vowel is as follows: In the third person forms, the stem vowel is typically Hireq-Yod (i-class). In the second person forms, the stem vowel is typically Pathach (a-class)."),
+                .init(text: "הִקְטַ֫לְתָּ", definition: "", parsing: "Hiphil Qatal 2ms", details: "The qatal has the i-class vowel under the preformative ה. The stem vowel is as follows: In the third person forms, the stem vowel is typically Hireq-Yod (i-class). In the second person forms, the stem vowel is typically Pathach (a-class)."),
+                .init(text: "יַקְטִיל", definition: "", parsing: "Hiphil Yiqtol", details: "In all the other forms (yiqtol, participle, imperative, and infinitive construct), the vowel pattern is typically Pathach under the preformative followed by Hireq-Yod. The i-class stem vowel is Tsere or Seghol in some forms, such as the imperative ms (הַקְטֵל)."),
+                .init(text: "הַקְטִיל", definition: "", parsing: "Hiphil Infinitive Construct", details: "In all the other forms (yiqtol, participle, imperative, and infinitive construct), the vowel pattern is typically Pathach under the preformative followed by Hireq-Yod. The i-class stem vowel is Tsere or Seghol in some forms, such as the imperative ms (הַקְטֵל)."),
+                .init(text: "מַקְטִיל", definition: "", parsing: "Hiphil Participle", details: "In all the other forms (yiqtol, participle, imperative, and infinitive construct), the vowel pattern is typically Pathach under the preformative followed by Hireq-Yod. The i-class stem vowel is Tsere or Seghol in some forms, such as the imperative ms (הַקְטֵל)."),
             ])
         case .pualPrincipalParts:
             return .init(title: "Pual Principal Parts", items: [
-                .init(text: "קֻטַּל", definition: "Pual Qatal", details: "The Pual has only one vowel pattern. It is “u-class followed by a-class.” The middle radical of the root is doubled with a Daghesh Forte."),
-                .init(text: "יְקֻטַּל", definition: "Pual Yiqtol", details: "The Pual has only one vowel pattern. It is “u-class followed by a-class.” The middle radical of the root is doubled with a Daghesh Forte. If there is a yiqtol or participle preformative, it has a Shewa"),
-                .init(text: "קֻטַּל", definition: "Pual Infinitive Construct", details: "The Pual has only one vowel pattern. It is “u-class followed by a-class.” The middle radical of the root is doubled with a Daghesh Forte."),
-                .init(text: "מְקֻטָּל", definition: "Pual Participle", details: "The Pual has only one vowel pattern. It is “u-class followed by a-class.” The middle radical of the root is doubled with a Daghesh Forte. The participle preformative is מ."),
+                .init(text: "קֻטַּל", definition: "", parsing: "Pual Qatal", details: "The Pual has only one vowel pattern. It is “u-class followed by a-class.” The middle radical of the root is doubled with a Daghesh Forte."),
+                .init(text: "יְקֻטַּל", definition: "", parsing: "Pual Yiqtol", details: "The Pual has only one vowel pattern. It is “u-class followed by a-class.” The middle radical of the root is doubled with a Daghesh Forte. If there is a yiqtol or participle preformative, it has a Shewa"),
+                .init(text: "קֻטַּל", definition: "", parsing: "Pual Infinitive Construct", details: "The Pual has only one vowel pattern. It is “u-class followed by a-class.” The middle radical of the root is doubled with a Daghesh Forte."),
+                .init(text: "מְקֻטָּל", definition: "", parsing: "Pual Participle", details: "The Pual has only one vowel pattern. It is “u-class followed by a-class.” The middle radical of the root is doubled with a Daghesh Forte. The participle preformative is מ."),
             ])
         case .hophalPrincipalParts:
             return .init(title: "Hophal Principal Parts", items: [
-                .init(text: "הָקְטַל", definition: "Hophal Qatal", details: "The Hophal is the passive of the Hiphil. Like the Hiphil, the Hophal has a ה preformative. Like the Pual, the Hophal has only one vowel pattern. It is u-class vowel followed by an a-class vowel. The distinctive Hophal preformative is ה."),
-                .init(text: "יָקְטַל", definition: "Hophal Qatal Yiqtol", details: "The Hophal is the passive of the Hiphil. Like the Hiphil, the Hophal has a ה preformative. Like the Pual, the Hophal has only one vowel pattern. It is u-class vowel followed by an a-class vowel. The distinctive Hophal preformative is ה."),
-                .init(text: "הָקְטַל", definition: "Hophal Infinitive Construct", details: "The Hophal is the passive of the Hiphil. Like the Hiphil, the Hophal has a ה preformative. Like the Pual, the Hophal has only one vowel pattern. It is u-class vowel followed by an a-class vowel. The distinctive Hophal preformative is ה."),
-                .init(text: "מָקְטָל", definition: "Hophal Participle", details: "The Hophal is the passive of the Hiphil. Like the Hiphil, the Hophal has a ה preformative. Like the Pual, the Hophal has only one vowel pattern. It is u-class vowel followed by an a-class vowel. The distinctive Hophal preformative is ה. The participle preformative is מ."),
+                .init(text: "הָקְטַל", definition: "", parsing: "Hophal Qatal", details: "The Hophal is the passive of the Hiphil. Like the Hiphil, the Hophal has a ה preformative. Like the Pual, the Hophal has only one vowel pattern. It is u-class vowel followed by an a-class vowel. The distinctive Hophal preformative is ה."),
+                .init(text: "יָקְטַל", definition: "", parsing: "Hophal Qatal Yiqtol", details: "The Hophal is the passive of the Hiphil. Like the Hiphil, the Hophal has a ה preformative. Like the Pual, the Hophal has only one vowel pattern. It is u-class vowel followed by an a-class vowel. The distinctive Hophal preformative is ה."),
+                .init(text: "הָקְטַל", definition: "", parsing: "Hophal Infinitive Construct", details: "The Hophal is the passive of the Hiphil. Like the Hiphil, the Hophal has a ה preformative. Like the Pual, the Hophal has only one vowel pattern. It is u-class vowel followed by an a-class vowel. The distinctive Hophal preformative is ה."),
+                .init(text: "מָקְטָל", definition: "", parsing: "Hophal Participle", details: "The Hophal is the passive of the Hiphil. Like the Hiphil, the Hophal has a ה preformative. Like the Pual, the Hophal has only one vowel pattern. It is u-class vowel followed by an a-class vowel. The distinctive Hophal preformative is ה. The participle preformative is מ."),
             ])
         case .hithpaelPrincipalParts:
             return .init(title: "Hithpael Principal Parts", items: [
-                .init(text: "הִתְקַטֵּל", definition: "Hithpael Qatal 3ms", details: "The stem has a preformative הִת. Like the Pual and Hophal, the Hithpael has only one basic vowel pattern. It is “a-class followed by i-class” (the preformative הִת is not counted in the vowel pattern). The middle radical of the root is doubled with a Daghesh Forte."),
-                .init(text: "הִתְקַטַּ֫לְתָּ", definition: "Hithpael Qatal 2ms", details: "The stem has a preformative הִת. Like the Pual and Hophal, the Hithpael has only one basic vowel pattern. It is “a-class followed by i-class” (the preformative הִת is not counted in the vowel pattern). The middle radical of the root is doubled with a Daghesh Forte."),
-                .init(text: "יִתְקַטֵּל", definition: "Hithpael Yiqtol", details: "The stem has a preformative הִת. Like the Pual and Hophal, the Hithpael has only one basic vowel pattern. It is “a-class followed by i-class” (the preformative הִת is not counted in the vowel pattern). The middle radical of the root is doubled with a Daghesh Forte."),
-                .init(text: "הִתְקַטֵּל", definition: "Hithpael Infinitive Construct", details: "The stem has a preformative הִת. Like the Pual and Hophal, the Hithpael has only one basic vowel pattern. It is “a-class followed by i-class” (the preformative הִת is not counted in the vowel pattern). The middle radical of the root is doubled with a Daghesh Forte."),
-                .init(text: "מִתְקַטֵּל", definition: "Hithpael Participle", details: "The stem has a preformative הִת. The participle adds מ to the preformative הִת but displaces the ה, forming מִת. Like the Pual and Hophal, the Hithpael has only one basic vowel pattern. It is “a-class followed by i-class” (the preformative הִת is not counted in the vowel pattern). The middle radical of the root is doubled with a Daghesh Forte."),
+                .init(text: "הִתְקַטֵּל", definition: "", parsing: "Hithpael Qatal 3ms", details: "The stem has a preformative הִת. Like the Pual and Hophal, the Hithpael has only one basic vowel pattern. It is “a-class followed by i-class” (the preformative הִת is not counted in the vowel pattern). The middle radical of the root is doubled with a Daghesh Forte."),
+                .init(text: "הִתְקַטַּ֫לְתָּ", definition: "", parsing: "Hithpael Qatal 2ms", details: "The stem has a preformative הִת. Like the Pual and Hophal, the Hithpael has only one basic vowel pattern. It is “a-class followed by i-class” (the preformative הִת is not counted in the vowel pattern). The middle radical of the root is doubled with a Daghesh Forte."),
+                .init(text: "יִתְקַטֵּל", definition: "", parsing: "Hithpael Yiqtol", details: "The stem has a preformative הִת. Like the Pual and Hophal, the Hithpael has only one basic vowel pattern. It is “a-class followed by i-class” (the preformative הִת is not counted in the vowel pattern). The middle radical of the root is doubled with a Daghesh Forte."),
+                .init(text: "הִתְקַטֵּל", definition: "", parsing: "Hithpael Infinitive Construct", details: "The stem has a preformative הִת. Like the Pual and Hophal, the Hithpael has only one basic vowel pattern. It is “a-class followed by i-class” (the preformative הִת is not counted in the vowel pattern). The middle radical of the root is doubled with a Daghesh Forte."),
+                .init(text: "מִתְקַטֵּל", definition: "", parsing: "Hithpael Participle", details: "The stem has a preformative הִת. The participle adds מ to the preformative הִת but displaces the ה, forming מִת. Like the Pual and Hophal, the Hithpael has only one basic vowel pattern. It is “a-class followed by i-class” (the preformative הִת is not counted in the vowel pattern). The middle radical of the root is doubled with a Daghesh Forte."),
             ])
         }
     }
@@ -648,6 +648,7 @@ struct LanguageConcept: Identifiable {
         let id: String = UUID().uuidString
         let text: String
         let definition: String
+        let parsing: String
         let details: String
     }
 }

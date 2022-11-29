@@ -87,7 +87,7 @@ struct WordDetailsView: View {
                             }
                             .frame(width: 110)
                             VStack {
-                                Text(wordInstance.parsingStr)
+                                Text(wordInstance.parsing)
                             }
                         }
                         .padding(.bottom)

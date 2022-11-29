@@ -85,7 +85,7 @@ class VocabListBuilder {
                 if !tenses.isEmpty {
                     tenses.forEach { t in
                         instances.forEach { i in
-                            if i.parsingStr.lowercased().contains(t.rawValue) {
+                            if i.parsing.lowercased().contains(t.rawValue) {
                                 filteredWordInstanceDict[i.textSurface] = i
                             }
                         }
@@ -100,7 +100,7 @@ class VocabListBuilder {
                     filteredWordInstanceDict.removeAll()
                     instances.forEach { i in
                         voices.forEach { v in
-                            if i.parsingStr.lowercased().contains(v.rawValue) {
+                            if i.parsing.lowercased().contains(v.rawValue) {
                                 filteredWordInstanceDict[i.textSurface] = i
                             }
                         }
@@ -113,7 +113,7 @@ class VocabListBuilder {
                     filteredWordInstanceDict.removeAll()
                     instances.forEach { i in
                         moods.forEach { m in
-                            if i.parsingStr.lowercased().contains(m.rawValue) {
+                            if i.parsing.lowercased().contains(m.rawValue) {
                                 filteredWordInstanceDict[i.textSurface] = i
                             }
                         }
@@ -126,7 +126,7 @@ class VocabListBuilder {
                     filteredWordInstanceDict.removeAll()
                     instances.forEach { i in
                         persons.forEach { p in
-                            if i.parsingStr.lowercased().contains(p.rawValue) {
+                            if i.parsing.lowercased().contains(p.rawValue) {
                                 filteredWordInstanceDict[i.textSurface] = i
                             }
                         }
@@ -139,7 +139,7 @@ class VocabListBuilder {
                     filteredWordInstanceDict.removeAll()
                     instances.forEach { i in
                         numbers.forEach { n in
-                            if i.parsingStr.lowercased().contains(n.rawValue) {
+                            if i.parsing.lowercased().contains(n.rawValue) {
                                 filteredWordInstanceDict[i.textSurface] = i
                             }
                         }
@@ -148,16 +148,16 @@ class VocabListBuilder {
                 
                 if moods.contains(.participle) {
                     // cases for participles
-                    var participleInstances = Array(filteredWordInstanceDict.values).filter { $0.parsingStr.lowercased().contains("participle") }
+                    var participleInstances = Array(filteredWordInstanceDict.values).filter { $0.parsing.lowercased().contains("participle") }
                     
-                    let nonParticipleInstances = Array(filteredWordInstanceDict.values).filter { !$0.parsingStr.lowercased().contains("participle") }
+                    let nonParticipleInstances = Array(filteredWordInstanceDict.values).filter { !$0.parsing.lowercased().contains("participle") }
                     
                     filteredWordInstanceDict.removeAll()
                     
                     if !cases.isEmpty {
                         cases.forEach { c in
                             participleInstances.forEach { i in
-                                if i.parsingStr.lowercased().contains(c.rawValue) {
+                                if i.parsing.lowercased().contains(c.rawValue) {
                                     filteredWordInstanceDict[i.textSurface] = i
                                 }
                             }
@@ -166,13 +166,13 @@ class VocabListBuilder {
                         participleInstances.forEach { filteredWordInstanceDict[$0.textSurface] = $0 }
                     }
                     
-                    participleInstances = Array(filteredWordInstanceDict.values).filter { $0.parsingStr.lowercased().contains("participle") }
+                    participleInstances = Array(filteredWordInstanceDict.values).filter { $0.parsing.lowercased().contains("participle") }
                     
                     // gender for participles
                     if !genders.isEmpty {
                         participleInstances.forEach { i in
                             genders.forEach { g in
-                                if i.parsingStr.lowercased().contains(g.rawValue) {
+                                if i.parsing.lowercased().contains(g.rawValue) {
                                     filteredWordInstanceDict[i.textSurface] = i
                                 }
                             }
@@ -190,7 +190,7 @@ class VocabListBuilder {
                 if !stems.isEmpty {
                     stems.forEach { s in
                         instances.forEach { i in
-                            if i.parsingStr.lowercased().contains(s.rawValue) {
+                            if i.parsing.lowercased().contains(s.rawValue) {
                                 filteredWordInstanceDict[i.textSurface] = i
                             }
                         }
@@ -205,7 +205,7 @@ class VocabListBuilder {
                     filteredWordInstanceDict.removeAll()
                     instances.forEach { i in
                         verbTypes.forEach { vt in
-                            if i.parsingStr.lowercased().contains(vt.parsingKey) {
+                            if i.parsing.lowercased().contains(vt.parsingKey) {
                                 filteredWordInstanceDict[i.textSurface] = i
                             }
                         }
@@ -218,7 +218,7 @@ class VocabListBuilder {
                     filteredWordInstanceDict.removeAll()
                     instances.forEach { i in
                         genders.forEach { g in
-                            if i.parsingStr.lowercased().contains(g.rawValue) {
+                            if i.parsing.lowercased().contains(g.rawValue) {
                                 filteredWordInstanceDict[i.textSurface] = i
                             }
                         }
@@ -231,7 +231,7 @@ class VocabListBuilder {
                     filteredWordInstanceDict.removeAll()
                     instances.forEach { i in
                         persons.forEach { p in
-                            if i.parsingStr.lowercased().contains(p.rawValue) {
+                            if i.parsing.lowercased().contains(p.rawValue) {
                                 filteredWordInstanceDict[i.textSurface] = i
                             }
                         }
@@ -244,7 +244,7 @@ class VocabListBuilder {
                     filteredWordInstanceDict.removeAll()
                     instances.forEach { i in
                         numbers.forEach { n in
-                            if i.parsingStr.lowercased().contains(n.rawValue) {
+                            if i.parsing.lowercased().contains(n.rawValue) {
                                 filteredWordInstanceDict[i.textSurface] = i
                             }
                         }
@@ -260,7 +260,7 @@ class VocabListBuilder {
                 if !cases.isEmpty {
                     cases.forEach { c in
                         instances.forEach { i in
-                            if i.parsingStr.lowercased().contains(c.rawValue) {
+                            if i.parsing.lowercased().contains(c.rawValue) {
                                 filteredWordInstanceDict[i.textSurface] = i
                             }
                         }
@@ -275,7 +275,7 @@ class VocabListBuilder {
                     filteredWordInstanceDict.removeAll()
                     numbers.forEach { n in
                         instances.forEach { i in
-                            if i.parsingStr.lowercased().contains(n.rawValue) {
+                            if i.parsing.lowercased().contains(n.rawValue) {
                                 filteredWordInstanceDict[i.textSurface] = i
                             }
                         }
@@ -288,7 +288,7 @@ class VocabListBuilder {
                     filteredWordInstanceDict.removeAll()
                     genders.forEach { g in
                         instances.forEach { i in
-                            if i.parsingStr.lowercased().contains(g.rawValue) {
+                            if i.parsing.lowercased().contains(g.rawValue) {
                                 filteredWordInstanceDict[i.textSurface] = i
                             }
                         }
@@ -303,7 +303,7 @@ class VocabListBuilder {
                     filteredWordInstanceDict.removeAll()
                     genders.forEach { g in
                         instances.forEach { i in
-                            if i.parsingStr.lowercased().contains(g.rawValue) {
+                            if i.parsing.lowercased().contains(g.rawValue) {
                                 filteredWordInstanceDict[i.textSurface] = i
                             }
                         }
@@ -318,7 +318,7 @@ class VocabListBuilder {
                     filteredWordInstanceDict.removeAll()
                     instances.forEach { i in
                         persons.forEach { p in
-                            if i.parsingStr.lowercased().contains(p.rawValue) {
+                            if i.parsing.lowercased().contains(p.rawValue) {
                                 filteredWordInstanceDict[i.textSurface] = i
                             }
                         }
@@ -331,7 +331,7 @@ class VocabListBuilder {
                     filteredWordInstanceDict.removeAll()
                     numbers.forEach { n in
                         instances.forEach { i in
-                            if i.parsingStr.lowercased().contains(n.rawValue) {
+                            if i.parsing.lowercased().contains(n.rawValue) {
                                 filteredWordInstanceDict[i.textSurface] = i
                             }
                         }

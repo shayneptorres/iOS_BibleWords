@@ -82,12 +82,14 @@ struct ConceptsView: View {
             NavigationView {
                 ParadigmDetailView(concepts: selectedConcepts)
                     .toolbar {
-                        Button(action: {
-                            showParadigmDetailView = false
-                        }, label: {
-                            Text("Dismiss")
-                                .bold()
-                        })
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            Button(action: {
+                                showParadigmDetailView = false
+                            }, label: {
+                                Text("Dismiss")
+                                    .bold()
+                            })
+                        }
                     }
             }
         }

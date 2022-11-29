@@ -24,24 +24,28 @@ struct StudyActivityView: View {
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     var body: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 4) {
-                Text("Bible Words")
-                    .foregroundColor(.accentColor)
-                    .font(.subheadline)
-                    .bold()
-                    .padding(.bottom, 4)
-                Text("Vocab Study Session")
-                Text("Due Words: \(context.state.dueCount)")
-                    .font(.subheadline)
-                Text("New Words: \(context.state.newCount)")
-                    .font(.subheadline)
+        ZStack {
+            Color("bg")
+            VStack(spacing: 0) {
+                HStack {
+                    Text("Due Words: \(context.state.dueCount)")
+                        .font(.subheadline)
+                        .foregroundColor(.white)
+                    Spacer()
+                    Text("New Words: \(context.state.newCount)")
+                        .font(.subheadline)
+                        .foregroundColor(.white)
+                }
+                .padding()
+                .background(Color.gray)
+                .padding([.horizontal, .top], 4)
+                Text(context.state.text)
+                    .font(.bible72)
+                    .padding(.bottom)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.3)
             }
-            Spacer()
-            Text(context.state.text)
-                .font(.bible40)
         }
-        .padding()
     }
 }
 

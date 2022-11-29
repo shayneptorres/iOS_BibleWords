@@ -183,12 +183,12 @@ extension WordInfoDetailsView {
         Section {
             NavigationLink(destination: {
                 List {
-                    ForEach(word.parsingInfo.instances.sorted { $0.parsingStr < $1.parsingStr }) { info in
+                    ForEach(word.parsingInfo.instances.sorted { $0.parsing < $1.parsing }) { info in
                         HStack {
                             Text(info.textSurface)
                                 .font(info.language.meduimBibleFont)
                             Spacer()
-                            Text(info.parsingStr)
+                            Text(info.parsing)
                                 .font(.footnote)
                                 .foregroundColor(Color(uiColor: .secondaryLabel))
                         }
@@ -214,23 +214,25 @@ extension WordInfoDetailsView {
             NavigationLink(destination: {
                 List {
                     ForEach(word.instances) { instance in
-                        NavigationLink(destination: {
-                            WordInPassageView(word: instance.wordInfo.bound(), instance: instance.bound())
-                        }) {
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text(instance.prettyRefStr)
-                                    .font(.title)
-                                    .bold()
-                                VStack(alignment: instance.language == .greek ? .leading : .trailing) {
-                                    Text(instance.wordInPassage) { string in
-                                        let attributedStr = instance.textSurface
-                                        if let range = string.range(of: attributedStr) { /// here!
-                                            string[range].foregroundColor = .accentColor
+                        Section {
+                            NavigationLink(destination: {
+                                WordInPassageView(word: instance.wordInfo.bound(), instance: instance.bound())
+                            }) {
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(instance.prettyRefStr)
+                                        .font(.title3)
+                                        .bold()
+                                    VStack(alignment: instance.language == .greek ? .leading : .trailing) {
+                                        Text(instance.wordInPassage) { string in
+                                            let attributedStr = instance.textSurface
+                                            if let range = string.range(of: attributedStr) { /// here!
+                                                string[range].foregroundColor = .accentColor
+                                            }
                                         }
+                                        .font(instance.language.largeBibleFont)
                                     }
-                                    .font(instance.language.largeBibleFont)
+                                    .padding(.bottom, 4)
                                 }
-                                .padding(.bottom, 4)
                             }
                         }
                     }

@@ -75,7 +75,7 @@ struct WordInPassageView: View {
                     }
                     .frame(width: 110)
                     VStack {
-                        Text(instance.parsingStr)
+                        Text(instance.parsing)
                             .lineLimit(4)
                     }
                 }

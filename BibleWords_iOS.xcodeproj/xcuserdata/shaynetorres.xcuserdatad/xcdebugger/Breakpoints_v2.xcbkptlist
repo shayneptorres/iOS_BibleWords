@@ -142,10 +142,10 @@
             filePath = "BibleWords_iOS/UI/Paradigms/ParadigmPracticeView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "275"
-            endingLineNumber = "275"
-            landmarkName = "DisplayMode"
-            landmarkType = "13">
+            startingLineNumber = "290"
+            endingLineNumber = "290"
+            landmarkName = "ParadigmPracticeView"
+            landmarkType = "21">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -193,22 +193,6 @@
             startingLineNumber = "80"
             endingLineNumber = "80"
             landmarkName = "body"
-            landmarkType = "24">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "66538800-550F-4187-A876-188F43122DD1"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BibleWords_iOS/Util/WordList+Extensions.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "30"
-            endingLineNumber = "30"
-            landmarkName = "rangesArr"
             landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>

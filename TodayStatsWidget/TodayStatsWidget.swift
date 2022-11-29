@@ -35,7 +35,8 @@ struct TodayStatsWidgetEntryView : View {
     var body: some View {
         switch family {
         case .systemSmall:
-            StatsSmallView(entry: entry)
+//            StatsDueReviewedSmallView(entry: entry)
+            StatsDueSmallView(entry: entry)
         case .systemMedium:
             StatsMediumWidgetView(entry: entry)
         case .accessoryRectangular:
@@ -50,60 +51,91 @@ struct TodayStatsWidgetEntryView : View {
     }
 }
 
-struct StatsSmallView: View {
+struct StatsDueSmallView: View {
     var entry: TodayStatsEntry
     
     var body: some View {
         ZStack {
             ContainerRelativeShape()
                 .fill(Color.widgetBGColor)
-            VStack(alignment: .center) {
-                Text("Today's Stats")
-                    .font(.title3)
-                    .bold()
-                    .padding(.top, 8)
-                    .padding(.bottom, 12)
-                    .foregroundColor(Color.widgetTextColor)
+            VStack(alignment: .leading, spacing: 4) {
                 HStack {
-                    VStack {
-                        Image(systemName: "arrow.triangle.2.circlepath")
-                            .foregroundColor(Color.widgetTextColor)
-                            .font(.headline)
-                            .bold()
-                        Text("\(entry.reviewedCount)")
-                    }
-                    .frame(maxWidth: .infinity)
-                    VStack {
-                        Image(systemName: "gift")
-                            .foregroundColor(Color.widgetTextColor)
-                            .font(.headline)
-                            .bold()
-                        Text("\(entry.newCount)")
-                    }
-                    .frame(maxWidth: .infinity)
-                }
-                .padding(.bottom, 8)
-                .padding(.horizontal)
-                HStack {
-                    VStack {
-                        Image(systemName: "rectangle.and.hand.point.up.left.filled")
-                            .foregroundColor(Color.widgetTextColor)
-                            .font(.headline)
-                            .bold()
-                        Text("\(entry.parsedCount)")
-                    }
-                    .frame(maxWidth: .infinity)
-                    VStack {
+                    ZStack {
+                        Circle()
+                            .fill(Color.widgetTextColor)
+                            .frame(width: 45)
                         Image(systemName: "clock.badge.exclamationmark")
-                            .foregroundColor(Color.widgetTextColor)
-                            .font(.headline)
-                            .bold()
-                        Text("\(entry.dueCount)")
+                            .font(.title2)
+                            .foregroundColor(Color.white)
                     }
-                    .frame(maxWidth: .infinity)
+                    .padding([.leading, .top])
+                    Spacer()
+                    Text("\(entry.dueCount)")
+                        .font(.largeTitle)
+                        .padding([.trailing, .top])
                 }
-                .padding(.horizontal)
                 Spacer()
+                Text("Due Words")
+                    .font(.title2)
+                    .bold()
+                    .padding([.leading, .bottom])
+            }
+        }
+    }
+}
+
+struct StatsDueReviewedSmallView: View {
+    var entry: TodayStatsEntry
+    
+    var body: some View {
+        ZStack {
+            ContainerRelativeShape()
+                .fill(Color.widgetBGColor)
+            VStack(alignment: .leading, spacing: 4) {
+                HStack {
+                    ZStack {
+                        Circle()
+                            .fill(Color.widgetTextColor)
+                            .frame(width: 45)
+                        Image(systemName: "clock.badge.exclamationmark")
+                            .font(.title2)
+                            .foregroundColor(Color.white)
+                    }
+                    .padding([.leading])
+                    Spacer()
+                    VStack(alignment: .trailing) {
+                        Text("\(entry.dueCount)")
+                            .font(.title3)
+                            .padding([.trailing])
+                        Text("Due")
+                            .font(.subheadline)
+                            .bold()
+                            .padding([.trailing])
+                    }
+                }
+                .frame(maxHeight: .infinity)
+                HStack {
+                    ZStack {
+                        Circle()
+                            .fill(Color.widgetTextColor)
+                            .frame(width: 45)
+                        Image(systemName: "arrow.2.circlepath")
+                            .font(.title2)
+                            .foregroundColor(Color.white)
+                    }
+                    .padding([.leading])
+                    Spacer()
+                    VStack(alignment: .trailing) {
+                        Text("\(entry.reviewedCount)")
+                            .font(.title3)
+                            .padding([.trailing])
+                        Text("Reviewed")
+                            .font(.subheadline)
+                            .bold()
+                            .padding([.trailing])
+                    }
+                }
+                .frame(maxHeight: .infinity)
             }
         }
     }

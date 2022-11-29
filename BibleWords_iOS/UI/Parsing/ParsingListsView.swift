@@ -27,13 +27,11 @@ struct ParsingListsView: View {
                             NavigationLazyView(ParsingListDetailView(viewModel: .init(list: list)))
                         }) {
                             VStack(alignment: .leading, spacing: 4) {
-                                HStack {
-                                    Text(list.defaultTitle)
-                                    Spacer()
-                                    Text(list.defaultDetails)
-                                        .font(.subheadline)
-                                        .foregroundColor(Color(uiColor: .secondaryLabel))
-                                }
+                                Text(list.defaultTitle)
+                                    .foregroundColor(.accentColor)
+                                Text(list.defaultDetails)
+                                    .font(.subheadline)
+                                    .foregroundColor(Color(uiColor: .secondaryLabel))
                                 Text(list.parsingDetails)
                                     .font(.subheadline)
                                     .foregroundColor(Color(uiColor: .secondaryLabel))
@@ -66,24 +64,8 @@ struct ParsingListsView: View {
                 .labelStyle(.titleAndIcon)
             }
         }
-        .navigationTitle("Parsing Lists")
+        .navigationTitle("Parsing")
         .navigationBarTitleDisplayMode(.inline)
-//        .navigationDestination(for: AppPath.self) { path in
-//            switch path {
-//            case .parsingListDetail(let list):
-//                ParsingListDetailView(viewModel: .init(list: list))
-//            case .parsingSessionsList(let list):
-//                ParsingListSessionsView(list: list.bound())
-//            case .parsingSessionDetail(let session):
-//                List {
-//                    ForEach(session.entriesArr.sorted { $0.createdAt! < $1.createdAt! }) { entry in
-//                        ParsingSessionEntryRow(entry: entry.bound())
-//                    }
-//                }
-//            default:
-//                Text("?")
-//            }
-//        }
     }
 }
 

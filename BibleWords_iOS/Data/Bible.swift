@@ -307,16 +307,9 @@ struct Bible {
             return rawSurface.isEmpty ? surface : rawSurface
         }
         
-        var parsingStr: String {
-//            if parsing.first == " " {
-//                return String(parsing.dropFirst())
-//            }
-            return parsing
-        }
-        
         var displayParsingStr: String {
             if language == .greek {
-                return parsing
+                return parsing.capitalized
             } else  {
                 var str = ""
                 str = parsing.replacingOccurrences(of: " perfect ", with: " Qatal (perfect) ")

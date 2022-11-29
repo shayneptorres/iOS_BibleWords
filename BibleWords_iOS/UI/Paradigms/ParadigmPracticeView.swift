@@ -105,6 +105,8 @@ struct ParadigmPracticeView: View {
                             if currentParadigmIndex == paradigms.count - 1 {
                                 showCurrentEntries = false
                                 presentationMode.wrappedValue.dismiss()
+                            } else {
+                                showCurrentEntries = false
                             }
                         }, label: {
                             Text("Dismiss")
@@ -137,30 +139,22 @@ struct ParadigmPracticeView: View {
     func HeaderView() -> some View {
         HStack(alignment: .center) {
             VStack {
-                Text("Paradigm \(currentParadigmIndex + 1) out of \(paradigms.count)")
-                    .bold()
-                    .padding(.bottom, 4)
                 HStack {
                     HStack {
                         SessionEntryAnswerType.wrong.rowImage
                         Text("\(entries.filter { $0.answerType == .wrong }.count)")
                     }
-                    .frame(maxWidth: .infinity)
-                    HStack {
-                        SessionEntryAnswerType.hard.rowImage
-                        Text("\(entries.filter { $0.answerType == .hard }.count)")
-                    }
-                    .frame(maxWidth: .infinity)
+                    .padding(.leading)
+                    Spacer()
+                    Text("Paradigm \(currentParadigmIndex + 1) out of \(paradigms.count)")
+                        .bold()
+                        .frame(maxWidth: .infinity)
+                    Spacer()
                     HStack {
                         SessionEntryAnswerType.good.rowImage
                         Text("\(entries.filter { $0.answerType == .good }.count)")
                     }
-                    .frame(maxWidth: .infinity)
-                    HStack {
-                        SessionEntryAnswerType.easy.rowImage
-                        Text("\(entries.filter { $0.answerType == .easy }.count)")
-                    }
-                    .frame(maxWidth: .infinity)
+                    .padding(.trailing)
                 }
                 .font(.caption)
             }
@@ -171,6 +165,7 @@ struct ParadigmPracticeView: View {
         .background(Color(uiColor: .systemGray))
         .cornerRadius(Design.smallCornerRadius)
         .padding(.horizontal)
+        .padding(.top)
     }
     
     func TextCardView() -> some View {
@@ -186,34 +181,54 @@ struct ParadigmPracticeView: View {
     }
     
     func DefinitionView() -> some View {
-        HStack {
-            Text(currentParadigm?.details ?? "")
-                .font(.bible24)
-                .padding(.trailing, 8)
-            Text(currentParadigm?.definition ?? "")
-                .font(.bible24)
+        ScrollView {
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    if let def = currentParadigm?.definition, !def.isEmpty {
+                        Text("Definition:")
+                            .font(.subheadline)
+                            .foregroundColor(.init(uiColor: .secondaryLabel))
+                        Text(def)
+                            .padding(.bottom, 8)
+                    }
+                    if let parsing = currentParadigm?.parsing, !parsing.isEmpty {
+                        Text("Parsing:")
+                            .font(.subheadline)
+                            .foregroundColor(.init(uiColor: .secondaryLabel))
+                        Text(parsing)
+                            .padding(.bottom, 8)
+                    }
+                    if let details = currentParadigm?.details, !details.isEmpty {
+                        Text("Details:")
+                            .font(.subheadline)
+                            .foregroundColor(.init(uiColor: .secondaryLabel))
+                        Text(currentParadigm?.details ?? "")
+                            .padding(.bottom, 8)
+                    }
+                }
+                Spacer()
+            }
+            .padding()
         }
+        .frame(maxWidth: .infinity)
+        .padding()
+        .background(Color(UIColor.systemBackground))
+        .foregroundColor(Color(uiColor: .label))
+        .cornerRadius(Design.defaultCornerRadius)
+        .padding(.horizontal)
+        .padding(.top, 4)
     }
     
     func AnswerView() -> some View {
         return AnyView(
             VStack {
-                Spacer()
-                HStack {
-                    AnswerButton(answerType: .wrong, action: { on(.wrong) })
-                    AnswerButton(answerType: .hard, action: { on(.hard) })
-                }
-                .frame(maxWidth: .infinity)
-                HStack {
-                    AnswerButton(answerType: .good, action: { on(.good) })
-                    AnswerButton(answerType: .easy, action: { on(.easy) })
-                }
-                .frame(maxWidth: .infinity)
+                AnswerButton(answerType: .good, action: { on(.good) })
+                AnswerButton(answerType: .wrong, action: { on(.wrong) })
             }
-                .frame(maxWidth: .infinity)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
         )
-        .frame(maxHeight: .infinity)
-        .padding([.horizontal, .bottom], 8)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding()
     }
     
     func on(_ answer: SessionEntryAnswerType) {

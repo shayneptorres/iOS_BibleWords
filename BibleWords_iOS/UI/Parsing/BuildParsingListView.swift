@@ -219,7 +219,7 @@ extension BuildParsingListView {
                                     Text(instance.textSurface)
                                         .font(language.meduimBibleFont)
                                         .padding(.bottom, 4)
-                                    Text(instance.parsingStr)
+                                    Text(instance.parsing)
                                         .font(.subheadline)
                                         .foregroundColor(Color(uiColor: .secondaryLabel))
                                 }

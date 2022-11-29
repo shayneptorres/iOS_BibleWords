@@ -23,6 +23,9 @@ struct PracticeParsingView: View {
     @State var displayMode = DisplayMode.surface
     @State var showSessionReportAlert = false
 //    @State var showSessionReport = false
+    @State var showWordInPassages = false
+    @State var showWordForms = false
+    @State var showWordInfo = false
     
     @State var session: StudySession?
     @State var entries: [StudySessionEntry] = []
@@ -80,12 +83,13 @@ struct PracticeParsingView: View {
                 ToolbarItemGroup(placement: .principal) {
                     VStack {
                         Text("Parsing Practice")
-//                        Text("DETAILS")
+                            .bold()
                     }
                 }
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
                     Button(action: onDone, label: {
                         Text("Done")
+                            .bold()
                     })
                 }
             }
@@ -103,6 +107,95 @@ struct PracticeParsingView: View {
             })
         }
         .interactiveDismissDisabled()
+        .sheet(isPresented: $showWordInfo) {
+            if let wordInfo = currentInstance?.wordInfo {
+                NavigationView {
+                    WordInfoDetailsView(word: wordInfo.bound(), isPresentedModally: true)
+                }
+            } else {
+                Text("Something went wrong")
+            }
+        }
+        .sheet(isPresented: $showWordInPassages) {
+            if let wordInfo = currentInstance?.wordInfo {
+                NavigationView {
+                    List {
+                        ForEach(wordInfo.instances.filter { $0.parsing == currentInstance?.parsing ?? "" || $0.textSurface == currentInstance?.textSurface ?? "" }) { instance in
+                            Section {
+                                VStack(alignment: .leading, spacing: 8) {
+                                    VStack(alignment: .leading, spacing: 2) {
+                                        Text("Surface Form:")
+                                            .font(.subheadline)
+                                            .foregroundColor(.init(uiColor: .secondaryLabel))
+                                        Text(instance.textSurface)
+                                            .font(instance.language.meduimBibleFont)
+                                    }
+                                    VStack(alignment: .leading, spacing: 2) {
+                                        Text("Parsing:")
+                                            .font(.subheadline)
+                                            .foregroundColor(.init(uiColor: .secondaryLabel))
+                                        Text(instance.displayParsingStr)
+                                    }
+                                    .padding(.bottom)
+                                    Text(instance.prettyRefStr)
+                                        .font(.title3)
+                                        .bold()
+                                    Text(instance.wordInPassage) { string in
+                                        let attributedStr = instance.textSurface
+                                        if let range = string.range(of: attributedStr) { /// here!
+                                            string[range].foregroundColor = .accentColor
+                                        }
+                                    }
+                                    .font(instance.language.largeBibleFont)
+                                }
+                            }
+                        }
+                    }
+                    .navigationBarTitle("Appearances", displayMode: .inline)
+                    .toolbar {
+                        Button(action: {
+                            showWordInPassages = false
+                        }, label: {
+                            Text("Dimiss")
+                                .bold()
+                        })
+                    }
+                }
+            } else {
+                Text("Something went wrong")
+            }
+        }
+        .sheet(isPresented: $showWordForms) {
+            if let wordInfo = currentInstance?.wordInfo {
+                NavigationView {
+                    List {
+                        ForEach(wordInfo.parsingInfo.instances.sorted { $0.parsing < $1.parsing }) { info in
+                            NavigationLink(destination: {
+                                WordInPassageView(word: info.wordInfo.bound(), instance: info.bound())
+                            }, label: {
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(info.textSurface)
+                                        .font(info.language.meduimBibleFont)
+                                        .foregroundColor(.accentColor)
+                                    Text(info.parsing.capitalized)
+                                        .font(.footnote)
+                                        .foregroundColor(Color(uiColor: .secondaryLabel))
+                                }
+                            })
+                        }
+                    }
+                    .navigationBarTitle("Forms", displayMode: .inline)
+                    .toolbar {
+                        Button(action: {
+                            showWordForms = false
+                        }, label: {
+                            Text("Dismiss")
+                                .bold()
+                        })
+                    }
+                }
+            }
+        }
         .onAppear {
             parsingInstances = parsingInstances.shuffled()
             setCurrentInstance()
@@ -117,38 +210,84 @@ struct PracticeParsingView: View {
 extension PracticeParsingView {
     
     func DefinitionView() -> some View {
-        VStack(alignment: .center) {
-            Text(currentInstance?.displayParsingStr ?? "")
-                .multilineTextAlignment(.center)
-                .font(.title3)
-                .padding(.bottom)
-            HStack {
-                VStack(alignment: .center) {
-                    Text("Lexical form:")
-                        .font(.subheadline)
-                        .foregroundColor(.init(uiColor: .secondaryLabel))
-                    Text(currentInstance?.lemma ?? "")
-                        .font(.bible24)
+        VStack {
+            VStack {
+                HStack {
+                    Button(action: {
+                        showWordInPassages = true
+                    }, label: {
+                        Image(systemName: "book")
+                            .font(.title3)
+                            .foregroundColor(.accentColor)
+                    })
+                    Spacer()
+                    Button(action: {
+                        showWordForms = true
+                    }, label: {
+                        Image(systemName: "filemenu.and.selection")
+                            .font(.title3)
+                            .foregroundColor(.accentColor)
+                    })
+                    Spacer()
+                    Button(action: {
+                        showWordInfo = true
+                    }, label: {
+                        Image(systemName: "info.circle")
+                            .font(.title3)
+                            .foregroundColor(.accentColor)
+                    })
                 }
-                .frame(maxWidth: .infinity)
-                VStack(alignment: .center) {
-                    Text("Definition:")
-                        .font(.subheadline)
-                        .foregroundColor(.init(uiColor: .secondaryLabel))
-                    Text(currentInstance?.wordInfo.definition ?? "")
-                        .font(.headline)
+                .padding(.horizontal, 4)
+                .padding(.bottom, 8)
+            }
+            .padding(.top, 4)
+            ScrollView {
+                VStack(alignment: .leading, spacing: 16) {
+                    VStack(alignment: .leading) {
+                        Text("Parsing:")
+                            .font(.subheadline)
+                            .foregroundColor(.init(uiColor: .secondaryLabel))
+                        Text(currentInstance?.displayParsingStr ?? "")
+                            .font(.headline)
+                            .minimumScaleFactor(0.3)
+                            .font(.title3)
+                    }
+                    HStack(alignment: .top) {
+                        VStack(alignment: .leading) {
+                            Text("Lexical form:")
+                                .font(.subheadline)
+                                .foregroundColor(.init(uiColor: .secondaryLabel))
+                            Text(currentInstance?.lemma ?? "")
+                                .font(.bible24)
+                        }
+                        Spacer()
+                        VStack(alignment: .leading) {
+                            Text("Definition:")
+                                .font(.subheadline)
+                                .foregroundColor(.init(uiColor: .secondaryLabel))
+                            Text(currentInstance?.wordInfo.definition ?? "")
+                                .font(.headline)
+                                .minimumScaleFactor(0.3)
+                        }
+                    }
                 }
-                .frame(maxWidth: .infinity)
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: 200)
+        .padding()
+        .background(Color(UIColor.systemBackground))
+        .foregroundColor(Color(uiColor: .label))
+        .cornerRadius(Design.defaultCornerRadius)
         .padding(.horizontal)
     }
     
     func LemmaView() -> some View {
         Text(currentInstance?.textSurface ?? "")
             .font(.bible72)
-            .minimumScaleFactor(0.6)
+            .lineLimit(1)
+            .minimumScaleFactor(0.2)
             .frame(maxWidth: .infinity, maxHeight: 200)
+            .padding(.horizontal)
             .background(Color(UIColor.systemBackground))
             .foregroundColor(Color(uiColor: .label))
             .cornerRadius(Design.defaultCornerRadius)
@@ -208,19 +347,11 @@ extension PracticeParsingView {
     func AnswerView() -> some View {
         return AnyView(
             VStack {
-                Spacer()
-                HStack {
-                    AnswerButton(answerType: .wrong, action: onWrong)
-                    AnswerButton(answerType: .hard, action: onHard)
-                }
-                .frame(maxWidth: .infinity)
-                HStack {
-                    AnswerButton(answerType: .good, action: onCorrect)
-                    AnswerButton(answerType: .easy, action: onEasy)
-                }
-                .frame(maxWidth: .infinity)
+                AnswerButton(answerType: .good, action: onCorrect)
+                    .frame(maxWidth: .infinity)
+                AnswerButton(answerType: .wrong, action: onWrong)
+                    .frame(maxWidth: .infinity)
             }
-                .frame(maxWidth: .infinity)
         )
         .frame(minHeight: 100)
     }

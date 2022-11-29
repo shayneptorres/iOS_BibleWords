@@ -77,8 +77,29 @@ struct ParsingListDetailView: View {
         ZStack {
             List {
                 if viewModel.isBuilding {
-                    DataLoadingRow(text: "Building parsing info...")
+                    DataLoadingRow(text: "Building parsing data...")
                 } else {
+                    Section {
+                        HStack {
+                            Button(action: { showSettings = true }, label: {
+                                HStack {
+                                    Image(systemName: "gearshape.fill")
+                                    Text("Settings")
+                                        .bold()
+                                }
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 60)
+                                .background(Color.accentColor)
+                                .cornerRadius(12)
+                            })
+                        }
+                        .padding(.bottom, 8)
+                    }
+                    .listRowSeparator(.hidden)
+                    .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+                    .listRowBackground(Color.appBackground)
+                    .foregroundColor(.white)
+                    
                     Section {
                         if viewModel.list.language == .greek {
                             GreekSettingsSection()
@@ -119,7 +140,7 @@ struct ParsingListDetailView: View {
                                                 Text(instance.textSurface)
                                                     .font(instance.language.meduimBibleFont)
                                                     .padding(.bottom, 4)
-                                                Text(instance.parsingStr)
+                                                Text(instance.parsing)
                                                     .font(.subheadline)
                                                     .foregroundColor(Color(uiColor: .secondaryLabel))
                                             }
@@ -151,23 +172,15 @@ struct ParsingListDetailView: View {
                     }
                 }
             }
-            VStack {
-                Spacer()
-                AppButton(text: "Practice Parsing") {
-                    showParsingPracticeView = true
-                }
-                .disabled(viewModel.isBuilding)
-                .padding([.horizontal, .bottom])
-            }
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
-                    showSettings = true
+                    showParsingPracticeView = true
                 }, label: {
-                    Image(systemName: "ellipsis.circle")
-                        .font(.title3)
+                    Label("Study", systemImage: "brain.head.profile")
                 })
+                .labelStyle(.titleAndIcon)
             }
         }
         .sheet(isPresented: $showSettings) {
@@ -176,7 +189,7 @@ struct ParsingListDetailView: View {
         .fullScreenCover(isPresented: $showParsingPracticeView) {
             PracticeParsingView(parsingList: viewModel.list, parsingInstances: viewModel.instances)
         }
-        .navigationTitle(viewModel.list.defaultTitle)
+        .navigationTitle(viewModel.list.shortTitle)
         .navigationBarTitleDisplayMode(.inline)
     }
 }

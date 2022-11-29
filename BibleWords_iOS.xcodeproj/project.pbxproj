@@ -52,6 +52,7 @@
 		B87060482932DB1200AC21EA /* VocabSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87060472932DB1200AC21EA /* VocabSettingsView.swift */; };
 		B870604A2932DB9200AC21EA /* VocabNotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87060492932DB9200AC21EA /* VocabNotificationsView.swift */; };
 		B870604C2933238A00AC21EA /* Notification+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B870604B2933238A00AC21EA /* Notification+Extensions.swift */; };
+		B870604E293594A900AC21EA /* ParsingList+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B870604D293594A900AC21EA /* ParsingList+Extensions.swift */; };
 		B899887E28FC94F000F00E0B /* WordInfoRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899887D28FC94F000F00E0B /* WordInfoRow.swift */; };
 		B899888028FCBCF100F00E0B /* StudySession+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899887F28FCBCF100F00E0B /* StudySession+Extensions.swift */; };
 		B899888228FD1A5100F00E0B /* NewWordsLearnedTodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899888128FD1A5100F00E0B /* NewWordsLearnedTodayView.swift */; };
@@ -203,6 +204,7 @@
 		B87060472932DB1200AC21EA /* VocabSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabSettingsView.swift; sourceTree = "<group>"; };
 		B87060492932DB9200AC21EA /* VocabNotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabNotificationsView.swift; sourceTree = "<group>"; };
 		B870604B2933238A00AC21EA /* Notification+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extensions.swift"; sourceTree = "<group>"; };
+		B870604D293594A900AC21EA /* ParsingList+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ParsingList+Extensions.swift"; sourceTree = "<group>"; };
 		B899887D28FC94F000F00E0B /* WordInfoRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordInfoRow.swift; sourceTree = "<group>"; };
 		B899887F28FCBCF100F00E0B /* StudySession+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StudySession+Extensions.swift"; sourceTree = "<group>"; };
 		B899888128FD1A5100F00E0B /* NewWordsLearnedTodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordsLearnedTodayView.swift; sourceTree = "<group>"; };
@@ -527,6 +529,7 @@
 				B89CB574290B1DC70002FEF8 /* PinnedItem+Extensions.swift */,
 				B8706028292F2A2900AC21EA /* VocabStudySession+Extensions.swift */,
 				B870604B2933238A00AC21EA /* Notification+Extensions.swift */,
+				B870604D293594A900AC21EA /* ParsingList+Extensions.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -807,6 +810,7 @@
 				B8A210F42901BF4600BDF272 /* ParsingListDetailView.swift in Sources */,
 				B8A210F62901CA7200BDF272 /* PracticeParsingView.swift in Sources */,
 				B82D5BB62911AF0F00474D61 /* ImportCSVView.swift in Sources */,
+				B870604E293594A900AC21EA /* ParsingList+Extensions.swift in Sources */,
 				B81C31742903B310002DBF6B /* WidgetShareable.swift in Sources */,
 				B8E2FB4D2908B71A00C17F75 /* WidgetStatsUtil.swift in Sources */,
 				B89CB571290AED710002FEF8 /* Activity.swift in Sources */,

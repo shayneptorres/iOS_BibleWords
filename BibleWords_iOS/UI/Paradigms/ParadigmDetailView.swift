@@ -17,31 +17,27 @@ struct ParadigmDetailView: View {
             Color(uiColor: .systemGroupedBackground)
                 .ignoresSafeArea()
             ScrollView {
-                HStack {
-                    Text("Study Session Reports")
-                    Spacer()
-                    Image(systemName: "chevron.right")
-                }
-                .padding()
-                .background(Color(UIColor.secondarySystemGroupedBackground))
-                .foregroundColor(Color(uiColor: .label))
-                .cornerRadius(Design.defaultCornerRadius)
-                .padding()
                 LazyVGrid(columns: gridItemLayout, spacing: 8) {
                     ForEach(concepts, id: \.rawValue) { type in
                         Section(content: {
                             ForEach(type.group.items) { paradigm in
-                                VStack(alignment: .center, spacing: 4) {
+                                VStack(alignment: .center, spacing: 8) {
                                     Text(paradigm.text)
                                         .font(.bible50)
-                                    Text(paradigm.details)
-                                        .font(.bible20)
-                                        .multilineTextAlignment(.center)
-                                    Text(paradigm.definition)
-                                        .font(.bible20)
-                                        .multilineTextAlignment(.center)
+                                        .padding(.bottom)
+                                    if !paradigm.parsing.isEmpty {
+                                        Text(paradigm.parsing)
+                                            .multilineTextAlignment(.center)
+                                            .padding(.bottom)
+                                    }
+                                    if !paradigm.definition.isEmpty {
+                                        Text(paradigm.definition)
+                                            .multilineTextAlignment(.center)
+                                    }
+                                    Spacer()
                                 }
                                 .frame(maxWidth: .infinity, minHeight: 225)
+                                .padding(.top)
                                 .padding(.horizontal)
                                 .background(Color(UIColor.secondarySystemGroupedBackground))
                                 .foregroundColor(Color(uiColor: .label))
@@ -57,19 +53,20 @@ struct ParadigmDetailView: View {
                 }
                 .padding(.horizontal)
             }
-            VStack {
-                Spacer()
-                AppButton(text: "Practice Paradigms", action: {
-                    showPracticeView = true
-                })
-                .padding([.horizontal, .bottom])
-            }
         }
         .fullScreenCover(isPresented: $showPracticeView) {
             ParadigmPracticeView(paradigmTypes: concepts)
         }
         .navigationTitle(title)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            Button(action: {
+                showPracticeView = true
+            }, label: {
+                Label("Study", systemImage: "brain.head.profile")
+            })
+            .labelStyle(.titleAndIcon)
+        }
     }
     
     var paradigms: [LanguageConcept.Item] {
@@ -78,7 +75,7 @@ struct ParadigmDetailView: View {
     
     var title: String {
         if concepts.count == 1 {
-//            return paradigmTypes.first!.group.title
+//            return paradigms.first?.text ?? ""
             return ""
         } else {
             return "Multiple Paradigms"
