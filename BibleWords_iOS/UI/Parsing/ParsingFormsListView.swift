@@ -14,9 +14,8 @@ struct ParsingFormsListView: View {
         var groups: [Bible.ParsingSurfaceGroup]
     }
     
-    @Environment(\.presentationMode) var presentationMode
     var wordInfo: Bible.WordInfo
-    var presentedModally = false
+    var modalDismiss: (() -> Void)?
     
     var paringGroups: [ParsingGroup] {
         switch wordInfo.language {
@@ -93,9 +92,9 @@ struct ParsingFormsListView: View {
                     .font(wordInfo.language.meduimBibleFont)
             }
             ToolbarItem(placement: .primaryAction) {
-                if presentedModally {
+                if modalDismiss != nil {
                     Button(action: {
-                        presentationMode.wrappedValue.dismiss()
+                        modalDismiss?()
                     }, label: {
                         Text("Dismiss")
                             .bold()

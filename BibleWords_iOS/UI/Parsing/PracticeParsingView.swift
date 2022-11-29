@@ -168,7 +168,9 @@ struct PracticeParsingView: View {
         .sheet(isPresented: $showWordForms) {
             if let wordInfo = currentInstance?.wordInfo {
                 NavigationView {
-                    ParsingFormsListView(wordInfo: wordInfo, presentedModally: true)
+                    ParsingFormsListView(wordInfo: wordInfo) {
+                        showWordForms = false
+                    }
                 }
             }
         }

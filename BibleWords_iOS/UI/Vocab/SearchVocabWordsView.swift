@@ -25,11 +25,11 @@ struct SearchVocabWordsView: View {
                         .padding(.trailing)
                 }
             }
-            ForEach($wordInfos) { wordInfo in
+            ForEach(wordInfos) { wordInfo in
                 NavigationLink(destination: {
-                    WordInfoDetailsView(word: wordInfo)
+                    WordInfoDetailsView(word: wordInfo.bound())
                 }, label: {
-                    WordInfoRow(wordInfo: wordInfo)
+                    WordInfoRow(wordInfo: wordInfo.bound())
                 })
             }
         }
