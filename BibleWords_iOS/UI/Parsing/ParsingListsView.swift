@@ -29,9 +29,11 @@ struct ParsingListsView: View {
                             VStack(alignment: .leading, spacing: 4) {
                                 Text(list.defaultTitle)
                                     .foregroundColor(.accentColor)
+                                    .bold()
                                 Text(list.defaultDetails)
                                     .font(.subheadline)
                                     .foregroundColor(Color(uiColor: .secondaryLabel))
+                                    .padding(.bottom, 8)
                                 Text(list.parsingDetails)
                                     .font(.subheadline)
                                     .foregroundColor(Color(uiColor: .secondaryLabel))

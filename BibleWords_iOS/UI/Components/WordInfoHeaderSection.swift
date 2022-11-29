@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct WordInfoHeaderSection: View {
+    @Environment(\.managedObjectContext) var context
     @Binding var wordInfo: Bible.WordInfo
 
     var body: some View {
@@ -35,9 +36,21 @@ struct WordInfoHeaderSection: View {
                     Text("definition")
                         .font(.subheadline)
                         .foregroundColor(Color(uiColor: .secondaryLabel))
-                    Text(wordInfo.definition)
-                        .font(.headline)
+                    if let vocab = wordInfo.vocabWord(context: context) {
+                        Text(vocab.definition)
+                            .font(.headline)
+                    } else {
+                        Text(wordInfo.definition)
+                            .font(.headline)
+                    }
                 }
+            }
+            VStack(alignment: .leading) {
+                Text("Language")
+                    .font(.subheadline)
+                    .foregroundColor(Color(uiColor: .secondaryLabel))
+                Text(wordInfo.language.title)
+                    .font(.headline)
             }
             VStack(alignment: .leading) {
                 Text("Strong's ID")

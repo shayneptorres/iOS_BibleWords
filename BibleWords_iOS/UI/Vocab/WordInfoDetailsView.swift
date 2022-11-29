@@ -182,24 +182,7 @@ extension WordInfoDetailsView {
     func FormsAppearancesSection() -> some View {
         Section {
             NavigationLink(destination: {
-                List {
-                    ForEach(word.parsingInfo.instances.sorted { $0.parsing < $1.parsing }) { info in
-                        HStack {
-                            Text(info.textSurface)
-                                .font(info.language.meduimBibleFont)
-                            Spacer()
-                            Text(info.parsing)
-                                .font(.footnote)
-                                .foregroundColor(Color(uiColor: .secondaryLabel))
-                        }
-                    }
-                }
-                .toolbar {
-                    ToolbarItem(placement: .principal) {
-                        Text(word.lemma)
-                            .font(word.language.meduimBibleFont)
-                    }
-                }
+                ParsingFormsListView(wordInfo: word)
             }, label: {
                 Label(title: {
                     Text("\(word.parsingInfo.instances.count)")
@@ -214,26 +197,10 @@ extension WordInfoDetailsView {
             NavigationLink(destination: {
                 List {
                     ForEach(word.instances) { instance in
-                        Section {
-                            NavigationLink(destination: {
-                                WordInPassageView(word: instance.wordInfo.bound(), instance: instance.bound())
-                            }) {
-                                VStack(alignment: .leading, spacing: 4) {
-                                    Text(instance.prettyRefStr)
-                                        .font(.title3)
-                                        .bold()
-                                    VStack(alignment: instance.language == .greek ? .leading : .trailing) {
-                                        Text(instance.wordInPassage) { string in
-                                            let attributedStr = instance.textSurface
-                                            if let range = string.range(of: attributedStr) { /// here!
-                                                string[range].foregroundColor = .accentColor
-                                            }
-                                        }
-                                        .font(instance.language.largeBibleFont)
-                                    }
-                                    .padding(.bottom, 4)
-                                }
-                            }
+                        NavigationLink(destination: {
+                            WordInstancePassageDetailsView(word: instance.wordInfo, instance: instance)
+                        }) {
+                            WordInstancePassageListRow(instance: instance)
                         }
                     }
                 }
@@ -272,21 +239,21 @@ extension WordInfoDetailsView {
             let liddleScott = "https://ref.ly/logosres/lsj?hw=\(word.lemma.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? "")"
             if let url = URL(string: liddleScott) {
                 if UIApplication.shared.canOpenURL(url) {
-                    externalDicts.append(.init(name: "Liddell Scott", url: url))
+                    externalDicts.append(.init(name: "(Logos) Liddell Scott", url: url))
                 }
             }
             
             let bdag = "https://ref.ly/logosres/bdag?hw=\(word.lemma.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? "")"
             if let url = URL(string: bdag) {
                 if UIApplication.shared.canOpenURL(url) {
-                    externalDicts.append(.init(name: "BDAG", url: url))
+                    externalDicts.append(.init(name: "(Logos) BDAG", url: url))
                 }
             }
         } else {
             let halot = "https://ref.ly/logosres/hal?hw=\(word.lemma.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? "")"
             if let url = URL(string: halot) {
                 if UIApplication.shared.canOpenURL(url) {
-                    externalDicts.append(.init(name: "HALOT", url: url))
+                    externalDicts.append(.init(name: "(Logos) HALOT", url: url))
                 }
             }
         }

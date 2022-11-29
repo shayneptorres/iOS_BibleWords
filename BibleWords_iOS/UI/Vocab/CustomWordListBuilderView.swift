@@ -116,7 +116,7 @@
 //                case .wordInfo(let word):
 //                    WordInfoDetailsView(word: word.bound())
 //                case .wordInstance(let instance):
-//                    WordInPassageView(word: instance.wordInfo.bound(), instance: instance.bound())
+//                    WordInstancePassageDetailsView(word: instance.wordInfo.bound(), instance: instance.bound())
 //                default:
 //                    Text("Route not active")
 //                }

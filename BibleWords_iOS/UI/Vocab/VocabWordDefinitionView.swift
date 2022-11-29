@@ -26,7 +26,7 @@ struct VocabWordDefinitionView: View {
             List {
                 Section {
                     VStack(alignment: .leading) {
-                        Text("Vocab word")
+                        Text("Lemma")
                             .font(.caption)
                             .foregroundColor(Color(uiColor: .secondaryLabel))
                             .padding(.bottom, 2)
@@ -38,7 +38,7 @@ struct VocabWordDefinitionView: View {
                             .font(.caption)
                             .foregroundColor(Color(uiColor: .secondaryLabel))
                             .padding(.bottom, 2)
-                        Text(vocabWord.definition)
+                        Text(vocabWord.wordInfo.definition)
                     }
                 }
                 Section(content: {

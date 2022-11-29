@@ -103,7 +103,7 @@ struct WordProgressLineChart: UIViewRepresentable {
     func chartData(from: [Int]) -> LineChartData {
         var chartDataEntries: [ChartDataEntry] = []
         
-        for (i, interval) in intervals.sorted().enumerated() {
+        for (i, interval) in intervals.reversed().enumerated() {
             chartDataEntries.append(ChartDataEntry(x: Double(i), y: Double(interval)))
         }
         

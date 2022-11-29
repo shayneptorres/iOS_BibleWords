@@ -58,7 +58,7 @@ extension Date {
             return "1hr"
         } else if timeSinceNow > 1.hours.toDouble {
             let hours = Int(timeSinceNow / 1.hours.toDouble)
-            var minutes = Int(timeSinceNow / 1.minutes.toDouble) - (60 * hours)
+            let minutes = Int(timeSinceNow / 1.minutes.toDouble) - (60 * hours)
             return "\(hours)hr and \(minutes)min"
         }
         return "Sometime"

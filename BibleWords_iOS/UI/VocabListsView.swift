@@ -29,6 +29,7 @@ struct VocabListsView: View {
     @State var showImportCSVFileView = false
     @State var showDueWords = false
     @State var showActivity = false
+    @State var showSearch = false
     @State var showSettings = false
     
     @State var showPinnedVocab = true
@@ -128,7 +129,11 @@ struct VocabListsView: View {
                     StudyActivityView()
                 }
             }
-
+            .sheet(isPresented: $showSearch) {
+                NavigationView {
+                    SearchVocabWordsView()
+                }
+            }
             .sheet(isPresented: $showCreateBiblePassageListModal) {
                 NavigationView {
                     BuildVocabListView()
@@ -145,7 +150,9 @@ struct VocabListsView: View {
             }
             .sheet(isPresented: $showDueWords) {
                 NavigationView {
-                    DueWordsView()
+                    DueWordsView { due in
+                        self.dueVocabWords = due
+                    }
                 }
             }
             .onAppear {
@@ -204,6 +211,22 @@ extension VocabListsView {
                 .buttonStyle(.borderless)
                 .foregroundColor(.white)
                 Button(action: {
+                    showSearch = true
+                }, label: {
+                    VStack(spacing: 4) {
+                        Image(systemName: "binoculars")
+                            .font(.title)
+                        Text("Search")
+                            .font(.subheadline)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 80)
+                    .background(Color.accentColor)
+                    .cornerRadius(12)
+                })
+                .buttonStyle(.borderless)
+                .foregroundColor(.white)
+                Button(action: {
                     showDueWords = true
                 }, label: {
                     VStack(spacing: 4) {
@@ -234,15 +257,7 @@ extension VocabListsView {
                     NavigationLink(destination: {
                         NavigationLazyView(ListDetailView(viewModel: .init(list: list)))
                     }) {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(list.defaultTitle)
-                                .bold()
-                                .multilineTextAlignment(.leading)
-                                .foregroundColor(.accentColor)
-                            Text(list.defaultDetails)
-                                .font(.caption)
-                                .foregroundColor(Color(uiColor: .secondaryLabel))
-                        }
+                        VocabWordListRow(list: list)
                     }
                     .contextMenu {
                         Button(role: .destructive, action: {
@@ -286,15 +301,7 @@ extension VocabListsView {
                     NavigationLink(destination: {
                         NavigationLazyView(ListDetailView(viewModel: .init(list: list)))
                     }) {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(list.defaultTitle)
-                                .bold()
-                                .multilineTextAlignment(.leading)
-                                .foregroundColor(.accentColor)
-                            Text(list.defaultDetails)
-                                .font(.caption)
-                                .foregroundColor(Color(uiColor: .secondaryLabel))
-                        }
+                        VocabWordListRow(list: list)
                     }
                     .contextMenu {
                         Button(role: .destructive, action: {
@@ -338,15 +345,7 @@ extension VocabListsView {
                     NavigationLink(destination: {
                         NavigationLazyView(ListDetailView(viewModel: .init(list: list)))
                     }) {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(list.defaultTitle)
-                                .bold()
-                                .multilineTextAlignment(.leading)
-                                .foregroundColor(.accentColor)
-                            Text(list.defaultDetails)
-                                .font(.caption)
-                                .foregroundColor(Color(uiColor: .secondaryLabel))
-                        }
+                        VocabWordListRow(list: list)
                     }
                     .contextMenu {
                         Button(role: .destructive, action: {
@@ -389,15 +388,7 @@ extension VocabListsView {
                     NavigationLink(destination: {
                         NavigationLazyView(ListDetailView(viewModel: .init(list: list)))
                     }) {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(list.defaultTitle)
-                                .bold()
-                                .multilineTextAlignment(.leading)
-                                .foregroundColor(.accentColor)
-                            Text(list.defaultDetails)
-                                .font(.caption)
-                                .foregroundColor(Color(uiColor: .secondaryLabel))
-                        }
+                        VocabWordListRow(list: list)
                     }
                     .contextMenu {
                         Button(role: .destructive, action: {

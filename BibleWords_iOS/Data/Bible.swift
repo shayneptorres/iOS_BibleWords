@@ -213,12 +213,24 @@ struct Bible {
         }
         
         var language: Language {
-            if instances.first?.bibleBook.rawValue ?? 0 <= Bible.Book.malachi.rawValue {
-                return .hebrew
+            if let instance = instances.first {
+                if instance.bibleBook.rawValue <= Bible.Book.malachi.rawValue {
+                    if instance.parsing.lowercased().contains("aramaic") {
+                        return .aramaic
+                    } else {
+                        return .hebrew
+                    }
+                } else {
+                    return .greek
+                }
             } else {
                 return .greek
             }
         }
+        
+//        var transliteration: String {
+//            return ""
+//        }
         
         var parsingInfo: ParsingInfo {
             var parsingDict: [String:WordInstance] = [:]
@@ -228,6 +240,24 @@ struct Bible {
             let uniqueInstances = parsingDict.map { $0.value }
             
             return .init(strongId: self.id, lemma: self.lemma, definition: self.definition, instances: uniqueInstances)
+        }
+        
+        var parsingGroups: [ParsingSurfaceGroup] {
+            var parsingDict: [String:[WordInstance]] = [:]
+            for instance in instances {
+                if parsingDict[instance.parsing] == nil {
+                    parsingDict[instance.parsing] = [instance]
+                } else {
+                    parsingDict[instance.parsing]?.append(instance)
+                }
+            }
+            
+            var groups: [ParsingSurfaceGroup] = []
+            for (parsing, instances) in parsingDict {
+                groups.append(.init(surface: instances.first?.textSurface ?? "-", parsing: parsing, instances: instances, language: instances.first?.language ?? .greek))
+            }
+            
+            return groups
         }
         
         func parsingInfo(for wordType: Parsing.WordType) -> ParsingInfo {
@@ -247,6 +277,18 @@ struct Bible {
         let lemma: String
         let definition: String
         var instances: [WordInstance]
+    }
+    
+    struct ParsingSurfaceGroup: Identifiable {
+        let id: String = UUID().uuidString
+        let surface: String
+        let parsing: String
+        let instances: [WordInstance]
+        let language: Language
+        
+        var wordInfo: WordInfo? {
+            return instances.first?.wordInfo
+        }
     }
     
     struct WordInstance: Identifiable, Hashable {

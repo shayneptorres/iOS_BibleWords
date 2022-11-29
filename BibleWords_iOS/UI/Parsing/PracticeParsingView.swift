@@ -151,7 +151,7 @@ struct PracticeParsingView: View {
                             }
                         }
                     }
-                    .navigationBarTitle("Appearances", displayMode: .inline)
+                    .navigationBarTitle("Form Appearances", displayMode: .inline)
                     .toolbar {
                         Button(action: {
                             showWordInPassages = false
@@ -168,31 +168,7 @@ struct PracticeParsingView: View {
         .sheet(isPresented: $showWordForms) {
             if let wordInfo = currentInstance?.wordInfo {
                 NavigationView {
-                    List {
-                        ForEach(wordInfo.parsingInfo.instances.sorted { $0.parsing < $1.parsing }) { info in
-                            NavigationLink(destination: {
-                                WordInPassageView(word: info.wordInfo.bound(), instance: info.bound())
-                            }, label: {
-                                VStack(alignment: .leading, spacing: 4) {
-                                    Text(info.textSurface)
-                                        .font(info.language.meduimBibleFont)
-                                        .foregroundColor(.accentColor)
-                                    Text(info.parsing.capitalized)
-                                        .font(.footnote)
-                                        .foregroundColor(Color(uiColor: .secondaryLabel))
-                                }
-                            })
-                        }
-                    }
-                    .navigationBarTitle("Forms", displayMode: .inline)
-                    .toolbar {
-                        Button(action: {
-                            showWordForms = false
-                        }, label: {
-                            Text("Dismiss")
-                                .bold()
-                        })
-                    }
+                    ParsingFormsListView(wordInfo: wordInfo, presentedModally: true)
                 }
             }
         }
@@ -283,7 +259,7 @@ extension PracticeParsingView {
     
     func LemmaView() -> some View {
         Text(currentInstance?.textSurface ?? "")
-            .font(.bible72)
+            .font(currentInstance?.language.xlargeBibleFont)
             .lineLimit(1)
             .minimumScaleFactor(0.2)
             .frame(maxWidth: .infinity, maxHeight: 200)

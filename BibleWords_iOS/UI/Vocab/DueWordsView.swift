@@ -91,6 +91,7 @@ struct DueWordsView: View, Equatable {
     @State var studyWords: [VocabWord] = []
     @State var soonFilter = SoonFilter.hour1
     @State var showSoonWords = false
+    var refreshCallback: (([VocabWord]) -> Void)?
     
     static func == (lhs: DueWordsView, rhs: DueWordsView) -> Bool {
         return true
@@ -268,6 +269,7 @@ extension DueWordsView {
     func refreshWords() {
         refreshDueWords()
         refreshSoonDueWords()
+        refreshCallback?(dueWords)
     }
     
     func refreshDueWords() {

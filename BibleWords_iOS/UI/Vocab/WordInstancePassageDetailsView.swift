@@ -1,5 +1,5 @@
 //
-//  WordInPassageView.swift
+//  WordInstancePassageDetailsView.swift
 //  BibleWords_iOS
 //
 //  Created by Shayne Torres on 10/14/22.
@@ -7,9 +7,11 @@
 
 import SwiftUI
 
-struct WordInPassageView: View {
-    @Binding var word: Bible.WordInfo
-    @Binding var instance: Bible.WordInstance
+struct WordInstancePassageDetailsView: View {
+    @Environment(\.managedObjectContext) var context
+    
+    var word: Bible.WordInfo
+    var instance: Bible.WordInstance
     @State var showBibleReader = false
     
     var body: some View {
@@ -89,8 +91,11 @@ struct WordInPassageView: View {
                     }
                     .frame(width: 110)
                     VStack {
-                        Text(instance.wordInfo.definition)
-                            .lineLimit(4)
+                        if let vocab = instance.wordInfo.vocabWord(context: context) {
+                            Text(vocab.definition)
+                        } else {
+                            Text(instance.wordInfo.definition)
+                        }
                     }
                 }
             }
@@ -132,6 +137,6 @@ extension Text {
 
 struct WordInPassageView_Previews: PreviewProvider {
     static var previews: some View {
-        WordInPassageView(word: Bible.WordInfo.init([:]).bound(), instance: Bible.WordInstance.init(dict: [:]).bound())
+        WordInstancePassageDetailsView(word: Bible.WordInfo.init([:]), instance: Bible.WordInstance.init(dict: [:]))
     }
 }

@@ -100,28 +100,15 @@ struct StudyVocabWordsView: View {
                             Section {
                                 ForEach(currentWord?.wordInfo.instances ?? []) { instance in
                                     NavigationLink(destination: {
-                                        WordInPassageView(word: instance.wordInfo.bound(), instance: instance.bound())
+                                        WordInstancePassageDetailsView(word: instance.wordInfo, instance: instance)
                                     }) {
-                                        VStack(alignment: .leading, spacing: 8) {
-                                            Text(instance.prettyRefStr)
-                                                .font(.title2)
-                                                .bold()
-                                            VStack(alignment: instance.language == .greek ? .leading : .trailing) {
-                                                Text(instance.wordInPassage) { string in
-                                                    let attributedStr = instance.textSurface
-                                                    if let range = string.range(of: attributedStr) { /// here!
-                                                        string[range].foregroundColor = .accentColor
-                                                    }
-                                                }
-                                                .font(instance.language.largeBibleFont)
-                                            }
-                                        }
+                                        WordInstancePassageListRow(instance: instance)
                                     }
                                 }
                             } header: {
                                 if let instances = currentWord?.wordInfo.instances ?? [] {
                                     if instances.count == 1 {
-                                        Text("1 Occurrence (HAPAX LEGOMON)")
+                                        Text("1 Occurrence (Hapax Legomenon)")
                                     } else {
                                         Text("\(instances.count) Occurrences")
                                     }
@@ -534,8 +521,12 @@ extension StudyVocabWordsView {
                         HStack {
                             Image(systemName: "book")
                                 .font(.title2)
-                            Text("\((currentWord?.wordInfo.instances ?? []).count)")
-                                .font(.subheadline)
+                            if (currentWord?.wordInfo.instances ?? []).count == 1 {
+                                Text("Hapax Legomenon")
+                            } else {
+                                Text("\((currentWord?.wordInfo.instances ?? []).count)")
+                                    .font(.subheadline)
+                            }
                         }
                     })
                     .padding()

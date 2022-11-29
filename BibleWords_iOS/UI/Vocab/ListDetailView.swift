@@ -140,60 +140,7 @@ struct ListDetailView: View {
             if viewModel.isBuilding {
                 DataLoadingRow(text: "Building vocab data...")
             } else {
-                Section {
-                    HStack {
-                        if viewModel.list.rangesArr.first != nil {
-                            Button(action: { showReadingView = true }, label: {
-                                HStack {
-                                    Image(systemName: "books.vertical")
-                                    Text("Read")
-                                        .bold()
-                                }
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 60)
-                                .background(Color.accentColor)
-                                .cornerRadius(12)
-                            })
-                        }
-                        Button(action: {
-                            CoreDataManager.transaction(context: context) {
-                                if viewModel.list.pin == nil {
-                                    let pin = PinnedItem(context: context)
-                                    pin.id = UUID().uuidString
-                                    pin.createdAt = Date()
-                                    pin.pinTitle = viewModel.list.defaultTitle
-                                    pin.vocabList = viewModel.list
-                                } else if let pin = viewModel.list.pin {
-                                    context.delete(pin)
-                                }
-                            }
-                        }, label: {
-                            HStack {
-                                Image(systemName: viewModel.list.pin == nil ? "pin" : "pin.slash")
-                                Text(viewModel.list.pin == nil ? "Pin" : "Unpin")
-                                    .bold()
-                            }
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 60)
-                            .background(Color.accentColor)
-                            .cornerRadius(12)
-                        })
-                    }
-                    .padding(.bottom, 8)
-                    Picker(selection: $wordFilter, content: {
-                        ForEach(Filter.allCases, id: \.title) { filter in
-                            Text("\(filter.title): \(words(for: filter).count)").tag(filter)
-                        }
-                    }, label: {})
-                    .frame(height: 40)
-                    .labelsHidden()
-                    .pickerStyle(.segmented)
-                }
-                .listRowSeparator(.hidden)
-                .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
-                .listRowBackground(Color.appBackground)
-                .foregroundColor(.white)
-                
+                ActionsSection()
                 WordsSection()
             }
         }
@@ -202,21 +149,15 @@ struct ListDetailView: View {
             SettingsView()
         }
         .confirmationDialog("Filter Words", isPresented: $showFilterActionSheet, actions: {
-            Button(action: {
+            LabelButton(title: "All words: \(viewModel.words.count)", systemImage: "") {
                 wordFilter = .all
-            }, label: {
-                Label("All words: \(viewModel.words.count)", systemImage: "")
-            })
-            Button(action: {
+            }
+            LabelButton(title: "New words: \(viewModel.words.filter { $0.isNewVocab(context: context) }.count)", systemImage: "") {
                 wordFilter = .new
-            }, label: {
-                Label("New words: \(viewModel.words.filter { $0.isNewVocab(context: context) }.count)", systemImage: "")
-            })
-            Button(action: {
+            }
+            LabelButton(title: "Due words: \(viewModel.list.wordsArr.filter { $0.isDue }.count)", systemImage: "") {
                 wordFilter = .due
-            }, label: {
-                Label("Due words: \(viewModel.list.wordsArr.filter { $0.isDue }.count)", systemImage: "")
-            })
+            }
         }, message: {
             Text("Filter Words")
         })
@@ -362,6 +303,63 @@ extension ListDetailView {
     }
     
     @ViewBuilder
+    func ActionsSection() -> some View {
+        Section {
+            HStack {
+                if viewModel.list.rangesArr.first != nil {
+                    Button(action: { showReadingView = true }, label: {
+                        HStack {
+                            Image(systemName: "books.vertical")
+                            Text("Read")
+                                .bold()
+                        }
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 60)
+                        .background(Color.accentColor)
+                        .cornerRadius(12)
+                    })
+                }
+                Button(action: {
+                    CoreDataManager.transaction(context: context) {
+                        if viewModel.list.pin == nil {
+                            let pin = PinnedItem(context: context)
+                            pin.id = UUID().uuidString
+                            pin.createdAt = Date()
+                            pin.pinTitle = viewModel.list.defaultTitle
+                            pin.vocabList = viewModel.list
+                        } else if let pin = viewModel.list.pin {
+                            context.delete(pin)
+                        }
+                    }
+                }, label: {
+                    HStack {
+                        Image(systemName: viewModel.list.pin == nil ? "pin" : "pin.slash")
+                        Text(viewModel.list.pin == nil ? "Pin" : "Unpin")
+                            .bold()
+                    }
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 60)
+                    .background(Color.accentColor)
+                    .cornerRadius(12)
+                })
+            }
+            .padding(.bottom, 8)
+            Picker(selection: $wordFilter, content: {
+                ForEach(Filter.allCases, id: \.title) { filter in
+                    Text("\(filter.title): \(words(for: filter).count)").tag(filter)
+                }
+            }, label: {})
+            .frame(height: 40)
+            .labelsHidden()
+            .pickerStyle(.segmented)
+        }
+        .listRowSeparator(.hidden)
+        .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+        .listRowBackground(Color.appBackground)
+        .foregroundColor(.white)
+    }
+    
+    @ViewBuilder
     func WordsSection() -> some View {
         Section {
             ForEach(sortedWords) { word in
@@ -373,37 +371,6 @@ extension ListDetailView {
             }
         } header: {
             Text("\(words(for: wordFilter).count) words")
-        }
-    }
-    
-    @ViewBuilder
-    func TextbookWordsSection() -> some View {
-        if viewModel.list.sourceType == .textbook {
-            ForEach(groupedTextbookWords, id: \.chapter) { group in
-                Section {
-                    ForEach(group.words) { word in
-                        NavigationLink(destination: {
-                            WordInfoDetailsView(word: word.bound())
-                        }) {
-                            VStack(alignment: .leading) {
-                                WordInfoRow(wordInfo: word.bound())
-                            }
-                            .navigationViewStyle(.stack)
-                        }
-                    }
-                } header: {
-                    Text("Chapter \(group.chapter)")
-                }
-            }
-        }
-    }
-    
-    @ViewBuilder
-    func StudyButton() -> some View {
-        VStack {
-            Spacer()
-            AppButton(text: "Study Vocab", action: onStudy)
-                .padding([.horizontal, .bottom])
         }
     }
     

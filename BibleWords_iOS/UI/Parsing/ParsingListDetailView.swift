@@ -133,26 +133,10 @@ struct ParsingListDetailView: View {
                     Section {
                         ForEach(groupedParsingInstances.sorted { $0.lemma < $1.lemma }, id: \.lemma) { group in
                             NavigationLink(destination: {
-                                List {
-                                    Section {
-                                        ForEach(group.instances) { instance in
-                                            VStack(alignment: .leading) {
-                                                Text(instance.textSurface)
-                                                    .font(instance.language.meduimBibleFont)
-                                                    .padding(.bottom, 4)
-                                                Text(instance.parsing)
-                                                    .font(.subheadline)
-                                                    .foregroundColor(Color(uiColor: .secondaryLabel))
-                                            }
-                                        }
-                                    } header: {
-                                        Text("Forms")
-                                    }
-                                }
-                                .toolbar {
-                                    ToolbarItemGroup(placement: .principal) {
-                                        Text(group.instances.first?.lemma ?? "").font(.bible24)
-                                    }
+                                if let wordInfo = group.instances.first?.wordInfo {
+                                    ParsingFormsListView(wordInfo: wordInfo)
+                                } else {
+                                    Text("🤔")
                                 }
                             }) {
                                 HStack {
@@ -166,7 +150,7 @@ struct ParsingListDetailView: View {
                             }
                         }
                     } header: {
-                        Text("Lexical Forms")
+                        Text("Words")
                     } footer: {
                         Spacer().frame(height: 100)
                     }

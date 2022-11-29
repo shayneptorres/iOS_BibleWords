@@ -23,7 +23,7 @@
 		B8124D7728FA0EF10053057C /* ParadigmDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8124D7428FA0EF10053057C /* ParadigmDetailView.swift */; };
 		B8124D7928FA0F120053057C /* HebrewConcepts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8124D7828FA0F120053057C /* HebrewConcepts.swift */; };
 		B8124D7D28FA0F990053057C /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8124D7C28FA0F990053057C /* HomeView.swift */; };
-		B8124D7F28FA30900053057C /* WordInPassageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8124D7E28FA30900053057C /* WordInPassageView.swift */; };
+		B8124D7F28FA30900053057C /* WordInstancePassageDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8124D7E28FA30900053057C /* WordInstancePassageDetailsView.swift */; };
 		B8124D8128FB285D0053057C /* BibleRange+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8124D8028FB285D0053057C /* BibleRange+Extensions.swift */; };
 		B8124D8328FB2AF90053057C /* NavHeaderTitleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8124D8228FB2AF90053057C /* NavHeaderTitleDetailView.swift */; };
 		B8124D8528FB366F0053057C /* DueWordsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8124D8428FB366F0053057C /* DueWordsView.swift */; };
@@ -53,6 +53,15 @@
 		B870604A2932DB9200AC21EA /* VocabNotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87060492932DB9200AC21EA /* VocabNotificationsView.swift */; };
 		B870604C2933238A00AC21EA /* Notification+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B870604B2933238A00AC21EA /* Notification+Extensions.swift */; };
 		B870604E293594A900AC21EA /* ParsingList+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B870604D293594A900AC21EA /* ParsingList+Extensions.swift */; };
+		B87060502935E30A00AC21EA /* VocabWordListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B870604F2935E30A00AC21EA /* VocabWordListRow.swift */; };
+		B87060522935E3A400AC21EA /* LabelButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87060512935E3A400AC21EA /* LabelButton.swift */; };
+		B87060542935E4DA00AC21EA /* ParsingFormListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87060532935E4DA00AC21EA /* ParsingFormListRow.swift */; };
+		B87060562935E68700AC21EA /* WordInstancePassageListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87060552935E68700AC21EA /* WordInstancePassageListRow.swift */; };
+		B87060582936699B00AC21EA /* WordInfoParsingFormsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87060572936699B00AC21EA /* WordInfoParsingFormsListView.swift */; };
+		B870605A2936773D00AC21EA /* ParsingFormsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87060592936773D00AC21EA /* ParsingFormsListView.swift */; };
+		B870605C293678C500AC21EA /* ParsingFormDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B870605B293678C400AC21EA /* ParsingFormDetailView.swift */; };
+		B870605E29367C5300AC21EA /* ParsingFormInfoHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B870605D29367C5300AC21EA /* ParsingFormInfoHeader.swift */; };
+		B87060602936A0EA00AC21EA /* SearchVocabWordsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B870605F2936A0EA00AC21EA /* SearchVocabWordsView.swift */; };
 		B899887E28FC94F000F00E0B /* WordInfoRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899887D28FC94F000F00E0B /* WordInfoRow.swift */; };
 		B899888028FCBCF100F00E0B /* StudySession+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899887F28FCBCF100F00E0B /* StudySession+Extensions.swift */; };
 		B899888228FD1A5100F00E0B /* NewWordsLearnedTodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899888128FD1A5100F00E0B /* NewWordsLearnedTodayView.swift */; };
@@ -176,7 +185,7 @@
 		B8124D7428FA0EF10053057C /* ParadigmDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParadigmDetailView.swift; sourceTree = "<group>"; };
 		B8124D7828FA0F120053057C /* HebrewConcepts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HebrewConcepts.swift; sourceTree = "<group>"; };
 		B8124D7C28FA0F990053057C /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
-		B8124D7E28FA30900053057C /* WordInPassageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordInPassageView.swift; sourceTree = "<group>"; };
+		B8124D7E28FA30900053057C /* WordInstancePassageDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordInstancePassageDetailsView.swift; sourceTree = "<group>"; };
 		B8124D8028FB285D0053057C /* BibleRange+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BibleRange+Extensions.swift"; sourceTree = "<group>"; };
 		B8124D8228FB2AF90053057C /* NavHeaderTitleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavHeaderTitleDetailView.swift; sourceTree = "<group>"; };
 		B8124D8428FB366F0053057C /* DueWordsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DueWordsView.swift; sourceTree = "<group>"; };
@@ -205,6 +214,15 @@
 		B87060492932DB9200AC21EA /* VocabNotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabNotificationsView.swift; sourceTree = "<group>"; };
 		B870604B2933238A00AC21EA /* Notification+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extensions.swift"; sourceTree = "<group>"; };
 		B870604D293594A900AC21EA /* ParsingList+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ParsingList+Extensions.swift"; sourceTree = "<group>"; };
+		B870604F2935E30A00AC21EA /* VocabWordListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabWordListRow.swift; sourceTree = "<group>"; };
+		B87060512935E3A400AC21EA /* LabelButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelButton.swift; sourceTree = "<group>"; };
+		B87060532935E4DA00AC21EA /* ParsingFormListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsingFormListRow.swift; sourceTree = "<group>"; };
+		B87060552935E68700AC21EA /* WordInstancePassageListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordInstancePassageListRow.swift; sourceTree = "<group>"; };
+		B87060572936699B00AC21EA /* WordInfoParsingFormsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordInfoParsingFormsListView.swift; sourceTree = "<group>"; };
+		B87060592936773D00AC21EA /* ParsingFormsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsingFormsListView.swift; sourceTree = "<group>"; };
+		B870605B293678C400AC21EA /* ParsingFormDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsingFormDetailView.swift; sourceTree = "<group>"; };
+		B870605D29367C5300AC21EA /* ParsingFormInfoHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsingFormInfoHeader.swift; sourceTree = "<group>"; };
+		B870605F2936A0EA00AC21EA /* SearchVocabWordsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVocabWordsView.swift; sourceTree = "<group>"; };
 		B899887D28FC94F000F00E0B /* WordInfoRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordInfoRow.swift; sourceTree = "<group>"; };
 		B899887F28FCBCF100F00E0B /* StudySession+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StudySession+Extensions.swift"; sourceTree = "<group>"; };
 		B899888128FD1A5100F00E0B /* NewWordsLearnedTodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordsLearnedTodayView.swift; sourceTree = "<group>"; };
@@ -332,6 +350,9 @@
 				B89CB56E290AEC1E0002FEF8 /* AppShadow.swift */,
 				B89CB572290B09070002FEF8 /* DataIsBuildingCard.swift */,
 				B870602F292F4C9A00AC21EA /* ChartViews.swift */,
+				B870604F2935E30A00AC21EA /* VocabWordListRow.swift */,
+				B87060512935E3A400AC21EA /* LabelButton.swift */,
+				B87060552935E68700AC21EA /* WordInstancePassageListRow.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -345,7 +366,7 @@
 				B8124D6128F958830053057C /* VocabWordDefinitionView.swift */,
 				B8DD2E3E28F93CDD00AC9492 /* WordInfoDetailsView.swift */,
 				B8DD2E3F28F93CDD00AC9492 /* BuildVocabListView.swift */,
-				B8124D7E28FA30900053057C /* WordInPassageView.swift */,
+				B8124D7E28FA30900053057C /* WordInstancePassageDetailsView.swift */,
 				B8124D8428FB366F0053057C /* DueWordsView.swift */,
 				B899888128FD1A5100F00E0B /* NewWordsLearnedTodayView.swift */,
 				B8A210EB29007CCD00BDF272 /* DefaultVocabListSelectorView.swift */,
@@ -354,6 +375,7 @@
 				B82D5BB52911AF0F00474D61 /* ImportCSVView.swift */,
 				B87060472932DB1200AC21EA /* VocabSettingsView.swift */,
 				B87060492932DB9200AC21EA /* VocabNotificationsView.swift */,
+				B870605F2936A0EA00AC21EA /* SearchVocabWordsView.swift */,
 			);
 			path = Vocab;
 			sourceTree = "<group>";
@@ -402,6 +424,11 @@
 				B8A210FB2901E38C00BDF272 /* ParsingListSettingsView.swift */,
 				B8A210FD2901E48A00BDF272 /* ParsingListSessionsView.swift */,
 				B8A210FF2902086B00BDF272 /* AllWordsParsedTodayView.swift */,
+				B87060572936699B00AC21EA /* WordInfoParsingFormsListView.swift */,
+				B87060592936773D00AC21EA /* ParsingFormsListView.swift */,
+				B87060532935E4DA00AC21EA /* ParsingFormListRow.swift */,
+				B870605B293678C400AC21EA /* ParsingFormDetailView.swift */,
+				B870605D29367C5300AC21EA /* ParsingFormInfoHeader.swift */,
 			);
 			path = Parsing;
 			sourceTree = "<group>";
@@ -748,6 +775,7 @@
 				B8DD2E7528F93CDF00AC9492 /* VocabListsView.swift in Sources */,
 				B8124D5E28F9446C0053057C /* Time+Extensions.swift in Sources */,
 				B8E2FB3C2905176400C17F75 /* Text+Extensions.swift in Sources */,
+				B87060562935E68700AC21EA /* WordInstancePassageListRow.swift in Sources */,
 				B870604C2933238A00AC21EA /* Notification+Extensions.swift in Sources */,
 				B8124D6228F958830053057C /* VocabWordDefinitionView.swift in Sources */,
 				B8124D5A28F944110053057C /* StudyVocabWordsView.swift in Sources */,
@@ -764,7 +792,9 @@
 				B899887E28FC94F000F00E0B /* WordInfoRow.swift in Sources */,
 				B8A210FE2901E48A00BDF272 /* ParsingListSessionsView.swift in Sources */,
 				B8124D6628F9BDB90053057C /* Codables.swift in Sources */,
+				B870605A2936773D00AC21EA /* ParsingFormsListView.swift in Sources */,
 				B8E2FB4529072D4C00C17F75 /* CustomWordListBuilderView.swift in Sources */,
+				B87060542935E4DA00AC21EA /* ParsingFormListRow.swift in Sources */,
 				B8124D8128FB285D0053057C /* BibleRange+Extensions.swift in Sources */,
 				B8DD2E6E28F93CDF00AC9492 /* VocabListBuilder.swift in Sources */,
 				B8124D7028F9FF5E0053057C /* Date+Extensions.swift in Sources */,
@@ -792,13 +822,15 @@
 				B8A210EA28FF5C3A00BDF272 /* BuildParsingListView.swift in Sources */,
 				B89CB5562909F8880002FEF8 /* LiveActivityManager.swift in Sources */,
 				B8A210E228FE6DB100BDF272 /* WordDetailsView.swift in Sources */,
+				B87060582936699B00AC21EA /* WordInfoParsingFormsListView.swift in Sources */,
 				B8124D7728FA0EF10053057C /* ParadigmDetailView.swift in Sources */,
 				B870604629303EAA00AC21EA /* StudyActivityView.swift in Sources */,
 				B8124D7628FA0EF10053057C /* ParadigmsViews.swift in Sources */,
-				B8124D7F28FA30900053057C /* WordInPassageView.swift in Sources */,
+				B8124D7F28FA30900053057C /* WordInstancePassageDetailsView.swift in Sources */,
 				B8124D6C28F9D05A0053057C /* TextbookSelectorView.swift in Sources */,
 				B8A210FA2901D8B100BDF272 /* ParsingSessionEntryRow.swift in Sources */,
 				B899888C28FDB32D00F00E0B /* ReadPassageView.swift in Sources */,
+				B87060602936A0EA00AC21EA /* SearchVocabWordsView.swift in Sources */,
 				B899889028FE4D1900F00E0B /* DesignConstants.swift in Sources */,
 				B899888828FDAFE100F00E0B /* DataDependentViewModel.swift in Sources */,
 				B8E2FB3E29065D1D00C17F75 /* VocabWordIntervalStatsView.swift in Sources */,
@@ -820,12 +852,16 @@
 				B8706030292F4C9A00AC21EA /* ChartViews.swift in Sources */,
 				B8E2FB412906694B00C17F75 /* MoreStatsView.swift in Sources */,
 				B870604A2932DB9200AC21EA /* VocabNotificationsView.swift in Sources */,
+				B87060522935E3A400AC21EA /* LabelButton.swift in Sources */,
 				B8124D7D28FA0F990053057C /* HomeView.swift in Sources */,
 				B8A210F82901D80800BDF272 /* ParsingSessionReportView.swift in Sources */,
+				B870605E29367C5300AC21EA /* ParsingFormInfoHeader.swift in Sources */,
 				B8DD2E6328F93CDF00AC9492 /* GreekCodeables.swift in Sources */,
+				B870605C293678C500AC21EA /* ParsingFormDetailView.swift in Sources */,
 				B89CB5532909E4E30002FEF8 /* StudySessionAnswerType.swift in Sources */,
 				B8DD2E1728F93CB300AC9492 /* BibleWords_iOS.xcdatamodeld in Sources */,
 				B83875EF2909BEC6002682FE /* Widget-AppOnly.swift in Sources */,
+				B87060502935E30A00AC21EA /* VocabWordListRow.swift in Sources */,
 				B8DD2E7428F93CDF00AC9492 /* BuildVocabListView.swift in Sources */,
 				B8A210EC29007CCD00BDF272 /* DefaultVocabListSelectorView.swift in Sources */,
 				B8DD2E0B28F93CB100AC9492 /* BibleWords_iOSApp.swift in Sources */,
