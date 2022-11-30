@@ -44,8 +44,8 @@ struct StudyVocabWordsView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                Color(uiColor: .secondarySystemBackground)
-                    .ignoresSafeArea()
+//                Color(uiColor: .secondarySystemBackground)
+//                    .ignoresSafeArea()
                 VStack {
                     if verticalSizeClass == .regular && horizontalSizeClass == .compact {
                         CompactWidthView()
@@ -510,7 +510,7 @@ extension StudyVocabWordsView {
                 .lineLimit(1)
                 .frame(maxWidth: .infinity, maxHeight: 225)
                 .padding(.horizontal)
-                .background(Color(UIColor.systemBackground))
+                .background(Color(uiColor: .secondarySystemBackground))
                 .foregroundColor(Color(uiColor: .label))
                 .cornerRadius(Design.defaultCornerRadius)
             HStack {
@@ -565,11 +565,11 @@ extension StudyVocabWordsView {
         ZStack {
             Text(displayDef)
                 .font(.system(size: 32))
-                .minimumScaleFactor(0.6)
-                .padding(.top, 8)
+                .minimumScaleFactor(0.3)
+                .padding(8)
                 .frame(maxWidth: .infinity, maxHeight: 225)
                 .padding(.horizontal)
-                .background(Color(UIColor.systemBackground))
+                .background(Color(uiColor: .secondarySystemBackground))
                 .foregroundColor(Color(uiColor: .label))
                 .cornerRadius(Design.defaultCornerRadius)
             if displayMode == .lemmaGloss || displayMode == .learnWord {

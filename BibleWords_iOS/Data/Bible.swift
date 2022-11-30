@@ -69,6 +69,7 @@ struct Bible {
                     "definition": word.gloss as AnyObject,
                     "chapter": word.chap as AnyObject,
                     "usage": "" as AnyObject,
+                    "xlit": "" as AnyObject,
                     "instances":[] as AnyObject
                 ]
                 if lex[id] == nil {
@@ -733,41 +734,6 @@ extension Bible {
 }
 
 extension Bible {
-//    struct Greek {
-//        static var main = Greek()
-//        var references = References([:])
-//        var words = Words()
-//        struct Words {
-//            private var dict: [String:[String:[String:AnyObject]]] = [:]
-//
-//            init(dict: [String:[String:[String:AnyObject]]] = [:]) {
-//                self.dict = dict
-//            }
-//
-//            func word(for strongID: String, source: String = "dc86985c-3dd5-11ed-a92f-4a45421fd684") -> WordInfo {
-//                guard
-//                    let wordsForSource = self.dict[source],
-//                    let wordDict = wordsForSource[strongID]
-//                else {
-//                    return .init([:])
-//                }
-//
-//                return .init(wordDict)
-//            }
-//        }
-//
-//        struct References {
-//            var dict: [String: [String:[String:[[String:AnyObject]]]]] = [:]
-//            init(_ dict: [String: [String:[String:[[String:AnyObject]]]]]) {
-//                self.dict = dict
-//            }
-//
-//            func instances(for book: Bible.Book, chapter: Int, verse: String) -> [WordInstance] {
-//                let arr = dict["\(book.rawValue)"]!["\(chapter)"]![verse] ?? []
-//                return arr.compactMap { WordInstance(dict: $0) }
-//            }
-//        }
-//    }
 }
 
 extension String {
