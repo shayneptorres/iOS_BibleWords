@@ -68,6 +68,7 @@ struct SearchVocabWordsView: View {
                 .filter {
                     $0.definition.lowercased().contains(self.searchText.lowercased()) ||
                     $0.id.lowercased().contains(self.searchText.lowercased()) ||
+                    $0.xlit.lowercased().contains(self.searchText.lowercased()) ||
                     $0.lemma.strippingAccents.lowercased().contains(self.searchText.strippingAccents.lowercased())
                 }
             results += Bible.main.hebrewLexicon.words()

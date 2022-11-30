@@ -176,6 +176,7 @@ struct Bible {
         var definition: String
         var usage: String
         var instances: [WordInstance]
+        var xlit: String
         // Textbook import only
         var chapter: String
 
@@ -185,6 +186,7 @@ struct Bible {
             self.definition = dict["definition"] as? String  ?? ""
             self.usage = dict["usage"] as? String  ?? ""
             self.chapter = dict["chapter"] as? String  ?? "-1"
+            self.xlit = dict["xlit"] as? String  ?? ""
             let instancesArr = dict["instances"] as? [[String:AnyObject]] ?? []
             instances = instancesArr.map { WordInstance(dict: $0) }
         }
@@ -195,6 +197,7 @@ struct Bible {
             self.definition = definition
             self.usage = ""
             self.chapter = "-1"
+            self.xlit = ""
             self.instances = []
         }
         

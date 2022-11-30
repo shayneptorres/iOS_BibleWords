@@ -62,6 +62,7 @@
 		B870605C293678C500AC21EA /* ParsingFormDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B870605B293678C400AC21EA /* ParsingFormDetailView.swift */; };
 		B870605E29367C5300AC21EA /* ParsingFormInfoHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B870605D29367C5300AC21EA /* ParsingFormInfoHeader.swift */; };
 		B87060602936A0EA00AC21EA /* SearchVocabWordsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B870605F2936A0EA00AC21EA /* SearchVocabWordsView.swift */; };
+		B87060622936EBD900AC21EA /* greek-dict.json in Resources */ = {isa = PBXBuildFile; fileRef = B87060612936EBD800AC21EA /* greek-dict.json */; };
 		B899887E28FC94F000F00E0B /* WordInfoRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899887D28FC94F000F00E0B /* WordInfoRow.swift */; };
 		B899888028FCBCF100F00E0B /* StudySession+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899887F28FCBCF100F00E0B /* StudySession+Extensions.swift */; };
 		B899888228FD1A5100F00E0B /* NewWordsLearnedTodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899888128FD1A5100F00E0B /* NewWordsLearnedTodayView.swift */; };
@@ -110,7 +111,6 @@
 		B8DD2E6428F93CDF00AC9492 /* BibleRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DD2E2C28F93CDD00AC9492 /* BibleRange.swift */; };
 		B8DD2E6528F93CDF00AC9492 /* HebrewParsingDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DD2E2D28F93CDD00AC9492 /* HebrewParsingDictionary.swift */; };
 		B8DD2E6728F93CDF00AC9492 /* greek-bible.json in Resources */ = {isa = PBXBuildFile; fileRef = B8DD2E3028F93CDD00AC9492 /* greek-bible.json */; };
-		B8DD2E6928F93CDF00AC9492 /* greek-dict.json in Resources */ = {isa = PBXBuildFile; fileRef = B8DD2E3228F93CDD00AC9492 /* greek-dict.json */; };
 		B8DD2E6A28F93CDF00AC9492 /* HebrewCodables.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DD2E3328F93CDD00AC9492 /* HebrewCodables.swift */; };
 		B8DD2E6B28F93CDF00AC9492 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DD2E3428F93CDD00AC9492 /* API.swift */; };
 		B8DD2E6D28F93CDF00AC9492 /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DD2E3728F93CDD00AC9492 /* Int+Extensions.swift */; };
@@ -223,6 +223,7 @@
 		B870605B293678C400AC21EA /* ParsingFormDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsingFormDetailView.swift; sourceTree = "<group>"; };
 		B870605D29367C5300AC21EA /* ParsingFormInfoHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsingFormInfoHeader.swift; sourceTree = "<group>"; };
 		B870605F2936A0EA00AC21EA /* SearchVocabWordsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVocabWordsView.swift; sourceTree = "<group>"; };
+		B87060612936EBD800AC21EA /* greek-dict.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "greek-dict.json"; sourceTree = "<group>"; };
 		B899887D28FC94F000F00E0B /* WordInfoRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordInfoRow.swift; sourceTree = "<group>"; };
 		B899887F28FCBCF100F00E0B /* StudySession+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StudySession+Extensions.swift"; sourceTree = "<group>"; };
 		B899888128FD1A5100F00E0B /* NewWordsLearnedTodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordsLearnedTodayView.swift; sourceTree = "<group>"; };
@@ -270,7 +271,6 @@
 		B8DD2E2C28F93CDD00AC9492 /* BibleRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BibleRange.swift; sourceTree = "<group>"; };
 		B8DD2E2D28F93CDD00AC9492 /* HebrewParsingDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HebrewParsingDictionary.swift; sourceTree = "<group>"; };
 		B8DD2E3028F93CDD00AC9492 /* greek-bible.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "greek-bible.json"; sourceTree = "<group>"; };
-		B8DD2E3228F93CDD00AC9492 /* greek-dict.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "greek-dict.json"; sourceTree = "<group>"; };
 		B8DD2E3328F93CDD00AC9492 /* HebrewCodables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HebrewCodables.swift; sourceTree = "<group>"; };
 		B8DD2E3428F93CDD00AC9492 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		B8DD2E3728F93CDD00AC9492 /* Int+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
@@ -524,8 +524,8 @@
 			children = (
 				B8A210EF2901953400BDF272 /* hebrew-dict.json */,
 				B8A210DF28FE688900BDF272 /* hebrew-bible.json */,
+				B87060612936EBD800AC21EA /* greek-dict.json */,
 				B8DD2E3028F93CDD00AC9492 /* greek-bible.json */,
-				B8DD2E3228F93CDD00AC9492 /* greek-dict.json */,
 				B8124D6D28F9EB7D0053057C /* garret-hebrew-1-21.json */,
 				B8124D6728F9BFDD0053057C /* mgbh-garret-vocab-1-21.json */,
 			);
@@ -734,8 +734,8 @@
 				B8DD2E7628F93CDF00AC9492 /* EzraSR.ttf in Resources */,
 				B8A210F02901953400BDF272 /* hebrew-dict.json in Resources */,
 				B8DD2E7728F93CDF00AC9492 /* TekniaGreek.ttf in Resources */,
+				B87060622936EBD900AC21EA /* greek-dict.json in Resources */,
 				B8DD2E6728F93CDF00AC9492 /* greek-bible.json in Resources */,
-				B8DD2E6928F93CDF00AC9492 /* greek-dict.json in Resources */,
 				B8DD2E1228F93CB300AC9492 /* Preview Assets.xcassets in Resources */,
 				B8DD2E0F28F93CB300AC9492 /* Assets.xcassets in Resources */,
 			);
