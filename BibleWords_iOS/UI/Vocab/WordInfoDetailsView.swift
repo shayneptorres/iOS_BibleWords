@@ -191,7 +191,7 @@ extension WordInfoDetailsView {
                     +
                     Text(" forms")
                 }, icon: {
-                    Image(systemName: "eye")
+                    Image(systemName: "filemenu.and.selection")
                 })
             })
             NavigationLink(destination: {

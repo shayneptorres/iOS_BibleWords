@@ -276,7 +276,7 @@ extension StudyVocabWordsView {
     
     func onSkip() {
         CoreDataManager.transaction(context: managedObjectContext) {
-            currentWord?.dueDate = Date().addingTimeInterval(TimeInterval(1.minutes))
+            currentWord?.dueDate = Date().addingTimeInterval(TimeInterval(5.minutes))
             updateCurrentWord()
         }
     }
@@ -547,14 +547,21 @@ extension StudyVocabWordsView {
                         Button(action: {
                             onPrev()
                         }, label: {
-                            Image(systemName: "arrow.uturn.backward.circle")
+                            Image(systemName: "gobackward")
                                 .font(.title2)
-                            Text("Previous word")
-                                .font(.subheadline)
                         })
                         .padding()
                     }
                     Spacer()
+                    if displayMode != .learnWord {
+                        Button(action: {
+                            onSkip()
+                        }, label: {
+                            Image(systemName: "goforward")
+                                .font(.title2)
+                        })
+                        .padding()                        
+                    }
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: 225)

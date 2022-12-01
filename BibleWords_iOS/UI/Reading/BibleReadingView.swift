@@ -23,6 +23,9 @@ struct BibleReadingView: View {
     @State var fontSize: CGFloat = 45
     @State var viewColor: Color = .appBackground
     
+    let bookGridLayout: [GridItem] = [.init(.flexible()), .init(.flexible()), .init(.flexible())]
+    let verseGridLayout: [GridItem] = [.init(.flexible()), .init(.flexible()), .init(.flexible()), .init(.flexible()), .init(.flexible())]
+    
     private let btnFontSize: CGFloat = 40
     
     var body: some View {
@@ -31,7 +34,26 @@ struct BibleReadingView: View {
                 DataLoadingRow()
             } else {
                 ZStack {
-                    ReadPassageView(passage: $passage, selectedWord: $selectedWord, fontSize: $fontSize, buffer: 50)
+                    ReadPassageView(passage: $passage, selectedWord: $selectedWord, fontSize: $fontSize, buffer: 75)
+                    VStack {
+                        Spacer()
+                        HStack {
+                            Spacer()
+                            Button(action: {
+                                showPassageSelector = true
+                            }, label: {
+                                ZStack {
+                                    Circle()
+                                        .fill(Color.accentColor)
+                                        .frame(width: 60, height: 60)
+                                    Image(systemName: "books.vertical")
+                                        .font(.title)
+                                        .foregroundColor(.white)
+                                }
+                            })
+                            .padding([.trailing, .bottom])
+                        }
+                    }
                     VStack {
                         Spacer()
                         if showWordDetail {
@@ -44,7 +66,85 @@ struct BibleReadingView: View {
                                 })
                             .frame(maxHeight: 400)
                         }
-                        PassageNavigationBar()
+                    }
+                    if showPassageSelector {
+                        ZStack {
+                            Color
+                                .black
+                                .opacity(0.8)
+                                .ignoresSafeArea()
+                                .onTapGesture {
+                                    showPassageSelector = false
+                                }
+                            VStack {
+                                Spacer()
+                                VStack {
+                                    HStack {
+                                        Spacer()
+                                        Button(action: {
+                                            showPassageSelector = false
+                                        }, label: {
+                                            Image(systemName: "xmark.circle")
+                                                .font(.title3)
+                                                .foregroundColor(.accentColor)
+                                        })
+                                    }
+                                    HStack {
+                                        VStack {
+                                            Text("Select Book")
+                                            ScrollView {
+                                                LazyVGrid(columns: bookGridLayout, spacing: 4) {
+                                                    ForEach(Bible.Book.allCases, id: \.rawValue) { book in
+                                                        VStack {
+                                                            Text(book.shortTitle)
+                                                                .font(.footnote)
+                                                                .frame(maxWidth: .infinity, minHeight: 30)
+                                                                .padding(12)
+                                                                .background(searchBook == book ? Color.accentColor : Color(UIColor.quaternaryLabel))
+                                                                .cornerRadius(Design.defaultCornerRadius)
+                                                        }
+                                                        .onTapGesture {
+                                                            searchBook = book
+                                                        }
+                                                    }
+                                                }
+                                                .onChange(of: self.searchBook) { value in
+                                                    setPassage()
+                                                }
+                                            }
+                                        }
+                                        Divider()
+                                        VStack {
+                                            Text("Select Chapter")
+                                            ScrollView {
+                                                LazyVGrid(columns: bookGridLayout, spacing: 4) {
+                                                    ForEach(1...chapCount, id: \.self) { chp in
+                                                        Text("\(chp)")
+                                                            .font(.subheadline)
+                                                            .frame(maxWidth: .infinity, minHeight: 30)
+                                                            .padding(12)
+                                                            .background(searchChapter == chp ? Color.accentColor : Color(UIColor.quaternaryLabel))
+                                                            .cornerRadius(Design.defaultCornerRadius)
+                                                            .onTapGesture {
+                                                                searchChapter = chp
+                                                            }
+                                                    }
+                                                }
+                                                .onChange(of: self.searchChapter) { value in
+                                                    setPassage()
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                .padding(8)
+                                .frame(maxWidth: .infinity, maxHeight: 400)
+                                .padding(.horizontal, 4)
+                                .background(Color(uiColor: .secondarySystemBackground))
+                                .foregroundColor(Color(uiColor: .label))
+                                .cornerRadius(Design.defaultCornerRadius)
+                            }
+                        }
                     }
                 }
                 .gesture(
@@ -118,13 +218,17 @@ struct BibleReadingView: View {
                 Button(action: {
                     showViewSettingsView = true
                 }, label: {
-                    Image(systemName: "eye")
+                    Image(systemName: "gearshape.fill")
                 })
             }
             ToolbarItemGroup(placement: .principal) {
-                Text("\(passage.book.title) \(passage.chapter)")
-                    .font(.title2)
-                    .bold()
+                Button(action: {
+                    showPassageSelector.toggle()
+                }, label: {
+                    Text("\(passage.book.title) \(passage.chapter)")
+                        .font(.title3)
+                        .bold()
+                })
             }
         }
         .onAppear {
@@ -208,7 +312,6 @@ extension BibleReadingView {
             searchChapter = 1
         }
         passage = .init(book: searchBook, chapter: searchChapter, verse: searchVerse)
-        showPassageSelector = false
     }
     
     func onPrev() {
