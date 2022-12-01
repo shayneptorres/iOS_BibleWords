@@ -127,7 +127,7 @@ struct PracticeParsingView: View {
                                         Text("Surface Form:")
                                             .font(.subheadline)
                                             .foregroundColor(.init(uiColor: .secondaryLabel))
-                                        Text(instance.textSurface)
+                                        Text(instance.textSurface.lowercased())
                                             .font(instance.language.meduimBibleFont)
                                     }
                                     VStack(alignment: .leading, spacing: 2) {

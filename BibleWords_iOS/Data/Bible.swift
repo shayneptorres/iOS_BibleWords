@@ -151,7 +151,7 @@ struct Bible {
                         // if verse is -1, get all verses
                         var versesArr = Bible.main.references.values[book-1][chapter-1]
                         for i in 0..<versesArr.count {
-                            versesArr[i].insert(["id":"verse-num","surface":"\(i+1)"] as [String:AnyObject], at: 0)
+                            versesArr[i].insert(["id":"verse-num","surface":"\(i+1)", "index":-1] as [String:AnyObject], at: 0)
                         }
                         
                         let words = versesArr.flatMap { $0 }.map { WordInstance(dict: $0) }
@@ -310,7 +310,7 @@ struct Bible {
             self.id = UUID().uuidString
             self.strongId = dict["id"] as? String ?? UUID().uuidString
             self.lemma = dict["lemma"] as? String ?? ""
-            self.index = dict["index"] as? Int ?? 0
+            self.index = dict["index"] as? Int ?? -1
             self.surfaceComponents = dict["surface"] as? String ?? ""
             self.rawSurface = dict["rawSurface"] as? String ?? ""
             self.parsing = dict["parsing"] as? String ?? ""
@@ -318,7 +318,7 @@ struct Bible {
         }
         
         func hash(into hasher: inout Hasher) {
-            hasher.combine(textSurface)
+            hasher.combine(textSurface.lowercased())
         }
 
         var bibleBook: Bible.Book {

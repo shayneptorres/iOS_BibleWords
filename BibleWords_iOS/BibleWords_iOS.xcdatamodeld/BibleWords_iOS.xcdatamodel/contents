@@ -26,6 +26,14 @@
         <relationship name="range" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VocabWordRange" inverseName="parsingList" inverseEntity="VocabWordRange"/>
         <relationship name="studySessions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="StudySession" inverseName="parsingList" inverseEntity="StudySession"/>
     </entity>
+    <entity name="PassageBookmark" representedClassName="PassageBookmark" syncable="YES" codeGenerationType="class">
+        <attribute name="bookInt" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="chapterInt" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="detail" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="verseInt" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
     <entity name="PinnedItem" representedClassName="PinnedItem" syncable="YES" codeGenerationType="class">
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="String"/>

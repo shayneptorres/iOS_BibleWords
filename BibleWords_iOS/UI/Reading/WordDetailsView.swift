@@ -22,12 +22,12 @@ struct WordDetailsView: View {
                         .bold()
                     Button(action: onInfo, label: {
                         Image(systemName: "info.circle")
-                            .font(.system(size: 16))
+                            .font(.title3)
                     })
                     Spacer()
                     Button(action: onClose, label: {
                         Image(systemName: "xmark.circle")
-                            .font(.system(size: 16))
+                            .font(.title3)
                     })
                 }
                 Divider()
@@ -43,7 +43,7 @@ struct WordDetailsView: View {
                             }
                             .frame(width: 110)
                             VStack {
-                                Text(wordInstance.surface)
+                                Text(wordInstance.surface.lowercased())
                                     .font(wordInstance.language == .greek ? .bible24 : .bible32)
                             }
                         }

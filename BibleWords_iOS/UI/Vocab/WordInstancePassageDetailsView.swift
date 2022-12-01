@@ -33,7 +33,7 @@ struct WordInstancePassageDetailsView: View {
                     }
                     .frame(width: 110)
                     VStack {
-                        Text(instance.textSurface)
+                        Text(instance.textSurface.lowercased())
                             .font(instance.language == .greek ? .bible24 : .bible32)
                     }
                 }
@@ -118,7 +118,7 @@ struct WordInstancePassageDetailsView: View {
         }
         .fullScreenCover(isPresented: $showBibleReader) {
             NavigationView {
-                BibleReadingView(passage: .init(book: instance.bibleBook, chapter: instance.chapter, verse: -1))
+                BibleReadingView(passage: .constant(.init(book: instance.bibleBook, chapter: instance.chapter, verse: -1)))
             }
         }
         .navigationTitle(instance.prettyRefStr)

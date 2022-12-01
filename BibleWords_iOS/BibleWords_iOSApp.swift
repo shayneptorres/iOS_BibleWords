@@ -14,7 +14,6 @@ struct BibleWords_iOSApp: App {
     
     let persistenceController = PersistenceController.shared
 
-    @State var showBibleReader = false
     
     var body: some Scene {
         WindowGroup {
@@ -26,29 +25,21 @@ struct BibleWords_iOSApp: App {
                 NavigationView {
                     ParsingListsView()
                 }
+                .navigationViewStyle(.stack)
                 .tabItem {
                     Label("Parse", systemImage: "filemenu.and.selection")
                 }
                 NavigationView {
                     ConceptsView()
                 }
+                .navigationViewStyle(.stack)
                 .tabItem {
                     Label("Learn", systemImage: "brain.head.profile")
                 }
                 NavigationView {
-                    List {
-                        Button(action: {
-                            showBibleReader = true
-                        }, label: {
-                            Label("Bible", systemImage: "books.vertical")
-                        })
-                    }
-                    .fullScreenCover(isPresented: $showBibleReader) {
-                        NavigationView {
-                            BibleReadingView()
-                        }
-                    }
+                    BibleReadingMainView()
                 }
+                .navigationViewStyle(.stack)
                 .tabItem {
                     Label("Read", systemImage: "book")
                 }

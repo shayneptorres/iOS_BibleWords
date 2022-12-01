@@ -72,6 +72,11 @@ struct GreekPassageTextView: View {
     var buffer: CGFloat = 0
     @State private var size: CGSize = .zero
     
+    func shouldHighlightWord(at i: Int) -> Bool {
+        return selectedWord.index == self.words[i].index
+        && self.words[i].strongId != "verse-num"
+    }
+    
     var body : some View {
         var width = CGFloat.zero
         var height = CGFloat.zero
@@ -80,7 +85,7 @@ struct GreekPassageTextView: View {
             GeometryReader { g in
                 ZStack(alignment: .topLeading) {
                     ForEach(0..<self.words.count, id: \.self) { i in
-                        Text(self.words[i].surface + " ")
+                        Text((self.words[i].surface + " ").lowercased())
                             .font(self.words[i].strongId == "verse-num" ? .system(size: 20) : .bible(size: fontSize * 0.75))
                             .padding([.horizontal, .vertical], 4)
                             .onTapGesture {
@@ -88,12 +93,12 @@ struct GreekPassageTextView: View {
                                     selectedWord = self.words[i]
                                 }
                             }
-                            .foregroundColor(selectedWord == self.words[i] ? .accentColor : Color(uiColor: .label))
+                            .foregroundColor(shouldHighlightWord(at: i) ? .accentColor : Color(uiColor: .label))
                             .alignmentGuide(.leading, computeValue: { d in
                                 if (abs(width - d.width) > g.size.width)
                                 {
                                     width = 0
-                                    height -= d.height
+                                    height -= (fontSize + 16)
                                 }
                                 let result = width
                                 if i < self.words.count-1 {
@@ -126,6 +131,11 @@ struct HebrewPassageTextView: View {
     var buffer: CGFloat = 0
     @State private var size: CGSize = .zero
     
+    func shouldHighlightWord(at i: Int) -> Bool {
+        return selectedWord.index == self.words[i].index
+        && self.words[i].strongId != "verse-num"
+    }
+    
     var body : some View {
         var height = CGFloat.zero
         var rowWidths: [CGFloat] = [0]
@@ -135,25 +145,24 @@ struct HebrewPassageTextView: View {
                 ZStack(alignment: .topTrailing) {
                     ForEach(0..<self.words.count, id: \.self) { i in
                         Text(self.words[i].surface + " ")
-                            .font(self.words[i].strongId == "verse-num" ? .system(size: 30) : .bible(size: fontSize))
+                            .font(self.words[i].strongId == "verse-num" ? .system(size: 20) : .bible(size: fontSize))
                             .padding([.horizontal, .vertical], 4)
                             .onTapGesture {
                                 if self.words[i].strongId != "verse-num" {
                                     selectedWord = self.words[i]
                                 }
                             }
-                            .foregroundColor(selectedWord == self.words[i] ? .accentColor : Color(uiColor: .label))
+                            .foregroundColor(shouldHighlightWord(at: i) ? .accentColor : Color(uiColor: .label))
                             .alignmentGuide(.trailing, computeValue: { d in
                                 if (abs(rowWidths[rowWidths.count - 1] - d.width) > g.size.width)
                                 {
                                     rowWidths[rowWidths.count - 1] = 0
-                                    height -= d.height
+                                    height -= (fontSize + 16)
                                     rowWidths.append(0)
                                 }
-                                
-                                if self.words[i].strongId == "verse-num" {
+                                if self.words[i].strongId == "verse-num", rowWidths[rowWidths.count - 1] != 0 {
                                     rowWidths[rowWidths.count - 1] = 0
-                                    height -= (d.height + 16)
+                                    height -= (fontSize + 16)
                                     rowWidths.append(0)
                                 }
                                 let result = d[.trailing] - rowWidths[rowWidths.count - 1]

@@ -167,11 +167,11 @@ struct ListDetailView: View {
         .fullScreenCover(isPresented: $showReadingView) {
             if let firstRange = viewModel.list.rangesArr.first {
                 NavigationView {
-                    BibleReadingView(passage: .init(
+                    BibleReadingView(passage: .init(get: {.init(
                         book: Bible.Book(rawValue: firstRange.bookStart.toInt) ?? .genesis,
                         chapter: firstRange.chapStart.toInt,
                         verse: -1
-                    ))
+                    )}, set: { _ in}))
                 }
             }
         }

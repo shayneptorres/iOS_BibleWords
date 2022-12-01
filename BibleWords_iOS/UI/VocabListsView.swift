@@ -159,7 +159,7 @@ struct VocabListsView: View {
                 refreshDueWords()
                 setViews()
             }
-        }
+        }.navigationViewStyle(.stack)
     }
     
     func refreshDueWords() {

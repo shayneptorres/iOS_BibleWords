@@ -64,6 +64,9 @@
 		B87060602936A0EA00AC21EA /* SearchVocabWordsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B870605F2936A0EA00AC21EA /* SearchVocabWordsView.swift */; };
 		B87060622936EBD900AC21EA /* greek-dict.json in Resources */ = {isa = PBXBuildFile; fileRef = B87060612936EBD800AC21EA /* greek-dict.json */; };
 		B870606C29373D9600AC21EA /* hebrew-dict.json in Resources */ = {isa = PBXBuildFile; fileRef = B870606B29373D9600AC21EA /* hebrew-dict.json */; };
+		B870606E29389E8000AC21EA /* PassageBookmark+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B870606D29389E8000AC21EA /* PassageBookmark+Extensions.swift */; };
+		B8706070293939DA00AC21EA /* greek-bible.json in Resources */ = {isa = PBXBuildFile; fileRef = B870606F293939DA00AC21EA /* greek-bible.json */; };
+		B870607229393B6B00AC21EA /* hebrew-bible.json in Resources */ = {isa = PBXBuildFile; fileRef = B870607129393B6B00AC21EA /* hebrew-bible.json */; };
 		B899887E28FC94F000F00E0B /* WordInfoRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899887D28FC94F000F00E0B /* WordInfoRow.swift */; };
 		B899888028FCBCF100F00E0B /* StudySession+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899887F28FCBCF100F00E0B /* StudySession+Extensions.swift */; };
 		B899888228FD1A5100F00E0B /* NewWordsLearnedTodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B899888128FD1A5100F00E0B /* NewWordsLearnedTodayView.swift */; };
@@ -84,7 +87,6 @@
 		B89CB571290AED710002FEF8 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89CB570290AED710002FEF8 /* Activity.swift */; };
 		B89CB573290B09070002FEF8 /* DataIsBuildingCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89CB572290B09070002FEF8 /* DataIsBuildingCard.swift */; };
 		B89CB575290B1DC70002FEF8 /* PinnedItem+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89CB574290B1DC70002FEF8 /* PinnedItem+Extensions.swift */; };
-		B8A210E028FE688900BDF272 /* hebrew-bible.json in Resources */ = {isa = PBXBuildFile; fileRef = B8A210DF28FE688900BDF272 /* hebrew-bible.json */; };
 		B8A210E228FE6DB100BDF272 /* WordDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A210E128FE6DB100BDF272 /* WordDetailsView.swift */; };
 		B8A210E628FF553C00BDF272 /* ParsingListsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A210E528FF553C00BDF272 /* ParsingListsView.swift */; };
 		B8A210E828FF581E00BDF272 /* ParsingInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A210E728FF581D00BDF272 /* ParsingInfo.swift */; };
@@ -110,7 +112,6 @@
 		B8DD2E6328F93CDF00AC9492 /* GreekCodeables.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DD2E2B28F93CDD00AC9492 /* GreekCodeables.swift */; };
 		B8DD2E6428F93CDF00AC9492 /* BibleRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DD2E2C28F93CDD00AC9492 /* BibleRange.swift */; };
 		B8DD2E6528F93CDF00AC9492 /* HebrewParsingDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DD2E2D28F93CDD00AC9492 /* HebrewParsingDictionary.swift */; };
-		B8DD2E6728F93CDF00AC9492 /* greek-bible.json in Resources */ = {isa = PBXBuildFile; fileRef = B8DD2E3028F93CDD00AC9492 /* greek-bible.json */; };
 		B8DD2E6A28F93CDF00AC9492 /* HebrewCodables.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DD2E3328F93CDD00AC9492 /* HebrewCodables.swift */; };
 		B8DD2E6B28F93CDF00AC9492 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DD2E3428F93CDD00AC9492 /* API.swift */; };
 		B8DD2E6D28F93CDF00AC9492 /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DD2E3728F93CDD00AC9492 /* Int+Extensions.swift */; };
@@ -225,6 +226,9 @@
 		B870605F2936A0EA00AC21EA /* SearchVocabWordsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVocabWordsView.swift; sourceTree = "<group>"; };
 		B87060612936EBD800AC21EA /* greek-dict.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "greek-dict.json"; sourceTree = "<group>"; };
 		B870606B29373D9600AC21EA /* hebrew-dict.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "hebrew-dict.json"; sourceTree = "<group>"; };
+		B870606D29389E8000AC21EA /* PassageBookmark+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PassageBookmark+Extensions.swift"; sourceTree = "<group>"; };
+		B870606F293939DA00AC21EA /* greek-bible.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "greek-bible.json"; sourceTree = "<group>"; };
+		B870607129393B6B00AC21EA /* hebrew-bible.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "hebrew-bible.json"; sourceTree = "<group>"; };
 		B899887D28FC94F000F00E0B /* WordInfoRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordInfoRow.swift; sourceTree = "<group>"; };
 		B899887F28FCBCF100F00E0B /* StudySession+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StudySession+Extensions.swift"; sourceTree = "<group>"; };
 		B899888128FD1A5100F00E0B /* NewWordsLearnedTodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordsLearnedTodayView.swift; sourceTree = "<group>"; };
@@ -242,7 +246,6 @@
 		B89CB570290AED710002FEF8 /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
 		B89CB572290B09070002FEF8 /* DataIsBuildingCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataIsBuildingCard.swift; sourceTree = "<group>"; };
 		B89CB574290B1DC70002FEF8 /* PinnedItem+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PinnedItem+Extensions.swift"; sourceTree = "<group>"; };
-		B8A210DF28FE688900BDF272 /* hebrew-bible.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "hebrew-bible.json"; sourceTree = "<group>"; };
 		B8A210E128FE6DB100BDF272 /* WordDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordDetailsView.swift; sourceTree = "<group>"; };
 		B8A210E528FF553C00BDF272 /* ParsingListsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsingListsView.swift; sourceTree = "<group>"; };
 		B8A210E728FF581D00BDF272 /* ParsingInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParsingInfo.swift; sourceTree = "<group>"; };
@@ -270,7 +273,6 @@
 		B8DD2E2B28F93CDD00AC9492 /* GreekCodeables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GreekCodeables.swift; sourceTree = "<group>"; };
 		B8DD2E2C28F93CDD00AC9492 /* BibleRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BibleRange.swift; sourceTree = "<group>"; };
 		B8DD2E2D28F93CDD00AC9492 /* HebrewParsingDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HebrewParsingDictionary.swift; sourceTree = "<group>"; };
-		B8DD2E3028F93CDD00AC9492 /* greek-bible.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "greek-bible.json"; sourceTree = "<group>"; };
 		B8DD2E3328F93CDD00AC9492 /* HebrewCodables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HebrewCodables.swift; sourceTree = "<group>"; };
 		B8DD2E3428F93CDD00AC9492 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		B8DD2E3728F93CDD00AC9492 /* Int+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
@@ -523,9 +525,9 @@
 			isa = PBXGroup;
 			children = (
 				B870606B29373D9600AC21EA /* hebrew-dict.json */,
-				B8A210DF28FE688900BDF272 /* hebrew-bible.json */,
+				B870607129393B6B00AC21EA /* hebrew-bible.json */,
 				B87060612936EBD800AC21EA /* greek-dict.json */,
-				B8DD2E3028F93CDD00AC9492 /* greek-bible.json */,
+				B870606F293939DA00AC21EA /* greek-bible.json */,
 				B8124D6D28F9EB7D0053057C /* garret-hebrew-1-21.json */,
 				B8124D6728F9BFDD0053057C /* mgbh-garret-vocab-1-21.json */,
 			);
@@ -557,6 +559,7 @@
 				B8706028292F2A2900AC21EA /* VocabStudySession+Extensions.swift */,
 				B870604B2933238A00AC21EA /* Notification+Extensions.swift */,
 				B870604D293594A900AC21EA /* ParsingList+Extensions.swift */,
+				B870606D29389E8000AC21EA /* PassageBookmark+Extensions.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -729,13 +732,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				B8124D6E28F9EB7D0053057C /* garret-hebrew-1-21.json in Resources */,
-				B8A210E028FE688900BDF272 /* hebrew-bible.json in Resources */,
+				B870607229393B6B00AC21EA /* hebrew-bible.json in Resources */,
 				B8124D6828F9BFDD0053057C /* mgbh-garret-vocab-1-21.json in Resources */,
 				B8DD2E7628F93CDF00AC9492 /* EzraSR.ttf in Resources */,
 				B870606C29373D9600AC21EA /* hebrew-dict.json in Resources */,
+				B8706070293939DA00AC21EA /* greek-bible.json in Resources */,
 				B8DD2E7728F93CDF00AC9492 /* TekniaGreek.ttf in Resources */,
 				B87060622936EBD900AC21EA /* greek-dict.json in Resources */,
-				B8DD2E6728F93CDF00AC9492 /* greek-bible.json in Resources */,
 				B8DD2E1228F93CB300AC9492 /* Preview Assets.xcassets in Resources */,
 				B8DD2E0F28F93CB300AC9492 /* Assets.xcassets in Resources */,
 			);
@@ -853,6 +856,7 @@
 				B8E2FB412906694B00C17F75 /* MoreStatsView.swift in Sources */,
 				B870604A2932DB9200AC21EA /* VocabNotificationsView.swift in Sources */,
 				B87060522935E3A400AC21EA /* LabelButton.swift in Sources */,
+				B870606E29389E8000AC21EA /* PassageBookmark+Extensions.swift in Sources */,
 				B8124D7D28FA0F990053057C /* HomeView.swift in Sources */,
 				B8A210F82901D80800BDF272 /* ParsingSessionReportView.swift in Sources */,
 				B870605E29367C5300AC21EA /* ParsingFormInfoHeader.swift in Sources */,

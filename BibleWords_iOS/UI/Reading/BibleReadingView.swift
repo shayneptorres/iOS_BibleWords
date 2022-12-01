@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct BibleReadingView: View {
     @Environment(\.presentationMode) var presentationMode
-    @State var passage: Passage = .init(book: .psalms, chapter: 1, verse: -1)
+    @Environment(\.managedObjectContext) var context
+    @Binding var passage: Passage
     @ObservedObject var viewModel = DataDependentViewModel()
     @State var searchBook: Bible.Book = .psalms
     @State var searchChapter = 1
@@ -20,11 +22,16 @@ struct BibleReadingView: View {
     @State var showInstanceInfo = false
     @State var showViewSettingsView = false
     @State var selectedWord: Bible.WordInstance = .init(dict: [:])
+    @State var bookmarkedPassages: [PassageBookmark] = []
     @State var fontSize: CGFloat = 45
     @State var viewColor: Color = .appBackground
     
     let bookGridLayout: [GridItem] = [.init(.flexible()), .init(.flexible()), .init(.flexible())]
     let verseGridLayout: [GridItem] = [.init(.flexible()), .init(.flexible()), .init(.flexible()), .init(.flexible()), .init(.flexible())]
+    
+    var isCurrentPassageBookmarked: Bool {
+        self.bookmarkedPassages.map { $0.passage }.contains(passage)
+    }
     
     private let btnFontSize: CGFloat = 40
     
@@ -35,25 +42,6 @@ struct BibleReadingView: View {
             } else {
                 ZStack {
                     ReadPassageView(passage: $passage, selectedWord: $selectedWord, fontSize: $fontSize, buffer: 75)
-                    VStack {
-                        Spacer()
-                        HStack {
-                            Spacer()
-                            Button(action: {
-                                showPassageSelector = true
-                            }, label: {
-                                ZStack {
-                                    Circle()
-                                        .fill(Color.accentColor)
-                                        .frame(width: 60, height: 60)
-                                    Image(systemName: "books.vertical")
-                                        .font(.title)
-                                        .foregroundColor(.white)
-                                }
-                            })
-                            .padding([.trailing, .bottom])
-                        }
-                    }
                     VStack {
                         Spacer()
                         if showWordDetail {
@@ -101,6 +89,7 @@ struct BibleReadingView: View {
                                                                 .frame(maxWidth: .infinity, minHeight: 30)
                                                                 .padding(12)
                                                                 .background(searchBook == book ? Color.accentColor : Color(UIColor.quaternaryLabel))
+                                                                .foregroundColor(searchBook == book ? Color.white : Color(UIColor.label))
                                                                 .cornerRadius(Design.defaultCornerRadius)
                                                         }
                                                         .onTapGesture {
@@ -124,6 +113,7 @@ struct BibleReadingView: View {
                                                             .frame(maxWidth: .infinity, minHeight: 30)
                                                             .padding(12)
                                                             .background(searchChapter == chp ? Color.accentColor : Color(UIColor.quaternaryLabel))
+                                                            .foregroundColor(searchChapter == chp ? Color.white : Color(UIColor.label))
                                                             .cornerRadius(Design.defaultCornerRadius)
                                                             .onTapGesture {
                                                                 searchChapter = chp
@@ -214,7 +204,12 @@ struct BibleReadingView: View {
                         .bold()
                 })
             }
-            ToolbarItemGroup(placement: .primaryAction) {
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
+                Button(action: {
+                    onBookmark()
+                }, label: {
+                    Image(systemName: isCurrentPassageBookmarked ? "bookmark.fill" : "bookmark")
+                })
                 Button(action: {
                     showViewSettingsView = true
                 }, label: {
@@ -234,6 +229,7 @@ struct BibleReadingView: View {
         .onAppear {
             searchBook = passage.book
             searchChapter = passage.chapter
+            refreshBookmarks()
         }
     }
 }
@@ -342,12 +338,40 @@ extension BibleReadingView {
         self.searchChapter = passage.chapter
         showWordDetail = false
     }
+    
+    func refreshBookmarks() {
+        let bookmarkPassageFetchRequest = NSFetchRequest<PassageBookmark>(entityName: "PassageBookmark")
+        var fetchedBookmarks: [PassageBookmark] = []
+        do {
+            fetchedBookmarks = try context.fetch(bookmarkPassageFetchRequest)
+        } catch let err {
+            print(err)
+        }
+        
+        bookmarkedPassages = fetchedBookmarks
+    }
+    
+    func onBookmark() {
+        CoreDataManager.transaction(context: context) {
+            if isCurrentPassageBookmarked, let currentBookmark = bookmarkedPassages.first(where: { $0.passage == passage }) {
+                context.delete(currentBookmark)
+            } else {
+                let bookmark = PassageBookmark(context: context)
+                bookmark.id = UUID().uuidString
+                bookmark.createdAt = Date()
+                bookmark.bookInt = passage.book.rawValue.toInt32
+                bookmark.chapterInt = passage.chapter.toInt32
+                bookmark.verseInt = passage.verse.toInt32
+            }
+            refreshBookmarks()
+        }
+    }
 }
 
 struct BibleReadingView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            BibleReadingView()
+            BibleReadingView(passage: .constant(.init(book: .psalms, chapter: 1, verse: -1)))
         }
     }
 }
