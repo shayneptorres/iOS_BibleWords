@@ -13,10 +13,8 @@
 		B8124D6028F948FD0053057C /* AppButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8124D5F28F948FD0053057C /* AppButton.swift */; };
 		B8124D6228F958830053057C /* VocabWordDefinitionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8124D6128F958830053057C /* VocabWordDefinitionView.swift */; };
 		B8124D6628F9BDB90053057C /* Codables.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8124D6528F9BDB90053057C /* Codables.swift */; };
-		B8124D6828F9BFDD0053057C /* mgbh-garret-vocab-1-21.json in Resources */ = {isa = PBXBuildFile; fileRef = B8124D6728F9BFDD0053057C /* mgbh-garret-vocab-1-21.json */; };
 		B8124D6A28F9C7100053057C /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8124D6928F9C7100053057C /* String+Extensions.swift */; };
 		B8124D6C28F9D05A0053057C /* TextbookSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8124D6B28F9D05A0053057C /* TextbookSelectorView.swift */; };
-		B8124D6E28F9EB7D0053057C /* garret-hebrew-1-21.json in Resources */ = {isa = PBXBuildFile; fileRef = B8124D6D28F9EB7D0053057C /* garret-hebrew-1-21.json */; };
 		B8124D7028F9FF5E0053057C /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8124D6F28F9FF5E0053057C /* Date+Extensions.swift */; };
 		B8124D7528FA0EF10053057C /* ParadigmPracticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8124D7228FA0EF10053057C /* ParadigmPracticeView.swift */; };
 		B8124D7628FA0EF10053057C /* ParadigmsViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8124D7328FA0EF10053057C /* ParadigmsViews.swift */; };
@@ -102,6 +100,7 @@
 		B8A210FE2901E48A00BDF272 /* ParsingListSessionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A210FD2901E48A00BDF272 /* ParsingListSessionsView.swift */; };
 		B8A211002902086B00BDF272 /* AllWordsParsedTodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A210FF2902086B00BDF272 /* AllWordsParsedTodayView.swift */; };
 		B8A2110229020FA100BDF272 /* ExternalTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A2110129020FA100BDF272 /* ExternalTools.swift */; };
+		B8C4B860293A85E3009AA40C /* WordOccurrencesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C4B85F293A85E3009AA40C /* WordOccurrencesListView.swift */; };
 		B8DD2E0B28F93CB100AC9492 /* BibleWords_iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DD2E0A28F93CB100AC9492 /* BibleWords_iOSApp.swift */; };
 		B8DD2E0F28F93CB300AC9492 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8DD2E0E28F93CB300AC9492 /* Assets.xcassets */; };
 		B8DD2E1228F93CB300AC9492 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8DD2E1128F93CB300AC9492 /* Preview Assets.xcassets */; };
@@ -176,10 +175,8 @@
 		B8124D5F28F948FD0053057C /* AppButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppButton.swift; sourceTree = "<group>"; };
 		B8124D6128F958830053057C /* VocabWordDefinitionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VocabWordDefinitionView.swift; sourceTree = "<group>"; };
 		B8124D6528F9BDB90053057C /* Codables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Codables.swift; sourceTree = "<group>"; };
-		B8124D6728F9BFDD0053057C /* mgbh-garret-vocab-1-21.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "mgbh-garret-vocab-1-21.json"; sourceTree = "<group>"; };
 		B8124D6928F9C7100053057C /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		B8124D6B28F9D05A0053057C /* TextbookSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextbookSelectorView.swift; sourceTree = "<group>"; };
-		B8124D6D28F9EB7D0053057C /* garret-hebrew-1-21.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "garret-hebrew-1-21.json"; sourceTree = "<group>"; };
 		B8124D6F28F9FF5E0053057C /* Date+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		B8124D7228FA0EF10053057C /* ParadigmPracticeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParadigmPracticeView.swift; sourceTree = "<group>"; };
 		B8124D7328FA0EF10053057C /* ParadigmsViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParadigmsViews.swift; sourceTree = "<group>"; };
@@ -261,6 +258,7 @@
 		B8A210FD2901E48A00BDF272 /* ParsingListSessionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsingListSessionsView.swift; sourceTree = "<group>"; };
 		B8A210FF2902086B00BDF272 /* AllWordsParsedTodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllWordsParsedTodayView.swift; sourceTree = "<group>"; };
 		B8A2110129020FA100BDF272 /* ExternalTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalTools.swift; sourceTree = "<group>"; };
+		B8C4B85F293A85E3009AA40C /* WordOccurrencesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordOccurrencesListView.swift; sourceTree = "<group>"; };
 		B8DD2E0728F93CB100AC9492 /* BibleWords_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BibleWords_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8DD2E0A28F93CB100AC9492 /* BibleWords_iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleWords_iOSApp.swift; sourceTree = "<group>"; };
 		B8DD2E0E28F93CB300AC9492 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -378,6 +376,7 @@
 				B87060472932DB1200AC21EA /* VocabSettingsView.swift */,
 				B87060492932DB9200AC21EA /* VocabNotificationsView.swift */,
 				B870605F2936A0EA00AC21EA /* SearchVocabWordsView.swift */,
+				B8C4B85F293A85E3009AA40C /* WordOccurrencesListView.swift */,
 			);
 			path = Vocab;
 			sourceTree = "<group>";
@@ -528,8 +527,6 @@
 				B870607129393B6B00AC21EA /* hebrew-bible.json */,
 				B87060612936EBD800AC21EA /* greek-dict.json */,
 				B870606F293939DA00AC21EA /* greek-bible.json */,
-				B8124D6D28F9EB7D0053057C /* garret-hebrew-1-21.json */,
-				B8124D6728F9BFDD0053057C /* mgbh-garret-vocab-1-21.json */,
 			);
 			path = JSON;
 			sourceTree = "<group>";
@@ -731,9 +728,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B8124D6E28F9EB7D0053057C /* garret-hebrew-1-21.json in Resources */,
 				B870607229393B6B00AC21EA /* hebrew-bible.json in Resources */,
-				B8124D6828F9BFDD0053057C /* mgbh-garret-vocab-1-21.json in Resources */,
 				B8DD2E7628F93CDF00AC9492 /* EzraSR.ttf in Resources */,
 				B870606C29373D9600AC21EA /* hebrew-dict.json in Resources */,
 				B8706070293939DA00AC21EA /* greek-bible.json in Resources */,
@@ -861,6 +856,7 @@
 				B8A210F82901D80800BDF272 /* ParsingSessionReportView.swift in Sources */,
 				B870605E29367C5300AC21EA /* ParsingFormInfoHeader.swift in Sources */,
 				B8DD2E6328F93CDF00AC9492 /* GreekCodeables.swift in Sources */,
+				B8C4B860293A85E3009AA40C /* WordOccurrencesListView.swift in Sources */,
 				B870605C293678C500AC21EA /* ParsingFormDetailView.swift in Sources */,
 				B89CB5532909E4E30002FEF8 /* StudySessionAnswerType.swift in Sources */,
 				B8DD2E1728F93CB300AC9492 /* BibleWords_iOS.xcdatamodeld in Sources */,

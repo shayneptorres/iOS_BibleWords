@@ -34,6 +34,109 @@ struct WordIntervalPieChartView: UIViewRepresentable {
     }
 }
 
+struct ParsingFormsPieChart: UIViewRepresentable {
+    @Binding var paringGroups: [ParsingFormsListView.ParsingGroup]
+    private let pieChartView = PieChartView()
+    
+    func makeUIView(context: Context) -> some PieChartView {
+        pieChartView.data = getChartData()
+        pieChartView.holeColor = .clear
+        return pieChartView
+    }
+    
+    func updateUIView(_ uiView: UIViewType, context: Context) {
+        pieChartView.data = getChartData()
+    }
+    
+    func getChartData() -> PieChartData {
+        var chartDataEntries: [PieChartDataEntry] = []
+        
+        for group in paringGroups {
+            let entry = PieChartDataEntry(value: Double(group.groups.flatMap { $0.instances }.count),label: group.name)
+            chartDataEntries.append(entry)
+        }
+        let dataSet = PieChartDataSet(entries: chartDataEntries)
+        dataSet.label = ""
+        dataSet.colors = [UIColor(.accentColor), .orange, .purple, .blue, .gray, .magenta, .red]
+        dataSet.valueFormatter = Formatter()
+        let chartData = PieChartData(dataSet: dataSet)
+        return chartData
+    }
+    
+    class Formatter: ValueFormatter {
+        func stringForValue(_ value: Double, entry: ChartDataEntry, dataSetIndex: Int, viewPortHandler: ViewPortHandler?) -> String {
+            return "\(Int(value))"
+        }
+    }
+}
+
+struct WordOccurrenceBarChartView: UIViewRepresentable {
+    @Binding var occurrences: [Bible.WordInstance]
+    private let barChartView = BarChartView()
+    
+    func makeUIView(context: Context) -> some BarChartView {
+        barChartView.data = getChartData()
+        barChartView.pinchZoomEnabled = false
+        barChartView.dragEnabled = false
+        barChartView.isUserInteractionEnabled = false
+        
+        barChartView.drawGridBackgroundEnabled = false
+        
+        barChartView.leftAxis.drawLabelsEnabled = false
+        barChartView.rightAxis.drawLabelsEnabled = false
+        
+        barChartView.leftAxis.drawGridLinesEnabled = false
+        barChartView.rightAxis.drawGridLinesEnabled = false
+//        barChartView.leftAxis.drawAxisLineEnabled = false
+//        barChartView.rightAxis.drawAxisLineEnabled = false
+        
+        barChartView.xAxis.valueFormatter = IntervalBarChartFormatter()
+        barChartView.xAxis.granularity = 1
+    
+        return barChartView
+    }
+    
+    func updateUIView(_ uiView: UIViewType, context: Context) {
+        barChartView.data = getChartData()
+    }
+    
+    func getChartData() -> BarChartData {
+        var chartDataEntries: [BarChartDataEntry] = []
+        var bookOccurrenceDict: [Int:Int] = [:]
+        for occurrence in occurrences {
+            if bookOccurrenceDict[occurrence.bookInt] != nil {
+                bookOccurrenceDict[occurrence.bookInt]! += 1
+            } else {
+                bookOccurrenceDict[occurrence.bookInt] = 1
+            }
+        }
+        
+        for (bookInt, count) in bookOccurrenceDict {
+            let entry = BarChartDataEntry(x: Double(bookInt), y: Double(count))
+            chartDataEntries.append(entry)
+        }
+        
+        let dataSet = BarChartDataSet(entries: chartDataEntries.sorted(by: { $0.x < $1.x }))
+        dataSet.valueFormatter = Formatter()
+        dataSet.colors = [UIColor(.accentColor)]
+        dataSet.label = "Occurrences"
+        let chartData = BarChartData(dataSet: dataSet)
+        return chartData
+    }
+    
+    class IntervalBarChartFormatter: AxisValueFormatter {
+        func stringForValue(_ value: Double, axis: AxisBase?) -> String {
+            return (Bible.Book(rawValue: value.toInt) ?? .genesis).shortTitle
+        }
+    }
+    
+    class Formatter: ValueFormatter {
+        func stringForValue(_ value: Double, entry: ChartDataEntry, dataSetIndex: Int, viewPortHandler: ViewPortHandler?) -> String {
+            return "\(Int(value))"
+        }
+    }
+}
+
 struct WordIntervalBarChartView: UIViewRepresentable {
     @Binding var intervalWords: [Int:[Bible.WordInfo]]
     private let barChartView = BarChartView()

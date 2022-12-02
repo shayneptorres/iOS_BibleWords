@@ -68,7 +68,6 @@ struct BibleWords_iOSApp: App {
                 } else if newPhase == .background {
                     print("Background")
                     AppGroupManager.updateStats(persistenceController.container.viewContext)
-//                    DueWordAlertManager.updateDueWordNotifications(persistenceController.container.viewContext)
                 }
             }
         }
@@ -82,7 +81,6 @@ struct BibleWords_iOSApp: App {
             await API.main.fetchGreekDict()
             await API.main.fetchGreekBible()
             
-            await API.main.fetchGarretHebrew()
             API.main.coreDataReadyPublisher.send(true)
         }
     }

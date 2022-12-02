@@ -185,7 +185,7 @@ extension WordInfoDetailsView {
                 ParsingFormsListView(wordInfo: word)
             }, label: {
                 Label(title: {
-                    Text("\(word.parsingInfo.instances.count)")
+                    Text("\(word.parsingGroups.count)")
                         .bold()
                         .foregroundColor(.accentColor)
                     +
@@ -195,28 +195,14 @@ extension WordInfoDetailsView {
                 })
             })
             NavigationLink(destination: {
-                List {
-                    ForEach(word.instances) { instance in
-                        NavigationLink(destination: {
-                            WordInstancePassageDetailsView(word: instance.wordInfo, instance: instance)
-                        }) {
-                            WordInstancePassageListRow(instance: instance)
-                        }
-                    }
-                }
-                .toolbar {
-                    ToolbarItem(placement: .principal) {
-                        Text(word.lemma)
-                            .font(word.language.meduimBibleFont)
-                    }
-                }
+                WordOccurrencesListView(wordInfo: word)
             }, label: {
                 Label(title: {
                     Text("\(word.instances.count)")
                         .bold()
                         .foregroundColor(.accentColor)
                     +
-                    Text(" appearances")
+                    Text(" occurrences")
                 }, icon: {
                     Image(systemName: "book")
                 })

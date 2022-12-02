@@ -70,15 +70,18 @@ struct StatsDueSmallView: View {
                     }
                     .padding([.leading, .top])
                     Spacer()
-                    Text("\(entry.dueCount)")
-                        .font(.largeTitle)
+                    Text("Due")
+                        .font(.title3)
                         .padding([.trailing, .top])
                 }
                 Spacer()
-                Text("Due Words")
-                    .font(.title2)
-                    .bold()
-                    .padding([.leading, .bottom])
+                HStack {
+                    Spacer()
+                    Text("\(entry.dueCount)")
+                        .font(.largeTitle)
+                        .bold()
+                        .padding([.trailing, .bottom])
+                }
             }
         }
     }

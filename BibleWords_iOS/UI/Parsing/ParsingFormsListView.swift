@@ -17,7 +17,7 @@ struct ParsingFormsListView: View {
     var wordInfo: Bible.WordInfo
     var modalDismiss: (() -> Void)?
     
-    var paringGroups: [ParsingGroup] {
+    var parsingGroups: [ParsingGroup] {
         switch wordInfo.language {
         case .greek:
             if wordInfo.instances.first?.parsing.lowercased().contains("verb") == true {
@@ -81,7 +81,9 @@ struct ParsingFormsListView: View {
     
     var body: some View {
         List {
-            ForEach(paringGroups) { group in
+            ParsingFormsPieChart(paringGroups: .init(get: { parsingGroups }, set: { _ in }))
+                .frame(height: 300)
+            ForEach(parsingGroups) { group in
                 ParsingFormListSection(group: group)
             }
         }

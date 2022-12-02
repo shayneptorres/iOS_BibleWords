@@ -264,6 +264,25 @@ struct Bible {
             return groups
         }
         
+        var bibleBookOccurenceGroups: [BibleBookOccurrenceGroup] {
+            var bookOccurrenceDict: [Bible.Book:[Bible.WordInstance]] = [:]
+            for book in Bible.Book.allCases {
+                let currentBookOccurrences = instances.filter { $0.bibleBook == book }
+                if bookOccurrenceDict[book] == nil {
+                    bookOccurrenceDict[book] = currentBookOccurrences
+                } else {
+                    bookOccurrenceDict[book] = bookOccurrenceDict[book]! + currentBookOccurrences
+                }
+            }
+            var bibleGroups: [BibleBookOccurrenceGroup] = []
+            for (book, occurrences) in bookOccurrenceDict {
+                if !occurrences.isEmpty {
+                    bibleGroups.append(.init(book: book, occurrences: occurrences))
+                }
+            }
+            return bibleGroups.sorted(by: { $0.book.rawValue < $1.book.rawValue })
+        }
+        
         func parsingInfo(for wordType: Parsing.WordType) -> ParsingInfo {
             var parsingDict: [String:WordInstance] = [:]
             for instance in instances {
@@ -293,6 +312,12 @@ struct Bible {
         var wordInfo: WordInfo? {
             return instances.first?.wordInfo
         }
+    }
+    
+    struct BibleBookOccurrenceGroup: Identifiable {
+        var id: String = UUID().uuidString
+        var book: Bible.Book
+        var occurrences: [Bible.WordInstance]
     }
     
     struct WordInstance: Identifiable, Hashable {

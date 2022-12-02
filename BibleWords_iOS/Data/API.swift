@@ -18,6 +18,7 @@ enum UserDefaultKey: String, CaseIterable {
     case vocabShowGreekLists
     case vocabShowHebrewLists
     case vocabShowImportedLists
+    case bibleReaderFontSize
     
     var defaultValue: Any {
         switch self {
@@ -37,12 +38,14 @@ enum UserDefaultKey: String, CaseIterable {
             return true
         case .vocabShowImportedLists:
             return true
+        case .bibleReaderFontSize:
+            return CGFloat(45)
         }
     }
     
     func get<T: Any>(as: T.Type) -> T {
         switch self {
-        case .hasFetchedAndSavedAllGreekWords, .hasFetchedAndSavedAllHebrewWords, .hasFetchedAndSavedModernGrammarHebrewGarret, .shouldRefreshWidgetTimeline,  .vocabPinnedLists, .vocabShowGreekLists, .vocabShowHebrewLists, .vocabShowImportedLists:
+        case .hasFetchedAndSavedAllGreekWords, .hasFetchedAndSavedAllHebrewWords, .hasFetchedAndSavedModernGrammarHebrewGarret, .shouldRefreshWidgetTimeline,  .vocabPinnedLists, .vocabShowGreekLists, .vocabShowHebrewLists, .vocabShowImportedLists, .bibleReaderFontSize:
             
             if let val = UserDefaults.standard.value(forKey: self.rawValue) as? T {
                 UserDefaults.standard.set(val, forKey: self.rawValue)
@@ -55,7 +58,7 @@ enum UserDefaultKey: String, CaseIterable {
     
     func set<T: Any>(val: T) {
         switch self {
-        case .hasFetchedAndSavedAllGreekWords, .hasFetchedAndSavedAllHebrewWords, .hasFetchedAndSavedModernGrammarHebrewGarret, .shouldRefreshWidgetTimeline, .vocabPinnedLists, .vocabShowGreekLists, .vocabShowHebrewLists, .vocabShowImportedLists:
+        case .hasFetchedAndSavedAllGreekWords, .hasFetchedAndSavedAllHebrewWords, .hasFetchedAndSavedModernGrammarHebrewGarret, .shouldRefreshWidgetTimeline, .vocabPinnedLists, .vocabShowGreekLists, .vocabShowHebrewLists, .vocabShowImportedLists, .bibleReaderFontSize:
             UserDefaults.standard.set(val, forKey: self.rawValue)
         }
     }
@@ -106,18 +109,6 @@ class API: ObservableObject {
         else { return }
         
         Bible.main.hebrewLexicon.add(newLex: dict, source: API.Source.Info.app.id)
-    }
-    
-    func fetchGarretHebrew() async {
-        guard
-            let data = await readLocalJSONFile(forName: "garret-hebrew-1-21"),
-            let list: [TextbookImportWord] = await parse(jsonData: data)
-        else { return }
-        
-        Bible.main.hebrewLexicon.add(list: list, id: Source.Info.hebrewGarret.id)
-        var built = builtTextbooks.value
-        built.append(.garretHebrew)
-        builtTextbooks.send(built)
     }
 
     private func readLocalJSONFile(forName name: String) async -> Data? {

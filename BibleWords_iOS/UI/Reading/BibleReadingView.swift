@@ -163,6 +163,9 @@ struct BibleReadingView: View {
                             Stepper(value: $fontSize, label: {
                                 Label("Font Size", systemImage: "textformat.size")
                             })
+                            .onChange(of: self.fontSize) { size in
+                                UserDefaultKey.bibleReaderFontSize.set(val: size)
+                            }
                             Section {
                                 ReadPassageView(
                                     passage: .constant(.init(book: .genesis, chapter: 1, verse: 1)),
@@ -230,6 +233,7 @@ struct BibleReadingView: View {
             searchBook = passage.book
             searchChapter = passage.chapter
             refreshBookmarks()
+            self.fontSize = UserDefaultKey.bibleReaderFontSize.get(as: CGFloat.self)
         }
     }
 }

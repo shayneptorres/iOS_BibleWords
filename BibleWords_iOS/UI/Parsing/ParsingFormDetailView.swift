@@ -13,6 +13,8 @@ struct ParsingFormDetailView: View {
     
     var body: some View {
         List {
+            WordOccurrenceBarChartView(occurrences: .constant(parsingGroup.instances))
+                .frame(height: 300)                
             if let instance = parsingGroup.instances.first {
                 ParsingFormInfoHeader(instance: instance)
             }
