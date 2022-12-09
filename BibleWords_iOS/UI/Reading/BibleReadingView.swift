@@ -24,6 +24,7 @@ struct BibleReadingView: View {
     @State var selectedWord: Bible.WordInstance = .init(dict: [:])
     @State var bookmarkedPassages: [PassageBookmark] = []
     @State var fontSize: CGFloat = 45
+    @State var showInterlinear = false
     @State var viewColor: Color = .appBackground
     
     let bookGridLayout: [GridItem] = [.init(.flexible()), .init(.flexible()), .init(.flexible())]
@@ -41,7 +42,7 @@ struct BibleReadingView: View {
                 DataLoadingRow()
             } else {
                 ZStack {
-                    ReadPassageView(passage: $passage, selectedWord: $selectedWord, fontSize: $fontSize, buffer: 75)
+                    ReadPassageView(passage: $passage, selectedWord: $selectedWord, fontSize: $fontSize, showInterlinear: $showInterlinear, buffer: 75)
                     VStack {
                         Spacer()
                         if showWordDetail {
@@ -170,16 +171,21 @@ struct BibleReadingView: View {
                                 ReadPassageView(
                                     passage: .constant(.init(book: .genesis, chapter: 1, verse: 1)),
                                     selectedWord: .constant(.init(dict: [:])),
-                                    fontSize: $fontSize)
+                                    fontSize: $fontSize, showInterlinear: .constant(false))
                                 ReadPassageView(
                                     passage: .constant(.init(book: .john, chapter: 1, verse: 1)),
                                     selectedWord: .constant(.init(dict: [:])),
-                                    fontSize: $fontSize)
+                                    fontSize: $fontSize, showInterlinear: .constant(false))
                             }
                         }
                     }, label: {
                         Label("Font size", systemImage: "textformat.size")
                     })
+                    if passage.book.rawValue >= 40 {
+                        Toggle(isOn: $showInterlinear, label: {
+                            Label("Show Interlinear", systemImage: "text.aligncenter")
+                        })
+                    }
                 }
                 .navigationTitle("View Settings")
                 .navigationBarTitleDisplayMode(.inline)

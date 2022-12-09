@@ -32,6 +32,7 @@ struct ReadPassageView: View {
     @Binding var passage: Passage
     @Binding var selectedWord: Bible.WordInstance
     @Binding var fontSize: CGFloat
+    @Binding var showInterlinear: Bool
     var buffer: CGFloat = 0
     
     var body: some View {
@@ -44,7 +45,7 @@ struct ReadPassageView: View {
                             reader.scrollTo(1, anchor: .top)
                         }
                 } else {
-                    GreekPassageTextView(words: $passage.words, selectedWord: $selectedWord, fontSize: $fontSize, buffer: buffer).id(2)
+                    GreekPassageTextView(words: $passage.words, selectedWord: $selectedWord, fontSize: $fontSize, showInterlinear: $showInterlinear, buffer: buffer).id(2)
                         .padding(8)
                         .onChange(of: passage) { i in
                             reader.scrollTo(2, anchor: .top)
@@ -69,6 +70,7 @@ struct GreekPassageTextView: View {
     @Binding var words: [Bible.WordInstance]
     @Binding var selectedWord: Bible.WordInstance
     @Binding var fontSize: CGFloat
+    @Binding var showInterlinear: Bool
     var buffer: CGFloat = 0
     @State private var size: CGSize = .zero
     
@@ -85,36 +87,76 @@ struct GreekPassageTextView: View {
             GeometryReader { g in
                 ZStack(alignment: .topLeading) {
                     ForEach(0..<self.words.count, id: \.self) { i in
-                        Text((self.words[i].surface + " ").lowercased())
-                            .font(self.words[i].strongId == "verse-num" ? .system(size: 20) : .bible(size: fontSize * 0.75))
-                            .padding([.horizontal, .vertical], 4)
-                            .onTapGesture {
-                                if self.words[i].strongId != "verse-num" {
-                                    selectedWord = self.words[i]
-                                }
+                        if showInterlinear {
+                            VStack {
+                                Text((self.words[i].surface + " ").lowercased())
+                                    .font(self.words[i].strongId == "verse-num" ? .system(size: 20) : .bible(size: fontSize * 0.5))
+                                    .padding([.horizontal, .top], 4)
+                                    .foregroundColor(shouldHighlightWord(at: i) ? .accentColor : Color(uiColor: .label))
+                                Text((self.words[i].interlinearStr + " ").lowercased())
+                                    .font(self.words[i].strongId == "verse-num" ? .system(size: 20) : .bible(size: fontSize * 0.25))
+                                    .padding([.horizontal, .bottom], 4)
+                                    .foregroundColor(shouldHighlightWord(at: i) ? .accentColor : Color(uiColor: .label))
+                                Spacer()
                             }
-                            .foregroundColor(shouldHighlightWord(at: i) ? .accentColor : Color(uiColor: .label))
-                            .alignmentGuide(.leading, computeValue: { d in
-                                if (abs(width - d.width) > g.size.width)
-                                {
-                                    width = 0
-                                    height -= (fontSize + 16)
+                                .onTapGesture {
+                                    if self.words[i].strongId != "verse-num" {
+                                        selectedWord = self.words[i]
+                                    }
                                 }
-                                let result = width
-                                if i < self.words.count-1 {
-                                    width -= d.width
-                                } else {
-                                    width = 0 //last item
+                                .alignmentGuide(.leading, computeValue: { d in
+                                    if (abs(width - d.width) > g.size.width)
+                                    {
+                                        width = 0
+                                        height -= (fontSize + 16)
+                                    }
+                                    let result = width
+                                    if i < self.words.count-1 {
+                                        width -= d.width
+                                    } else {
+                                        width = 0 //last item
+                                    }
+                                    return result
+                                })
+                                .alignmentGuide(.top, computeValue: {d in
+                                    let result = height
+                                    if i >= self.words.count-1 {
+                                        height = 0 // last item
+                                    }
+                                    return result
+                                })
+                        } else {
+                            Text((self.words[i].surface + " ").lowercased())
+                                .font(self.words[i].strongId == "verse-num" ? .system(size: 20) : .bible(size: fontSize * 0.75))
+                                .padding([.horizontal, .vertical], 4)
+                                .onTapGesture {
+                                    if self.words[i].strongId != "verse-num" {
+                                        selectedWord = self.words[i]
+                                    }
                                 }
-                                return result
-                            })
-                            .alignmentGuide(.top, computeValue: {d in
-                                let result = height
-                                if i >= self.words.count-1 {
-                                    height = 0 // last item
-                                }
-                                return result
-                            })
+                                .foregroundColor(shouldHighlightWord(at: i) ? .accentColor : Color(uiColor: .label))
+                                .alignmentGuide(.leading, computeValue: { d in
+                                    if (abs(width - d.width) > g.size.width)
+                                    {
+                                        width = 0
+                                        height -= (fontSize + 16)
+                                    }
+                                    let result = width
+                                    if i < self.words.count-1 {
+                                        width -= d.width
+                                    } else {
+                                        width = 0 //last item
+                                    }
+                                    return result
+                                })
+                                .alignmentGuide(.top, computeValue: {d in
+                                    let result = height
+                                    if i >= self.words.count-1 {
+                                        height = 0 // last item
+                                    }
+                                    return result
+                                })
+                        }
                     }
                 }
                 .readVerticalFlowSize(to: $size)

@@ -327,9 +327,9 @@ struct Bible {
         let lemma: String
         let surfaceComponents: String
         let rawSurface: String
-//        let surfaceComponents: String
         let parsing: String
         let refStr: String
+        var interlinearStr: String
 
         init(dict: [String:AnyObject]) {
             self.id = UUID().uuidString
@@ -340,6 +340,7 @@ struct Bible {
             self.rawSurface = dict["rawSurface"] as? String ?? ""
             self.parsing = dict["parsing"] as? String ?? ""
             self.refStr = dict["ref"] as? String ?? ""
+            self.interlinearStr = dict["interlinear_txt"] as? String ?? ""
         }
         
         func hash(into hasher: inout Hasher) {
@@ -415,6 +416,21 @@ struct Bible {
             }
             return ""
         }
+        
+        var wordInInterlinear: String {
+            if Bible.main.references.values.count >= bookInt {
+                if Bible.main.references.values[bookInt-1].count >= chapter {
+                    if Bible.main.references.values[bookInt-1][chapter-1].count >= verse {
+                        let verse = Bible.main.references.values[bookInt-1][chapter-1][verse-1]
+                        let words = verse.compactMap { ($0["interlinear_text"] as? String) }
+                        return words.joined(separator: " ")
+                    }
+                }
+                return ""
+            }
+            return ""
+        }
+        
         
         var wordInfo: WordInfo {
             if language == .greek {

@@ -207,6 +207,10 @@ extension WordInfoDetailsView {
                     Image(systemName: "book")
                 })
             })
+        } footer: {
+            if word.instances.count > 100 {
+                Text("⚠️ Warning: When there are word with 100+ occurrences, it can take more time to load them all up. Be aware of this when tapping to see the occurrences")
+            }
         }
     }
 }

@@ -97,6 +97,23 @@ struct WordInstancePassageDetailsView: View {
                             Text(instance.wordInfo.definition)
                         }
                     }
+                    .padding(.bottom)
+                }
+                if !instance.interlinearStr.isEmpty {
+                    HStack(alignment: .top) {
+                        HStack {
+                            Text("Translation:")
+                                .foregroundColor(Color(uiColor: .secondaryLabel))
+                                .font(.subheadline)
+                            Spacer()
+                        }
+                        .frame(width: 110)
+                        VStack {
+                            Text(instance.interlinearStr)
+                                .lineLimit(4)
+                        }
+                    }
+                    .padding(.bottom)
                 }
             }
             VStack(alignment: instance.language == .greek ? .leading : .trailing) {

@@ -87,8 +87,6 @@ struct WordOccurrenceBarChartView: UIViewRepresentable {
         
         barChartView.leftAxis.drawGridLinesEnabled = false
         barChartView.rightAxis.drawGridLinesEnabled = false
-//        barChartView.leftAxis.drawAxisLineEnabled = false
-//        barChartView.rightAxis.drawAxisLineEnabled = false
         
         barChartView.xAxis.valueFormatter = IntervalBarChartFormatter()
         barChartView.xAxis.granularity = 1
@@ -97,7 +95,10 @@ struct WordOccurrenceBarChartView: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: UIViewType, context: Context) {
-        barChartView.data = getChartData()
+        let data = getChartData()
+        var labelCount = min(8, data.entryCount)
+        barChartView.xAxis.setLabelCount(labelCount, force: true)
+        barChartView.data = data
     }
     
     func getChartData() -> BarChartData {
